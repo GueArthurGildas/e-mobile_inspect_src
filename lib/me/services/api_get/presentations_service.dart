@@ -1,0 +1,38 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:sqflite/sqflite.dart';
+import 'package:test_app_divkit/me/models/presentations_model.dart';
+import 'package:test_app_divkit/me/services/database_service.dart';
+
+
+class PresentationsService {
+  Future<Database> get _db async => await DatabaseHelper.database;
+
+  Future<List<Presentations>> fetchFromApi() async {
+    final response = await http.get(Uri.parse('https://ton-api.com/api/v1/presentations'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Presentations.fromJson(json)).toList();
+    } else {
+      throw Exception('Erreur API presentations');
+    }
+  }
+
+  Future<void> insert(Presentations item) async {
+    final db = await _db;
+    await db.insert('presentations', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<void> syncToLocal() async {
+    final list = await fetchFromApi();
+    for (var item in list) {
+      await insert(item);
+    }
+  }
+
+  Future<List<Presentations>> getAll() async {
+    final db = await _db;
+    final maps = await db.query('presentations');
+    return maps.map((e) => Presentations.fromMap(e)).toList();
+  }
+}
