@@ -10,7 +10,7 @@ import 'package:test_app_divkit/me/views/inspection/section_inspection_form/mode
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_2.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_3.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/section1.dart';
-import 'package:test_app_divkit/me/views/pays_screen/pays.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/pays.dart';
 import 'package:test_app_divkit/me/views/tbl_ref_screen/activites_navires_screen.dart';
 import 'package:test_app_divkit/me/views/tbl_ref_screen/agents_shiping_screen.dart';
 import 'package:test_app_divkit/me/views/tbl_ref_screen/conservations_screen.dart';
@@ -62,7 +62,7 @@ void main() {
 
 class MenuPrincipalScreen extends StatelessWidget {
   final List<Map<String, dynamic>> ressources = [
-    {'title': 'Pavillons', 'screen': const PavillonsScreen()},
+    {'title': 'Pavillons', 'screen': const PaysScreen()},
     {'title': 'Typenavires', 'screen': const TypenaviresScreen()},
     {'title': 'Ports', 'screen': const PortsScreen()},
     {'title': 'ActivitesNavires', 'screen': const ActivitesNaviresScreen()},
