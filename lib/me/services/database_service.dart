@@ -70,7 +70,7 @@ class DatabaseHelper {
         ''');
 
         await db.execute('''
-          CREATE TABLE IF NOT EXISTS type_documents (
+          CREATE TABLE IF NOT EXISTS types_documents (
             id INTEGER PRIMARY KEY,
             libelle TEXT NOT NULL,
             created_at TEXT,
@@ -98,7 +98,7 @@ class DatabaseHelper {
         ''');
 
         await db.execute('''
-          CREATE TABLE IF NOT EXISTS zones (
+          CREATE TABLE IF NOT EXISTS zones_capture (
             id INTEGER PRIMARY KEY,
             code TEXT NOT NULL,
             libelle TEXT NOT NULL,
@@ -147,9 +147,11 @@ class DatabaseHelper {
 
 
         await db.execute('''
-          CREATE TABLE IF NOT EXISTS types_engins (
+         CREATE TABLE IF NOT EXISTS types_engins (
         id INTEGER PRIMARY KEY,
-        libelle TEXT NOT NULL,
+        code TEXT NOT NULL,
+        label_english_name TEXT NOT NULL,
+        french_name TEXT NOT NULL,
         created_at TEXT,
         updated_at TEXT
     );
@@ -184,6 +186,61 @@ class DatabaseHelper {
         updated_at TEXT
     );
         ''');
+
+
+
+        await db.execute('''
+  CREATE TABLE IF NOT EXISTS inspections (
+    id INTEGER PRIMARY KEY,
+    created_at TEXT,
+    updated_at TEXT,
+    date_escale_navire TEXT,
+    date_depart_navire TEXT,
+    date_arrive_navire TEXT,
+    date_fin_inspection TEXT,
+    date_deb_inspection TEXT,
+    date_prevue_arriv_navi TEXT,
+    date_prevue_inspect TEXT,
+    titre_inspect TEXT,
+    consigne_inspect TEXT,
+    navire_id INTEGER,
+    captaine_id INTEGER,
+    statut_inspection_id INTEGER,
+    agent_shiping_id INTEGER,
+    infraction_id INTEGER,
+    user_id INTEGER,
+    observateur_embarque_id INTEGER,
+    position_navires_id INTEGER,
+    port_inspection_id INTEGER,
+    pays_escale_id INTEGER,
+    port_escale_id INTEGER,
+    type_navire_id INTEGER,
+    type_pavillon_id INTEGER,
+    pavillon_navire_id INTEGER,
+    dpeps_id INTEGER,
+    dpep_status_id INTEGER,
+    consignations_id INTEGER,
+    proprietaires_id INTEGER,
+    captaines_id INTEGER,
+    controle_engins_navire_id INTEGER,
+    resultat_inspection_id INTEGER,
+    pavillon_navire_fao TEXT,
+    ircs_fao TEXT,
+    non_navire_fao TEXT,
+    imo_num_fao TEXT,
+    external_id_fao TEXT,
+    navire_nonexistant_id INTEGER,
+    ports_last_escale TEXT,
+    activit_port_obs TEXT,
+    observa_embarq_status TEXT,
+    respect_mesure_id INTEGER,
+    navire_fao_id INTEGER,
+    sync INTEGER DEFAULT 0
+  );
+''');
+
+
+
       },
     );
   }

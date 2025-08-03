@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
 import 'package:test_app_divkit/me/controllers/user_controller.dart';
 import 'package:test_app_divkit/me/services/api_get/user_api_service.dart';
 import 'package:test_app_divkit/me/views/auth/myHome.dart';
@@ -6,10 +7,12 @@ import 'package:test_app_divkit/me/views/auth/splash_screen1.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_form_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_list_screen.dart';
+import 'package:test_app_divkit/me/views/inspection/inspections_test_sync_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_1.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_2.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_3.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/section1.dart';
+import 'package:test_app_divkit/me/views/inspection/welcome_screen.dart';
 import 'package:test_app_divkit/me/views/tbl_ref_screen/pays.dart';
 import 'package:test_app_divkit/me/views/tbl_ref_screen/activites_navires_screen.dart';
 import 'package:test_app_divkit/me/views/tbl_ref_screen/agents_shiping_screen.dart';
@@ -51,78 +54,39 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 
+
+
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Synchronisation API ↔ SQLite',
-    theme: ThemeData(primarySwatch: Colors.green),
-    home: MenuPrincipalScreen(),
-  ));
+  runApp(
+      MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => InspectionController()..loadAndSync()),
+          ],
+          child: const MyApp(),
+      ),);
 }
 
-class MenuPrincipalScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> ressources = [
-    {'title': 'Pavillons', 'screen': const PaysScreen()},
-    {'title': 'Typenavires', 'screen': const TypenaviresScreen()},
-    {'title': 'Ports', 'screen': const PortsScreen()},
-    {'title': 'ActivitesNavires', 'screen': const ActivitesNaviresScreen()},
-    {'title': 'Consignations', 'screen': const ConsignationsScreen()},
-    {'title': 'AgentsShiping', 'screen': const AgentsShipingScreen()},
-    {'title': 'TypesDocuments', 'screen': const TypesDocumentsScreen()},
-    {'title': 'TypesEngins', 'screen': const TypesEnginsScreen()},
-    {'title': 'EtatsEngins', 'screen': const EtatsEnginsScreen()},
-    {'title': 'Especes', 'screen': const EspecesScreen()},
-    {'title': 'ZonesCapture', 'screen': const ZonesCaptureScreen()},
-    {'title': 'Presentations', 'screen': const PresentationsScreen()},
-    {'title': 'Conservations', 'screen': const ConservationsScreen()},
-  ];
+
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Menu Synchronisation")),
-      body: ListView.builder(
-        itemCount: ressources.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(ressources[index]['title']),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => ressources[index]['screen']),
-              );
-            },
-          );
-        },
+    return ChangeNotifierProvider<UserController>(
+      create: (_) => UserController()..loadUsers(),
+      child: MaterialApp(
+        title: 'Flutter CRUD Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: DashboardScreen(),//InspectionScreen(),////PendingInspectionPage(),//ActivitesNaviresScreen(),//PaysScreen(),//UsersPage(),
       ),
     );
   }
 }
-
-
-
-// void main() {
-//   runApp(const MyApp());
-// }
-//
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChangeNotifierProvider<UserController>(
-//       create: (_) => UserController()..loadUsers(),
-//       child: MaterialApp(
-//         title: 'Flutter CRUD Demo',
-//         theme: ThemeData(
-//           primarySwatch: Colors.blue,
-//         ),
-//         home: ActivitesNaviresScreen(),//PaysScreen(),//UsersPage(),
-//       ),
-//     );
-//   }
-// }
 
 
 
@@ -136,3 +100,57 @@ class MenuPrincipalScreen extends StatelessWidget {
 //InspectionWizardScreen(),//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
 //home: SplashScreen1(),//InspectionWizardScreen(),//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
 
+
+
+/****** @s code main pour tester l'integration correctes des tables de references *//////
+
+// void main() {
+//   runApp(MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     title: 'Synchronisation API ↔ SQLite',
+//     theme: ThemeData(primarySwatch: Colors.green),
+//     home: MenuPrincipalScreen(),
+//   ));
+// }
+//
+// class MenuPrincipalScreen extends StatelessWidget {
+//   final List<Map<String, dynamic>> ressources = [
+//     {'title': 'Pavillons', 'screen': const PaysScreen()},
+//     {'title': 'Typenavires', 'screen': const TypenaviresScreen()},
+//     {'title': 'Ports', 'screen': const PortsScreen()},
+//     {'title': 'ActivitesNavires', 'screen': const ActivitesNaviresScreen()},
+//     {'title': 'Consignations', 'screen': const ConsignationsScreen()},
+//     {'title': 'AgentsShiping', 'screen': const AgentsShipingScreen()},
+//     {'title': 'TypesDocuments', 'screen': const TypesDocumentsScreen()},
+//     {'title': 'TypesEngins', 'screen': const TypesEnginsScreen()},
+//     {'title': 'EtatsEngins', 'screen': const EtatsEnginsScreen()},
+//     {'title': 'Especes', 'screen': const EspecesScreen()},
+//     {'title': 'ZonesCapture', 'screen': const ZonesCaptureScreen()},
+//     {'title': 'Presentations', 'screen': const PresentationsScreen()},
+//     {'title': 'Conservations', 'screen': const ConservationsScreen()},
+//   ];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: const Text("Menu Synchronisation")),
+//       body: ListView.builder(
+//         itemCount: ressources.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(ressources[index]['title']),
+//             trailing: const Icon(Icons.chevron_right),
+//             onTap: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(builder: (_) => ressources[index]['screen']),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+/****** @e code main pour tester l'integration correctes des tables de references *//////

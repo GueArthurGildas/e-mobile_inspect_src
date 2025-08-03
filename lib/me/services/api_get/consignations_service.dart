@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
+import 'package:test_app_divkit/me/config/api_constants.dart';
 import 'package:test_app_divkit/me/models/consignations_model.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
 
@@ -8,7 +9,7 @@ class ConsignationsService {
   Future<Database> get _db async => await DatabaseHelper.database;
 
   Future<List<Consignations>> fetchFromApi() async {
-    final response = await http.get(Uri.parse('https://ton-api.com/api/v1/consignations'));
+    final response = await http.get(Uri.parse(base_url_api+'consignations'));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Consignations.fromJson(json)).toList();
