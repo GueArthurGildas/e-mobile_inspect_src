@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
-import 'package:test_app_divkit/me/views/inspection/inspection_controller.dart';
 import 'package:test_app_divkit/me/views/shared/app_bar.dart';
 
 class WizardOption {
@@ -20,9 +19,7 @@ class InspectionWizardScreen extends StatefulWidget {
 
 class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
   int currentStep = 0;
-  bool _loading = false;
-  final InspectionController _controller = InspectionController();
-  Map<String, dynamic> wizardData = {};
+  final Map<String, dynamic> _wizardData = {};
 
   final List<WizardOption> steps = [
     WizardOption(
@@ -62,37 +59,24 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
   final Color green = const Color(0xFF006400);
   final Color bg = const Color(0xFFF9F9F9);
 
+
   @override
   void initState() {
-    _init();
     super.initState();
-  }
-
-  Future<void> _init() async {
-    setState(() => _loading = true);
-    try {
-      await _controller.loadData();
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
   }
 
   void saveStepData(String key, dynamic data) {
     setState(() {
-      wizardData[key] = data;
+      _wizardData[key] = data;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_controller.data);
-
     return Scaffold(
       backgroundColor: bg,
       appBar: CustomAppBar(title: "Réalisation de l'Inspection"),
-      body: _loading
-          ? Center(child: CircularProgressIndicator(color: orange))
-          : SafeArea(
+      body: SafeArea(
               child: Column(
                 children: [
                   const SizedBox(height: 16),
@@ -155,12 +139,11 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                               ),
                               onTap: () async {
                                 if (index <= currentStep || true) {
-                                  _controller.data['formData'] = [wizardData];
                                   final dynamic stepData =
                                       await Navigator.pushNamed<dynamic>(
                                         context,
                                         steps[index].route,
-                                        arguments: _controller.data,
+                                        arguments: _wizardData[steps[index].key],
                                       );
 
                                   if (stepData != null) {
@@ -244,7 +227,7 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                                 ),
                               );
 
-                              print(wizardData);
+                              print(_wizardData);
                             }
                           },
                           style: ElevatedButton.styleFrom(

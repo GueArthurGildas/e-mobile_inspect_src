@@ -1,18 +1,15 @@
-// lib/screens/splash_screen.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/views/auth/splash_screen2.dart';
+import 'package:test_app_divkit/me/views/auth/login_screen.dart';
 
-class SplashScreen1 extends StatefulWidget {
-  const SplashScreen1({super.key});
-
-  static String id = "splash_screen1";
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashScreen1> createState() => _SplashScreen1State();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreen1State extends State<SplashScreen1> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -20,7 +17,7 @@ class _SplashScreen1State extends State<SplashScreen1> {
     Timer(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => SplashScreen2()),
+        MaterialPageRoute(builder: (_) => LoginPage()),
       );
     });
   }

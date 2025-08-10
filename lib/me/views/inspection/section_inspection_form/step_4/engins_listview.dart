@@ -53,7 +53,7 @@ class _EngineListViewState extends State<EngineListView> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              engine.typesEngins.libelle,
+              engine.typesEngins.french_name,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(

@@ -109,7 +109,7 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
     5,
     (index) => TypesEngins(
       id: index,
-      libelle: "Type par défaut ${index + 1}",
+      french_name: "Type par défaut ${index + 1}",
       created_at: null,
       updated_at: null,
     ),

@@ -121,7 +121,11 @@ class _AppFormState extends State<AppForm> {
                       .map(
                         (e) => DropdownMenuItem(
                           value: e.id.toString(),
-                          child: Text(e.libelle, maxLines: 1, overflow: TextOverflow.ellipsis,),
+                          child: Text(
+                            e.libelle,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       )
                       .toList(),
@@ -142,7 +146,7 @@ class _AppFormState extends State<AppForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 5.0,
                   children: [
-                    const SizedBox(height: 6.0,),
+                    const SizedBox(height: 6.0),
                     Text(control.label),
                     AppSearchableDropdown(
                       hintText: control.hint,
@@ -152,22 +156,14 @@ class _AppFormState extends State<AppForm> {
                         control.onChanged!(item);
                       },
                       required: control.required,
-                    )
+                    ),
                   ],
                 );
                 break;
 
               case ControlType.date:
                 field = FormField<DateTime>(
-                  initialValue: control.initialValue,
-                  // DateTime.now(),
-                  onSaved: (value) {
-                    if (value != null) {
-                      setState(() {
-                        formData[control.name] = value;
-                      });
-                    }
-                  },
+                  initialValue: control.initialValue, // DateTime.now(),
                   validator: control.required
                       ? (val) => val == null ? "Ce champ est requis" : null
                       : null,
@@ -177,6 +173,9 @@ class _AppFormState extends State<AppForm> {
                         final pickedDate = await Common.pickDate(context);
                         if (pickedDate != null) {
                           state.didChange(pickedDate);
+                          setState(() {
+                            formData[control.name] = pickedDate;
+                          });
                         }
                       },
                       child: InputDecorator(
@@ -305,6 +304,7 @@ class _AppFormState extends State<AppForm> {
             child: ElevatedButton.icon(
               onPressed: () {
                 if (widget.formKey.currentState!.validate()) {
+                  print(formData);
                   Navigator.pop(context, formData);
                 }
               },

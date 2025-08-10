@@ -16,7 +16,7 @@ class DatabaseHelper {
     final path = join(directory.path, 'inspection.db');
 
     // À activer temporairement si tu veux forcer la recréation
-    await deleteDatabase(path);
+    // await deleteDatabase(path);
 
     return await openDatabase(
       path,

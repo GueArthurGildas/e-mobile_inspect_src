@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
+import 'package:test_app_divkit/me/config/api_constants.dart';
 import 'package:test_app_divkit/me/models/pavillons_model.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
 
@@ -9,7 +10,7 @@ class PavillonsService {
 
   Future<List<Pavillons>> fetchFromApi() async {
     final response = await http.get(
-      Uri.parse('https://ton-api.com/api/v1/pavillons'),
+        Uri.parse('${base_url_api}pavillons'),
     );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);

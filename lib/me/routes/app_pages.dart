@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/views/auth/login_screen.dart';
 import 'package:test_app_divkit/me/views/auth/myHome.dart';
-import 'package:test_app_divkit/me/views/auth/splash_screen1.dart';
-import 'package:test_app_divkit/me/views/auth/splash_screen2.dart';
+import 'package:test_app_divkit/me/views/auth/splash_screen.dart';
+import 'package:test_app_divkit/me/views/auth/sync_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_form_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_list_screen.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/informations_engins.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/informations_initiales.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_5/informations_infractions.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_2/informations_responsables.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_3/inspection_documents.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/informations_engins.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_5/informations_infractions.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_6/inspection_soumission.dart';
-import 'package:test_app_divkit/ui/screen/signin/signin1.dart';
 
-//
-
-//
 import 'app_routes.dart';
 
-//
 class AppPages {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.splash:
-        return MaterialPageRoute(builder: (_) => SplashScreen1());
+        return MaterialPageRoute(builder: (_) => SplashScreen());
 
-      case AppRoutes.splash2:
-        return MaterialPageRoute(builder: (_) => SplashScreen2());
+      case AppRoutes.sync:
+        return MaterialPageRoute(builder: (_) => SyncScreen());
 
       case AppRoutes.login:
-        return MaterialPageRoute(builder: (_) => Signin1Page());
+        return MaterialPageRoute(builder: (_) => LoginPage());
 
       // case AppRoutes.home:
       //   return MaterialPageRoute(builder: (_) => Home1Page());

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/models/pavillons_model.dart';
-import 'package:test_app_divkit/me/models/pays_model.dart';
-import 'package:test_app_divkit/me/models/ports_model.dart';
-import 'package:test_app_divkit/me/models/typenavires_model.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
 import 'package:test_app_divkit/me/views/shared/app_bar.dart';
 import 'package:test_app_divkit/me/views/shared/app_button.dart';
 import 'package:test_app_divkit/me/views/shared/app_form.dart';
@@ -23,8 +20,8 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   final _formKey = GlobalKey<FormState>();
   final Color _orangeColor = const Color(0xFFFF6A00);
 
-  Map<String, List<dynamic>>? _data;
-  late Map<String, dynamic> _formData;
+  late Map<String, dynamic> _data;
+  final StepOneController _controller = StepOneController();
 
   late TextEditingController _titreController;
   late TextEditingController _observationsController;
@@ -39,11 +36,19 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   @override
   void initState() {
     super.initState();
-    _initControllers();
-    // Load data after first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadData();
-    });
+
+    if (mounted) {
+      _initControllers();
+      // load data after first frame
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _loadData();
+      });
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   void _initControllers() {
@@ -57,18 +62,16 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   }
 
   Future<void> _loadData() async {
-    final routeArgs =
-        ModalRoute.of(context)?.settings.arguments
-            as Map<String, List<dynamic>>?;
-    _data = routeArgs;
-    _formData = _data?['formData']?[0] ?? <String, dynamic>{};
+    dynamic routeData = ModalRoute.of(context)?.settings.arguments;
+    _data = routeData ?? {};
+    await _controller.loadData();
 
-    _titreController.text = _formData['titre'] ?? '';
-    _observationsController.text = _formData['observation'] ?? '';
-    _maillageController.text = _formData['maillage'] ?? '';
-    _dimensionsCalesController.text = _formData['dimensionsCales'] ?? '';
-    _marquageNavireController.text = _formData['marquageNavire'] ?? '';
-    _baliseVMSController.text = _formData['baliseVMS'] ?? '';
+    _titreController.text = _data['titre'] ?? '';
+    _observationsController.text = _data['observation'] ?? '';
+    _maillageController.text = _data['maillage'] ?? '';
+    _dimensionsCalesController.text = _data['dimensionsCales'] ?? '';
+    _marquageNavireController.text = _data['marquageNavire'] ?? '';
+    _baliseVMSController.text = _data['baliseVMS'] ?? '';
 
     setState(() => _loading = false);
   }
@@ -89,7 +92,7 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: "Informations générales"),
+      appBar: CustomAppBar(title: "Informations initiales"),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SafeArea(
@@ -99,15 +102,7 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   }
 
   List<FormControl> _buildControls() {
-    final portsList = (_data?['ports'] as List<Ports>?) ?? [];
-    final pavillonsList = (_data?['pavillons'] as List<Pavillons>?) ?? [];
-    final typesNavireList = (_data?['typesNavire'] as List<Typenavires>?) ?? [];
-    final pays = (_data?['pays'] as List<Pays>?) ?? [];
-    final motifsEntreeList = [];
-
-    bool observateurPresent =
-        _formData['informationsInitiales']?['observateurEmbarque']?['present'] ??
-        false;
+    bool observateurPresent = _data['observateurEmbarque']?['present'] ?? false;
 
     return [
       FormControl(
@@ -124,13 +119,13 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         name: 'dateArriveeEffective',
         label: "Date d'arrivée effective du navire",
         type: ControlType.date,
-        initialValue: _formData['dateArriveeEffective'],
+        initialValue: _data['dateArriveeEffective'],
       ),
       FormControl(
         name: 'dateDebutInspection',
         label: "Date de début de l'inspection",
         type: ControlType.date,
-        initialValue: _formData['dateDebutInspection'],
+        initialValue: _data['dateDebutInspection'],
       ),
       FormControl(
         type: ControlType.label,
@@ -147,37 +142,39 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         name: 'portInspection',
         label: "Port de l'inspection",
         type: ControlType.dropdown,
-        options: portsList
+        options: _controller.portsList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
-            _formData['portInspection'] ??
-            (portsList.isNotEmpty ? portsList.first.id.toString() : null),
+            _data['portInspection'] ??
+            (_controller.portsList.isNotEmpty
+                ? _controller.portsList.first.id.toString()
+                : null),
       ),
       FormControl(
         name: 'pavillonNavire',
         label: "Pavillon du navire",
         type: ControlType.dropdown,
-        options: pavillonsList
+        options: _controller.pavillonsList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
-            _formData['pavillonNavire'] ??
-            (pavillonsList.isNotEmpty
-                ? pavillonsList.first.id.toString()
+            _data['pavillonNavire'] ??
+            (_controller.pavillonsList.isNotEmpty
+                ? _controller.pavillonsList.first.id.toString()
                 : null),
       ),
       FormControl(
         name: 'typeNavire',
         label: "Type de navire",
         type: ControlType.dropdown,
-        options: typesNavireList
+        options: _controller.typesNavireList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
-            _formData['typeNavire'] ??
-            (typesNavireList.isNotEmpty
-                ? typesNavireList.first.id.toString()
+            _data['typeNavire'] ??
+            (_controller.typesNavireList.isNotEmpty
+                ? _controller.typesNavireList.first.id.toString()
                 : null),
       ),
       FormControl(
@@ -214,35 +211,39 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         name: 'paysEscale',
         label: "Pays d'escale",
         type: ControlType.dropdown,
-        options: pays
+        options: _controller.pays
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
-            _formData['paysEscale'] ??
-            (pays.isNotEmpty ? pays.first.id.toString() : null),
+            _data['paysEscale'] ??
+            (_controller.pays.isNotEmpty
+                ? _controller.pays.first.id.toString()
+                : null),
       ),
       FormControl(
         name: 'portEscale',
         label: "Port d'escale",
         type: ControlType.dropdown,
-        options: portsList
+        options: _controller.portsList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
-            _formData['portEscale'] ??
-            (portsList.isNotEmpty ? portsList.first.id.toString() : null),
+            _data['portEscale'] ??
+            (_controller.portsList.isNotEmpty
+                ? _controller.portsList.first.id.toString()
+                : null),
       ),
       FormControl(
         name: 'dateEscaleNavire',
         label: "Date d'escale",
         type: ControlType.date,
-        initialValue: _formData['dateEscaleNavire'],
+        initialValue: _data['dateEscaleNavire'],
       ),
       FormControl(
         name: 'demandePrealablePort',
         label: "Demande préalable d'entrée au port ?",
         type: ControlType.switchTile,
-        initialValue: _formData['demandePrealablePort'],
+        initialValue: _data['demandePrealablePort'],
       ),
       FormControl(
         name: 'observateurEmbarque',
@@ -250,23 +251,19 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         type: ControlType.switchTile,
         initialValue: {'present': observateurPresent},
         onChanged: (value) async {
-          _formData['informationsInitiales'] ??= <String, dynamic>{};
-          _formData['informationsInitiales']['observateurEmbarque'] ??=
-              <String, dynamic>{};
+          _data['observateurEmbarque'] ??= <String, dynamic>{};
 
           if (value == true) {
             final dynamic observerData = await Common.showBottomSheet(
               context,
               ExtraFieldsSheet(
-                initialValues:
-                    _formData['informationsInitiales']['observateurEmbarque'] ??
-                    {},
+                initialValues: _data['observateurEmbarque'] ?? {},
               ),
             );
 
             if (observerData != null) {
               setState(() {
-                _formData['informationsInitiales']['observateurEmbarque'] = {
+                _data['observateurEmbarque'] = {
                   'present': true,
                   ...observerData,
                 };
@@ -274,8 +271,7 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
             }
           } else {
             setState(() {
-              _formData['informationsInitiales']['observateurEmbarque']['present'] =
-                  false;
+              _data['observateurEmbarque']['present'] = false;
             });
           }
         },
@@ -296,16 +292,13 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
             final dynamic observerData = await Common.showBottomSheet(
               context,
               ExtraFieldsSheet(
-                initialValues:
-                    _formData['informationsInitiales']?['observateurEmbarque'] ??
-                    {},
+                initialValues: _data['observateurEmbarque'] ?? {},
               ),
             );
 
             if (observerData != null) {
               setState(() {
-                _formData['informationsInitiales'] ??= <String, dynamic>{};
-                _formData['informationsInitiales']['observateurEmbarque'] = {
+                _data['observateurEmbarque'] = {
                   'present': true,
                   ...observerData,
                 };
@@ -329,13 +322,13 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         name: 'objet',
         label: "Objet",
         type: ControlType.dropdown,
-        options: motifsEntreeList
+        options: _controller.motifsEntreeList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
-            _formData['objet'] ??
-            (motifsEntreeList.isNotEmpty
-                ? motifsEntreeList.first.id.toString()
+            _data['objet'] ??
+            (_controller.motifsEntreeList.isNotEmpty
+                ? _controller.motifsEntreeList.first.id.toString()
                 : null),
         controller: _objetController,
       ),

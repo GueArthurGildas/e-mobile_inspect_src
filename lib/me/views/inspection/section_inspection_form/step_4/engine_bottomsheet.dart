@@ -36,7 +36,7 @@ class _EngineBottomSheetState extends State<EngineBottomSheet> {
         name: "typesEngin",
         label: "Type d'engin",
         searchDropdownItems: widget.engineTypes
-            .map((e) => DropdownItem(id: e.id, value: e, label: e.libelle))
+            .map((e) => DropdownItem(id: e.id, value: e, label: e.french_name))
             .toList(),
         onChanged: (typeEngin) {},
         required: true,

@@ -12,20 +12,15 @@ class InspectionController extends ChangeNotifier {
   /// 🔹 Charge les données depuis l'API et synchronise avec SQLite
   Future<void> loadAndSync() async {
     try {
-      // 1️⃣ Synchronisation locale
       await _service.syncToLocal();
-
-      // 2️⃣ Récupération des données depuis SQLite
       _items = await _service.getAll();
 
-      // 3️⃣ Mise à jour de la vue
       notifyListeners();
     } catch (e) {
       print('Erreur Inspection : $e');
     }
   }
 
-  /// 🔹 Rafraîchir seulement depuis la base locale
   Future<void> loadLocalOnly() async {
     try {
       _items = await _service.getAll();
