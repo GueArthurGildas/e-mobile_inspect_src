@@ -14,7 +14,16 @@ class ActivitesNaviresController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur ActivitesNavires : \$e');
+      print('Erreur ActivitesNavires : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur ActivitesNavires : $e');
     }
   }
 }

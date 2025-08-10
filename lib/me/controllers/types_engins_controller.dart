@@ -14,7 +14,16 @@ class TypesEnginsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur TypesEngins : \$e');
+      print('Erreur TypesEngins : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur TypesEngins : $e');
     }
   }
 }

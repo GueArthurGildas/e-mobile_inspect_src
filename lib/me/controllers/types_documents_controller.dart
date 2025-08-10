@@ -14,7 +14,16 @@ class TypesDocumentsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur TypesDocuments : \$e');
+      print('Erreur TypesDocuments : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur TypesDocuments : $e');
     }
   }
 }

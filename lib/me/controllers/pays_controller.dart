@@ -9,9 +9,18 @@ class PaysController extends ChangeNotifier {
 
   List<Pays> get pays => _pays;
 
-  Future<void> loadAndSyncPays() async {
+  Future<void> loadAndSync() async {
     try {
       await _service.syncPaysToLocal();
+      _pays = await _service.getLocalPays();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur lors du chargement des pays : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
       _pays = await _service.getLocalPays();
       notifyListeners();
     } catch (e) {

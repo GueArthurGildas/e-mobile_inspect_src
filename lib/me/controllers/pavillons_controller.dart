@@ -14,7 +14,16 @@ class PavillonsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Pavillons : \$e');
+      print('Erreur Pavillons : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur Pavillons : $e');
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:test_app_divkit/me/services/api_get/agents_shiping_service.dart'
 import '../models/agents_shiping_model.dart';
 
 class AgentsShipingController extends ChangeNotifier {
+  final String _errorMsg = "Erreur AgentsShiping";
   final AgentsShipingService _service = AgentsShipingService();
   List<AgentsShiping> _items = [];
 
@@ -14,7 +15,16 @@ class AgentsShipingController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur AgentsShiping : \$e');
+      print('$_errorMsg : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('$_errorMsg : $e');
     }
   }
 }

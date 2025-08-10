@@ -6,12 +6,14 @@ class TypesEngins {
   final dynamic label_english_name;
   final dynamic french_name;
 
-  TypesEngins({ required this.id,
-                required this.code,
-                required this.label_english_name,
-                required this.french_name,
-                required this.created_at,
-                required this.updated_at});
+  TypesEngins({
+    this.id,
+    this.code,
+    this.label_english_name,
+    this.french_name,
+    this.created_at,
+    this.updated_at,
+  });
 
   factory TypesEngins.fromJson(Map<String, dynamic> json) => TypesEngins(
     id: json['id'],
@@ -25,7 +27,7 @@ class TypesEngins {
   Map<String, dynamic> toMap() => {
     'id': id,
     'code': code,
-    'label_english_name' : label_english_name,
+    'label_english_name': label_english_name,
     'french_name': french_name,
     'created_at': created_at,
     'updated_at': updated_at,

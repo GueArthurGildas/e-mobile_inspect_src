@@ -3,6 +3,7 @@ import 'package:test_app_divkit/me/services/api_get/especes_service.dart';
 import '../models/especes_model.dart';
 
 class EspecesController extends ChangeNotifier {
+  final String _errorMsg = "Erreur Especes";
   final EspecesService _service = EspecesService();
   List<Especes> _items = [];
 
@@ -14,7 +15,16 @@ class EspecesController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Especes : \$e');
+      print('$_errorMsg : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('$_errorMsg : $e');
     }
   }
 }

@@ -1,18 +1,44 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
+import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
+import 'package:test_app_divkit/me/controllers/etats_engins_controller.dart';
 import 'package:test_app_divkit/me/controllers/pays_controller.dart';
 import 'package:test_app_divkit/me/controllers/ports_controller.dart';
+import 'package:test_app_divkit/me/controllers/typenavires_controller.dart';
+import 'package:test_app_divkit/me/controllers/types_engins_controller.dart';
+
+enum ControllerKey {
+  ports, // pavillons,
+  typesNavire,
+  pays,
+  consignataires,
+  agents,
+  etatsEngins,
+  typesEngins,
+}
 
 class SyncController extends ChangeNotifier {
-  SyncController({required this.controllers});
+  SyncController._();
 
-  final Map<String, dynamic> controllers;
+  final Map<ControllerKey, dynamic> controllers = {
+    ControllerKey.ports: PortsController(),
+    // ControllerKey.pavillons: PavillonsController(),
+    ControllerKey.typesNavire: TypenaviresController(),
+    ControllerKey.pays: PaysController(),
+    ControllerKey.consignataires: ConsignationsController(),
+    ControllerKey.agents: AgentsShipingController(),
+    ControllerKey.etatsEngins: EtatsEnginsController(),
+    ControllerKey.typesEngins: TypesEnginsController(),
+  };
+
+  static final SyncController _instance = SyncController._();
+  static SyncController get instance => _instance;
 
   Future<void> syncAll() async {
     try {
       await Future.wait(
         controllers.values.map((c) async {
-          if (c is PaysController) return await c.loadAndSyncPays();
-          if (c is PortsController) return await c.loadAndSync();
+          return await c.loadAndSync();
         }),
       );
     } catch (e) {
@@ -22,5 +48,19 @@ class SyncController extends ChangeNotifier {
     }
   }
 
-  T getController<T>(String key) => controllers[key] as T;
+  Future<void> loadAll() async {
+    try {
+      await Future.wait(
+        controllers.values.map((c) async {
+          return await c.loadLocalOnly();
+        }),
+      );
+    } catch (e) {
+      print(e);
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  T getController<T>(ControllerKey key) => controllers[key] as T;
 }

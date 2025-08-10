@@ -14,7 +14,16 @@ class PresentationsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Presentations : \$e');
+      print('Erreur Presentations : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur Presentations : $e');
     }
   }
 }

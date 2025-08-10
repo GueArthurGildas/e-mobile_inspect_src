@@ -3,7 +3,7 @@ import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
 import 'package:test_app_divkit/me/controllers/user_controller.dart';
 import 'package:test_app_divkit/me/services/api_get/user_api_service.dart';
 import 'package:test_app_divkit/me/views/auth/myHome.dart';
-import 'package:test_app_divkit/me/views/auth/splash_screen1.dart';
+import 'package:test_app_divkit/me/views/auth/splash_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_form_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_list_screen.dart';
@@ -55,38 +55,38 @@ import 'package:flutter/material.dart';
 
 
 
-
-void main() {
-  runApp(
-      MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => InspectionController()..loadAndSync()),
-          ],
-          child: const MyApp(),
-      ),);
-}
-
-
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserController>(
-      create: (_) => UserController()..loadUsers(),
-      child: MaterialApp(
-        title: 'Flutter CRUD Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: DashboardScreen(),//InspectionScreen(),////PendingInspectionPage(),//ActivitesNaviresScreen(),//PaysScreen(),//UsersPage(),
-      ),
-    );
-  }
-}
+//
+// void main() {
+//   runApp(
+//       MultiProvider(
+//           providers: [
+//             ChangeNotifierProvider(create: (_) => InspectionController()..loadAndSync()),
+//           ],
+//           child: const MyApp(),
+//       ),);
+// }
+//
+//
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider<UserController>(
+//       create: (_) => UserController()..loadUsers(),
+//       child: MaterialApp(
+//         title: 'Flutter CRUD Demo',
+//         theme: ThemeData(
+//           primarySwatch: Colors.blue,
+//         ),
+//         home: DashboardScreen(),//InspectionScreen(),////PendingInspectionPage(),//ActivitesNaviresScreen(),//PaysScreen(),//UsersPage(),
+//       ),
+//     );
+//   }
+// }
 
 
 
@@ -104,53 +104,53 @@ class MyApp extends StatelessWidget {
 
 /****** @s code main pour tester l'integration correctes des tables de references *//////
 
-// void main() {
-//   runApp(MaterialApp(
-//     debugShowCheckedModeBanner: false,
-//     title: 'Synchronisation API ↔ SQLite',
-//     theme: ThemeData(primarySwatch: Colors.green),
-//     home: MenuPrincipalScreen(),
-//   ));
-// }
-//
-// class MenuPrincipalScreen extends StatelessWidget {
-//   final List<Map<String, dynamic>> ressources = [
-//     {'title': 'Pavillons', 'screen': const PaysScreen()},
-//     {'title': 'Typenavires', 'screen': const TypenaviresScreen()},
-//     {'title': 'Ports', 'screen': const PortsScreen()},
-//     {'title': 'ActivitesNavires', 'screen': const ActivitesNaviresScreen()},
-//     {'title': 'Consignations', 'screen': const ConsignationsScreen()},
-//     {'title': 'AgentsShiping', 'screen': const AgentsShipingScreen()},
-//     {'title': 'TypesDocuments', 'screen': const TypesDocumentsScreen()},
-//     {'title': 'TypesEngins', 'screen': const TypesEnginsScreen()},
-//     {'title': 'EtatsEngins', 'screen': const EtatsEnginsScreen()},
-//     {'title': 'Especes', 'screen': const EspecesScreen()},
-//     {'title': 'ZonesCapture', 'screen': const ZonesCaptureScreen()},
-//     {'title': 'Presentations', 'screen': const PresentationsScreen()},
-//     {'title': 'Conservations', 'screen': const ConservationsScreen()},
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text("Menu Synchronisation")),
-//       body: ListView.builder(
-//         itemCount: ressources.length,
-//         itemBuilder: (context, index) {
-//           return ListTile(
-//             title: Text(ressources[index]['title']),
-//             trailing: const Icon(Icons.chevron_right),
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (_) => ressources[index]['screen']),
-//               );
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Synchronisation API ↔ SQLite',
+    theme: ThemeData(primarySwatch: Colors.green),
+    home: MenuPrincipalScreen(),
+  ));
+}
+
+class MenuPrincipalScreen extends StatelessWidget {
+  final List<Map<String, dynamic>> ressources = [
+    {'title': 'Pavillons', 'screen': const PaysScreen()},
+    {'title': 'Typenavires', 'screen': const TypenaviresScreen()},
+    {'title': 'Ports', 'screen': const PortsScreen()},
+    {'title': 'ActivitesNavires', 'screen': const ActivitesNaviresScreen()},
+    {'title': 'Consignations', 'screen': const ConsignationsScreen()},
+    {'title': 'AgentsShiping', 'screen': const AgentsShipingScreen()},
+    {'title': 'TypesDocuments', 'screen': const TypesDocumentsScreen()},
+    {'title': 'TypesEngins', 'screen': const TypesEnginsScreen()},
+    {'title': 'EtatsEngins', 'screen': const EtatsEnginsScreen()},
+    {'title': 'Especes', 'screen': const EspecesScreen()},
+    {'title': 'ZonesCapture', 'screen': const ZonesCaptureScreen()},
+    {'title': 'Presentations', 'screen': const PresentationsScreen()},
+    {'title': 'Conservations', 'screen': const ConservationsScreen()},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Menu Synchronisation")),
+      body: ListView.builder(
+        itemCount: ressources.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(ressources[index]['title']),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ressources[index]['screen']),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
 
 /****** @e code main pour tester l'integration correctes des tables de references *//////

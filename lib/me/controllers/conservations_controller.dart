@@ -3,6 +3,7 @@ import 'package:test_app_divkit/me/services/api_get/conservations_service.dart';
 import '../models/conservations_model.dart';
 
 class ConservationsController extends ChangeNotifier {
+  final String _errorMsg = "Erreur Conservations";
   final ConservationsService _service = ConservationsService();
   List<Conservations> _items = [];
 
@@ -14,7 +15,16 @@ class ConservationsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Conservations : \$e');
+      print('$_errorMsg : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('$_errorMsg : $e');
     }
   }
 }

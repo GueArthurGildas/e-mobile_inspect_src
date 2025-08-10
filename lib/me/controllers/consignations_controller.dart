@@ -3,6 +3,7 @@ import 'package:test_app_divkit/me/services/api_get/consignations_service.dart';
 import '../models/consignations_model.dart';
 
 class ConsignationsController extends ChangeNotifier {
+  final String _errorMsg = "Erreur Consignations";
   final ConsignationsService _service = ConsignationsService();
   List<Consignations> _items = [];
 
@@ -14,7 +15,16 @@ class ConsignationsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Consignations : \$e');
+      print('$_errorMsg : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('$_errorMsg : $e');
     }
   }
 }

@@ -14,7 +14,16 @@ class TypenaviresController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Typenavires : \$e');
+      print('Erreur Typenavires : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur Typenavires : $e');
     }
   }
 }

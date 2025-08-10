@@ -14,7 +14,16 @@ class EtatsEnginsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur EtatsEngins : \$e');
+      print('Erreur EtatsEngins : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur EtatsEngins : $e');
     }
   }
 }

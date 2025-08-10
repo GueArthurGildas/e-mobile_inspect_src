@@ -17,4 +17,13 @@ class PortsController extends ChangeNotifier {
       print('Erreur Ports : $e');
     }
   }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur Ports : $e');
+    }
+  }
 }

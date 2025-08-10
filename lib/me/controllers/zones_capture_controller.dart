@@ -14,7 +14,16 @@ class ZonesCaptureController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur ZonesCapture : \$e');
+      print('Erreur ZonesCapture : $e');
+    }
+  }
+
+  Future<void> loadLocalOnly() async {
+    try {
+      _items = await _service.getAll();
+      notifyListeners();
+    } catch (e) {
+      print('Erreur ZonesCapture : $e');
     }
   }
 }

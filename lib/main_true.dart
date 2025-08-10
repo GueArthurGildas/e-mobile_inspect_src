@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:test_app_divkit/me/views/auth/splash_screen1.dart';
+import 'package:test_app_divkit/me/views/auth/splash_screen.dart';
+import 'package:test_app_divkit/me/views/shared/app_preferences.dart';
 import 'package:test_app_divkit/me/views/users/screen_test.dart';
 import 'me/routes//app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('fr_FR');
+  await AppPrefs.instance.init();
 
   runApp(MyApp());
 }
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         home:
-            SplashScreen1(), //UsersPage(),//plashScreen1(),//,//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
+            SplashScreen(), //UsersPage(),//plashScreen1(),//,//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
         onGenerateRoute:
             AppPages.generateRoute, // gestion des routes dynamiques
         //routes: AppPages.routes,
