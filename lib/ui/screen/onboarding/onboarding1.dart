@@ -16,29 +16,33 @@ class _Onboarding1PageState extends State<Onboarding1Page> {
   // create each page of onBoard here
   final _pageList = [
     PageModel(
-        color: Colors.white,
-        imageAssetPath: 'assets/images/lamp.jpg',
-        title: 'Tutorial 1',
-        body: 'This is description of tutorial 1. Lorem ipsum dolor sit amet.',
-        doAnimateImage: true),
+      color: Colors.white,
+      imageAssetPath: 'assets/images/lamp.jpg',
+      title: 'Tutorial 1',
+      body: 'This is description of tutorial 1. Lorem ipsum dolor sit amet.',
+      doAnimateImage: true,
+    ),
     PageModel(
-        color: Colors.white,
-        imageFromUrl: '$globalUrl/onboarding/cart.png',
-        title: 'Tutorial 2',
-        body: 'This is description of tutorial 2. Lorem ipsum dolor sit amet.',
-        doAnimateImage: true),
+      color: Colors.white,
+      imageFromUrl: '$globalUrl/onboarding/cart.png',
+      title: 'Tutorial 2',
+      body: 'This is description of tutorial 2. Lorem ipsum dolor sit amet.',
+      doAnimateImage: true,
+    ),
     PageModel(
-        color: Colors.white,
-        imageFromUrl: '$globalUrl/onboarding/delivery.png',
-        title: 'Tutorial 3',
-        body: 'This is description of tutorial 3. Lorem ipsum dolor sit amet.',
-        doAnimateImage: true),
+      color: Colors.white,
+      imageFromUrl: '$globalUrl/onboarding/delivery.png',
+      title: 'Tutorial 3',
+      body: 'This is description of tutorial 3. Lorem ipsum dolor sit amet.',
+      doAnimateImage: true,
+    ),
     PageModel(
-        color: Colors.white,
-        imageAssetPath: 'assets/images/lamp.jpg',
-        title: 'Tutorial 4',
-        body: 'This is description of tutorial 4. Lorem ipsum dolor sit amet.',
-        doAnimateImage: true),
+      color: Colors.white,
+      imageAssetPath: 'assets/images/lamp.jpg',
+      title: 'Tutorial 4',
+      body: 'This is description of tutorial 4. Lorem ipsum dolor sit amet.',
+      doAnimateImage: true,
+    ),
   ];
 
   @override
@@ -54,18 +58,21 @@ class _Onboarding1PageState extends State<Onboarding1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.dark
-          ),
-          child: OverBoard(
-            pages: _pageList,
-            showBullets: true,
-            finishCallback: () {
-              Fluttertoast.showToast(msg: 'Click finish', toastLength: Toast.LENGTH_SHORT);
-            },
-          ),
-        )
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        child: OverBoard(
+          pages: _pageList,
+          showBullets: true,
+          finishCallback: () {
+            Fluttertoast.showToast(
+              msg: 'Click finish',
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+        ),
+      ),
     );
   }
 }

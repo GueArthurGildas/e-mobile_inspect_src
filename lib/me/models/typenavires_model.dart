@@ -4,7 +4,12 @@ class Typenavires {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Typenavires({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  Typenavires({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Typenavires.fromJson(Map<String, dynamic> json) => Typenavires(
     id: json['id'],

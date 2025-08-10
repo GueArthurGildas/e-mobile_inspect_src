@@ -15,11 +15,7 @@ class User {
     email: json['email'] as String,
   );
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'email': email,
-  };
+  Map<String, dynamic> toJson() => {'id': id, 'name': name, 'email': email};
 
   @override
   String toString() => jsonEncode(toJson());

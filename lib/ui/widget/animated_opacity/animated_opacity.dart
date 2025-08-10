@@ -36,20 +36,21 @@ class _AnimatedOpacityPageState extends State<AnimatedOpacityPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Opacity',
-                desc: 'Animated version of Opacity which automatically transitions the child\'s opacity over a given duration whenever the given opacity changes.',
-                icon: Icons.animation
+              title: 'Animated Opacity',
+              desc:
+                  'Animated version of Opacity which automatically transitions the child\'s opacity over a given duration whenever the given opacity changes.',
+              icon: Icons.animation,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: _globalWidget.createButton(
-                  buttonName: 'Change',
-                  onPressed: (){
-                    setState(() {
-                      _opacity = !_opacity;
-                      _opacityLevel = _opacityLevel == 0 ? 1.0 : 0.0;
-                    });
-                  }
+                buttonName: 'Change',
+                onPressed: () {
+                  setState(() {
+                    _opacity = !_opacity;
+                    _opacityLevel = _opacityLevel == 0 ? 1.0 : 0.0;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
@@ -60,7 +61,7 @@ class _AnimatedOpacityPageState extends State<AnimatedOpacityPage> {
                 duration: const Duration(seconds: 2),
                 child: Image.asset('assets/images/lamp.jpg', height: 200),
               ),
-            )
+            ),
           ],
         ),
       ),

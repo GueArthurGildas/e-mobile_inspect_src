@@ -6,7 +6,8 @@ class VerticalDirectionWrapPage extends StatefulWidget {
   const VerticalDirectionWrapPage({super.key});
 
   @override
-  State<VerticalDirectionWrapPage> createState() => _VerticalDirectionWrapPageState();
+  State<VerticalDirectionWrapPage> createState() =>
+      _VerticalDirectionWrapPageState();
 }
 
 class _VerticalDirectionWrapPageState extends State<VerticalDirectionWrapPage> {
@@ -26,98 +27,104 @@ class _VerticalDirectionWrapPageState extends State<VerticalDirectionWrapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Vertical Direction on Wrap',
-                  desc: 'This is the example of wrap with vertical direction'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Vertical Direction on Wrap',
+              desc: 'This is the example of wrap with vertical direction',
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: const Text(
+                'Vertical direction from first row to last row',
+                style: TextStyle(color: softBlue),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: const Text('Vertical direction from first row to last row', style: TextStyle(color: softBlue))
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Wrap(
+                verticalDirection: VerticalDirection.down,
+                spacing: 8,
+                children: [
+                  Text('aaa'),
+                  Text('bbb'),
+                  Text('ccc'),
+                  Text('ddd'),
+                  Text('eee'),
+                  Text('fff'),
+                  Text('ggg'),
+                  Text('hhh'),
+                  Text('iii'),
+                  Text('jjj'),
+                  Text('kkk'),
+                  Text('lll'),
+                  Text('mmm'),
+                  Text('nnn'),
+                  Text('ooo'),
+                  Text('ppp'),
+                  Text('qqq'),
+                  Text('rrr'),
+                  Text('sss'),
+                  Text('ttt'),
+                  Text('uuu'),
+                  Text('vvv'),
+                  Text('www'),
+                  Text('111'),
+                  Text('222'),
+                  Text('333'),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Wrap(
-                  verticalDirection: VerticalDirection.down,
-                  spacing: 8,
-                  children: [
-                    Text('aaa'),
-                    Text('bbb'),
-                    Text('ccc'),
-                    Text('ddd'),
-                    Text('eee'),
-                    Text('fff'),
-                    Text('ggg'),
-                    Text('hhh'),
-                    Text('iii'),
-                    Text('jjj'),
-                    Text('kkk'),
-                    Text('lll'),
-                    Text('mmm'),
-                    Text('nnn'),
-                    Text('ooo'),
-                    Text('ppp'),
-                    Text('qqq'),
-                    Text('rrr'),
-                    Text('sss'),
-                    Text('ttt'),
-                    Text('uuu'),
-                    Text('vvv'),
-                    Text('www'),
-                    Text('111'),
-                    Text('222'),
-                    Text('333'),
-                  ],
-                ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: const Text(
+                'Vertical direction from last row to first row',
+                style: TextStyle(color: softBlue),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: const Text('Vertical direction from last row to first row', style: TextStyle(color: softBlue))
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Wrap(
+                verticalDirection: VerticalDirection.up,
+                spacing: 8,
+                children: [
+                  Text('aaa'),
+                  Text('bbb'),
+                  Text('ccc'),
+                  Text('ddd'),
+                  Text('eee'),
+                  Text('fff'),
+                  Text('ggg'),
+                  Text('hhh'),
+                  Text('iii'),
+                  Text('jjj'),
+                  Text('kkk'),
+                  Text('lll'),
+                  Text('mmm'),
+                  Text('nnn'),
+                  Text('ooo'),
+                  Text('ppp'),
+                  Text('qqq'),
+                  Text('rrr'),
+                  Text('sss'),
+                  Text('ttt'),
+                  Text('uuu'),
+                  Text('vvv'),
+                  Text('www'),
+                  Text('111'),
+                  Text('222'),
+                  Text('333'),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Wrap(
-                  verticalDirection: VerticalDirection.up,
-                  spacing: 8,
-                  children: [
-                    Text('aaa'),
-                    Text('bbb'),
-                    Text('ccc'),
-                    Text('ddd'),
-                    Text('eee'),
-                    Text('fff'),
-                    Text('ggg'),
-                    Text('hhh'),
-                    Text('iii'),
-                    Text('jjj'),
-                    Text('kkk'),
-                    Text('lll'),
-                    Text('mmm'),
-                    Text('nnn'),
-                    Text('ooo'),
-                    Text('ppp'),
-                    Text('qqq'),
-                    Text('rrr'),
-                    Text('sss'),
-                    Text('ttt'),
-                    Text('uuu'),
-                    Text('vvv'),
-                    Text('www'),
-                    Text('111'),
-                    Text('222'),
-                    Text('333'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

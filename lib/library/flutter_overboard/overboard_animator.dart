@@ -8,7 +8,9 @@ class OverBoardAnimator {
   OverBoardAnimator(vsync) {
     _vsync = vsync;
     _controller = AnimationController(
-        vsync: _vsync, duration: const Duration(milliseconds: 500));
+      vsync: _vsync,
+      duration: const Duration(milliseconds: 500),
+    );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     //debugPrint('creating new animator');
   }

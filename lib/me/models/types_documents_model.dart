@@ -4,7 +4,12 @@ class TypesDocuments {
   final dynamic created_at;
   final dynamic updated_at;
 
-  TypesDocuments({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  TypesDocuments({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory TypesDocuments.fromJson(Map<String, dynamic> json) => TypesDocuments(
     id: json['id'],

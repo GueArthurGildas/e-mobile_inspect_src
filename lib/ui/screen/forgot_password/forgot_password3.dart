@@ -37,153 +37,187 @@ class _ForgotPassword3PageState extends State<ForgotPassword3Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: Platform.isIOS?SystemUiOverlayStyle.light:const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light
-          ),
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                top: -getSmallDiameter(context) / 3,
-                right: -getSmallDiameter(context) / 3,
-                child: Container(
-                  width: getSmallDiameter(context),
-                  height: getSmallDiameter(context),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                          colors: [_color1, _color3],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter)),
-                ),
+      backgroundColor: Colors.white,
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: Platform.isIOS
+            ? SystemUiOverlayStyle.light
+            : const SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
               ),
-              Positioned(
-                top: -getBigDiameter(context) / 4,
-                left: -getBigDiameter(context) / 4,
-                child: Container(
-                  width: getBigDiameter(context),
-                  height: getBigDiameter(context),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                          colors: [_color1, _color2],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter)),
-                  child: Center(
-                    child: Container(
-                        alignment: const Alignment(0.2, 0.2),
-                        child: Image.asset('assets/images/logo_dark.png', height: 120)),
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              top: -getSmallDiameter(context) / 3,
+              right: -getSmallDiameter(context) / 3,
+              child: Container(
+                width: getSmallDiameter(context),
+                height: getSmallDiameter(context),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [_color1, _color3],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
                   ),
                 ),
               ),
-              Positioned(
-                bottom: -getBigDiameter(context) / 2,
-                right: -getBigDiameter(context) / 2,
-                child: Container(
-                  width: getBigDiameter(context),
-                  height: getBigDiameter(context),
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xFFF3E9EE)),
+            ),
+            Positioned(
+              top: -getBigDiameter(context) / 4,
+              left: -getBigDiameter(context) / 4,
+              child: Container(
+                width: getBigDiameter(context),
+                height: getBigDiameter(context),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    colors: [_color1, _color2],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: Center(
+                  child: Container(
+                    alignment: const Alignment(0.2, 0.2),
+                    child: Image.asset(
+                      'assets/images/logo_dark.png',
+                      height: 120,
+                    ),
+                  ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ListView(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5)),
-                      margin: const EdgeInsets.fromLTRB(24, 300, 24, 10),
-                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 25),
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                icon: Icon(Icons.email, color: _color2,),
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: _color2)),
-                                labelText: "Email",
-                                labelStyle: TextStyle(color: _color2)),
-                          ),
-                          const SizedBox(height: 20),
-                          Container(
-                            margin: const EdgeInsets.only(left: 40),
-                            child: const Text('We will send the instruction to reset your password through the email', style: TextStyle(
-                                fontSize: 13, color: Colors.grey
-                            )),
-                          ),
-                        ],
-                      ),
+            ),
+            Positioned(
+              bottom: -getBigDiameter(context) / 2,
+              right: -getBigDiameter(context) / 2,
+              child: Container(
+                width: getBigDiameter(context),
+                height: getBigDiameter(context),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFF3E9EE),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ListView(
+                padding: const EdgeInsets.only(bottom: 24),
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(24, 0, 24, 30),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                      (Set<MaterialState> states) => Colors.transparent,
-                                ),
-                                overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              ),
-                              onPressed: () {
-                                Fluttertoast.showToast(msg: 'Click reset password', toastLength: Toast.LENGTH_SHORT);
-                              },
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: <Color>[_color1, _color2],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                ),
-                                child: Container(
-                                  constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width/1.5, minHeight: 40), // min sizes for Material buttons
-                                  alignment: Alignment.center,
-                                  child: const Text(
-                                    "RESET PASSWORD",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                              )
+                    margin: const EdgeInsets.fromLTRB(24, 300, 24, 10),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 25),
+                    child: Column(
+                      children: <Widget>[
+                        TextField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.email, color: _color2),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: _color2),
+                            ),
+                            labelText: "Email",
+                            labelStyle: TextStyle(color: _color2),
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 20),
+                        Container(
+                          margin: const EdgeInsets.only(left: 40),
+                          child: const Text(
+                            'We will send the instruction to reset your password through the email',
+                            style: TextStyle(fontSize: 13, color: Colors.grey),
+                          ),
+                        ),
+                      ],
                     ),
-                    Row(
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(24, 0, 24, 30),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Icon(Icons.arrow_back, size: 16, color: _color2),
-                        GestureDetector(
-                          onTap: () {
-                            Fluttertoast.showToast(msg: 'Click back to login', toastLength: Toast.LENGTH_SHORT);
-                          },
-                          child: Text(
-                            ' Back to login',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: _color2,
-                                fontWeight: FontWeight.w700),
+                        TextButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) =>
+                                      Colors.transparent,
+                                ),
+                            overlayColor: MaterialStateProperty.all(
+                              Colors.transparent,
+                            ),
                           ),
-                        )
+                          onPressed: () {
+                            Fluttertoast.showToast(
+                              msg: 'Click reset password',
+                              toastLength: Toast.LENGTH_SHORT,
+                            );
+                          },
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: <Color>[_color1, _color2],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width / 1.5,
+                                minHeight: 40,
+                              ), // min sizes for Material buttons
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "RESET PASSWORD",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.arrow_back, size: 16, color: _color2),
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(
+                            msg: 'Click back to login',
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        },
+                        child: Text(
+                          ' Back to login',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: _color2,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

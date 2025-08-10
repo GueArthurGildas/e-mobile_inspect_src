@@ -25,66 +25,67 @@ class _WordSpacingTextPageState extends State<WordSpacingTextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Word Spacing Text',
-                desc: 'This is the example of text with different space of each word'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Word Spacing Text',
+            desc:
+                'This is the example of text with different space of each word',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 0),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 0
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 0.5),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 0.5
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 1),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 1
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 2.5),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 2.5
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 4),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 4
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 6.5),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 6.5
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, wordSpacing: 8),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  wordSpacing: 8
-              )),
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

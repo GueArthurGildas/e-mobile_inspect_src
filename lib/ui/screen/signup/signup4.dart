@@ -41,128 +41,130 @@ class _Signup4PageState extends State<Signup4Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(30, 120, 30, 30),
-          children: <Widget>[
-            Center(
-                child: Image.asset('assets/images/logo_horizontal.png', color: _mainColor, height: 30)),
-            const SizedBox(
-              height: 80,
-            ),
-            Text('Sign Up', style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: _mainColor
-            )),
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              style: TextStyle(color: _color1),
-              decoration: InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: _mainColor, width: 2.0)),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: _underlineColor),
-                ),
-                labelText: 'Email',
-                labelStyle: TextStyle(color: _color2),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.text,
-              style: TextStyle(color: _color1),
-              decoration: InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: _mainColor, width: 2.0)),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: _underlineColor),
-                ),
-                labelText: 'Name',
-                labelStyle: TextStyle(color: _color2),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              obscureText: _obscureText,
-              style: TextStyle(color: _color1),
-              decoration: InputDecoration(
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: _mainColor, width: 2.0)),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: _underlineColor),
-                ),
-                labelText: 'Password',
-                labelStyle: TextStyle(color: _color2),
-                suffixIcon: IconButton(
-                    icon: Icon(_iconVisible, color: Colors.grey[400], size: 20),
-                    onPressed: () {
-                      _toggleObscureText();
-                    }),
-              ),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) => _mainColor,
-                  ),
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                      )
-                  ),
-                ),
-                onPressed: () {
-                  Fluttertoast.showToast(msg: 'Click register', toastLength: Toast.LENGTH_SHORT);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: Text(
-                    'REGISTER',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-            ),
-            const SizedBox(
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(30, 120, 30, 30),
+        children: <Widget>[
+          Center(
+            child: Image.asset(
+              'assets/images/logo_horizontal.png',
+              color: _mainColor,
               height: 30,
             ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  Fluttertoast.showToast(msg: 'Click back to login', toastLength: Toast.LENGTH_SHORT);
-                  FocusScope.of(context).unfocus();
+          ),
+          const SizedBox(height: 80),
+          Text(
+            'Sign Up',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: _mainColor,
+            ),
+          ),
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(color: _color1),
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _mainColor, width: 2.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _underlineColor),
+              ),
+              labelText: 'Email',
+              labelStyle: TextStyle(color: _color2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextFormField(
+            keyboardType: TextInputType.text,
+            style: TextStyle(color: _color1),
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _mainColor, width: 2.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _underlineColor),
+              ),
+              labelText: 'Name',
+              labelStyle: TextStyle(color: _color2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            obscureText: _obscureText,
+            style: TextStyle(color: _color1),
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _mainColor, width: 2.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _underlineColor),
+              ),
+              labelText: 'Password',
+              labelStyle: TextStyle(color: _color2),
+              suffixIcon: IconButton(
+                icon: Icon(_iconVisible, color: Colors.grey[400], size: 20),
+                onPressed: () {
+                  _toggleObscureText();
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                        Icons.arrow_back,
-                        size: 16,
-                        color: _mainColor
-                    ),
-                    Text(
-                      ' Back to login',
-                      style: TextStyle(
-                          color: _mainColor,
-                          fontWeight: FontWeight.w700
-                      ),
-                    )
-                  ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 40),
+          TextButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) => _mainColor,
+              ),
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3.0),
                 ),
               ),
             ),
-          ],
-        )
+            onPressed: () {
+              Fluttertoast.showToast(
+                msg: 'Click register',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                'REGISTER',
+                style: TextStyle(fontSize: 16, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                Fluttertoast.showToast(
+                  msg: 'Click back to login',
+                  toastLength: Toast.LENGTH_SHORT,
+                );
+                FocusScope.of(context).unfocus();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.arrow_back, size: 16, color: _mainColor),
+                  Text(
+                    ' Back to login',
+                    style: TextStyle(
+                      color: _mainColor,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

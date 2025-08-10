@@ -9,5 +9,15 @@ class ProductModel {
   int? stock;
   String? location;
 
-  ProductModel({required this.id, required this.name, this.price, required this.image, this.rating, this.review, required this.sale, this.stock, this.location});
+  ProductModel({
+    required this.id,
+    required this.name,
+    this.price,
+    required this.image,
+    this.rating,
+    this.review,
+    required this.sale,
+    this.stock,
+    this.location,
+  });
 }

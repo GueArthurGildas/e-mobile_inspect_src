@@ -25,39 +25,30 @@ class _PopupMenuButton1PageState extends State<PopupMenuButton1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Popup Menu Button 1 - Standart',
-                  desc: 'This is the example of standart Popup Menu Button'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Popup Menu Button 1 - Standart',
+              desc: 'This is the example of standart Popup Menu Button',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: PopupMenuButton<int>(
+                itemBuilder: (context) => [
+                  const PopupMenuItem(value: 1, child: Text('Option 1')),
+                  const PopupMenuItem(value: 2, child: Text('Option 2')),
+                  const PopupMenuItem(value: 3, child: Text('Option 3')),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: PopupMenuButton<int>(
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 1,
-                      child: Text('Option 1'),
-                    ),
-                    const PopupMenuItem(
-                      value: 2,
-                      child: Text('Option 2'),
-                    ),
-                    const PopupMenuItem(
-                      value: 3,
-                      child: Text('Option 3'),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

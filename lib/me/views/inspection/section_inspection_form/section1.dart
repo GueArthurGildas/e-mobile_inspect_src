@@ -57,9 +57,11 @@ class _FormulaireStyleImageState extends State<FormulaireStyleImage> {
             DropdownButtonFormField<String>(
               value: typeInspection,
               decoration: champDecoration("Type d’inspection *"),
-              items: ['Complète', 'Rapide', 'Surprise']
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  .toList(),
+              items: [
+                'Complète',
+                'Rapide',
+                'Surprise',
+              ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
               onChanged: (val) => setState(() => typeInspection = val),
             ),
             const SizedBox(height: 16),
@@ -92,21 +94,32 @@ class _FormulaireStyleImageState extends State<FormulaireStyleImage> {
             TextFormField(
               controller: raisonController,
               maxLines: 3,
-              decoration: champDecoration("Objectif ou contexte *", maxLines: 3),
+              decoration: champDecoration(
+                "Objectif ou contexte *",
+                maxLines: 3,
+              ),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Formulaire soumis avec succès ✅")));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Formulaire soumis avec succès ✅"),
+                    ),
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: orange,
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               child: const Text("Soumettre"),
             ),

@@ -13,7 +13,10 @@ class FormulaireInspectionStyleBanking extends StatelessWidget {
         labelText: label,
         alignLabelWithHint: lines > 1,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
       );
     }
 
@@ -27,17 +30,17 @@ class FormulaireInspectionStyleBanking extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           // Texte simple
-          TextField(
-            decoration: fieldDecoration("Titre de l’inspection *"),
-          ),
+          TextField(decoration: fieldDecoration("Titre de l’inspection *")),
           const SizedBox(height: 16),
 
           // Dropdown
           DropdownButtonFormField<String>(
             decoration: fieldDecoration("Type d’inspection *"),
-            items: ['Complète', 'Partielle', 'Surprise']
-                .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                .toList(),
+            items: [
+              'Complète',
+              'Partielle',
+              'Surprise',
+            ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
             onChanged: (val) {},
           ),
           const SizedBox(height: 16),
@@ -63,9 +66,7 @@ class FormulaireInspectionStyleBanking extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Lieu
-          TextField(
-            decoration: fieldDecoration("Lieu géographique *"),
-          ),
+          TextField(decoration: fieldDecoration("Lieu géographique *")),
           const SizedBox(height: 16),
 
           // Texte multilignes
@@ -79,12 +80,11 @@ class FormulaireInspectionStyleBanking extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Inspection surprise ?", style: TextStyle(fontSize: 16)),
-              Switch(
-                value: true,
-                activeColor: green,
-                onChanged: (val) {},
-              )
+              const Text(
+                "Inspection surprise ?",
+                style: TextStyle(fontSize: 16),
+              ),
+              Switch(value: true, activeColor: green, onChanged: (val) {}),
             ],
           ),
           const SizedBox(height: 16),
@@ -93,7 +93,10 @@ class FormulaireInspectionStyleBanking extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Documents disponibles", style: TextStyle(fontSize: 16)),
+              const Text(
+                "Documents disponibles",
+                style: TextStyle(fontSize: 16),
+              ),
               CheckboxListTile(
                 value: true,
                 onChanged: (val) {},
@@ -128,8 +131,13 @@ class FormulaireInspectionStyleBanking extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: orange,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              textStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
           ),
         ],

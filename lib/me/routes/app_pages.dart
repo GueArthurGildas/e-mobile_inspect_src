@@ -5,15 +5,19 @@ import 'package:test_app_divkit/me/views/auth/splash_screen2.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_form_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_list_screen.dart';
-import 'package:test_app_divkit/ui/screen/home/home1.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/informations_engins.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/informations_initiales.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_5/informations_infractions.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_2/informations_responsables.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_3/inspection_documents.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_6/inspection_soumission.dart';
 import 'package:test_app_divkit/ui/screen/signin/signin1.dart';
 
 //
 
-
-
 //
 import 'app_routes.dart';
+
 //
 class AppPages {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -35,6 +39,37 @@ class AppPages {
 
       case AppRoutes.inspectionWizard:
         return MaterialPageRoute(builder: (_) => InspectionWizardScreen());
+
+      case AppRoutes.inspectionInformationsInitiales:
+        return MaterialPageRoute<Map<String, dynamic>?>(
+          builder: (_) => const FormInfosInitialesScreen(),
+          settings: settings,
+        );
+      case AppRoutes.inspectionInformationsResponsables:
+        return MaterialPageRoute<Map<String, dynamic>?>(
+          builder: (_) => const FormInfosResponsablesScreen(),
+          settings: settings,
+        );
+      case AppRoutes.inspectionDocuments:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const FormInspectionDocumentsScreen(),
+          settings: settings,
+        );
+      case AppRoutes.inspectionInformationsEngins:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const FormInfosEnginsScreen(),
+          settings: settings,
+        );
+      case AppRoutes.inspectionInformationsInfractions:
+        return MaterialPageRoute<Map<String, dynamic>?>(
+          builder: (_) => const FormInfosInfractionsScreen(),
+          settings: settings,
+        );
+      case AppRoutes.inspectionSoumission:
+        return MaterialPageRoute<Map<String, dynamic>?>(
+          builder: (_) => const FormInspectionSoumissionScreen(),
+          settings: settings,
+        );
 
       case AppRoutes.pendingInspection:
         return MaterialPageRoute(builder: (_) => PendingInspectionPage());

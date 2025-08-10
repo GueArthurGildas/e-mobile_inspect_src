@@ -8,7 +8,16 @@ class ProductListviewModel {
   late int sale;
   late String location;
 
-  ProductListviewModel({required this.id, required this.name, required this.price, required this.image, required this.rating, required this.review, required this.sale, required this.location});
+  ProductListviewModel({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.image,
+    required this.rating,
+    required this.review,
+    required this.sale,
+    required this.location,
+  });
 
   ProductListviewModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

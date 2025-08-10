@@ -25,53 +25,53 @@ class _StandartWrapPageState extends State<StandartWrapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Standart Wrap',
-                  desc: 'This is the example of wrap widget without any style'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Standart Wrap',
+              desc: 'This is the example of wrap widget without any style',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Wrap(
+                children: [
+                  Text('aaa'),
+                  Text('bbb'),
+                  Text('ccc'),
+                  Text('ddd'),
+                  Text('eee'),
+                  Text('fff'),
+                  Text('ggg'),
+                  Text('hhh'),
+                  Text('iii'),
+                  Text('jjj'),
+                  Text('kkk'),
+                  Text('lll'),
+                  Text('mmm'),
+                  Text('nnn'),
+                  Text('ooo'),
+                  Text('ppp'),
+                  Text('qqq'),
+                  Text('rrr'),
+                  Text('sss'),
+                  Text('ttt'),
+                  Text('uuu'),
+                  Text('vvv'),
+                  Text('www'),
+                  Text('111'),
+                  Text('222'),
+                  Text('333'),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Wrap(
-                  children: [
-                    Text('aaa'),
-                    Text('bbb'),
-                    Text('ccc'),
-                    Text('ddd'),
-                    Text('eee'),
-                    Text('fff'),
-                    Text('ggg'),
-                    Text('hhh'),
-                    Text('iii'),
-                    Text('jjj'),
-                    Text('kkk'),
-                    Text('lll'),
-                    Text('mmm'),
-                    Text('nnn'),
-                    Text('ooo'),
-                    Text('ppp'),
-                    Text('qqq'),
-                    Text('rrr'),
-                    Text('sss'),
-                    Text('ttt'),
-                    Text('uuu'),
-                    Text('vvv'),
-                    Text('www'),
-                    Text('111'),
-                    Text('222'),
-                    Text('333'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

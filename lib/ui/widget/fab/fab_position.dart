@@ -13,7 +13,8 @@ class _FabPositionPageState extends State<FabPositionPage> {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
-  FloatingActionButtonLocation _fabPosition = FloatingActionButtonLocation.endFloat;
+  FloatingActionButtonLocation _fabPosition =
+      FloatingActionButtonLocation.endFloat;
 
   @override
   void initState() {
@@ -36,59 +37,59 @@ class _FabPositionPageState extends State<FabPositionPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'FAB position',
-                desc: 'This is the example of fab with position'
+              title: 'FAB position',
+              desc: 'This is the example of fab with position',
             ),
             Wrap(
               spacing: 16,
               children: [
                 _globalWidget.createButton(
-                    buttonName: 'Left',
-                    onPressed: (){
-                      setState(() {
-                        _fabPosition = FloatingActionButtonLocation.startFloat;
-                      });
-                    }
+                  buttonName: 'Left',
+                  onPressed: () {
+                    setState(() {
+                      _fabPosition = FloatingActionButtonLocation.startFloat;
+                    });
+                  },
                 ),
                 _globalWidget.createButton(
-                    buttonName: 'Left Docked',
-                    onPressed: (){
-                      setState(() {
-                        _fabPosition = FloatingActionButtonLocation.startDocked;
-                      });
-                    }
+                  buttonName: 'Left Docked',
+                  onPressed: () {
+                    setState(() {
+                      _fabPosition = FloatingActionButtonLocation.startDocked;
+                    });
+                  },
                 ),
                 _globalWidget.createButton(
-                    buttonName: 'Center',
-                    onPressed: (){
-                      setState(() {
-                        _fabPosition = FloatingActionButtonLocation.centerFloat;
-                      });
-                    }
+                  buttonName: 'Center',
+                  onPressed: () {
+                    setState(() {
+                      _fabPosition = FloatingActionButtonLocation.centerFloat;
+                    });
+                  },
                 ),
                 _globalWidget.createButton(
-                    buttonName: 'Center Docked',
-                    onPressed: (){
-                      setState(() {
-                        _fabPosition = FloatingActionButtonLocation.centerDocked;
-                      });
-                    }
+                  buttonName: 'Center Docked',
+                  onPressed: () {
+                    setState(() {
+                      _fabPosition = FloatingActionButtonLocation.centerDocked;
+                    });
+                  },
                 ),
                 _globalWidget.createButton(
-                    buttonName: 'Right',
-                    onPressed: (){
-                      setState(() {
-                        _fabPosition = FloatingActionButtonLocation.endFloat;
-                      });
-                    }
+                  buttonName: 'Right',
+                  onPressed: () {
+                    setState(() {
+                      _fabPosition = FloatingActionButtonLocation.endFloat;
+                    });
+                  },
                 ),
                 _globalWidget.createButton(
-                    buttonName: 'Right Docked',
-                    onPressed: (){
-                      setState(() {
-                        _fabPosition = FloatingActionButtonLocation.endDocked;
-                      });
-                    }
+                  buttonName: 'Right Docked',
+                  onPressed: () {
+                    setState(() {
+                      _fabPosition = FloatingActionButtonLocation.endDocked;
+                    });
+                  },
                 ),
               ],
             ),
@@ -97,7 +98,10 @@ class _FabPositionPageState extends State<FabPositionPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Fluttertoast.showToast(msg: 'FAB Pressed', toastLength: Toast.LENGTH_SHORT);
+          Fluttertoast.showToast(
+            msg: 'FAB Pressed',
+            toastLength: Toast.LENGTH_SHORT,
+          );
         },
         child: const Icon(Icons.add),
       ),

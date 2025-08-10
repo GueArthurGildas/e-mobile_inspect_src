@@ -32,207 +32,215 @@ class _ProductList4PageState extends State<ProductList4Page> {
     super.dispose();
   }
 
-  void _getData(){
+  void _getData() {
     _productData = [
       ProductModel(
-          id: 21,
-          name: "Delta Boots Import 8 Inch",
-          price: 18.3,
-          image: "$globalUrl/product/25.jpg",
-          rating: 5,
-          review: 212,
-          sale: 735,
-          location: "Brooklyn"
+        id: 21,
+        name: "Delta Boots Import 8 Inch",
+        price: 18.3,
+        image: "$globalUrl/product/25.jpg",
+        rating: 5,
+        review: 212,
+        sale: 735,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 20,
-          name: "Fimi X8 SE Black",
-          price: 567,
-          image: "$globalUrl/product/26.jpg",
-          rating: 5,
-          review: 63,
-          sale: 115,
-          location: "Brooklyn"
+        id: 20,
+        name: "Fimi X8 SE Black",
+        price: 567,
+        image: "$globalUrl/product/26.jpg",
+        rating: 5,
+        review: 63,
+        sale: 115,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 19,
-          name: "Guess Collection Watch Ceramic Type GC 6004 ",
-          price: 52,
-          image: "$globalUrl/product/27.jpg",
-          rating: 5,
-          review: 7,
-          sale: 7,
-          location: "Brooklyn"
+        id: 19,
+        name: "Guess Collection Watch Ceramic Type GC 6004 ",
+        price: 52,
+        image: "$globalUrl/product/27.jpg",
+        rating: 5,
+        review: 7,
+        sale: 7,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 17,
-          name: "NEW Original Apple TV 4K 64GB 5th Generation",
-          price: 261,
-          image: "$globalUrl/product/29.jpg",
-          rating: 5,
-          review: 98,
-          sale: 263,
-          location: "Brooklyn"
+        id: 17,
+        name: "NEW Original Apple TV 4K 64GB 5th Generation",
+        price: 261,
+        image: "$globalUrl/product/29.jpg",
+        rating: 5,
+        review: 98,
+        sale: 263,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 16,
-          name: "SAMSUNG GALAXY S20 PLUS RAM 8/128GB",
-          price: 751,
-          image: "$globalUrl/product/30.jpg",
-          rating: 5,
-          review: 14,
-          sale: 17,
-          location: "Brooklyn"
+        id: 16,
+        name: "SAMSUNG GALAXY S20 PLUS RAM 8/128GB",
+        price: 751,
+        image: "$globalUrl/product/30.jpg",
+        rating: 5,
+        review: 14,
+        sale: 17,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 15,
-          name: "Xiaomi Smart LED TV Mi 4",
-          price: 224.14,
-          image: "$globalUrl/product/31.jpg",
-          rating: 5,
-          review: 701,
-          sale: 1558,
-          location: "Brooklyn"
+        id: 15,
+        name: "Xiaomi Smart LED TV Mi 4",
+        price: 224.14,
+        image: "$globalUrl/product/31.jpg",
+        rating: 5,
+        review: 701,
+        sale: 1558,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 14,
-          name: "Adidas EQT Adv Premium Original",
-          price: 28.67,
-          image: "$globalUrl/product/32.jpg",
-          rating: 5,
-          review: 146,
-          sale: 398,
-          location: "Brooklyn"
+        id: 14,
+        name: "Adidas EQT Adv Premium Original",
+        price: 28.67,
+        image: "$globalUrl/product/32.jpg",
+        rating: 5,
+        review: 146,
+        sale: 398,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 13,
-          name: "Xiaomi Air Purifier 3 Mijia OLED Touch Sterilization Air Ionizer - 3",
-          price: 139,
-          image: "$globalUrl/product/33.jpg",
-          rating: 5,
-          review: 275,
-          sale: 1055,
-          location: "Brooklyn"
+        id: 13,
+        name:
+            "Xiaomi Air Purifier 3 Mijia OLED Touch Sterilization Air Ionizer - 3",
+        price: 139,
+        image: "$globalUrl/product/33.jpg",
+        rating: 5,
+        review: 275,
+        sale: 1055,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 12,
-          name: "Spatula Set Stainless Kitchen Tools",
-          price: 2.5,
-          image: "$globalUrl/product/34.jpg",
-          rating: 5,
-          review: 302,
-          sale: 752,
-          location: "Brooklyn"
+        id: 12,
+        name: "Spatula Set Stainless Kitchen Tools",
+        price: 2.5,
+        image: "$globalUrl/product/34.jpg",
+        rating: 5,
+        review: 302,
+        sale: 752,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 11,
-          name: "DATA CABLE TYPE-C TO TYPE-C BASEUS HALO DATA CABLE PD 2.0 60W - 0.5 M",
-          price: 3,
-          image: "$globalUrl/product/35.jpg",
-          rating: 5,
-          review: 636,
-          sale: 2087,
-          location: "Brooklyn"
+        id: 11,
+        name:
+            "DATA CABLE TYPE-C TO TYPE-C BASEUS HALO DATA CABLE PD 2.0 60W - 0.5 M",
+        price: 3,
+        image: "$globalUrl/product/35.jpg",
+        rating: 5,
+        review: 636,
+        sale: 2087,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 10,
-          name: "BASEUS QUICK CHARGER HEAD QC3.0/4.0 TYPE-C+USB 30W PD 5A - USB TC",
-          price: 10.6,
-          image: "$globalUrl/product/36.jpg",
-          rating: 5,
-          review: 2802,
-          sale: 7052,
-          location: "Brooklyn"
+        id: 10,
+        name:
+            "BASEUS QUICK CHARGER HEAD QC3.0/4.0 TYPE-C+USB 30W PD 5A - USB TC",
+        price: 10.6,
+        image: "$globalUrl/product/36.jpg",
+        rating: 5,
+        review: 2802,
+        sale: 7052,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 9,
-          name: "Xiaomi Powerbank MI2C 20000mAh Mi Power Bank 20000 mAh PLM06ZM",
-          price: 19.9,
-          image: "$globalUrl/product/37.jpg",
-          rating: 5,
-          review: 105,
-          sale: 227,
-          location: "Brooklyn"
+        id: 9,
+        name: "Xiaomi Powerbank MI2C 20000mAh Mi Power Bank 20000 mAh PLM06ZM",
+        price: 19.9,
+        image: "$globalUrl/product/37.jpg",
+        rating: 5,
+        review: 105,
+        sale: 227,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 8,
-          name: "3D FASHION MASK WITH BREATHING VALVE / MASKER PM 2.5 KARBON / WASHABLE - BLACK NEW MODEL",
-          price: 2.33,
-          image: "$globalUrl/product/38.jpg",
-          rating: 5,
-          review: 503,
-          sale: 3645,
-          location: "Brooklyn"
+        id: 8,
+        name:
+            "3D FASHION MASK WITH BREATHING VALVE / MASKER PM 2.5 KARBON / WASHABLE - BLACK NEW MODEL",
+        price: 2.33,
+        image: "$globalUrl/product/38.jpg",
+        rating: 5,
+        review: 503,
+        sale: 3645,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 7,
-          name: "Robot RT-US04 Table Phone Holder Stand Aluminium Alloy Universal - Pink",
-          price: 5.3,
-          image: "$globalUrl/product/39.jpg",
-          rating: 5,
-          review: 1095,
-          sale: 3400,
-          location: "Brooklyn"
+        id: 7,
+        name:
+            "Robot RT-US04 Table Phone Holder Stand Aluminium Alloy Universal - Pink",
+        price: 5.3,
+        image: "$globalUrl/product/39.jpg",
+        rating: 5,
+        review: 1095,
+        sale: 3400,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 6,
-          name: "Tactical Pants Blackhawk Helikon ",
-          price: 10,
-          image: "$globalUrl/product/40.jpg",
-          rating: 5,
-          review: 63,
-          sale: 131,
-          location: "Brooklyn"
+        id: 6,
+        name: "Tactical Pants Blackhawk Helikon ",
+        price: 10,
+        image: "$globalUrl/product/40.jpg",
+        rating: 5,
+        review: 63,
+        sale: 131,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 5,
-          name: "Sony SRS- XB12 / XB 12 Extra Bass Portable Bluetooth Speaker - Black",
-          price: 48,
-          image: "$globalUrl/product/41.jpg",
-          rating: 5,
-          review: 182,
-          sale: 427,
-          location: "Brooklyn"
+        id: 5,
+        name:
+            "Sony SRS- XB12 / XB 12 Extra Bass Portable Bluetooth Speaker - Black",
+        price: 48,
+        image: "$globalUrl/product/41.jpg",
+        rating: 5,
+        review: 182,
+        sale: 427,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 4,
-          name: "Original 100% 60W Magsafe 1 Power Adapter Charger Macbook Pro - Air",
-          price: 22.66,
-          image: "$globalUrl/product/42.jpg",
-          rating: 5,
-          review: 131,
-          sale: 466,
-          location: "Brooklyn"
+        id: 4,
+        name:
+            "Original 100% 60W Magsafe 1 Power Adapter Charger Macbook Pro - Air",
+        price: 22.66,
+        image: "$globalUrl/product/42.jpg",
+        rating: 5,
+        review: 131,
+        sale: 466,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 3,
-          name: "Macbook Pro 2019 TouchBar MV912 15\" 16GB 512GB 2.3GHz 8-core i9 Gray",
-          price: 2212,
-          image: "$globalUrl/product/43.jpg",
-          rating: 5,
-          review: 16,
-          sale: 37,
-          location: "Brooklyn"
+        id: 3,
+        name:
+            "Macbook Pro 2019 TouchBar MV912 15\" 16GB 512GB 2.3GHz 8-core i9 Gray",
+        price: 2212,
+        image: "$globalUrl/product/43.jpg",
+        rating: 5,
+        review: 16,
+        sale: 37,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 2,
-          name: "New imac 2017 MNEA2 5K retina /3,5GHZ/i5/8GB/1TB/RP575",
-          price: 1643,
-          image: "$globalUrl/product/44.jpg",
-          rating: 5,
-          review: 2,
-          sale: 3,
-          location: "Brooklyn"
+        id: 2,
+        name: "New imac 2017 MNEA2 5K retina /3,5GHZ/i5/8GB/1TB/RP575",
+        price: 1643,
+        image: "$globalUrl/product/44.jpg",
+        rating: 5,
+        review: 2,
+        sale: 3,
+        location: "Brooklyn",
       ),
       ProductModel(
-          id: 1,
-          name: "Adidas Football Predator 19.3 FG F35594 Original",
-          price: 9,
-          image: "$globalUrl/product/45.jpg",
-          rating: 5,
-          review: 30,
-          sale: 70,
-          location: "Brooklyn"
+        id: 1,
+        name: "Adidas Football Predator 19.3 FG F35594 Original",
+        price: 9,
+        image: "$globalUrl/product/45.jpg",
+        rating: 5,
+        review: 30,
+        sale: 70,
+        location: "Brooklyn",
       ),
     ];
   }
@@ -240,19 +248,19 @@ class _ProductList4PageState extends State<ProductList4Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          children: [
-            _createLastSearch(),
-            const SizedBox(height: 16),
-            _createNewProduct(),
-          ],
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        children: [
+          _createLastSearch(),
+          const SizedBox(height: 16),
+          _createNewProduct(),
+        ],
+      ),
     );
   }
 
-  Widget _createLastSearch(){
+  Widget _createLastSearch() {
     final double boxImageSize = (MediaQuery.of(context).size.width / 3);
     return Column(
       children: [
@@ -261,59 +269,74 @@ class _ProductList4PageState extends State<ProductList4Page> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Last Search', style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold
-              )),
+              const Text(
+                'Last Search',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               GestureDetector(
-                onTap: (){
-                  Fluttertoast.showToast(msg: 'Click last search', toastLength: Toast.LENGTH_SHORT);
+                onTap: () {
+                  Fluttertoast.showToast(
+                    msg: 'Click last search',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
                 },
-                child: const Text('view all', style: TextStyle(
+                child: const Text(
+                  'view all',
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: primaryColor
-                ), textAlign: TextAlign.end),
-              )
+                    color: primaryColor,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+              ),
             ],
           ),
         ),
         Container(
-            margin: const EdgeInsets.only(top: 16),
-            height: boxImageSize*1.90,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              scrollDirection: Axis.horizontal,
-              itemCount: 8,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildLastSearchCard(index, boxImageSize);
-              },
-            )
+          margin: const EdgeInsets.only(top: 16),
+          height: boxImageSize * 1.90,
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            scrollDirection: Axis.horizontal,
+            itemCount: 8,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildLastSearchCard(index, boxImageSize);
+            },
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildLastSearchCard(index, boxImageSize){
+  Widget _buildLastSearchCard(index, boxImageSize) {
     return SizedBox(
-      width: boxImageSize+10,
+      width: boxImageSize + 10,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 2,
         color: Colors.white,
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: (){
-            Fluttertoast.showToast(msg: 'Click ${_productData[index].name}', toastLength: Toast.LENGTH_SHORT);
+          onTap: () {
+            Fluttertoast.showToast(
+              msg: 'Click ${_productData[index].name}',
+              toastLength: Toast.LENGTH_SHORT,
+            );
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                  child: buildCacheNetworkImage(width: boxImageSize+10, height: boxImageSize+10, url: _productData[index].image)
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                child: buildCacheNetworkImage(
+                  width: boxImageSize + 10,
+                  height: boxImageSize + 10,
+                  url: _productData[index].image,
+                ),
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -323,30 +346,38 @@ class _ProductList4PageState extends State<ProductList4Page> {
                   children: [
                     Text(
                       _productData[index].name,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: _color1
-                      ), maxLines: 2, overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 12, color: _color1),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top:5),
-                      child: Text('\$ ${_globalFunction.removeDecimalZeroFormat(_productData[index].price!)}', style: const TextStyle(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: Text(
+                        '\$ ${_globalFunction.removeDecimalZeroFormat(_productData[index].price!)}',
+                        style: const TextStyle(
                           fontSize: 13,
-                          fontWeight: FontWeight.bold
-                      )),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top:5),
+                      margin: const EdgeInsets.only(top: 5),
                       child: Row(
                         children: [
-                          _globalWidget.createRatingBar(rating: _productData[index].rating!, size: 12),
-                          Text('(${_productData[index].review})', style: const TextStyle(
+                          _globalWidget.createRatingBar(
+                            rating: _productData[index].rating!,
+                            size: 12,
+                          ),
+                          Text(
+                            '(${_productData[index].review})',
+                            style: const TextStyle(
                               fontSize: 11,
-                              color: softGrey
-                          ))
+                              color: softGrey,
+                            ),
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -357,7 +388,7 @@ class _ProductList4PageState extends State<ProductList4Page> {
     );
   }
 
-  Widget _createNewProduct(){
+  Widget _createNewProduct() {
     final double boxImageSize = (MediaQuery.of(context).size.width / 3);
     return Column(
       children: [
@@ -366,59 +397,74 @@ class _ProductList4PageState extends State<ProductList4Page> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('New', style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold
-              )),
+              const Text(
+                'New',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               GestureDetector(
-                onTap: (){
-                  Fluttertoast.showToast(msg: 'Click new', toastLength: Toast.LENGTH_SHORT);
+                onTap: () {
+                  Fluttertoast.showToast(
+                    msg: 'Click new',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
                 },
-                child: const Text('view all', style: TextStyle(
+                child: const Text(
+                  'view all',
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: primaryColor
-                ), textAlign: TextAlign.end),
-              )
+                    color: primaryColor,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+              ),
             ],
           ),
         ),
         Container(
-            margin: const EdgeInsets.only(top: 16),
-            height: boxImageSize*1.90,
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              scrollDirection: Axis.horizontal,
-              itemCount: _productData.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildNewProductCard(index, boxImageSize);
-              },
-            )
+          margin: const EdgeInsets.only(top: 16),
+          height: boxImageSize * 1.90,
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            scrollDirection: Axis.horizontal,
+            itemCount: _productData.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildNewProductCard(index, boxImageSize);
+            },
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildNewProductCard(index, boxImageSize){
+  Widget _buildNewProductCard(index, boxImageSize) {
     return SizedBox(
-      width: boxImageSize+10,
+      width: boxImageSize + 10,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 2,
         color: Colors.white,
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: (){
-            Fluttertoast.showToast(msg: 'Click ${_productData[index].name}', toastLength: Toast.LENGTH_SHORT);
+          onTap: () {
+            Fluttertoast.showToast(
+              msg: 'Click ${_productData[index].name}',
+              toastLength: Toast.LENGTH_SHORT,
+            );
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                  child: buildCacheNetworkImage(width: boxImageSize+10, height: boxImageSize+10, url: _productData[index].image)
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+                child: buildCacheNetworkImage(
+                  width: boxImageSize + 10,
+                  height: boxImageSize + 10,
+                  url: _productData[index].image,
+                ),
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
@@ -428,30 +474,38 @@ class _ProductList4PageState extends State<ProductList4Page> {
                   children: [
                     Text(
                       _productData[index].name,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: _color1
-                      ), maxLines: 2, overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 12, color: _color1),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top:5),
-                      child: Text('\$ ${_globalFunction.removeDecimalZeroFormat(_productData[index].price!)}', style: const TextStyle(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: Text(
+                        '\$ ${_globalFunction.removeDecimalZeroFormat(_productData[index].price!)}',
+                        style: const TextStyle(
                           fontSize: 13,
-                          fontWeight: FontWeight.bold
-                      )),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top:5),
+                      margin: const EdgeInsets.only(top: 5),
                       child: Row(
                         children: [
-                          _globalWidget.createRatingBar(rating: _productData[index].rating!, size: 12),
-                          Text('(${_productData[index].review})', style: const TextStyle(
+                          _globalWidget.createRatingBar(
+                            rating: _productData[index].rating!,
+                            size: 12,
+                          ),
+                          Text(
+                            '(${_productData[index].review})',
+                            style: const TextStyle(
                               fontSize: 11,
-                              color: softGrey
-                          ))
+                              color: softGrey,
+                            ),
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

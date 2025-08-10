@@ -33,16 +33,18 @@ class _InteractiveViewerPageState extends State<InteractiveViewerPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Interactive Viewer',
-                desc: 'A widget that enables pan and zoom interactions with its child.',
-                icon: Icons.zoom_out_map
+              title: 'Interactive Viewer',
+              desc:
+                  'A widget that enables pan and zoom interactions with its child.',
+              icon: Icons.zoom_out_map,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: InteractiveViewer(
                 maxScale: 10,
-                child: Image.asset('assets/images/lamp.jpg')),
-            )
+                child: Image.asset('assets/images/lamp.jpg'),
+              ),
+            ),
           ],
         ),
       ),

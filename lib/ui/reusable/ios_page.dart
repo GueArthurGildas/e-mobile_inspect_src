@@ -31,7 +31,7 @@ class _IosPageState extends State<IosPage> {
         navigationBar: CupertinoNavigationBar(
           leading: GestureDetector(
             child: const Icon(CupertinoIcons.back),
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
           ),
@@ -39,10 +39,13 @@ class _IosPageState extends State<IosPage> {
         ),
         child: Center(
           child: _globalWidget.createButton(
-              buttonName: 'Go To New Page',
-              onPressed: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const IosPage()));
-              }
+            buttonName: 'Go To New Page',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const IosPage()),
+              );
+            },
           ),
         ),
       ),

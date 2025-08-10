@@ -25,89 +25,116 @@ class _DecorationTextPageState extends State<DecorationTextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Decoration Text',
-                desc: 'This is the example of text with decoration'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Decoration Text',
+            desc: 'This is the example of text with decoration',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.overline,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.overline
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.lineThrough,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.lineThrough,
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.lineThrough,
+                decorationThickness: 2.85,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.lineThrough,
-                  decorationThickness: 2.85
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.lineThrough,
+                decorationColor: Colors.red,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.lineThrough,
-                  decorationColor: Colors.red
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.dashed,
+                decorationThickness: 2.85,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.dashed,
-                  decorationThickness: 2.85
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.double,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.double
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.dotted,
+                decorationThickness: 2.85,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.dotted,
-                  decorationThickness: 2.85
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.wavy,
+                decorationThickness: 2.85,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                  decorationStyle: TextDecorationStyle.wavy,
-                  decorationThickness: 2.85
-              )),
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

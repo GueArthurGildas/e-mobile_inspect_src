@@ -21,24 +21,23 @@ class _FabAnimationPageState extends State<FabAnimationPage>
 
   @override
   void initState() {
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500))
-      ..addListener(() {
-        setState(() {});
-      });
-    _animateIcon =
-        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
-    _animateColor = ColorTween(
-      begin: Colors.blue,
-      end: Colors.red,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Interval(
-        0.00,
-        1.00,
-        curve: _curve,
+    _animationController =
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 500),
+        )..addListener(() {
+          setState(() {});
+        });
+    _animateIcon = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_animationController);
+    _animateColor = ColorTween(begin: Colors.blue, end: Colors.red).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Interval(0.00, 1.00, curve: _curve),
       ),
-    ));
+    );
 
     super.initState();
   }
@@ -70,8 +69,9 @@ class _FabAnimationPageState extends State<FabAnimationPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'FAB animation',
-                desc: 'This is the example of fab animation'),
+              title: 'FAB animation',
+              desc: 'This is the example of fab animation',
+            ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: const Text('Below is the example'),

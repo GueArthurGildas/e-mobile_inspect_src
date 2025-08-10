@@ -9,7 +9,8 @@ class AnimatedBuilderPage extends StatefulWidget {
   State<AnimatedBuilderPage> createState() => _AnimatedBuilderPageState();
 }
 
-class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with TickerProviderStateMixin{
+class _AnimatedBuilderPageState extends State<AnimatedBuilderPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -40,9 +41,9 @@ class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with TickerPr
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Builder',
-                desc: 'A general-purpose widget for building animations.',
-                icon: Icons.animation
+              title: 'Animated Builder',
+              desc: 'A general-purpose widget for building animations.',
+              icon: Icons.animation,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
@@ -54,9 +55,10 @@ class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with TickerPr
                     height: 200.0,
                     color: Colors.pinkAccent,
                     child: const Center(
-                      child: Text('Rotate', style: TextStyle(
-                        color: Colors.white
-                      )),
+                      child: Text(
+                        'Rotate',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   builder: (BuildContext context, Widget? child) {
@@ -67,7 +69,7 @@ class _AnimatedBuilderPageState extends State<AnimatedBuilderPage> with TickerPr
                   },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

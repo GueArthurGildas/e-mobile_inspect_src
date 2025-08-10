@@ -26,43 +26,56 @@ class _SelectableTextPageState extends State<SelectableTextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Selectable Text & Selectable Rich Text',
-                desc: 'This is the example of selectable text & selectable rich text'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Selectable Text & Selectable Rich Text',
+            desc:
+                'This is the example of selectable text & selectable rich text',
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: const Text(
+              'Selectable text',
+              style: TextStyle(color: softBlue),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: const Text('Selectable text', style: TextStyle(color: softBlue))
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const SelectableText(
+              'You can select this text by tap and hold on this text',
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const SelectableText(
-                'You can select this text by tap and hold on this text',
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: const Text(
+              'Selectable rich text',
+              style: TextStyle(color: softBlue),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const SelectableText.rich(
+              TextSpan(
+                text: 'Hello', // default text style
+                children: <TextSpan>[
+                  TextSpan(
+                    text: ' beautiful ',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  TextSpan(
+                    text: 'world',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: const Text('Selectable rich text', style: TextStyle(color: softBlue))
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const SelectableText.rich(
-                TextSpan(
-                  text: 'Hello', // default text style
-                  children: <TextSpan>[
-                    TextSpan(text: ' beautiful ', style: TextStyle(fontStyle: FontStyle.italic)),
-                    TextSpan(text: 'world', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

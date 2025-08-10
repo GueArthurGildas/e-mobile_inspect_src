@@ -6,7 +6,14 @@ class ZonesCapture {
   final dynamic created_at;
   final dynamic updated_at;
 
-  ZonesCapture({required this.id, required this.code, required this.libelle, required this.deleted_at, required this.created_at, required this.updated_at});
+  ZonesCapture({
+    required this.id,
+    required this.code,
+    required this.libelle,
+    required this.deleted_at,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory ZonesCapture.fromJson(Map<String, dynamic> json) => ZonesCapture(
     id: json['id'],

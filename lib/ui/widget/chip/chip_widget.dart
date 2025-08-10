@@ -27,116 +27,116 @@ class _ChipWidgetPageState extends State<ChipWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget2(
-                title: 'Chip Widget',
-                desc: 'Chip Widget usually used for labeling, tags, choises, etc.',
-                icon: Icons.label
-            ),
-            Wrap(
-              spacing: 16,
-              runSpacing: 16,
-              children: [
-                const Chip(
-                  label: Text('Example 1')
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget2(
+            title: 'Chip Widget',
+            desc: 'Chip Widget usually used for labeling, tags, choises, etc.',
+            icon: Icons.label,
+          ),
+          Wrap(
+            spacing: 16,
+            runSpacing: 16,
+            children: [
+              const Chip(label: Text('Example 1')),
+              const Chip(
+                label: Text('Example 2', style: TextStyle(color: Colors.white)),
+                backgroundColor: Colors.pinkAccent,
+              ),
+              const Chip(
+                label: Text('Example 3', style: TextStyle(color: Colors.white)),
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                backgroundColor: Colors.pinkAccent,
+              ),
+              const Chip(
+                label: Text('Example 4', style: TextStyle(color: Colors.white)),
+                backgroundColor: Colors.pinkAccent,
+                elevation: 10,
+              ),
+              const Chip(
+                label: Text('Example 5', style: TextStyle(color: Colors.white)),
+                backgroundColor: Colors.pinkAccent,
+                elevation: 10,
+                shadowColor: Colors.yellow,
+              ),
+              Chip(
+                label: const Text(
+                  'Example 6',
+                  style: TextStyle(color: Colors.white),
                 ),
-                const Chip(
-                  label: Text('Example 2', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  backgroundColor: Colors.pinkAccent,
-                ),
-                const Chip(
-                  label: Text('Example 3', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  backgroundColor: Colors.pinkAccent,
-                ),
-                const Chip(
-                  label: Text('Example 4', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  backgroundColor: Colors.pinkAccent,
-                  elevation: 10,
-                ),
-                const Chip(
-                  label: Text('Example 5', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  backgroundColor: Colors.pinkAccent,
-                  elevation: 10,
-                  shadowColor: Colors.yellow,
-                ),
-                Chip(
-                  label: const Text('Example 6', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  backgroundColor: Colors.pinkAccent,
-                  avatar: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: buildCacheNetworkImage(url: '$globalUrl/category/otomotif.png'),
+                backgroundColor: Colors.pinkAccent,
+                avatar: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: buildCacheNetworkImage(
+                    url: '$globalUrl/category/otomotif.png',
                   ),
                 ),
-                const Chip(
-                  label: Text('Example 7', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  backgroundColor: Colors.pinkAccent,
-                  avatar: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Text('A'),
+              ),
+              const Chip(
+                label: Text('Example 7', style: TextStyle(color: Colors.white)),
+                backgroundColor: Colors.pinkAccent,
+                avatar: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Text('A'),
+                ),
+              ),
+              Chip(
+                label: const Text(
+                  'Example 8',
+                  style: TextStyle(color: Colors.white, fontSize: 26),
+                ),
+                padding: const EdgeInsets.all(8),
+                backgroundColor: Colors.pinkAccent,
+                avatar: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: buildCacheNetworkImage(
+                    url: '$globalUrl/category/otomotif.png',
                   ),
                 ),
-                Chip(
-                  label: const Text('Example 8', style: TextStyle(
-                      color: Colors.white, fontSize: 26
-                  )),
-                  padding: const EdgeInsets.all(8),
-                  backgroundColor: Colors.pinkAccent,
-                  avatar: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: buildCacheNetworkImage(url: '$globalUrl/category/otomotif.png'),
+              ),
+              Chip(
+                label: const Text(
+                  'Example 9',
+                  style: TextStyle(color: Colors.white),
+                ),
+                backgroundColor: Colors.pinkAccent,
+                avatar: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: buildCacheNetworkImage(
+                    url: '$globalUrl/category/otomotif.png',
                   ),
                 ),
-                Chip(
-                  label: const Text('Example 9', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  backgroundColor: Colors.pinkAccent,
-                  avatar: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: buildCacheNetworkImage(url: '$globalUrl/category/otomotif.png'),
-                  ),
-                  onDeleted: () {
-                    debugPrint('input chip when onDeleted');
-                  },
-                  deleteIconColor: Colors.white,
+                onDeleted: () {
+                  debugPrint('input chip when onDeleted');
+                },
+                deleteIconColor: Colors.white,
+              ),
+              Chip(
+                label: const Text(
+                  'Example 10',
+                  style: TextStyle(color: Colors.white),
                 ),
-                Chip(
-                  label: const Text('Example 10', style: TextStyle(
-                      color: Colors.white
-                  )),
-                  elevation: 5,
-                  backgroundColor: Colors.pinkAccent,
-                  avatar: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: buildCacheNetworkImage(url: '$globalUrl/category/otomotif.png'),
+                elevation: 5,
+                backgroundColor: Colors.pinkAccent,
+                avatar: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: buildCacheNetworkImage(
+                    url: '$globalUrl/category/otomotif.png',
                   ),
-                  onDeleted: () {
-                    debugPrint('input chip when onDeleted');
-                  },
-                  deleteIconColor: Colors.white,
-                  deleteIcon: const Icon(Icons.delete),
                 ),
-              ],
-            )
-          ],
-        )
+                onDeleted: () {
+                  debugPrint('input chip when onDeleted');
+                },
+                deleteIconColor: Colors.white,
+                deleteIcon: const Icon(Icons.delete),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

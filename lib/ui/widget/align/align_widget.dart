@@ -25,144 +25,126 @@ class _AlignWidgetPageState extends State<AlignWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget2(
-                title: 'Align Widget',
-                desc: 'Align Widget used to do some alignment.',
-                icon: Icons.text_format
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget2(
+            title: 'Align Widget',
+            desc: 'Align Widget used to do some alignment.',
+            icon: Icons.text_format,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 8),
+            child: const Text('Align top left'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.topLeft,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 10, bottom: 8),
-                child: const Text('Align top left')
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align top center'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.topCenter,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.topLeft,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align top right'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.topRight,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align top center')
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align center left'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.topCenter,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align center'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.center,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align top right')
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align center right'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.centerRight,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.topRight,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align bottom left'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.bottomLeft,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align center left')
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align bottom center'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.bottomCenter,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Align bottom right'),
+          ),
+          Container(
+            height: 150,
+            color: Colors.pinkAccent,
+            child: const Align(
+              alignment: Alignment.bottomRight,
+              child: Text('Text', style: TextStyle(color: Colors.white)),
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align center')
-            ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.center,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align center right')
-            ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.centerRight,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align bottom left')
-            ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.bottomLeft,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align bottom center')
-            ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.bottomCenter,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Align bottom right')
-            ),
-            Container(
-              height: 150,
-              color: Colors.pinkAccent,
-              child: const Align(
-                alignment: Alignment.bottomRight,
-                child: Text('Text', style: TextStyle(
-                    color: Colors.white
-                )),
-              ),
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

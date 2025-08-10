@@ -14,7 +14,7 @@ class PortsController extends ChangeNotifier {
       _items = await _service.getAll();
       notifyListeners();
     } catch (e) {
-      print('Erreur Ports : \$e');
+      print('Erreur Ports : $e');
     }
   }
 }

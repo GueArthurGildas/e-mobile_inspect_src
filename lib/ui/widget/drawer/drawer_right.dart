@@ -25,16 +25,14 @@ class _DrawerRightPageState extends State<DrawerRightPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        endDrawer: Drawer(
-            child: ListView(
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      endDrawer: Drawer(
+        child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
+              decoration: BoxDecoration(color: Colors.blue),
               child: Text('Drawer Header'),
             ),
             ListTile(
@@ -42,10 +40,7 @@ class _DrawerRightPageState extends State<DrawerRightPage> {
               trailing: const Icon(Icons.arrow_forward),
               onTap: () {},
             ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {},
-            ),
+            ListTile(title: const Text('Item 2'), onTap: () {}),
             ListTile(
               title: const Text('Close this drawer'),
               onTap: () {
@@ -53,9 +48,9 @@ class _DrawerRightPageState extends State<DrawerRightPage> {
               },
             ),
           ],
-        )),
-        body: const Center(
-          child: Text('Drawer at the right'),
-        ));
+        ),
+      ),
+      body: const Center(child: Text('Drawer at the right')),
+    );
   }
 }

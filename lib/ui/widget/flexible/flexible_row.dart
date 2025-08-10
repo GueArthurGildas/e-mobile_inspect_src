@@ -25,51 +25,57 @@ class _FlexibleRowPageState extends State<FlexibleRowPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Flexible Row',
-                  desc: 'This is the example of flexible row'
-              ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    fit: FlexFit.tight,
-                    child: Container(
-                      height: 100,
-                      color: Colors.redAccent,
-                      child: const Center(child: Text('1/6', style: TextStyle(color: Colors.white))),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Flexible Row',
+              desc: 'This is the example of flexible row',
+            ),
+            Row(
+              children: [
+                Flexible(
+                  flex: 1,
+                  fit: FlexFit.tight,
+                  child: Container(
+                    height: 100,
+                    color: Colors.redAccent,
+                    child: const Center(
+                      child: Text('1/6', style: TextStyle(color: Colors.white)),
                     ),
                   ),
-                  Flexible(
-                    flex: 2,
-                    fit: FlexFit.tight,
-                    child: Container(
-                      height: 100,
-                      color: Colors.blue,
-                      child: const Center(child: Text('2/6', style: TextStyle(color: Colors.white))),
+                ),
+                Flexible(
+                  flex: 2,
+                  fit: FlexFit.tight,
+                  child: Container(
+                    height: 100,
+                    color: Colors.blue,
+                    child: const Center(
+                      child: Text('2/6', style: TextStyle(color: Colors.white)),
                     ),
                   ),
-                  Flexible(
-                    flex: 3,
-                    fit: FlexFit.tight,
-                    child: Container(
-                      height: 100,
-                      color: Colors.green,
-                      child: const Center(child: Text('3/6', style: TextStyle(color: Colors.white))),
+                ),
+                Flexible(
+                  flex: 3,
+                  fit: FlexFit.tight,
+                  child: Container(
+                    height: 100,
+                    color: Colors.green,
+                    child: const Center(
+                      child: Text('3/6', style: TextStyle(color: Colors.white)),
                     ),
-                  )
-                ],
-              )
-            ],
-          ),
-        )
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

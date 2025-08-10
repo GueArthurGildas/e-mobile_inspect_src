@@ -4,7 +4,12 @@ class Pavillons {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Pavillons({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  Pavillons({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Pavillons.fromJson(Map<String, dynamic> json) => Pavillons(
     id: json['id'],

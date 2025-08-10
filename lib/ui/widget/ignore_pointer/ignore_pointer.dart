@@ -36,19 +36,19 @@ class _IgnorePointerPageState extends State<IgnorePointerPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Ignore Pointer',
-                desc: 'A widget that is invisible during hit testing.',
-                icon: Icons.mouse
+              title: 'Ignore Pointer',
+              desc: 'A widget that is invisible during hit testing.',
+              icon: Icons.mouse,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: _globalWidget.createButton(
-                  buttonName: 'Change Ignoring to ${_ignore ? 'false' : 'true'}',
-                  onPressed: (){
-                    setState(() {
-                      _ignore = !_ignore;
-                    });
-                  }
+                buttonName: 'Change Ignoring to ${_ignore ? 'false' : 'true'}',
+                onPressed: () {
+                  setState(() {
+                    _ignore = !_ignore;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 8),
@@ -62,13 +62,16 @@ class _IgnorePointerPageState extends State<IgnorePointerPage> {
               child: IgnorePointer(
                 ignoring: _ignore,
                 child: _globalWidget.createButton(
-                    buttonName: 'Click Me ',
-                    onPressed: (){
-                      Fluttertoast.showToast(msg: 'Clicked', toastLength: Toast.LENGTH_SHORT);
-                    }
+                  buttonName: 'Click Me ',
+                  onPressed: () {
+                    Fluttertoast.showToast(
+                      msg: 'Clicked',
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  },
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

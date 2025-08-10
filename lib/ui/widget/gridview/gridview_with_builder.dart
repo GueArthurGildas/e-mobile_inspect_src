@@ -37,7 +37,7 @@ class _GridviewWithBuilderPageState extends State<GridviewWithBuilderPage> {
     "Android Other 7",
     "Android Other 8",
     "Android Other 9",
-    "Android Other 10"
+    "Android Other 10",
   ];
 
   @override
@@ -53,25 +53,28 @@ class _GridviewWithBuilderPageState extends State<GridviewWithBuilderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: GridView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: androidVersions.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              elevation: 5,
-              child: Center(
-                child: Text(androidVersions[index].toString(),
-                    textAlign: TextAlign.center),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: androidVersions.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 8.0,
+          mainAxisSpacing: 8.0,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return Card(
+            elevation: 5,
+            child: Center(
+              child: Text(
+                androidVersions[index].toString(),
+                textAlign: TextAlign.center,
               ),
-            );
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 }

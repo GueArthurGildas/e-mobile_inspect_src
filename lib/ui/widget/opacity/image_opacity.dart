@@ -27,68 +27,68 @@ class _ImageOpacityPageState extends State<ImageOpacityPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Image Opacity',
-                  desc: 'This is the example of opacity on image'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Image Opacity',
+              desc: 'This is the example of opacity on image',
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: const Text('Opacity 1'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              // this is the start of example
+              child: Opacity(
+                opacity: 1,
+                child: Image.asset('assets/images/lamp.jpg'),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: const Text('Opacity 1')
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Opacity 0.1'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              // this is the start of example
+              child: Opacity(
+                opacity: 0.1,
+                child: Image.asset('assets/images/lamp.jpg'),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                // this is the start of example
-                child: Opacity(
-                  opacity: 1,
-                  child: Image.asset('assets/images/lamp.jpg'),
-                ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Opacity 0.5'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              // this is the start of example
+              child: Opacity(
+                opacity: 0.5,
+                child: Image.asset('assets/images/lamp.jpg'),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: const Text('Opacity 0.1')
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Opacity 0.9'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              // this is the start of example
+              child: Opacity(
+                opacity: 0.9,
+                child: buildCacheNetworkImage(url: '$globalUrl/product/1.jpg'),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                // this is the start of example
-                child: Opacity(
-                  opacity: 0.1,
-                  child: Image.asset('assets/images/lamp.jpg'),
-                ),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: const Text('Opacity 0.5')
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                // this is the start of example
-                child: Opacity(
-                  opacity: 0.5,
-                  child: Image.asset('assets/images/lamp.jpg'),
-                ),
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: const Text('Opacity 0.9')
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                // this is the start of example
-                child: Opacity(
-                  opacity: 0.9,
-                  child: buildCacheNetworkImage(url: '$globalUrl/product/1.jpg'),
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

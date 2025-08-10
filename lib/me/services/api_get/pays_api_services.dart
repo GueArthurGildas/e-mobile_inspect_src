@@ -1,4 +1,3 @@
-
 // pays_service.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -7,12 +6,11 @@ import 'package:test_app_divkit/me/config/api_constants.dart';
 import 'package:test_app_divkit/me/models/pays_model.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
 
-
 class PaysService {
   Future<Database> get _db async => await DatabaseHelper.database;
 
   Future<List<Pays>> fetchPaysFromApi() async {
-    final response = await http.get(Uri.parse(base_url_api+'pays'));
+    final response = await http.get(Uri.parse(base_url_api + 'pays'));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Pays.fromJson(json)).toList();

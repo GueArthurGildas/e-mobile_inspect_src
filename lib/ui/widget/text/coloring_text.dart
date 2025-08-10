@@ -33,74 +33,90 @@ class _ColoringTextPageState extends State<ColoringTextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Coloring Text',
-                desc: 'This is the example of text with different color, use different method to get color, hex color, rgb color, gradient color'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Coloring Text',
+            desc:
+                'This is the example of text with different color, use different method to get color, hex color, rgb color, gradient color',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, color: Colors.red),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.red
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, color: Color(0xFF00AAFF)),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF00AAFF)
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(fontSize: 16, color: Colors.green[400]),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.green[400]
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                color: Color.fromARGB(255, 204, 0, 255),
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  color: Color.fromARGB(255, 204, 0, 255)
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                background: Paint()..color = Colors.grey,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  background: Paint()..color = Colors.grey,
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                foreground: Paint()..shader = linearGradient1,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  foreground: Paint()..shader = linearGradient1
-              )),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
+                fontSize: 16,
+                foreground: Paint()..shader = linearGradient2,
+              ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: Text('lorem ipsum dolor sit amet', style: TextStyle(
-                  fontSize: 16,
-                  foreground: Paint()..shader = linearGradient2
-              )),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet', style: TextStyle(
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text(
+              'lorem ipsum dolor sit amet',
+              style: TextStyle(
                 fontSize: 16,
                 color: Colors.white,
                 backgroundColor: Colors.blue,
-              )),
+              ),
             ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

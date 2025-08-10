@@ -99,7 +99,8 @@ class CoachMark {
 
     globalKey = globalKey ?? GlobalKey<HighlighterCoachMarkState>();
 
-    _overlayEntryBackground = _overlayEntryBackground ??
+    _overlayEntryBackground =
+        _overlayEntryBackground ??
         OverlayEntry(
           builder: (BuildContext context) => _HighlighterCoachMarkWidget(
             key: globalKey,
@@ -176,21 +177,13 @@ class HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
     _blurAnimation = Tween(begin: 0.0, end: 3.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(
-          0.5,
-          1.0,
-          curve: Curves.ease,
-        ),
+        curve: const Interval(0.5, 1.0, curve: Curves.ease),
       ),
     );
     _opacityAnimation = Tween(begin: 0.0, end: 0.8).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(
-          0.0,
-          1.0,
-          curve: Curves.ease,
-        ),
+        curve: const Interval(0.0, 1.0, curve: Curves.ease),
       ),
     );
     _controller.forward();
@@ -208,51 +201,53 @@ class HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
     final clipper = _CoachMarkClipper(position);
 
     return AnimatedBuilder(
-        animation: _controller,
-        builder: (BuildContext context, Widget? child) {
-          return Stack(
-            children: <Widget>[
-              ClipPath(
-                clipper: clipper,
-                child: BackdropFilter(
-                  filter: ui.ImageFilter.blur(
-                      sigmaX: _blurAnimation.value,
-                      sigmaY: _blurAnimation.value),
-                  child: Container(
-                    color: Colors.transparent,
+      animation: _controller,
+      builder: (BuildContext context, Widget? child) {
+        return Stack(
+          children: <Widget>[
+            ClipPath(
+              clipper: clipper,
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(
+                  sigmaX: _blurAnimation.value,
+                  sigmaY: _blurAnimation.value,
+                ),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+            _CoachMarkLayer(
+              behavior: HitTestBehavior.translucent,
+              onPointerDown: _onPointer,
+              onPointerMove: _onPointer,
+              onPointerUp: _onPointer,
+              onPointerCancel: _onPointer,
+              markPosition: position,
+              child: CustomPaint(
+                painter: _CoachMarkPainter(
+                  rect: position,
+                  shadow: BoxShadow(
+                    color: widget.bgColor.withOpacity(_opacityAnimation.value),
+                    blurRadius: 8.0,
+                  ),
+                  clipper: clipper,
+                  coachMarkShape: widget.markShape,
+                ),
+                child: Opacity(
+                  opacity: _opacityAnimation.value,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: widget.children,
+                    ),
                   ),
                 ),
               ),
-              _CoachMarkLayer(
-                behavior: HitTestBehavior.translucent,
-                onPointerDown: _onPointer,
-                onPointerMove: _onPointer,
-                onPointerUp: _onPointer,
-                onPointerCancel: _onPointer,
-                markPosition: position,
-                child: CustomPaint(
-                  painter: _CoachMarkPainter(
-                    rect: position,
-                    shadow: BoxShadow(
-                        color:
-                        widget.bgColor.withOpacity(_opacityAnimation.value),
-                        blurRadius: 8.0),
-                    clipper: clipper,
-                    coachMarkShape: widget.markShape,
-                  ),
-                  child: Opacity(
-                      opacity: _opacityAnimation.value,
-                      child: Material(
-                          type: MaterialType.transparency,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: widget.children,
-                          ))),
-                ),
-              ),
-            ],
-          );
-        });
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _onPointer(PointerEvent p) {
@@ -263,14 +258,15 @@ class HighlighterCoachMarkState extends State<_HighlighterCoachMarkWidget>
 /// This widget creates _RenderPointerListenerWithExceptRegion which
 /// overrides a special hitTest
 class _CoachMarkLayer extends Listener {
-  const _CoachMarkLayer(
-      {super.onPointerDown,
-        super.onPointerMove,
-        super.onPointerUp,
-        super.onPointerCancel,
-        behavior,
-        this.markPosition,
-        super.child});
+  const _CoachMarkLayer({
+    super.onPointerDown,
+    super.onPointerMove,
+    super.onPointerUp,
+    super.onPointerCancel,
+    behavior,
+    this.markPosition,
+    super.child,
+  });
 
   final Rect? markPosition;
 
@@ -288,7 +284,9 @@ class _CoachMarkLayer extends Listener {
 
   @override
   void updateRenderObject(
-      BuildContext context, RenderPointerListener renderObject) {
+    BuildContext context,
+    RenderPointerListener renderObject,
+  ) {
     renderObject
       ..onPointerDown = onPointerDown
       ..onPointerMove = onPointerMove
@@ -303,14 +301,14 @@ class _CoachMarkLayer extends Listener {
 /// so framework continues traverse the tree. It makes possible for CoachMark
 /// to process touch (to close itself) and for targetElement to process touch.
 class _RenderPointerListenerWithExceptRegion extends RenderPointerListener {
-  _RenderPointerListenerWithExceptRegion(
-      {super.onPointerDown,
-        super.onPointerMove,
-        super.onPointerUp,
-        super.onPointerCancel,
-        HitTestBehavior? behavior,
-        this.exceptRegion})
-      : super(behavior: behavior!);
+  _RenderPointerListenerWithExceptRegion({
+    super.onPointerDown,
+    super.onPointerMove,
+    super.onPointerUp,
+    super.onPointerCancel,
+    HitTestBehavior? behavior,
+    this.exceptRegion,
+  }) : super(behavior: behavior!);
 
   final Rect? exceptRegion;
 
@@ -339,8 +337,11 @@ class _CoachMarkClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    return Path.combine(ui.PathOperation.difference,
-        Path()..addRect(Offset.zero & size), Path()..addOval(rect));
+    return Path.combine(
+      ui.PathOperation.difference,
+      Path()..addRect(Offset.zero & size),
+      Path()..addOval(rect),
+    );
   }
 
   @override
@@ -371,8 +372,9 @@ class _CoachMarkPainter extends CustomPainter {
     switch (coachMarkShape) {
       case BoxShape.rectangle:
         canvas.drawRRect(
-            RRect.fromRectAndRadius(rect, Radius.circular(circle.width * 0.3)),
-            paint);
+          RRect.fromRectAndRadius(rect, Radius.circular(circle.width * 0.3)),
+          paint,
+        );
         break;
       case BoxShape.circle:
       default:

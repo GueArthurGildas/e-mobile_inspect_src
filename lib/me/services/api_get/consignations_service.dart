@@ -8,7 +8,9 @@ class ConsignationsService {
   Future<Database> get _db async => await DatabaseHelper.database;
 
   Future<List<Consignations>> fetchFromApi() async {
-    final response = await http.get(Uri.parse('https://ton-api.com/api/v1/consignations'));
+    final response = await http.get(
+      Uri.parse('https://ton-api.com/api/v1/consignations'),
+    );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Consignations.fromJson(json)).toList();
@@ -19,7 +21,11 @@ class ConsignationsService {
 
   Future<void> insert(Consignations item) async {
     final db = await _db;
-    await db.insert('consignations', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(
+      'consignations',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> syncToLocal() async {

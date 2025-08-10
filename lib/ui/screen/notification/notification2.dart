@@ -24,7 +24,7 @@ class _Notification2PageState extends State<Notification2Page> {
 
   List<Notification2Model> _notificationData1 = [];
 
-  void getData(){
+  void getData() {
     // this timer function is just for demo, so after 2 second, the shimmer loading will disappear and show the content
     _timerDummy = Timer(const Duration(seconds: 2), () {
       setState(() {
@@ -47,7 +47,8 @@ class _Notification2PageState extends State<Notification2Page> {
       Notification2Model(
         id: 3,
         title: 'Flash Sale',
-        message: 'Hi Robert Steven, Flash Sale is open in 10 minutes. Grab your favorite product on sale',
+        message:
+            'Hi Robert Steven, Flash Sale is open in 10 minutes. Grab your favorite product on sale',
         notifDate: '10 Sep 2019 10:00',
       ),
       Notification2Model(
@@ -65,7 +66,8 @@ class _Notification2PageState extends State<Notification2Page> {
       Notification2Model(
         id: 6,
         title: 'Trending Product',
-        message: 'Hi Robert Steven, there is a trending product for you, check it out now',
+        message:
+            'Hi Robert Steven, there is a trending product for you, check it out now',
         notifDate: '9 Sep 2019 13:00',
       ),
       Notification2Model(
@@ -110,37 +112,32 @@ class _Notification2PageState extends State<Notification2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          elevation: 0,
-          title: const Text(
-            'Notification',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black
-            ),
-          ),
-          backgroundColor: Colors.white,
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(1.0),
-              child: Container(
-                color: Colors.grey[100],
-                height: 1.0,
-              )),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
         ),
-        body: RefreshIndicator(
-          onRefresh: refreshData,
-          child: (_loading == true)
-              ? _shimmerLoading.buildShimmerContent()
-              : ListView(
-              children: List.generate(_notificationData1.length, (index) {
-                return _createItem(index);
-              })
-          ),
-        )
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        elevation: 0,
+        title: const Text(
+          'Notification',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey[100], height: 1.0),
+        ),
+      ),
+      body: RefreshIndicator(
+        onRefresh: refreshData,
+        child: (_loading == true)
+            ? _shimmerLoading.buildShimmerContent()
+            : ListView(
+                children: List.generate(_notificationData1.length, (index) {
+                  return _createItem(index);
+                }),
+              ),
+      ),
     );
   }
 
@@ -152,11 +149,14 @@ class _Notification2PageState extends State<Notification2Page> {
     });
   }
 
-  Widget _createItem(int index){
+  Widget _createItem(int index) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Fluttertoast.showToast(msg: 'Click Title ${_notificationData1[index].title}', toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+          msg: 'Click Title ${_notificationData1[index].title}',
+          toastLength: Toast.LENGTH_SHORT,
+        );
       },
       child: Container(
         color: Colors.white,
@@ -164,31 +164,31 @@ class _Notification2PageState extends State<Notification2Page> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                margin: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_notificationData1[index].title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: _color1)),
-                    const SizedBox(
-                      height: 4,
+              margin: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _notificationData1[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: _color1,
                     ),
-                    Text(_notificationData1[index].notifDate,
-                        style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 11)),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Text(_notificationData1[index].message, style: TextStyle(color: _color2)),
-                  ],
-                )),
-            Divider(
-              height: 1,
-              color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    _notificationData1[index].notifDate,
+                    style: TextStyle(color: Colors.grey[400], fontSize: 11),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    _notificationData1[index].message,
+                    style: TextStyle(color: _color2),
+                  ),
+                ],
+              ),
             ),
+            Divider(height: 1, color: Colors.grey[400]),
           ],
         ),
       ),

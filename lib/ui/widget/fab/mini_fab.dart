@@ -34,7 +34,9 @@ class _MiniFabPageState extends State<MiniFabPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'Mini FAB', desc: 'This is the example of mini fab'),
+              title: 'Mini FAB',
+              desc: 'This is the example of mini fab',
+            ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: const Text('Below is the example'),
@@ -45,7 +47,9 @@ class _MiniFabPageState extends State<MiniFabPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Fluttertoast.showToast(
-              msg: 'FAB Pressed', toastLength: Toast.LENGTH_SHORT);
+            msg: 'FAB Pressed',
+            toastLength: Toast.LENGTH_SHORT,
+          );
         },
         mini: true,
         backgroundColor: Colors.pinkAccent,

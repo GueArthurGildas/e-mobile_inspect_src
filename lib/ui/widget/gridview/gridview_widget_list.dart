@@ -30,46 +30,78 @@ class _GridviewWidgetListPageState extends State<GridviewWidgetListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            const Text('GridView Widget', style: TextStyle(
-                fontSize: 18, color: black21, fontWeight: FontWeight.w500
-            )),
-            Container(
-              margin: const EdgeInsets.only(top: 24),
-              child: Row(
-                children: [
-                  const Flexible(
-                      flex:5,
-                      child: Text('GridView Widget is used to create layout with grid', style: TextStyle(
-                          fontSize: 15, color: black77,letterSpacing: 0.5
-                      ))
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          const Text(
+            'GridView Widget',
+            style: TextStyle(
+              fontSize: 18,
+              color: black21,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 24),
+            child: Row(
+              children: [
+                const Flexible(
+                  flex: 5,
+                  child: Text(
+                    'GridView Widget is used to create layout with grid',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: black77,
+                      letterSpacing: 0.5,
+                    ),
                   ),
-                  Flexible(
-                      flex: 2,
-                      child: Container(
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.grid_on, size: 50, color: softBlue))
-                  )
-                ],
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.grid_on, size: 50, color: softBlue),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 48),
+            child: const Text(
+              'List',
+              style: TextStyle(
+                fontSize: 18,
+                color: black21,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 48),
-              child: const Text('List', style: TextStyle(
-                  fontSize: 18, color: black21, fontWeight: FontWeight.w500
-              )),
-            ),
-            const SizedBox(height: 18),
-            _globalWidget.screenDetailList(context: context, title: 'GridView with count', page: const GridviewWithCountPage()),
-            _globalWidget.screenDetailList(context: context, title: 'GridView with builder', page: const GridviewWithBuilderPage()),
-            _globalWidget.screenDetailList(context: context, title: 'GridView with extent', page: const GridviewWithExtentPage()),
-            _globalWidget.screenDetailList(context: context, title: 'GridView height', page: const GridviewHeightPage()),
-          ],
-        )
+          ),
+          const SizedBox(height: 18),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'GridView with count',
+            page: const GridviewWithCountPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'GridView with builder',
+            page: const GridviewWithBuilderPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'GridView with extent',
+            page: const GridviewWithExtentPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'GridView height',
+            page: const GridviewHeightPage(),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -21,36 +21,36 @@ class _SliverGrid3PageState extends State<SliverGrid3Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            const SliverAppBar(
-              title: Text('Sliver Grid 3'),
-              floating: true,
-              backgroundColor: Colors.pinkAccent,
-              expandedHeight: 200,
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          const SliverAppBar(
+            title: Text('Sliver Grid 3'),
+            floating: true,
+            backgroundColor: Colors.pinkAccent,
+            expandedHeight: 200,
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.all(8),
+            sliver: SliverGrid.count(
+              crossAxisCount: 4,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              children: [
+                Container(color: Colors.red, height: 150.0),
+                Container(color: Colors.purple, height: 150.0),
+                Container(color: Colors.green, height: 150.0),
+                Container(color: Colors.orange, height: 150.0),
+                Container(color: Colors.yellow, height: 150.0),
+                Container(color: Colors.pink, height: 150.0),
+                Container(color: Colors.cyan, height: 150.0),
+                Container(color: Colors.indigo, height: 150.0),
+                Container(color: Colors.blue, height: 150.0),
+              ],
             ),
-            SliverPadding(
-              padding: const EdgeInsets.all(8),
-              sliver: SliverGrid.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                children: [
-                  Container(color: Colors.red, height: 150.0),
-                  Container(color: Colors.purple, height: 150.0),
-                  Container(color: Colors.green, height: 150.0),
-                  Container(color: Colors.orange, height: 150.0),
-                  Container(color: Colors.yellow, height: 150.0),
-                  Container(color: Colors.pink, height: 150.0),
-                  Container(color: Colors.cyan, height: 150.0),
-                  Container(color: Colors.indigo, height: 150.0),
-                  Container(color: Colors.blue, height: 150.0),
-                ],
-              ),
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

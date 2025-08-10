@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/controllers/zones_capture_controller.dart';
 
-
 class ZonesCaptureScreen extends StatefulWidget {
   const ZonesCaptureScreen({super.key});
 
@@ -31,10 +30,7 @@ class _ZonesCaptureScreenState extends State<ZonesCaptureScreen> {
       appBar: AppBar(
         title: const Text('ZonesCapture'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _load,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
         ],
       ),
       body: _loading
@@ -43,9 +39,7 @@ class _ZonesCaptureScreenState extends State<ZonesCaptureScreen> {
               itemCount: _controller.items.length,
               itemBuilder: (context, index) {
                 final item = _controller.items[index];
-                return ListTile(
-                  title: Text(item.toMap().toString()),
-                );
+                return ListTile(title: Text(item.toMap().toString()));
               },
             ),
     );

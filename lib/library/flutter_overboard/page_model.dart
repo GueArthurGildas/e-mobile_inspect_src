@@ -10,16 +10,18 @@ class PageModel {
   bool? doAnimateChild;
   bool? doAnimateImage;
 
-  PageModel(
-      {required this.color,
-        this.imageAssetPath,
-        this.imageFromUrl,
-        required this.title,
-        required this.body,
-        required this.doAnimateImage});
+  PageModel({
+    required this.color,
+    this.imageAssetPath,
+    this.imageFromUrl,
+    required this.title,
+    required this.body,
+    required this.doAnimateImage,
+  });
 
-  PageModel.withChild(
-      {required this.child,
-        required this.color,
-        required this.doAnimateChild});
+  PageModel.withChild({
+    required this.child,
+    required this.color,
+    required this.doAnimateChild,
+  });
 }

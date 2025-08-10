@@ -5,7 +5,8 @@ class ListviewWithGeneratePage extends StatefulWidget {
   const ListviewWithGeneratePage({super.key});
 
   @override
-  State<ListviewWithGeneratePage> createState() => _ListviewWithGeneratePageState();
+  State<ListviewWithGeneratePage> createState() =>
+      _ListviewWithGeneratePageState();
 }
 
 class _ListviewWithGeneratePageState extends State<ListviewWithGeneratePage> {
@@ -25,17 +26,17 @@ class _ListviewWithGeneratePageState extends State<ListviewWithGeneratePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: List.generate(100, (index) {
-            return Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('index $index'),
-            );
-          }),
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: List.generate(100, (index) {
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('index $index'),
+          );
+        }),
+      ),
     );
   }
 }

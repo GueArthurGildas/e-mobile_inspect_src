@@ -1,4 +1,3 @@
-
 // lib/pages/user_form_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +30,9 @@ class _UserFormPageState extends State<UserFormPage> {
     final ctrl = Provider.of<UserController>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(title: Text(isEditing ? 'Modifier Utilisateur' : 'Ajouter Utilisateur')),
+      appBar: AppBar(
+        title: Text(isEditing ? 'Modifier Utilisateur' : 'Ajouter Utilisateur'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -48,7 +49,8 @@ class _UserFormPageState extends State<UserFormPage> {
                 initialValue: _email,
                 decoration: InputDecoration(labelText: 'Email'),
                 onSaved: (v) => _email = v ?? '',
-                validator: (v) => v!.isEmpty ? 'Veuillez saisir un email' : null,
+                validator: (v) =>
+                    v!.isEmpty ? 'Veuillez saisir un email' : null,
               ),
               SizedBox(height: 20),
               ElevatedButton(

@@ -8,7 +8,8 @@ class SlideTransitionPage extends StatefulWidget {
   State<SlideTransitionPage> createState() => _SlideTransitionPageState();
 }
 
-class _SlideTransitionPageState extends State<SlideTransitionPage> with TickerProviderStateMixin {
+class _SlideTransitionPageState extends State<SlideTransitionPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -19,10 +20,7 @@ class _SlideTransitionPageState extends State<SlideTransitionPage> with TickerPr
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
     begin: Offset.zero,
     end: const Offset(1.5, 0.0),
-  ).animate(CurvedAnimation(
-    parent: _controller,
-    curve: Curves.elasticIn,
-  ));
+  ).animate(CurvedAnimation(parent: _controller, curve: Curves.elasticIn));
 
   @override
   void initState() {
@@ -46,9 +44,10 @@ class _SlideTransitionPageState extends State<SlideTransitionPage> with TickerPr
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Slide Transition',
-                desc: 'Animates the position of a widget relative to its normal position.',
-                icon: Icons.animation
+              title: 'Slide Transition',
+              desc:
+                  'Animates the position of a widget relative to its normal position.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
@@ -57,7 +56,7 @@ class _SlideTransitionPageState extends State<SlideTransitionPage> with TickerPr
                 position: _offsetAnimation,
                 child: Image.asset('assets/images/lamp.jpg', height: 200),
               ),
-            )
+            ),
           ],
         ),
       ),

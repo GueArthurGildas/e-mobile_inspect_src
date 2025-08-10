@@ -25,10 +25,10 @@ class _DrawerCustomHeaderPageState extends State<DrawerCustomHeaderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        drawer: Drawer(
-            child: ListView(
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      drawer: Drawer(
+        child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             const UserAccountsDrawerHeader(
@@ -56,9 +56,9 @@ class _DrawerCustomHeaderPageState extends State<DrawerCustomHeaderPage> {
               },
             ),
           ],
-        )),
-        body: const Center(
-          child: Text('Drawer Custom Header'),
-        ));
+        ),
+      ),
+      body: const Center(child: Text('Drawer Custom Header')),
+    );
   }
 }

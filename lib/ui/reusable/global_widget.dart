@@ -9,7 +9,11 @@ class GlobalWidget {
   // create random color for polylines
   Color _getColor() {
     return Color.fromARGB(
-        255, _random.nextInt(255), _random.nextInt(255), _random.nextInt(255));
+      255,
+      _random.nextInt(255),
+      _random.nextInt(255),
+      _random.nextInt(255),
+    );
   }
 
   final List<IconData> _iconList = [
@@ -25,7 +29,7 @@ class GlobalWidget {
     Icons.memory,
     Icons.audiotrack,
     Icons.miscellaneous_services,
-    Icons.whatshot
+    Icons.whatshot,
   ];
 
   PreferredSizeWidget globalAppBar() {
@@ -39,21 +43,20 @@ class GlobalWidget {
       centerTitle: true,
       title: Image.asset('assets/images/logo_horizontal.png', height: 24),
       bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            color: Colors.grey[100],
-            height: 1.0,
-          )),
+        preferredSize: const Size.fromHeight(1.0),
+        child: Container(color: Colors.grey[100], height: 1.0),
+      ),
     );
   }
 
-  Widget screenTabList(
-      {required BuildContext context,
-      required int id,
-      required String title,
-      required IconData icon,
-      String? desc,
-      required StatefulWidget page}) {
+  Widget screenTabList({
+    required BuildContext context,
+    required int id,
+    required String title,
+    required IconData icon,
+    String? desc,
+    required StatefulWidget page,
+  }) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -67,16 +70,17 @@ class GlobalWidget {
             SizedBox(width: 20, child: Text(id.toString())),
             const SizedBox(width: 24),
             Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                elevation: 2,
-                color: Colors.white,
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: Icon(icon, color: _getColor()),
-                )),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+              elevation: 2,
+              color: Colors.white,
+              child: SizedBox(
+                width: 48,
+                height: 48,
+                child: Icon(icon, color: _getColor()),
+              ),
+            ),
             const SizedBox(width: 24),
             Expanded(
               child: Container(
@@ -84,30 +88,39 @@ class GlobalWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title,
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w400)),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                     const SizedBox(height: 4),
                     (desc == null)
                         ? const Wrap()
-                        : Text(desc,
+                        : Text(
+                            desc,
                             style: TextStyle(
-                                fontSize: 12, color: Colors.grey[700])),
+                              fontSize: 12,
+                              color: Colors.grey[700],
+                            ),
+                          ),
                     (desc == null) ? const Wrap() : const SizedBox(height: 4),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget screenDetailList(
-      {required BuildContext context,
-      required String title,
-      required StatefulWidget page}) {
+  Widget screenDetailList({
+    required BuildContext context,
+    required String title,
+    required StatefulWidget page,
+  }) {
     Color color = _getColor();
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -122,15 +135,21 @@ class GlobalWidget {
             margin: const EdgeInsets.all(18),
             child: Row(
               children: [
-                Icon(_iconList[_random.nextInt(_iconList.length)],
-                    color: color, size: 26),
+                Icon(
+                  _iconList[_random.nextInt(_iconList.length)],
+                  color: color,
+                  size: 26,
+                ),
                 const SizedBox(width: 24),
                 Expanded(
-                  child: Text(title,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          color: black55,
-                          fontWeight: FontWeight.w500)),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: black55,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
                 Icon(Icons.chevron_right, size: 30, color: color),
               ],
@@ -146,56 +165,92 @@ class GlobalWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: const TextStyle(
-                fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            color: black21,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         Container(
           margin: const EdgeInsets.only(top: 8),
-          child: Text(desc,
-              style: const TextStyle(
-                  fontSize: 15, color: black77, letterSpacing: 0.5)),
+          child: Text(
+            desc,
+            style: const TextStyle(
+              fontSize: 15,
+              color: black77,
+              letterSpacing: 0.5,
+            ),
+          ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 24, bottom: 8),
-          child: const Text('Example',
-              style: TextStyle(
-                  fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
+          child: const Text(
+            'Example',
+            style: TextStyle(
+              fontSize: 18,
+              color: black21,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget createDetailWidget2(
-      {required String title, required String desc, required IconData icon}) {
+  Widget createDetailWidget2({
+    required String title,
+    required String desc,
+    required IconData icon,
+  }) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,
-            style: const TextStyle(
-                fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18,
+            color: black21,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         Container(
           margin: const EdgeInsets.only(top: 24),
           child: Row(
             children: [
               Flexible(
-                  flex: 5,
-                  child: Text(desc,
-                      style: const TextStyle(
-                          fontSize: 15, color: black77, letterSpacing: 0.5))),
+                flex: 5,
+                child: Text(
+                  desc,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: black77,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ),
               Flexible(
-                  flex: 2,
-                  child: Container(
-                      alignment: Alignment.center,
-                      child: Icon(icon, size: 50, color: softBlue)))
+                flex: 2,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Icon(icon, size: 50, color: softBlue),
+                ),
+              ),
             ],
           ),
         ),
         Container(
           margin: const EdgeInsets.only(top: 24, bottom: 16),
-          child: const Text('Example',
-              style: TextStyle(
-                  fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
+          child: const Text(
+            'Example',
+            style: TextStyle(
+              fontSize: 18,
+              color: black21,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ],
     );
@@ -208,38 +263,39 @@ class GlobalWidget {
     required Function onPressed,
   }) {
     return TextButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) => backgroundColor,
-          ),
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(3.0),
-          )),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          (Set<MaterialState> states) => backgroundColor,
         ),
-        onPressed: onPressed as void Function(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            buttonName,
-            style: TextStyle(fontSize: 14, color: textColor),
-            textAlign: TextAlign.center,
-          ),
-        ));
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+        ),
+      ),
+      onPressed: onPressed as void Function(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Text(
+          buttonName,
+          style: TextStyle(fontSize: 14, color: textColor),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
   }
 
   Widget createDefaultLabel(context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
       decoration: BoxDecoration(
-          color: softBlue, borderRadius: BorderRadius.circular(2)),
+        color: softBlue,
+        borderRadius: BorderRadius.circular(2),
+      ),
       child: const Row(
         children: [
           Text('Default', style: TextStyle(color: Colors.white, fontSize: 13)),
-          SizedBox(
-            width: 4,
-          ),
-          Icon(Icons.done, color: Colors.white, size: 11)
+          SizedBox(width: 4),
+          Icon(Icons.done, color: Colors.white, size: 11),
         ],
       ),
     );
@@ -291,13 +347,14 @@ class GlobalWidget {
     );
   }
 
-  Widget customNotifIcon(
-      {int count = 0,
-      Color notifColor = Colors.grey,
-      Color labelColor = Colors.pinkAccent,
-      double notifSize = 24,
-      double labelSize = 14,
-      String position = 'right'}) {
+  Widget customNotifIcon({
+    int count = 0,
+    Color notifColor = Colors.grey,
+    Color labelColor = Colors.pinkAccent,
+    double notifSize = 24,
+    double labelSize = 14,
+    String position = 'right',
+  }) {
     double? posLeft;
     double? posRight = 0;
     if (position == 'left') {
@@ -323,15 +380,12 @@ class GlobalWidget {
             child: Center(
               child: Text(
                 count.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 8,
-                ),
+                style: const TextStyle(color: Colors.white, fontSize: 8),
                 textAlign: TextAlign.center,
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

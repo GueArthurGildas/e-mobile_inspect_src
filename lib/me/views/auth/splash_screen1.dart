@@ -1,15 +1,15 @@
-
 // lib/screens/splash_screen.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/views/auth/splash_screen2.dart';
 
-
 class SplashScreen1 extends StatefulWidget {
+  const SplashScreen1({super.key});
+
   static String id = "splash_screen1";
 
   @override
-  _SplashScreen1State createState() => _SplashScreen1State();
+  State<SplashScreen1> createState() => _SplashScreen1State();
 }
 
 class _SplashScreen1State extends State<SplashScreen1> {
@@ -34,7 +34,8 @@ class _SplashScreen1State extends State<SplashScreen1> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo de l'entreprise
-            Image.asset('assets/me/images/MIRAH-BG.png', // Assure-toi d’avoir ce fichier dans ton projet
+            Image.asset(
+              'assets/me/images/MIRAH-BG.png', // Assure-toi d’avoir ce fichier dans ton projet
               height: 150,
             ),
             SizedBox(height: 20),
@@ -45,4 +46,3 @@ class _SplashScreen1State extends State<SplashScreen1> {
     );
   }
 }
-

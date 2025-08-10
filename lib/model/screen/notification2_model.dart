@@ -4,5 +4,10 @@ class Notification2Model {
   late String message;
   late String notifDate;
 
-  Notification2Model({required this.id, required this.title, required this.message, required this.notifDate});
+  Notification2Model({
+    required this.id,
+    required this.title,
+    required this.message,
+    required this.notifDate,
+  });
 }

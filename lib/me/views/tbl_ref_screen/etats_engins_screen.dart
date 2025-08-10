@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/controllers/etats_engins_controller.dart';
 
-
 class EtatsEnginsScreen extends StatefulWidget {
   const EtatsEnginsScreen({super.key});
 
@@ -31,10 +30,7 @@ class _EtatsEnginsScreenState extends State<EtatsEnginsScreen> {
       appBar: AppBar(
         title: const Text('EtatsEngins'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _load,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
         ],
       ),
       body: _loading
@@ -43,9 +39,7 @@ class _EtatsEnginsScreenState extends State<EtatsEnginsScreen> {
               itemCount: _controller.items.length,
               itemBuilder: (context, index) {
                 final item = _controller.items[index];
-                return ListTile(
-                  title: Text(item.toMap().toString()),
-                );
+                return ListTile(title: Text(item.toMap().toString()));
               },
             ),
     );

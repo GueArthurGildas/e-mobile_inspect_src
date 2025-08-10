@@ -4,7 +4,12 @@ class Conservations {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Conservations({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  Conservations({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Conservations.fromJson(Map<String, dynamic> json) => Conservations(
     id: json['id'],

@@ -19,17 +19,18 @@ class OverBoard extends StatefulWidget {
   final OverBoardAnimator? animator;
   final String? skipText, nextText, finishText;
 
-  const OverBoard(
-      {super.key,
-      required this.pages,
-      this.center,
-      this.showBullets,
-      this.skipText,
-      this.nextText,
-      this.finishText,
-      required this.finishCallback,
-      this.animator,
-      this.skipCallback});
+  const OverBoard({
+    super.key,
+    required this.pages,
+    this.center,
+    this.showBullets,
+    this.skipText,
+    this.nextText,
+    this.finishText,
+    required this.finishCallback,
+    this.animator,
+    this.skipCallback,
+  });
 
   @override
   State<OverBoard> createState() => _OverBoardState();
@@ -59,9 +60,7 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: _getStack(),
-    );
+    return Container(child: _getStack());
   }
 
   _getStack() {
@@ -98,9 +97,12 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
             animation: _animator.getAnimator(),
             builder: (context, child) {
               return ClipOval(
-                  clipper: CircularClipper(
-                      _animator.getAnimator().value, widget.center),
-                  child: _getPage(_counter));
+                clipper: CircularClipper(
+                  _animator.getAnimator().value,
+                  widget.center,
+                ),
+                child: _getPage(_counter),
+              );
             },
             child: Container(),
           ),
@@ -114,81 +116,91 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
                 Opacity(
                   opacity: (_counter < _total - 1) ? 1.0 : 0.0,
                   child: TextButton(
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.resolveWith<Color>(
-                              (Set<MaterialState> states) => primaryColor,
-                        ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) => primaryColor,
                       ),
-                      onPressed: (widget.skipCallback ?? _skip),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Text(widget.skipText ?? "SKIP"),
-                      )
+                    ),
+                    onPressed: (widget.skipCallback ?? _skip),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Text(widget.skipText ?? "SKIP"),
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: Center(child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      _bulletContainerWidth = constraints.maxWidth - 40.0;
-                      return Container(
-                        padding: const EdgeInsets.all(20.0),
-                        child: ((widget.showBullets ?? true)
-                            ? SingleChildScrollView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                controller: _scrollController,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    for (int i = 0; i < _total; i++)
-                                      Padding(
-                                        padding: EdgeInsets.all(_bulletPadding),
-                                        child: AnimatedContainer(
-                                          duration: const Duration(milliseconds: 150),
-                                          height: _bulletSize,
-                                          width: (i == _counter)
-                                              ? _bulletSize*2
-                                              : _bulletSize,
-                                          decoration: BoxDecoration(
-                                              color: (i == _counter)?primaryColor:Colors.grey[300],
-                                              borderRadius: BorderRadius.circular(10)
-                                          )
+                  child: Center(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        _bulletContainerWidth = constraints.maxWidth - 40.0;
+                        return Container(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ((widget.showBullets ?? true)
+                              ? SingleChildScrollView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  controller: _scrollController,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      for (int i = 0; i < _total; i++)
+                                        Padding(
+                                          padding: EdgeInsets.all(
+                                            _bulletPadding,
+                                          ),
+                                          child: AnimatedContainer(
+                                            duration: const Duration(
+                                              milliseconds: 150,
+                                            ),
+                                            height: _bulletSize,
+                                            width: (i == _counter)
+                                                ? _bulletSize * 2
+                                                : _bulletSize,
+                                            decoration: BoxDecoration(
+                                              color: (i == _counter)
+                                                  ? primaryColor
+                                                  : Colors.grey[300],
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
                                         ),
-                                      )
-                                  ],
-                                ),
-                              )
-                            : Container()),
-                      );
-                    },
-                  )),
+                                    ],
+                                  ),
+                                )
+                              : Container()),
+                        );
+                      },
+                    ),
+                  ),
                 ),
                 (_counter < _total - 1
                     ? TextButton(
                         style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                          foregroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
                                 (Set<MaterialState> states) => primaryColor,
-                          ),
+                              ),
                         ),
                         onPressed: _next,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(widget.nextText ?? "NEXT"),
-                        )
-                    )
+                        ),
+                      )
                     : TextButton(
                         style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                          foregroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
                                 (Set<MaterialState> states) => primaryColor,
-                          ),
+                              ),
                         ),
                         onPressed: widget.finishCallback,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(widget.finishText ?? "FINISH"),
-                        )
-                    )
-                ),
+                        ),
+                      )),
               ],
             ),
           ),
@@ -206,14 +218,11 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
       child: page.child != null
           ? Center(
               child: page.doAnimateChild!
-                  ? AnimatedBoard(
-                      animator: _animator,
-                      child: page.child,
-                    )
+                  ? AnimatedBoard(animator: _animator, child: page.child)
                   : page.child,
             )
           : (kIsWeb)
-            ? SingleChildScrollView(
+          ? SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(top: 64),
                 child: Column(
@@ -221,108 +230,135 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
                   children: <Widget>[
                     page.doAnimateImage!
                         ? AnimatedBoard(
-                      animator: _animator,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 25.0),
-                        child: (page.imageAssetPath != null)
-                            ? Image.asset(page.imageAssetPath!,
-                            width: 300.0, height: 300.0)
-                            : buildCacheNetworkImage(
-                            width: 300,
-                            height: 300,
-                            url: page.imageFromUrl,
-                            plColor: Colors.transparent),
-                      ),
-                    )
+                            animator: _animator,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 25.0),
+                              child: (page.imageAssetPath != null)
+                                  ? Image.asset(
+                                      page.imageAssetPath!,
+                                      width: 300.0,
+                                      height: 300.0,
+                                    )
+                                  : buildCacheNetworkImage(
+                                      width: 300,
+                                      height: 300,
+                                      url: page.imageFromUrl,
+                                      plColor: Colors.transparent,
+                                    ),
+                            ),
+                          )
                         : Padding(
-                      padding: const EdgeInsets.only(bottom: 25.0),
-                      child: (page.imageAssetPath != null)
-                          ? Image.asset(page.imageAssetPath!,
-                          width: 300.0, height: 300.0)
-                          : buildCacheNetworkImage(
-                          width: 300,
-                          height: 300,
-                          url: page.imageFromUrl,
-                          plColor: Colors.transparent),
-                    ),
+                            padding: const EdgeInsets.only(bottom: 25.0),
+                            child: (page.imageAssetPath != null)
+                                ? Image.asset(
+                                    page.imageAssetPath!,
+                                    width: 300.0,
+                                    height: 300.0,
+                                  )
+                                : buildCacheNetworkImage(
+                                    width: 300,
+                                    height: 300,
+                                    url: page.imageFromUrl,
+                                    plColor: Colors.transparent,
+                                  ),
+                          ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 10.0, bottom: 30.0, left: 30.0, right: 30.0),
+                        top: 10.0,
+                        bottom: 30.0,
+                        left: 30.0,
+                        right: 30.0,
+                      ),
                       child: Text(
                         page.title!,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.black,
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          bottom: 75.0, left: 30.0, right: 30.0),
+                        bottom: 75.0,
+                        left: 30.0,
+                        right: 30.0,
+                      ),
                       child: Text(
                         page.body!,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: softGrey,
-                          fontSize: 15,
-                        ),
+                        style: const TextStyle(color: softGrey, fontSize: 15),
                       ),
                     ),
                   ],
                 ),
               ),
-            ) : Column(
+            )
+          : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 page.doAnimateImage!
                     ? AnimatedBoard(
-                  animator: _animator,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 25.0),
-                    child: (page.imageAssetPath != null)
-                        ? Image.asset(page.imageAssetPath!,
-                        width: 300.0, height: 300.0)
-                        : buildCacheNetworkImage(
-                        width: 300,
-                        height: 300,
-                        url: page.imageFromUrl,
-                        plColor: Colors.transparent),
-                  ),
-                )
+                        animator: _animator,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 25.0),
+                          child: (page.imageAssetPath != null)
+                              ? Image.asset(
+                                  page.imageAssetPath!,
+                                  width: 300.0,
+                                  height: 300.0,
+                                )
+                              : buildCacheNetworkImage(
+                                  width: 300,
+                                  height: 300,
+                                  url: page.imageFromUrl,
+                                  plColor: Colors.transparent,
+                                ),
+                        ),
+                      )
                     : Padding(
-                  padding: const EdgeInsets.only(bottom: 25.0),
-                  child: (page.imageAssetPath != null)
-                      ? Image.asset(page.imageAssetPath!,
-                      width: 300.0, height: 300.0)
-                      : buildCacheNetworkImage(
-                      width: 300,
-                      height: 300,
-                      url: page.imageFromUrl,
-                      plColor: Colors.transparent),
-                ),
+                        padding: const EdgeInsets.only(bottom: 25.0),
+                        child: (page.imageAssetPath != null)
+                            ? Image.asset(
+                                page.imageAssetPath!,
+                                width: 300.0,
+                                height: 300.0,
+                              )
+                            : buildCacheNetworkImage(
+                                width: 300,
+                                height: 300,
+                                url: page.imageFromUrl,
+                                plColor: Colors.transparent,
+                              ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 10.0, bottom: 30.0, left: 30.0, right: 30.0),
+                    top: 10.0,
+                    bottom: 30.0,
+                    left: 30.0,
+                    right: 30.0,
+                  ),
                   child: Text(
                     page.title!,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.black,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      bottom: 75.0, left: 30.0, right: 30.0),
+                    bottom: 75.0,
+                    left: 30.0,
+                    right: 30.0,
+                  ),
                   child: Text(
                     page.body!,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: softGrey,
-                      fontSize: 15,
-                    ),
+                    style: const TextStyle(color: softGrey, fontSize: 15),
                   ),
                 ),
               ],
@@ -358,16 +394,25 @@ class _OverBoardState extends State<OverBoard> with TickerProviderStateMixin {
         _swipeDirection == SwipeDirection.rightToLeft) {
       double scrollDistance =
           (((scroll - _bulletContainerWidth) ~/ bulletDimension) + 1) *
-              bulletDimension;
-      _scrollController.animateTo(scrollDistance,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 100));
+          bulletDimension;
+      _scrollController.animateTo(
+        scrollDistance,
+        curve: Curves.easeIn,
+        duration: const Duration(milliseconds: 100),
+      );
     } else if (scroll < (maxScroll - _bulletContainerWidth) &&
         _swipeDirection == SwipeDirection.leftToRight) {
-      _scrollController.animateTo(scroll,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 100));
+      _scrollController.animateTo(
+        scroll,
+        curve: Curves.easeIn,
+        duration: const Duration(milliseconds: 100),
+      );
     } else if (_swipeDirection == SwipeDirection.skipToLast) {
-      _scrollController.animateTo(maxScroll,
-          curve: Curves.easeIn, duration: const Duration(milliseconds: 100));
+      _scrollController.animateTo(
+        maxScroll,
+        curve: Curves.easeIn,
+        duration: const Duration(milliseconds: 100),
+      );
     }
   }
 }
@@ -382,7 +427,10 @@ class AnimatedBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Transform(
       transform: Matrix4.translationValues(
-          0.0, 50.0 * (1.0 - animator!.getAnimator().value), 0.0),
+        0.0,
+        50.0 * (1.0 - animator!.getAnimator().value),
+        0.0,
+      ),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: child,

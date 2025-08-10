@@ -7,10 +7,16 @@ class ShoppingCartModel {
   late double price;
   late int qty;
 
-  ShoppingCartModel({required this.id, required this.image, required this.name, required this.price, required this.qty});
+  ShoppingCartModel({
+    required this.id,
+    required this.image,
+    required this.name,
+    required this.price,
+    required this.qty,
+  });
 
   void setQty(int i) {
-    if(i<1){
+    if (i < 1) {
       qty = 1;
     } else {
       qty = i;
@@ -21,14 +27,16 @@ class ShoppingCartModel {
 List<ShoppingCartModel> shoppingCartData = [
   ShoppingCartModel(
     id: 1,
-    name: 'BARDI Smart Light Bulb Lamp Bohlam LED WIFI RGBWW 12W 12 watt Home IoT',
+    name:
+        'BARDI Smart Light Bulb Lamp Bohlam LED WIFI RGBWW 12W 12 watt Home IoT',
     image: '$globalUrl/apps/ecommerce/product/58.jpg',
     price: 8.6,
     qty: 2,
   ),
   ShoppingCartModel(
     id: 2,
-    name: 'BARDI Smart UNIVERSAL IR REMOTE Wifi Wireless IoT For Home Automation',
+    name:
+        'BARDI Smart UNIVERSAL IR REMOTE Wifi Wireless IoT For Home Automation',
     image: '$globalUrl/apps/ecommerce/product/60.jpg',
     price: 11.5,
     qty: 1,

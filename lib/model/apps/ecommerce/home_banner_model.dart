@@ -12,7 +12,7 @@ Banner Data Information
 width = 800px
 height = 600px
  */
-List<HomeBannerModel> homeBannerData =[
+List<HomeBannerModel> homeBannerData = [
   HomeBannerModel(id: 1, image: '$globalUrl/apps/ecommerce/home_banner/1.jpg'),
   HomeBannerModel(id: 2, image: '$globalUrl/apps/ecommerce/home_banner/2.jpg'),
   HomeBannerModel(id: 3, image: '$globalUrl/apps/ecommerce/home_banner/3.jpg'),

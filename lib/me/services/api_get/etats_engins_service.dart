@@ -4,12 +4,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:test_app_divkit/me/models/etats_engins_model.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
 
-
 class EtatsEnginsService {
   Future<Database> get _db async => await DatabaseHelper.database;
 
   Future<List<EtatsEngins>> fetchFromApi() async {
-    final response = await http.get(Uri.parse('https://ton-api.com/api/v1/etats-engins'));
+    final response = await http.get(
+      Uri.parse('https://ton-api.com/api/v1/etats-engins'),
+    );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => EtatsEngins.fromJson(json)).toList();
@@ -20,7 +21,11 @@ class EtatsEnginsService {
 
   Future<void> insert(EtatsEngins item) async {
     final db = await _db;
-    await db.insert('etats_engins', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(
+      'etats_engins',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> syncToLocal() async {

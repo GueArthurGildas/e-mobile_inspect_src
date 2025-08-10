@@ -30,41 +30,83 @@ class _Home1PageState extends State<Home1Page> {
 
   @override
   void initState() {
-    _bannerData
-        .add(BannerSliderModel(id: 1, image: '$globalUrl/fish1.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 2, image: '$globalUrl/home_banner/2.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 3, image: '$globalUrl/home_banner/3.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 4, image: '$globalUrl/home_banner/4.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 5, image: '$globalUrl/home_banner/5.jpg'));
+    _bannerData.add(BannerSliderModel(id: 1, image: '$globalUrl/fish1.jpg'));
+    _bannerData.add(
+      BannerSliderModel(id: 2, image: '$globalUrl/home_banner/2.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 3, image: '$globalUrl/home_banner/3.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 4, image: '$globalUrl/home_banner/4.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 5, image: '$globalUrl/home_banner/5.jpg'),
+    );
 
-    _categoryData.add(CategoryModel(
-        id: 1, name: 'Outlet Store', image: '$globalUrl/menu/store.png'));
-    _categoryData.add(CategoryModel(
-        id: 2, name: 'Product', image: '$globalUrl/menu/products.png'));
-    _categoryData.add(CategoryModel(
-        id: 3, name: 'Buy Online', image: '$globalUrl/menu/buy_online.png'));
-    _categoryData.add(CategoryModel(
+    _categoryData.add(
+      CategoryModel(
+        id: 1,
+        name: 'Outlet Store',
+        image: '$globalUrl/menu/store.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
+        id: 2,
+        name: 'Product',
+        image: '$globalUrl/menu/products.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
+        id: 3,
+        name: 'Buy Online',
+        image: '$globalUrl/menu/buy_online.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
         id: 4,
         name: 'Apply for Credit',
-        image: '$globalUrl/menu/apply_credit.png'));
-    _categoryData.add(CategoryModel(
+        image: '$globalUrl/menu/apply_credit.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
         id: 5,
         name: 'Credit\nApplication\nStatus',
-        image: '$globalUrl/menu/credit_application_status.png'));
-    _categoryData.add(CategoryModel(
+        image: '$globalUrl/menu/credit_application_status.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
         id: 6,
         name: 'Credit Payment',
-        image: '$globalUrl/menu/credit_payment.png'));
-    _categoryData.add(CategoryModel(
-        id: 7, name: 'Commission', image: '$globalUrl/menu/commission.png'));
-    _categoryData.add(CategoryModel(
-        id: 8, name: 'Check Point', image: '$globalUrl/menu/point.png'));
-    _categoryData.add(CategoryModel(
-        id: 9, name: 'Contact Us', image: '$globalUrl/menu/contact_us.png'));
+        image: '$globalUrl/menu/credit_payment.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
+        id: 7,
+        name: 'Commission',
+        image: '$globalUrl/menu/commission.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
+        id: 8,
+        name: 'Check Point',
+        image: '$globalUrl/menu/point.png',
+      ),
+    );
+    _categoryData.add(
+      CategoryModel(
+        id: 9,
+        name: 'Contact Us',
+        image: '$globalUrl/menu/contact_us.png',
+      ),
+    );
 
     super.initState();
   }
@@ -77,38 +119,53 @@ class _Home1PageState extends State<Home1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-            centerTitle: true,
-            systemOverlayStyle: SystemUiOverlayStyle.light,
-            title: Image.asset('assets/images/logo_horizontal.png',
-                height: 24, color: Colors.white),
-            backgroundColor:myOrangCorlor, //_color1,
-            leading: IconButton(
-                icon: const Icon(Icons.help_outline),
-                onPressed: () {
-                  Fluttertoast.showToast(
-                      msg: 'Click about us', toastLength: Toast.LENGTH_SHORT);
-                }),
-            actions: <Widget>[
-              IconButton(
-                  icon: _globalWidget.customNotifIcon(
-                      count: 8, notifColor: Colors.white),
-                  onPressed: () {
-                    Fluttertoast.showToast(
-                        msg: 'Click notification',
-                        toastLength: Toast.LENGTH_SHORT);
-                  }),
-              IconButton(
-                  icon: const Icon(Icons.settings),
-                  onPressed: () {
-                    Fluttertoast.showToast(
-                        msg: 'Click setting', toastLength: Toast.LENGTH_SHORT);
-                  })
-            ]),
-        body: ListView(
-          children: [_buildTop(), _buildHomeBanner(), _createMenu()],
-        ));
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: Image.asset(
+          'assets/images/logo_horizontal.png',
+          height: 24,
+          color: Colors.white,
+        ),
+        backgroundColor: myOrangCorlor, //_color1,
+        leading: IconButton(
+          icon: const Icon(Icons.help_outline),
+          onPressed: () {
+            Fluttertoast.showToast(
+              msg: 'Click about us',
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: _globalWidget.customNotifIcon(
+              count: 8,
+              notifColor: Colors.white,
+            ),
+            onPressed: () {
+              Fluttertoast.showToast(
+                msg: 'Click notification',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Fluttertoast.showToast(
+                msg: 'Click setting',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        children: [_buildTop(), _buildHomeBanner(), _createMenu()],
+      ),
+    );
   }
 
   Widget _buildTop() {
@@ -119,14 +176,17 @@ class _Home1PageState extends State<Home1Page> {
           GestureDetector(
             onTap: () {
               Fluttertoast.showToast(
-                  msg: 'Click profile picture',
-                  toastLength: Toast.LENGTH_SHORT);
+                msg: 'Click profile picture',
+                toastLength: Toast.LENGTH_SHORT,
+              );
             },
             child: Hero(
               tag: 'profilePicture',
               child: ClipOval(
                 child: buildCacheNetworkImage(
-                    url: '$globalUrl/user/avatar.png', width: 50),
+                  url: '$globalUrl/user/avatar.png',
+                  width: 50,
+                ),
               ),
             ),
           ),
@@ -139,14 +199,17 @@ class _Home1PageState extends State<Home1Page> {
                   GestureDetector(
                     onTap: () {
                       Fluttertoast.showToast(
-                          msg: 'Click name', toastLength: Toast.LENGTH_SHORT);
+                        msg: 'Click name',
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     },
                     child: Text(
                       'Robert Steven',
                       style: TextStyle(
-                          color: _color2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                        color: _color2,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -154,30 +217,38 @@ class _Home1PageState extends State<Home1Page> {
                   GestureDetector(
                     onTap: () {
                       Fluttertoast.showToast(
-                          msg: 'Click platinum member',
-                          toastLength: Toast.LENGTH_SHORT);
+                        msg: 'Click platinum member',
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     },
                     child: Container(
-                        margin: const EdgeInsets.only(top: 6),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9, vertical: 6),
-                        decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.star, color: _color2, size: 12),
-                            const SizedBox(width: 4),
-                            Text('platinum member',
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: _color2,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 9))
-                          ],
-                        )),
-                  )
+                      margin: const EdgeInsets.only(top: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 9,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.star, color: _color2, size: 12),
+                          const SizedBox(width: 4),
+                          Text(
+                            'platinum member',
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: _color2,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -191,11 +262,15 @@ class _Home1PageState extends State<Home1Page> {
           GestureDetector(
             onTap: () {
               Fluttertoast.showToast(
-                  msg: 'Click log out', toastLength: Toast.LENGTH_SHORT);
+                msg: 'Click log out',
+                toastLength: Toast.LENGTH_SHORT,
+              );
             },
-            child: Text('Log Out',
-                style: TextStyle(color: _color2, fontWeight: FontWeight.bold)),
-          )
+            child: Text(
+              'Log Out',
+              style: TextStyle(color: _color2, fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
     );
@@ -206,27 +281,35 @@ class _Home1PageState extends State<Home1Page> {
       children: [
         CarouselSlider(
           items: _bannerData
-              .map((item) => GestureDetector(
+              .map(
+                (item) => GestureDetector(
                   onTap: () {
                     Fluttertoast.showToast(
-                        msg: 'Click banner ${item.id}',
-                        toastLength: Toast.LENGTH_SHORT);
+                      msg: 'Click banner ${item.id}',
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
                   },
                   child: buildCacheNetworkImage(
-                      width: 0, height: 0, url: item.image)))
+                    width: 0,
+                    height: 0,
+                    url: item.image,
+                  ),
+                ),
+              )
               .toList(),
           options: CarouselOptions(
-              aspectRatio: 2,
-              viewportFraction: 1.0,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 6),
-              autoPlayAnimationDuration: const Duration(milliseconds: 300),
-              enlargeCenterPage: false,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _currentImageSlider = index;
-                });
-              }),
+            aspectRatio: 2,
+            viewportFraction: 1.0,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 6),
+            autoPlayAnimationDuration: const Duration(milliseconds: 300),
+            enlargeCenterPage: false,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _currentImageSlider = index;
+              });
+            },
+          ),
         ),
         Positioned(
           bottom: 0,
@@ -240,8 +323,10 @@ class _Home1PageState extends State<Home1Page> {
                 duration: const Duration(milliseconds: 150),
                 width: _currentImageSlider == index ? 10 : 5,
                 height: _currentImageSlider == index ? 10 : 5,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 4.0,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -263,40 +348,45 @@ class _Home1PageState extends State<Home1Page> {
       crossAxisCount: 3,
       children: List.generate(_categoryData.length, (index) {
         return GestureDetector(
-            onTap: () {
-              Fluttertoast.showToast(
-                  msg:
-                      'Click ${_categoryData[index].name.replaceAll('\n', ' ')}',
-                  toastLength: Toast.LENGTH_SHORT);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[100]!, width: 0.5),
-                  color: Colors.white),
-              padding: const EdgeInsets.all(8),
-              child: Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                    buildCacheNetworkImage(
-                        width: 40,
-                        height: 40,
-                        url: _categoryData[index].image,
-                        plColor: Colors.transparent),
-                    Container(
-                      margin: const EdgeInsets.only(top: 12),
-                      child: Text(
-                        _categoryData[index].name,
-                        style: TextStyle(
-                          color: myOrangCorlor,//_color1,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                        ),
-                        textAlign: TextAlign.center,
+          onTap: () {
+            Fluttertoast.showToast(
+              msg: 'Click ${_categoryData[index].name.replaceAll('\n', ' ')}',
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey[100]!, width: 0.5),
+              color: Colors.white,
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildCacheNetworkImage(
+                    width: 40,
+                    height: 40,
+                    url: _categoryData[index].image,
+                    plColor: Colors.transparent,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 12),
+                    child: Text(
+                      _categoryData[index].name,
+                      style: TextStyle(
+                        color: myOrangCorlor, //_color1,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
                       ),
-                    )
-                  ])),
-            ));
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
       }),
     );
   }

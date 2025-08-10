@@ -30,49 +30,45 @@ class _ProductList5PageState extends State<ProductList5Page> {
     super.dispose();
   }
 
-  void _getData(){
+  void _getData() {
     _productData = [
       ProductModel(
-          id: 1,
-          name: "Adidas Shirt",
-          image: "$globalUrl/product/21.jpg",
-          sale: 12700,
+        id: 1,
+        name: "Adidas Shirt",
+        image: "$globalUrl/product/21.jpg",
+        sale: 12700,
       ),
       ProductModel(
-          id: 2,
-          name: "iPhone SE 2020",
-          image: "$globalUrl/product/22.jpg",
-          sale: 8300,
+        id: 2,
+        name: "iPhone SE 2020",
+        image: "$globalUrl/product/22.jpg",
+        sale: 8300,
       ),
       ProductModel(
-          id: 3,
-          name: "Macbook Air 2020",
-          image: "$globalUrl/product/23.jpg",
-          sale: 31400,
+        id: 3,
+        name: "Macbook Air 2020",
+        image: "$globalUrl/product/23.jpg",
+        sale: 31400,
       ),
       ProductModel(
-          id: 4,
-          name: "Gaming Chair",
-          image: "$globalUrl/product/24.jpg",
-          sale: 11900,
-      )
+        id: 4,
+        name: "Gaming Chair",
+        image: "$globalUrl/product/24.jpg",
+        sale: 11900,
+      ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          children: [
-            _createTrending(),
-          ],
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(children: [_createTrending()]),
     );
   }
 
-  Widget _createTrending(){
+  Widget _createTrending() {
     return Column(
       children: [
         Container(
@@ -80,27 +76,34 @@ class _ProductList5PageState extends State<ProductList5Page> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Trending', style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold
-              )),
+              const Text(
+                'Trending',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               GestureDetector(
-                onTap: (){
-                  Fluttertoast.showToast(msg: 'Click trending', toastLength: Toast.LENGTH_SHORT);
+                onTap: () {
+                  Fluttertoast.showToast(
+                    msg: 'Click trending',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
                 },
-                child: const Text('view all', style: TextStyle(
+                child: const Text(
+                  'view all',
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: primaryColor
-                ), textAlign: TextAlign.end),
-              )
+                    color: primaryColor,
+                  ),
+                  textAlign: TextAlign.end,
+                ),
+              ),
             ],
           ),
         ),
         GridView.count(
           padding: const EdgeInsets.all(12),
           primary: false,
-          childAspectRatio: 4/1.6,
+          childAspectRatio: 4 / 1.6,
           shrinkWrap: true,
           crossAxisSpacing: 2,
           mainAxisSpacing: 2,
@@ -113,43 +116,62 @@ class _ProductList5PageState extends State<ProductList5Page> {
     );
   }
 
-  Widget _buildTrendingProductCard(index){
+  Widget _buildTrendingProductCard(index) {
     return GestureDetector(
       onTap: () {
-        Fluttertoast.showToast(msg: 'Click ${_productData[index].name}', toastLength: Toast.LENGTH_SHORT);
+        Fluttertoast.showToast(
+          msg: 'Click ${_productData[index].name}',
+          toastLength: Toast.LENGTH_SHORT,
+        );
       },
       child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 2,
-          color: Colors.white,
-          child: Row(
-            children: [
-              ClipRRect(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
-                  child: buildCacheNetworkImage(width: (MediaQuery.of(context).size.width/2)*(1.6/4)-12-1, height: (MediaQuery.of(context).size.width/2)*(1.6/4)-12-1, url: _productData[index].image)
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        elevation: 2,
+        color: Colors.white,
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
               ),
-              Expanded(
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_productData[index].name, style: const TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.bold
-                      )),
-                      const SizedBox(height: 4),
-                      Text('${_productData[index].sale} product', style: TextStyle(
-                          fontSize: 9, color: _color1
-                      ))
-                    ],
-                  ),
+              child: buildCacheNetworkImage(
+                width:
+                    (MediaQuery.of(context).size.width / 2) * (1.6 / 4) -
+                    12 -
+                    1,
+                height:
+                    (MediaQuery.of(context).size.width / 2) * (1.6 / 4) -
+                    12 -
+                    1,
+                url: _productData[index].image,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _productData[index].name,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${_productData[index].sale} product',
+                      style: TextStyle(fontSize: 9, color: _color1),
+                    ),
+                  ],
                 ),
-              )
-            ],
-          )
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

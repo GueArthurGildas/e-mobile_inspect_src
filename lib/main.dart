@@ -46,18 +46,17 @@ import 'me/routes//app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-
 import 'package:flutter/material.dart';
 
-
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: 'Synchronisation API ↔ SQLite',
-    theme: ThemeData(primarySwatch: Colors.green),
-    home: MenuPrincipalScreen(),
-  ));
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Synchronisation API ↔ SQLite',
+      theme: ThemeData(primarySwatch: Colors.green),
+      home: MenuPrincipalScreen(),
+    ),
+  );
 }
 
 class MenuPrincipalScreen extends StatelessWidget {
@@ -100,8 +99,6 @@ class MenuPrincipalScreen extends StatelessWidget {
   }
 }
 
-
-
 // void main() {
 //   runApp(const MyApp());
 // }
@@ -124,15 +121,6 @@ class MenuPrincipalScreen extends StatelessWidget {
 //   }
 // }
 
-
-
-
-
-
-
-
-
 // Liste des screen que je souhaite utiliser dans mon application
 //InspectionWizardScreen(),//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
 //home: SplashScreen1(),//InspectionWizardScreen(),//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
-

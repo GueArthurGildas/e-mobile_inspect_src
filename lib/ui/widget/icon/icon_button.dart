@@ -26,49 +26,58 @@ class _IconButtonPageState extends State<IconButtonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Icon Button',
-                  desc: 'This is the example of icon button'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Icon Button',
+              desc: 'This is the example of icon button',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Wrap(
+                spacing: 32,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.android_outlined),
+                    onPressed: () {
+                      Fluttertoast.showToast(
+                        msg: 'Icon 1',
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.android_outlined),
+                    color: Colors.pinkAccent,
+                    onPressed: () {
+                      Fluttertoast.showToast(
+                        msg: 'Icon 2',
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.android_outlined),
+                    color: Colors.pinkAccent,
+                    iconSize: 40,
+                    onPressed: () {
+                      Fluttertoast.showToast(
+                        msg: 'Icon 3',
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
+                    },
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Wrap(
-                  spacing: 32,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.android_outlined),
-                      onPressed: (){
-                        Fluttertoast.showToast(msg: 'Icon 1', toastLength: Toast.LENGTH_SHORT);
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.android_outlined),
-                      color: Colors.pinkAccent,
-                      onPressed: (){
-                        Fluttertoast.showToast(msg: 'Icon 2', toastLength: Toast.LENGTH_SHORT);
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.android_outlined),
-                      color: Colors.pinkAccent,
-                      iconSize: 40,
-                      onPressed: (){
-                        Fluttertoast.showToast(msg: 'Icon 3', toastLength: Toast.LENGTH_SHORT);
-                      },
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

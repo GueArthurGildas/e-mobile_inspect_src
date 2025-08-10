@@ -8,7 +8,8 @@ class SizeTransitionPage extends StatefulWidget {
   State<SizeTransitionPage> createState() => _SizeTransitionPageState();
 }
 
-class _SizeTransitionPageState extends State<SizeTransitionPage> with TickerProviderStateMixin {
+class _SizeTransitionPageState extends State<SizeTransitionPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -43,9 +44,9 @@ class _SizeTransitionPageState extends State<SizeTransitionPage> with TickerProv
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Size Transition',
-                desc: 'Animates its own size and clips and aligns its child.',
-                icon: Icons.animation
+              title: 'Size Transition',
+              desc: 'Animates its own size and clips and aligns its child.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
@@ -58,7 +59,7 @@ class _SizeTransitionPageState extends State<SizeTransitionPage> with TickerProv
                   child: Image.asset('assets/images/lamp.jpg', height: 200),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

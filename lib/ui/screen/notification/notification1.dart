@@ -23,7 +23,7 @@ class _Notification1PageState extends State<Notification1Page> {
 
   List<Notification1Model> _notificationData1 = [];
 
-  void _getData(){
+  void _getData() {
     // this timer function is just for demo, so after 2 second, the shimmer loading will disappear and show the content
     _timerDummy = Timer(const Duration(seconds: 2), () {
       setState(() {
@@ -43,42 +43,50 @@ class _Notification1PageState extends State<Notification1Page> {
       ),
       Notification1Model(
         id: 3,
-        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquam eu massa in tempus. Etiam vitae sodales est.',
+        message:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquam eu massa in tempus. Etiam vitae sodales est.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 4,
-        message: 'Curabitur finibus euismod neque eget placerat. Donec tincidunt felis eget blandit dictum.',
+        message:
+            'Curabitur finibus euismod neque eget placerat. Donec tincidunt felis eget blandit dictum.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 5,
-        message: 'Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis lacinia dui lacus, in pretium est fringilla a.',
+        message:
+            'Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis lacinia dui lacus, in pretium est fringilla a.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 6,
-        message: 'Suspendisse tempor urna tellus, vitae tristique mauris tincidunt sed.',
+        message:
+            'Suspendisse tempor urna tellus, vitae tristique mauris tincidunt sed.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 7,
-        message: 'Quisque finibus maximus nunc vitae pretium. Nullam lacinia blandit orci, finibus dictum justo ultricies et.',
+        message:
+            'Quisque finibus maximus nunc vitae pretium. Nullam lacinia blandit orci, finibus dictum justo ultricies et.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 8,
-        message: 'Duis ultrices lacus justo, non fringilla augue euismod gravida.',
+        message:
+            'Duis ultrices lacus justo, non fringilla augue euismod gravida.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 9,
-        message: 'Etiam ante augue, euismod in facilisis sed, aliquam nec diam. Nullam porttitor sapien a suscipit cursus.',
+        message:
+            'Etiam ante augue, euismod in facilisis sed, aliquam nec diam. Nullam porttitor sapien a suscipit cursus.',
         notifDate: '28 Jul 2020, 10:00',
       ),
       Notification1Model(
         id: 10,
-        message: 'Morbi lacinia quam velit, nec semper leo mattis sit amet. In in diam id enim consequat vestibulum non quis lacus. Proin quis tellus purus.',
+        message:
+            'Morbi lacinia quam velit, nec semper leo mattis sit amet. In in diam id enim consequat vestibulum non quis lacus. Proin quis tellus purus.',
         notifDate: '28 Jul 2020, 10:00',
       ),
     ];
@@ -99,25 +107,23 @@ class _Notification1PageState extends State<Notification1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: _color1,
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          elevation: 0,
-          centerTitle: true,
-          title: const Text('NOTIFICATION', style: TextStyle(
-            fontSize: 14,
-          )),
-        ),
-        body: RefreshIndicator(
-          onRefresh: refreshData,
-          child: (_loading == true)
-              ? _shimmerLoading.buildShimmerContent()
-              : ListView(
-              children: List.generate(_notificationData1.length, (index) {
-                return _buildNotif(index);
-              })
-          ),
-        )
+      appBar: AppBar(
+        backgroundColor: _color1,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('NOTIFICATION', style: TextStyle(fontSize: 14)),
+      ),
+      body: RefreshIndicator(
+        onRefresh: refreshData,
+        child: (_loading == true)
+            ? _shimmerLoading.buildShimmerContent()
+            : ListView(
+                children: List.generate(_notificationData1.length, (index) {
+                  return _buildNotif(index);
+                }),
+              ),
+      ),
     );
   }
 
@@ -129,38 +135,35 @@ class _Notification1PageState extends State<Notification1Page> {
     });
   }
 
-  Widget _buildNotif(index){
+  Widget _buildNotif(index) {
     return Container(
-        color: Colors.white,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                margin: const EdgeInsets.only(top: 10),
-                child: Html(
-                  data: _notificationData1[index].message,
-                  style: {
-                    "html": Style.fromTextStyle(const TextStyle(fontSize: 14)),
-                  },
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                  margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: Text(
-                    _notificationData1[index].notifDate,
-                    style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.grey[500]
-                    ),
-                    textAlign: TextAlign.left,
-                  )
-              ),
-              Container(color: Colors.grey[300], height: 1),
-            ]
-        )
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.only(top: 10),
+            child: Html(
+              data: _notificationData1[index].message,
+              style: {
+                "html": Style.fromTextStyle(const TextStyle(fontSize: 14)),
+              },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: Text(
+              _notificationData1[index].notifDate,
+              style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          Container(color: Colors.grey[300], height: 1),
+        ],
+      ),
     );
   }
 }

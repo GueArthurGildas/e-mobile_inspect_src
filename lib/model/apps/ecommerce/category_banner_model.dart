@@ -7,17 +7,17 @@ class CategoryBannerModel {
   CategoryBannerModel({required this.id, required this.image});
 }
 
-List<CategoryBannerModel> categoryBannerData =[
+List<CategoryBannerModel> categoryBannerData = [
   CategoryBannerModel(
-      id: 1,
-      image: '$globalUrl/apps/ecommerce/category_banner/1.jpg'
+    id: 1,
+    image: '$globalUrl/apps/ecommerce/category_banner/1.jpg',
   ),
   CategoryBannerModel(
-      id: 2,
-      image: '$globalUrl/apps/ecommerce/category_banner/2.jpg'
+    id: 2,
+    image: '$globalUrl/apps/ecommerce/category_banner/2.jpg',
   ),
   CategoryBannerModel(
-      id: 3,
-      image: '$globalUrl/apps/ecommerce/category_banner/3.jpg'
+    id: 3,
+    image: '$globalUrl/apps/ecommerce/category_banner/3.jpg',
   ),
 ];

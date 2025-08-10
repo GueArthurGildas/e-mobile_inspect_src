@@ -30,10 +30,7 @@ class _TypesEnginsScreenState extends State<TypesEnginsScreen> {
       appBar: AppBar(
         title: const Text('TypesEngins'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _load,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
         ],
       ),
       body: _loading
@@ -42,9 +39,7 @@ class _TypesEnginsScreenState extends State<TypesEnginsScreen> {
               itemCount: _controller.items.length,
               itemBuilder: (context, index) {
                 final item = _controller.items[index];
-                return ListTile(
-                  title: Text(item.toMap().toString()),
-                );
+                return ListTile(title: Text(item.toMap().toString()));
               },
             ),
     );

@@ -8,7 +8,8 @@ class ScaleTransitionPage extends StatefulWidget {
   State<ScaleTransitionPage> createState() => _ScaleTransitionPageState();
 }
 
-class _ScaleTransitionPageState extends State<ScaleTransitionPage> with TickerProviderStateMixin {
+class _ScaleTransitionPageState extends State<ScaleTransitionPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -43,9 +44,9 @@ class _ScaleTransitionPageState extends State<ScaleTransitionPage> with TickerPr
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Scale Transition',
-                desc: 'Animates the scale of a transformed widget.',
-                icon: Icons.animation
+              title: 'Scale Transition',
+              desc: 'Animates the scale of a transformed widget.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
@@ -54,7 +55,7 @@ class _ScaleTransitionPageState extends State<ScaleTransitionPage> with TickerPr
                 scale: _animation,
                 child: Image.asset('assets/images/lamp.jpg', height: 200),
               ),
-            )
+            ),
           ],
         ),
       ),

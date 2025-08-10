@@ -5,12 +5,18 @@ class Especes {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Especes({required this.id, required this.code, required this.name , required this.created_at, required this.updated_at});
+  Especes({
+    required this.id,
+    required this.code,
+    required this.name,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Especes.fromJson(Map<String, dynamic> json) => Especes(
     id: json['id'],
     code: json['code'],
-    name : json['name'],
+    name: json['name'],
     created_at: json['created_at'],
     updated_at: json['updated_at'],
   );
@@ -18,7 +24,7 @@ class Especes {
   Map<String, dynamic> toMap() => {
     'id': id,
     'code': code,
-     'name' : name,
+    'name': name,
     'created_at': created_at,
     'updated_at': updated_at,
   };

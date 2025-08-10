@@ -12,19 +12,19 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
       "shipName": "Navire Ivoire",
       "date": "08/06/2025",
       "port": "Abidjan",
-      "status": "En attente"
+      "status": "En attente",
     },
     {
       "shipName": "Navire Atlantique",
       "date": "09/06/2025",
       "port": "San Pedro",
-      "status": "En attente"
+      "status": "En attente",
     },
     {
       "shipName": "Navire Delta",
       "date": "10/06/2025",
       "port": "Sassandra",
-      "status": "En retard"
+      "status": "En retard",
     },
   ];
 
@@ -33,8 +33,11 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
   @override
   Widget build(BuildContext context) {
     final filteredInspections = inspections
-        .where((item) =>
-        item["shipName"]!.toLowerCase().contains(searchQuery.toLowerCase()))
+        .where(
+          (item) => item["shipName"]!.toLowerCase().contains(
+            searchQuery.toLowerCase(),
+          ),
+        )
         .toList();
 
     return Scaffold(
@@ -61,7 +64,10 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.orange.shade700, width: 2),
+                  borderSide: BorderSide(
+                    color: Colors.orange.shade700,
+                    width: 2,
+                  ),
                 ),
               ),
             ),
@@ -98,7 +104,11 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                           CircleAvatar(
                             radius: 28,
                             backgroundColor: Colors.orange.shade100,
-                            child: Icon(Icons.directions_boat, color: Colors.orange.shade800, size: 30),
+                            child: Icon(
+                              Icons.directions_boat,
+                              color: Colors.orange.shade800,
+                              size: 30,
+                            ),
                           ),
                           const SizedBox(width: 12),
 
@@ -110,7 +120,9 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                                 Text(
                                   item['shipName']!,
                                   style: const TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.bold),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const SizedBox(height: 4),
                                 Text("Date : ${item['date']}"),
@@ -124,16 +136,23 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: isLate ? Colors.red[100] : Colors.orange[100],
+                                  color: isLate
+                                      ? Colors.red[100]
+                                      : Colors.orange[100],
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Text(
                                   item['status']!,
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: isLate ? Colors.red[900] : Colors.orange[800],
+                                    color: isLate
+                                        ? Colors.red[900]
+                                        : Colors.orange[800],
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -142,17 +161,22 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                               OutlinedButton(
                                 onPressed: () {},
                                 style: OutlinedButton.styleFrom(
-                                  side: BorderSide(color: Colors.green.shade800, width: 2),
+                                  side: BorderSide(
+                                    color: Colors.green.shade800,
+                                    width: 2,
+                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 10,
+                                  ),
                                   backgroundColor: Colors.transparent,
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-
                                     const SizedBox(width: 8),
                                     const Text(
                                       "Voir",
@@ -163,15 +187,19 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                                       ),
                                     ),
                                     Transform.rotate(
-                                      angle: 0.6, // inclinaison vers le haut gauche (~-23°)
-                                      child: Icon(Icons.arrow_upward, size: 16, color: Colors.green.shade800),
+                                      angle:
+                                          0.6, // inclinaison vers le haut gauche (~-23°)
+                                      child: Icon(
+                                        Icons.arrow_upward,
+                                        size: 16,
+                                        color: Colors.green.shade800,
+                                      ),
                                     ),
                                   ],
                                 ),
-                              )
-
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
 
@@ -185,11 +213,22 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                               // Action PDF
                             },
                             style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              side: BorderSide(color: Colors.red.shade400, width: 1.5),
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              side: BorderSide(
+                                color: Colors.red.shade400,
+                                width: 1.5,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 12,
+                              ),
                             ),
-                            child: Icon(Icons.picture_as_pdf, color: Colors.red.shade400),
+                            child: Icon(
+                              Icons.picture_as_pdf,
+                              color: Colors.red.shade400,
+                            ),
                           ),
 
                           const SizedBox(width: 12),
@@ -201,21 +240,35 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                                 // Action Voir
                               },
                               style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: Colors.green.shade800, width: 2),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                side: BorderSide(
+                                  color: Colors.green.shade800,
+                                  width: 2,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                                 backgroundColor: Colors.transparent,
                               ),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, AppRoutes.navireStatus);
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.navireStatus,
+                                  );
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Transform.rotate(
                                       angle: -0.4,
-                                      child: Icon(Icons.arrow_upward, size: 16, color: Colors.green.shade800),
+                                      child: Icon(
+                                        Icons.arrow_upward,
+                                        size: 16,
+                                        color: Colors.green.shade800,
+                                      ),
                                     ),
                                     const SizedBox(width: 8),
                                     const Text(
@@ -229,14 +282,12 @@ class _PendingInspectionPageState extends State<PendingInspectionPage> {
                                   ],
                                 ),
                               ),
-
                             ),
                           ),
                         ],
                       ),
-
                     ],
-                  )
+                  ),
                 );
               },
             ),

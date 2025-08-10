@@ -33,73 +33,93 @@ class _ListviewWidgetListPageState extends State<ListviewWidgetListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            const Text('ListView Widget',
-                style: TextStyle(
-                    fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
-            Container(
-              margin: const EdgeInsets.only(top: 24),
-              child: Row(
-                children: [
-                  const Flexible(
-                      flex: 5,
-                      child: Text(
-                          'ListView Widget is used to listing your data',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: black77,
-                              letterSpacing: 0.5))),
-                  Flexible(
-                      flex: 2,
-                      child: Container(
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.list,
-                              size: 50, color: softBlue)))
-                ],
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          const Text(
+            'ListView Widget',
+            style: TextStyle(
+              fontSize: 18,
+              color: black21,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 24),
+            child: Row(
+              children: [
+                const Flexible(
+                  flex: 5,
+                  child: Text(
+                    'ListView Widget is used to listing your data',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: black77,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.list, size: 50, color: softBlue),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 48),
+            child: const Text(
+              'List',
+              style: TextStyle(
+                fontSize: 18,
+                color: black21,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 48),
-              child: const Text('List',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: black21,
-                      fontWeight: FontWeight.w500)),
-            ),
-            const SizedBox(height: 18),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Standart ListView',
-                page: const StandartListviewPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'ListView with builder',
-                page: const ListviewWithBuilderPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'ListView with generate',
-                page: const ListviewWithGeneratePage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Separated ListView',
-                page: const SeparatedListviewPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Horizontal ListView',
-                page: const HorizontalListviewPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Reverse ListView',
-                page: const ReverseListviewPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'ListView with ListTile',
-                page: const ListviewWithListTilePage()),
-          ],
-        ));
+          ),
+          const SizedBox(height: 18),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Standart ListView',
+            page: const StandartListviewPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'ListView with builder',
+            page: const ListviewWithBuilderPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'ListView with generate',
+            page: const ListviewWithGeneratePage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Separated ListView',
+            page: const SeparatedListviewPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Horizontal ListView',
+            page: const HorizontalListviewPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Reverse ListView',
+            page: const ReverseListviewPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'ListView with ListTile',
+            page: const ListviewWithListTilePage(),
+          ),
+        ],
+      ),
+    );
   }
 }

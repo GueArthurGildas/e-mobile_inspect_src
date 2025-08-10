@@ -25,18 +25,18 @@ class _ReverseListviewPageState extends State<ReverseListviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          reverse: true,
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: List.generate(100, (index) {
-            return Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('index $index'),
-            );
-          }),
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        reverse: true,
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: List.generate(100, (index) {
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('index $index'),
+          );
+        }),
+      ),
     );
   }
 }

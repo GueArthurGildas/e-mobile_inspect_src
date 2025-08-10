@@ -7,25 +7,25 @@ class CategoryForYouModel {
   CategoryForYouModel({required this.id, required this.image});
 }
 
-List<CategoryForYouModel> categoryForYouData =[
+List<CategoryForYouModel> categoryForYouData = [
   CategoryForYouModel(
     id: 7,
     image: '$globalUrl/apps/ecommerce/category_for_you/1.jpg',
   ),
   CategoryForYouModel(
-      id: 3,
-      image: '$globalUrl/apps/ecommerce/category_for_you/2.jpg'
+    id: 3,
+    image: '$globalUrl/apps/ecommerce/category_for_you/2.jpg',
   ),
   CategoryForYouModel(
-      id: 5,
-      image: '$globalUrl/apps/ecommerce/category_for_you/3.jpg'
+    id: 5,
+    image: '$globalUrl/apps/ecommerce/category_for_you/3.jpg',
   ),
   CategoryForYouModel(
-      id: 2,
-      image: '$globalUrl/apps/ecommerce/category_for_you/4.jpg'
+    id: 2,
+    image: '$globalUrl/apps/ecommerce/category_for_you/4.jpg',
   ),
   CategoryForYouModel(
-      id: 8,
-      image: '$globalUrl/apps/ecommerce/category_for_you/5.jpg'
+    id: 8,
+    image: '$globalUrl/apps/ecommerce/category_for_you/5.jpg',
   ),
 ];

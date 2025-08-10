@@ -25,30 +25,31 @@ class _HeroWidgetPageState extends State<HeroWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Hero Widget',
-                  desc:
-                      'The icon will be animated from before page to this page'),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Hero(
-                  tag: 'volley',
-                  child: Icon(
-                    Icons.sports_volleyball,
-                    size: 280,
-                    color: Colors.pinkAccent,
-                  ),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Hero Widget',
+              desc: 'The icon will be animated from before page to this page',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Hero(
+                tag: 'volley',
+                child: Icon(
+                  Icons.sports_volleyball,
+                  size: 280,
+                  color: Colors.pinkAccent,
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

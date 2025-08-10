@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class GlobalFunction{
+class GlobalFunction {
   bool validateMobileNumber(String value) {
     String patttern = r'(^(?:[+0]9)?[0-9]{10,15}$)';
     RegExp regExp = RegExp(patttern);
@@ -15,7 +15,8 @@ class GlobalFunction{
   }
 
   bool validateEmail(String value) {
-    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    String pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return false;
@@ -37,15 +38,14 @@ class GlobalFunction{
 
   Future showProgressDialog(BuildContext context) {
     return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const PopScope(
-            canPop: false,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const PopScope(
+          canPop: false,
+          child: Center(child: CircularProgressIndicator()),
+        );
+      },
+    );
   }
 }

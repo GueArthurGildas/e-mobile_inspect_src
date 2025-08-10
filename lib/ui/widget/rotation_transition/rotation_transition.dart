@@ -8,7 +8,8 @@ class RotationTransitionPage extends StatefulWidget {
   State<RotationTransitionPage> createState() => _RotationTransitionPageState();
 }
 
-class _RotationTransitionPageState extends State<RotationTransitionPage> with TickerProviderStateMixin {
+class _RotationTransitionPageState extends State<RotationTransitionPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -43,9 +44,9 @@ class _RotationTransitionPageState extends State<RotationTransitionPage> with Ti
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Rotation Transition',
-                desc: 'Animates the rotation of a widget.',
-                icon: Icons.animation
+              title: 'Rotation Transition',
+              desc: 'Animates the rotation of a widget.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
@@ -54,7 +55,7 @@ class _RotationTransitionPageState extends State<RotationTransitionPage> with Ti
                 turns: _animation,
                 child: Image.asset('assets/images/lamp.jpg', height: 200),
               ),
-            )
+            ),
           ],
         ),
       ),

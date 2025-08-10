@@ -40,18 +40,15 @@ class ShimmerLoading {
                       child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10.0),
-                              bottomRight: Radius.circular(10.0)),
+                            topRight: Radius.circular(10.0),
+                            bottomRight: Radius.circular(10.0),
+                          ),
                           color: Colors.white,
                         ),
-                        child: Container(
-                          width: 80,
-                        ),
+                        child: Container(width: 80),
                       ),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
+                    const SizedBox(width: 20),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,16 +62,16 @@ class ShimmerLoading {
                             ),
                             height: _containerHeight,
                             child: Container(
-                                decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0)),
-                              color: Colors.white,
-                            )),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             padding: const EdgeInsets.only(left: 12.0),
                             decoration: BoxDecoration(
@@ -83,16 +80,16 @@ class ShimmerLoading {
                             ),
                             height: _containerHeight,
                             child: Container(
-                                decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0)),
-                              color: Colors.white,
-                            )),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             padding: const EdgeInsets.only(left: 12.0),
                             decoration: BoxDecoration(
@@ -102,12 +99,14 @@ class ShimmerLoading {
                             height: _containerHeight,
                             width: 100,
                             child: Container(
-                                decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10.0),
-                                  bottomRight: Radius.circular(10.0)),
-                              color: Colors.white,
-                            )),
+                                  bottomRight: Radius.circular(10.0),
+                                ),
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -117,9 +116,10 @@ class ShimmerLoading {
               ),
             ),
             Container(
-                margin: const EdgeInsets.only(top: 20),
-                color: _shimmerColor,
-                height: 1),
+              margin: const EdgeInsets.only(top: 20),
+              color: _shimmerColor,
+              height: 1,
+            ),
           ],
         );
       },
@@ -141,9 +141,7 @@ class ShimmerLoading {
             baseColor: _shimmerColor,
             period: const Duration(milliseconds: 1000),
             child: ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: Container(
                 width: boxImageSize,
                 height: boxImageSize,
@@ -181,8 +179,9 @@ class ShimmerLoading {
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10)),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
                       child: Container(
                         width: boxImageSize,
                         height: boxImageSize,
@@ -202,9 +201,7 @@ class ShimmerLoading {
                             ),
                             height: 12,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -212,9 +209,7 @@ class ShimmerLoading {
                             ),
                             height: 12,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -223,16 +218,17 @@ class ShimmerLoading {
                             height: 12,
                             width: 50,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Row(
                             children: [
                               for (int i = 1; i <= 5; i++)
-                                Icon(Icons.star,
-                                    color: _shimmerColor, size: 12),
+                                Icon(
+                                  Icons.star,
+                                  color: _shimmerColor,
+                                  size: 12,
+                                ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -273,8 +269,9 @@ class ShimmerLoading {
                         period: const Duration(milliseconds: 1000),
                         child: ClipRRect(
                           borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10)),
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
                           child: Container(
                             width: boxImageSize,
                             height: boxImageSize,
@@ -291,18 +288,17 @@ class ShimmerLoading {
                           period: const Duration(milliseconds: 1000),
                           child: Container(
                             decoration: BoxDecoration(
-                                color: _shimmerColorDark,
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(6),
-                                    bottomLeft: Radius.circular(6))),
-                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                            child: const SizedBox(
-                              width: 20,
-                              height: 12,
+                              color: _shimmerColorDark,
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(6),
+                                bottomLeft: Radius.circular(6),
+                              ),
                             ),
+                            padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                            child: const SizedBox(width: 20, height: 12),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   Shimmer.fromColors(
@@ -322,9 +318,7 @@ class ShimmerLoading {
                             ),
                             height: 12,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -332,9 +326,7 @@ class ShimmerLoading {
                             ),
                             height: 12,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -343,9 +335,7 @@ class ShimmerLoading {
                             height: 12,
                             width: 50,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
-                          ),
+                          SizedBox(height: _spaceHeight),
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
@@ -393,8 +383,9 @@ class ShimmerLoading {
                     period: const Duration(milliseconds: 1000),
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10)),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                      ),
                       child: Container(
                         width: boxImageSize,
                         height: boxImageSize,
@@ -411,18 +402,17 @@ class ShimmerLoading {
                       period: const Duration(milliseconds: 1000),
                       child: Container(
                         decoration: BoxDecoration(
-                            color: _shimmerColorDark,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(6),
-                                bottomLeft: Radius.circular(6))),
-                        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                        child: const SizedBox(
-                          width: 20,
-                          height: 12,
+                          color: _shimmerColorDark,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(6),
+                            bottomLeft: Radius.circular(6),
+                          ),
                         ),
+                        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                        child: const SizedBox(width: 20, height: 12),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               Shimmer.fromColors(
@@ -442,9 +432,7 @@ class ShimmerLoading {
                         ),
                         height: 12,
                       ),
-                      SizedBox(
-                        height: _spaceHeight,
-                      ),
+                      SizedBox(height: _spaceHeight),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -452,9 +440,7 @@ class ShimmerLoading {
                         ),
                         height: 12,
                       ),
-                      SizedBox(
-                        height: _spaceHeight,
-                      ),
+                      SizedBox(height: _spaceHeight),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -462,9 +448,7 @@ class ShimmerLoading {
                         ),
                         height: 12,
                       ),
-                      SizedBox(
-                        height: _spaceHeight,
-                      ),
+                      SizedBox(height: _spaceHeight),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -497,19 +481,22 @@ class ShimmerLoading {
           ),
         ),
         Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) {
-              return Container(
-                width: 8.0,
-                height: 8.0,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _shimmerColor,
-                ),
-              );
-            })),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(5, (index) {
+            return Container(
+              width: 8.0,
+              height: 8.0,
+              margin: const EdgeInsets.symmetric(
+                vertical: 10.0,
+                horizontal: 2.0,
+              ),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _shimmerColor,
+              ),
+            );
+          }),
+        ),
       ],
     );
   }
@@ -551,8 +538,9 @@ class ShimmerLoading {
               children: <Widget>[
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                  ),
                   child: Container(
                     width: boxImageSize,
                     height: boxImageSize,
@@ -572,9 +560,7 @@ class ShimmerLoading {
                         ),
                         height: 12,
                       ),
-                      SizedBox(
-                        height: _spaceHeight,
-                      ),
+                      SizedBox(height: _spaceHeight),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -582,9 +568,7 @@ class ShimmerLoading {
                         ),
                         height: 12,
                       ),
-                      SizedBox(
-                        height: _spaceHeight,
-                      ),
+                      SizedBox(height: _spaceHeight),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
@@ -593,15 +577,13 @@ class ShimmerLoading {
                         height: 12,
                         width: 50,
                       ),
-                      SizedBox(
-                        height: _spaceHeight,
-                      ),
+                      SizedBox(height: _spaceHeight),
                       Row(
                         children: [
                           for (int i = 1; i <= 5; i++)
                             Icon(Icons.star, color: _shimmerColor, size: 12),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -624,57 +606,58 @@ class ShimmerLoading {
       crossAxisCount: 2,
       children: List.generate(4, (index) {
         return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            elevation: 2,
-            color: Colors.white,
-            child: Shimmer.fromColors(
-              highlightColor: Colors.white,
-              baseColor: _shimmerColor,
-              period: const Duration(milliseconds: 1000),
-              child: Row(
-                children: [
-                  ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10)),
-                      child: Container(
-                        width: (boxImageSize) * (1.6 / 4) - 12 - 1,
-                        height: (boxImageSize) * (1.6 / 4) - 12 - 1,
-                        color: _shimmerColor,
-                      )),
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: _shimmerColor,
-                            ),
-                            height: 12,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          elevation: 2,
+          color: Colors.white,
+          child: Shimmer.fromColors(
+            highlightColor: Colors.white,
+            baseColor: _shimmerColor,
+            period: const Duration(milliseconds: 1000),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
+                  child: Container(
+                    width: (boxImageSize) * (1.6 / 4) - 12 - 1,
+                    height: (boxImageSize) * (1.6 / 4) - 12 - 1,
+                    color: _shimmerColor,
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: _shimmerColor,
                           ),
-                          SizedBox(
-                            height: _spaceHeight,
+                          height: 12,
+                        ),
+                        SizedBox(height: _spaceHeight),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: _shimmerColor,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: _shimmerColor,
-                            ),
-                            height: 12,
-                          ),
-                        ],
-                      ),
+                          height: 12,
+                        ),
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ));
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       }),
     );
   }
@@ -693,24 +676,20 @@ class ShimmerLoading {
           highlightColor: Colors.white,
           baseColor: _shimmerColor,
           period: const Duration(milliseconds: 1000),
-          child: Column(children: [
-            Container(
-              width: 40,
-              height: 40,
-              color: _shimmerColor,
-            ),
-            SizedBox(
-              height: _spaceHeight,
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: _shimmerColor,
+          child: Column(
+            children: [
+              Container(width: 40, height: 40, color: _shimmerColor),
+              SizedBox(height: _spaceHeight),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: _shimmerColor,
+                ),
+                height: 12,
               ),
-              height: 12,
-            ),
-          ]),
+            ],
+          ),
         );
       }),
     );
@@ -731,24 +710,20 @@ class ShimmerLoading {
           highlightColor: Colors.white,
           baseColor: _shimmerColor,
           period: const Duration(milliseconds: 1000),
-          child: Column(children: [
-            Container(
-              width: 40,
-              height: 40,
-              color: _shimmerColor,
-            ),
-            SizedBox(
-              height: _spaceHeight,
-            ),
-            Container(
-              width: 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: _shimmerColor,
+          child: Column(
+            children: [
+              Container(width: 40, height: 40, color: _shimmerColor),
+              SizedBox(height: _spaceHeight),
+              Container(
+                width: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: _shimmerColor,
+                ),
+                height: 12,
               ),
-              height: 12,
-            ),
-          ]),
+            ],
+          ),
         );
       }),
     );
@@ -774,9 +749,7 @@ class ShimmerLoading {
                   ),
                   height: _containerHeight,
                 ),
-                SizedBox(
-                  height: _spaceHeight,
-                ),
+                SizedBox(height: _spaceHeight),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
@@ -784,9 +757,7 @@ class ShimmerLoading {
                   ),
                   height: _containerHeight,
                 ),
-                SizedBox(
-                  height: _spaceHeight,
-                ),
+                SizedBox(height: _spaceHeight),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
@@ -794,9 +765,7 @@ class ShimmerLoading {
                   ),
                   height: _containerHeight,
                 ),
-                SizedBox(
-                  height: _spaceHeight,
-                ),
+                SizedBox(height: _spaceHeight),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
@@ -804,9 +773,7 @@ class ShimmerLoading {
                   ),
                   height: _containerHeight,
                 ),
-                SizedBox(
-                  height: _spaceHeight,
-                ),
+                SizedBox(height: _spaceHeight),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),

@@ -4,7 +4,12 @@ class TypesEngins {
   final dynamic created_at;
   final dynamic updated_at;
 
-  TypesEngins({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  TypesEngins({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory TypesEngins.fromJson(Map<String, dynamic> json) => TypesEngins(
     id: json['id'],

@@ -7,7 +7,8 @@ class BackDropFilterWidgetPage extends StatefulWidget {
   const BackDropFilterWidgetPage({super.key});
 
   @override
-  State<BackDropFilterWidgetPage> createState() => _BackDropFilterWidgetPageState();
+  State<BackDropFilterWidgetPage> createState() =>
+      _BackDropFilterWidgetPageState();
 }
 
 class _BackDropFilterWidgetPageState extends State<BackDropFilterWidgetPage> {
@@ -27,37 +28,35 @@ class _BackDropFilterWidgetPageState extends State<BackDropFilterWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget2(
-                title: 'Back Drop Filter Widget',
-                desc: 'Back Drop Filter Widget used to do blur object.',
-                icon: Icons.blur_on
-            ),
-            Stack(
-              children: <Widget>[
-                Image.asset('assets/images/lamp.jpg'),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                      child: Container(
-                        color: Colors.black.withOpacity(0.1),
-                      ),
-                    ),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget2(
+            title: 'Back Drop Filter Widget',
+            desc: 'Back Drop Filter Widget used to do blur object.',
+            icon: Icons.blur_on,
+          ),
+          Stack(
+            children: <Widget>[
+              Image.asset('assets/images/lamp.jpg'),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: Container(color: Colors.black.withOpacity(0.1)),
                   ),
-                )
-              ],
-            ),
-          ],
-        )
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

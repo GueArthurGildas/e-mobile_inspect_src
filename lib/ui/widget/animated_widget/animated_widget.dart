@@ -9,7 +9,8 @@ class AnimatedWidgetPage extends StatefulWidget {
   State<AnimatedWidgetPage> createState() => _AnimatedWidgetPageState();
 }
 
-class _AnimatedWidgetPageState extends State<AnimatedWidgetPage> with TickerProviderStateMixin {
+class _AnimatedWidgetPageState extends State<AnimatedWidgetPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -40,15 +41,16 @@ class _AnimatedWidgetPageState extends State<AnimatedWidgetPage> with TickerProv
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Widget',
-                desc: 'A widget that rebuilds when the given Listenable changes value.',
-                icon: Icons.animation
+              title: 'Animated Widget',
+              desc:
+                  'A widget that rebuilds when the given Listenable changes value.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: Center(child: SpinningContainer(controller: _controller)),
-            )
+            ),
           ],
         ),
       ),

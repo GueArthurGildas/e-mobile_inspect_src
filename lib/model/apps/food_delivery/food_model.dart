@@ -9,5 +9,15 @@ class FoodModel {
   late int discount;
   late String location;
 
-  FoodModel({required this.id, required this.name, required this.restaurantName, required this.price, required this.image, this.rating, this.distance, required this.discount, required this.location});
+  FoodModel({
+    required this.id,
+    required this.name,
+    required this.restaurantName,
+    required this.price,
+    required this.image,
+    this.rating,
+    this.distance,
+    required this.discount,
+    required this.location,
+  });
 }

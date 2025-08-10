@@ -25,22 +25,23 @@ class _StandartListviewPageState extends State<StandartListviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView( // this is start of example
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Standart ListView',
-                desc: 'This is the example of listview without any style'
-            ),
-            const Text('data 1'),
-            const Text('data 2'),
-            const Text('data 3'),
-            const Text('data 4'),
-            const Text('data 5'),
-          ],
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        // this is start of example
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Standart ListView',
+            desc: 'This is the example of listview without any style',
+          ),
+          const Text('data 1'),
+          const Text('data 2'),
+          const Text('data 3'),
+          const Text('data 4'),
+          const Text('data 5'),
+        ],
+      ),
     );
   }
 }

@@ -33,9 +33,9 @@ class _AbsorbPointerPageState extends State<AbsorbPointerPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Absorb Pointer',
-                desc: 'A widget that absorbs pointers during hit testing.',
-                icon: Icons.mouse
+              title: 'Absorb Pointer',
+              desc: 'A widget that absorbs pointers during hit testing.',
+              icon: Icons.mouse,
             ),
             const SizedBox(height: 16),
             Container(
@@ -46,10 +46,7 @@ class _AbsorbPointerPageState extends State<AbsorbPointerPage> {
                   SizedBox(
                     width: 200.0,
                     height: 100.0,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: null,
-                    ),
+                    child: ElevatedButton(onPressed: () {}, child: null),
                   ),
                   SizedBox(
                     width: 100.0,
@@ -67,7 +64,7 @@ class _AbsorbPointerPageState extends State<AbsorbPointerPage> {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

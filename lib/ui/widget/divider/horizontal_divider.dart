@@ -25,50 +25,40 @@ class _HorizontalDividerPageState extends State<HorizontalDividerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Horizontal Divider',
-                  desc: 'This is the example of horizontal divider'),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Menu 1'),
-                    Divider(),
-                    Text('Menu 2'),
-                    Divider(
-                      thickness: 8,
-                    ),
-                    Text('Menu 3'),
-                    Divider(
-                      height: 40,
-                    ),
-                    Text('Menu 4'),
-                    Divider(
-                      color: Colors.pinkAccent,
-                    ),
-                    Text('Menu 5'),
-                    Divider(
-                      color: Colors.pinkAccent,
-                      indent: 24,
-                    ),
-                    Text('Menu 6'),
-                    Divider(
-                      color: Colors.pinkAccent,
-                      endIndent: 24,
-                    ),
-                  ],
-                ),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Horizontal Divider',
+              desc: 'This is the example of horizontal divider',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Menu 1'),
+                  Divider(),
+                  Text('Menu 2'),
+                  Divider(thickness: 8),
+                  Text('Menu 3'),
+                  Divider(height: 40),
+                  Text('Menu 4'),
+                  Divider(color: Colors.pinkAccent),
+                  Text('Menu 5'),
+                  Divider(color: Colors.pinkAccent, indent: 24),
+                  Text('Menu 6'),
+                  Divider(color: Colors.pinkAccent, endIndent: 24),
+                ],
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

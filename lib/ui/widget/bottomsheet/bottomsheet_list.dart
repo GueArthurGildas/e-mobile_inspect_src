@@ -29,57 +29,77 @@ class _BottomsheetListPageState extends State<BottomsheetListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            const Text('BottomSheet',
-                style: TextStyle(
-                    fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
-            Container(
-              margin: const EdgeInsets.only(top: 24),
-              child: Row(
-                children: [
-                  const Flexible(
-                      flex: 5,
-                      child: Text(
-                          'Bottom Sheet widget used to show some layout from the bottom',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: black77,
-                              letterSpacing: 0.5))),
-                  Flexible(
-                      flex: 2,
-                      child: Container(
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.open_in_browser,
-                              size: 50, color: softBlue)))
-                ],
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          const Text(
+            'BottomSheet',
+            style: TextStyle(
+              fontSize: 18,
+              color: black21,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 24),
+            child: Row(
+              children: [
+                const Flexible(
+                  flex: 5,
+                  child: Text(
+                    'Bottom Sheet widget used to show some layout from the bottom',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: black77,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.open_in_browser,
+                      size: 50,
+                      color: softBlue,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 48),
+            child: const Text(
+              'List',
+              style: TextStyle(
+                fontSize: 18,
+                color: black21,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 48),
-              child: const Text('List',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: black21,
-                      fontWeight: FontWeight.w500)),
-            ),
-            const SizedBox(height: 18),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Standart BottomSheet',
-                page: const StandartBottomsheetPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'BottomSheet with shape',
-                page: const BottomsheetWithShapePage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'BottomSheet dragdown to dismiss',
-                page: const BottomsheetDragdownToDismissPage()),
-          ],
-        ));
+          ),
+          const SizedBox(height: 18),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Standart BottomSheet',
+            page: const StandartBottomsheetPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'BottomSheet with shape',
+            page: const BottomsheetWithShapePage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'BottomSheet dragdown to dismiss',
+            page: const BottomsheetDragdownToDismissPage(),
+          ),
+        ],
+      ),
+    );
   }
 }

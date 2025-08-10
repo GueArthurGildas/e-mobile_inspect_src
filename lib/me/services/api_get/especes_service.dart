@@ -5,12 +5,11 @@ import 'package:test_app_divkit/me/config/api_constants.dart';
 import 'package:test_app_divkit/me/models/especes_model.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
 
-
 class EspecesService {
   Future<Database> get _db async => await DatabaseHelper.database;
 
   Future<List<Especes>> fetchFromApi() async {
-    final response = await http.get(Uri.parse(base_url_api+'especes'));
+    final response = await http.get(Uri.parse(base_url_api + 'especes'));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Especes.fromJson(json)).toList();
@@ -21,7 +20,11 @@ class EspecesService {
 
   Future<void> insert(Especes item) async {
     final db = await _db;
-    await db.insert('especes', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert(
+      'especes',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> syncToLocal() async {

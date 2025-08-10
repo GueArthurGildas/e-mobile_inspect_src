@@ -4,7 +4,12 @@ class Presentations {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Presentations({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  Presentations({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Presentations.fromJson(Map<String, dynamic> json) => Presentations(
     id: json['id'],

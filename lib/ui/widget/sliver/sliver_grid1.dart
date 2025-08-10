@@ -21,30 +21,31 @@ class _SliverGrid1PageState extends State<SliverGrid1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            const SliverAppBar(
-              title: Text('Sliver Grid 1'),
-              floating: true,
-              backgroundColor: Colors.pinkAccent,
-              expandedHeight: 200,
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          const SliverAppBar(
+            title: Text('Sliver Grid 1'),
+            floating: true,
+            backgroundColor: Colors.pinkAccent,
+            expandedHeight: 200,
+          ),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
             ),
-            SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-              ) ,
-              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                return Container(
-                  color: _randomColor(index),
-                  child: Center(
-                    child: Text((index+1).toString()),
-                  ),
-                );
-              }, childCount: 52,),
-            ),
-          ],
-        )
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return Container(
+                color: _randomColor(index),
+                child: Center(child: Text((index + 1).toString())),
+              );
+            }, childCount: 52),
+          ),
+        ],
+      ),
     );
   }
 

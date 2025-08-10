@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/models/pays_model.dart';
 import 'package:test_app_divkit/me/services/api_get/pays_api_services.dart';
 
-
 class PaysController extends ChangeNotifier {
   final PaysService _service = PaysService();
   List<Pays> _pays = [];
@@ -16,7 +15,7 @@ class PaysController extends ChangeNotifier {
       _pays = await _service.getLocalPays();
       notifyListeners();
     } catch (e) {
-      print('Erreur lors du chargement des pays : \$e');
+      print('Erreur lors du chargement des pays : $e');
     }
   }
 }

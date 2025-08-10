@@ -36,14 +36,17 @@ class _AppBar4PageState extends State<AppBar4Page> {
             children: [
               Container(
                 child: _globalWidget.createDetailWidget(
-                    title: 'App Bar 4 - Properties',
-                    desc: 'This is the example of App Bar with properties'
+                  title: 'App Bar 4 - Properties',
+                  desc: 'This is the example of App Bar with properties',
                 ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: AppBar(
-                  title: Image.asset('assets/images/logo_horizontal.png', height: 24),
+                  title: Image.asset(
+                    'assets/images/logo_horizontal.png',
+                    height: 24,
+                  ),
                   centerTitle: true,
                   iconTheme: const IconThemeData(
                     color: Colors.black, //change your color here

@@ -22,8 +22,9 @@ class _TimePickerWidgetPageState extends State<TimePickerWidgetPage> {
   @override
   void initState() {
     _timeController.text = formatDate(
-        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
-        [hh, ':', nn, " ", am]).toString();
+      DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
+      [hh, ':', nn, " ", am],
+    ).toString();
     super.initState();
   }
 
@@ -35,42 +36,44 @@ class _TimePickerWidgetPageState extends State<TimePickerWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'TimePicker Widget',
-                  desc: 'This is the example of TimePicker'
-              ),
-              Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: GestureDetector(
-                    onTap: () {
-                      _selectTime(context);
-                    },
-                    child: TextFormField(
-                      style: const TextStyle(fontSize: 40),
-                      onSaved: (String? val) {
-                        _setTime = val!;
-                        debugPrint(_setTime.toString());
-                      },
-                      enabled: false,
-                      keyboardType: TextInputType.text,
-                      controller: _timeController,
-                      decoration: const InputDecoration(
-                          disabledBorder:
-                          UnderlineInputBorder(borderSide: BorderSide.none),
-                          contentPadding: EdgeInsets.all(5)),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'TimePicker Widget',
+              desc: 'This is the example of TimePicker',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: GestureDetector(
+                onTap: () {
+                  _selectTime(context);
+                },
+                child: TextFormField(
+                  style: const TextStyle(fontSize: 40),
+                  onSaved: (String? val) {
+                    _setTime = val!;
+                    debugPrint(_setTime.toString());
+                  },
+                  enabled: false,
+                  keyboardType: TextInputType.text,
+                  controller: _timeController,
+                  decoration: const InputDecoration(
+                    disabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide.none,
                     ),
-                  )
+                    contentPadding: EdgeInsets.all(5),
+                  ),
+                ),
               ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -87,8 +90,9 @@ class _TimePickerWidgetPageState extends State<TimePickerWidgetPage> {
         _time = '$_hour : $_minute';
         _timeController.text = _time;
         _timeController.text = formatDate(
-            DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn, " ", am]).toString();
+          DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
+          [hh, ':', nn, " ", am],
+        ).toString();
       });
     }
   }

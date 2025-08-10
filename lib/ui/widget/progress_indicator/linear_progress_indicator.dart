@@ -51,64 +51,65 @@ class _LinearProgressIndicatorPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Linear Progress Indicator',
-                  desc: 'This is the example of linear progress indicator'),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const LinearProgressIndicator(),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Linear Progress Indicator',
+              desc: 'This is the example of linear progress indicator',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const LinearProgressIndicator(),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const LinearProgressIndicator(minHeight: 20),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const LinearProgressIndicator(
+                backgroundColor: Colors.pinkAccent,
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const LinearProgressIndicator(
-                  minHeight: 20,
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const LinearProgressIndicator(
+                backgroundColor: Colors.pinkAccent,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20, bottom: 10),
+              child: const Text('With value'),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                LinearProgressIndicator(
+                  backgroundColor: Colors.cyanAccent,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
+                  value: _progress,
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const LinearProgressIndicator(
-                  backgroundColor: Colors.pinkAccent,
+                const SizedBox(height: 16),
+                _globalWidget.createButton(
+                  buttonName: 'Start timer',
+                  onPressed: () {
+                    if (_timer == null) {
+                      _progress = 0;
+                      _startTimer();
+                    }
+                  },
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const LinearProgressIndicator(
-                  backgroundColor: Colors.pinkAccent,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 10),
-                child: const Text('With value'),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  LinearProgressIndicator(
-                    backgroundColor: Colors.cyanAccent,
-                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
-                    value: _progress,
-                  ),
-                  const SizedBox(height: 16),
-                  _globalWidget.createButton(
-                      buttonName: 'Start timer',
-                      onPressed: () {
-                        if (_timer == null) {
-                          _progress = 0;
-                          _startTimer();
-                        }
-                      }),
-                ],
-              ),
-            ],
-          ),
-        ));
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -30,264 +30,252 @@ class _RadioButtonWidgetPageState extends State<RadioButtonWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Radio Button Widget',
-                  desc: 'This is the example of Radio Button'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Radio Button Widget',
+              desc: 'This is the example of Radio Button',
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: const Text('Standart Radio Button'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Wrap(
+                children: [
+                  Column(
+                    children: [
+                      Radio(
+                        value: 'one',
+                        groupValue: _val1,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _val1 = value!;
+                          });
+                        },
+                      ),
+                      const Text('One'),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Radio(
+                        value: 'two',
+                        groupValue: _val1,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _val1 = value!;
+                          });
+                        },
+                      ),
+                      const Text('Two'),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Radio(
+                        value: 'three',
+                        groupValue: _val1,
+                        onChanged: (String? value) {
+                          setState(() {
+                            _val1 = value!;
+                          });
+                        },
+                      ),
+                      const Text('Three'),
+                    ],
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: const Text('Standart Radio Button'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  Radio(
+                    value: 'four',
+                    groupValue: _val1,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _val1 = value!;
+                      });
+                    },
+                  ),
+                  const Text('Four'),
+                  Radio(
+                    value: 'five',
+                    groupValue: _val1,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _val1 = value!;
+                      });
+                    },
+                  ),
+                  const Text('Five'),
+                  Radio(
+                    value: 'six',
+                    groupValue: _val1,
+                    onChanged: (String? value) {
+                      setState(() {
+                        _val1 = value!;
+                      });
+                    },
+                  ),
+                  const Text('Six'),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Wrap(
-                  children: [
-                    Column(
-                      children: [
-                        Radio(
-                          value: 'one',
-                          groupValue: _val1,
-                          onChanged: (String? value) {
-                            setState(() {
-                              _val1 = value!;
-                            });
-                          },
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Radio Tile'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                children: [
+                  // This goes to the build method
+                  RadioListTile(
+                    value: 'car',
+                    groupValue: _val2,
+                    title: const Text("Radio Title"),
+                    subtitle: const Text("Radio Subtitle"),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _val2 = value!;
+                      });
+                    },
+                    activeColor: Colors.red,
+                    secondary: OutlinedButton(
+                      onPressed: () {
+                        //debugPrint("Say Hello");
+                      },
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(
+                          Colors.transparent,
                         ),
-                        const Text('One')
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Radio(
-                          value: 'two',
-                          groupValue: _val1,
-                          onChanged: (String? value) {
-                            setState(() {
-                              _val1 = value!;
-                            });
-                          },
-                        ),
-                        const Text('Two')
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Radio(
-                          value: 'three',
-                          groupValue: _val1,
-                          onChanged: (String? value) {
-                            setState(() {
-                              _val1 = value!;
-                            });
-                          },
-                        ),
-                        const Text('Three')
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  children: [
-                    Radio(
-                      value: 'four',
-                      groupValue: _val1,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _val1 = value!;
-                        });
-                      },
-                    ),
-                    const Text('Four'),
-                    Radio(
-                      value: 'five',
-                      groupValue: _val1,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _val1 = value!;
-                        });
-                      },
-                    ),
-                    const Text('Five'),
-                    Radio(
-                      value: 'six',
-                      groupValue: _val1,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _val1 = value!;
-                        });
-                      },
-                    ),
-                    const Text('Six')
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: const Text('Radio Tile'),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Column(
-                  children: [
-                    // This goes to the build method
-                    RadioListTile(
-                      value: 'car',
-                      groupValue: _val2,
-                      title: const Text("Radio Title"),
-                      subtitle: const Text("Radio Subtitle"),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _val2 = value!;
-                        });
-                      },
-                      activeColor: Colors.red,
-                      secondary: OutlinedButton(
-                          onPressed: () {
-                            //debugPrint("Say Hello");
-                          },
-                          style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  )
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                    color: Colors.grey[300]!,
-                                    width: 1.0
-                                ),
-                              )
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
-                          child: const Text(
-                            'Say Hi',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                        ),
+                        side: MaterialStateProperty.all(
+                          BorderSide(color: Colors.grey[300]!, width: 1.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Say Hi',
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    RadioListTile(
-                      value: 'bike',
-                      groupValue: _val2,
-                      title: const Text("Radio Title"),
-                      subtitle: const Text("Radio Subtitle"),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _val2 = value!;
-                        });
+                  ),
+                  RadioListTile(
+                    value: 'bike',
+                    groupValue: _val2,
+                    title: const Text("Radio Title"),
+                    subtitle: const Text("Radio Subtitle"),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _val2 = value!;
+                      });
+                    },
+                    activeColor: Colors.red,
+                    secondary: OutlinedButton(
+                      onPressed: () {
+                        debugPrint("Say Hello");
                       },
-                      activeColor: Colors.red,
-                      secondary: OutlinedButton(
-                          onPressed: () {
-                            debugPrint("Say Hello");
-                          },
-                          style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  )
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                    color: Colors.grey[300]!,
-                                    width: 1.0
-                                ),
-                              )
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(
+                          Colors.transparent,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
-                          child: const Text(
-                            'Say Hi',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                        ),
+                        side: MaterialStateProperty.all(
+                          BorderSide(color: Colors.grey[300]!, width: 1.0),
+                        ),
+                      ),
+                      child: const Text(
+                        'Say Hi',
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    RadioListTile(
-                      value: 'boat',
-                      groupValue: _val2,
-                      title: const Text("Radio Title"),
-                      subtitle: const Text("Radio Subtitle"),
-                      onChanged: (String? value) {
-                        setState(() {
-                          _val2 = value!;
-                        });
+                  ),
+                  RadioListTile(
+                    value: 'boat',
+                    groupValue: _val2,
+                    title: const Text("Radio Title"),
+                    subtitle: const Text("Radio Subtitle"),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _val2 = value!;
+                      });
+                    },
+                    activeColor: Colors.red,
+                    secondary: OutlinedButton(
+                      onPressed: () {
+                        debugPrint("Say Hello");
                       },
-                      activeColor: Colors.red,
-                      secondary: OutlinedButton(
-                          onPressed: () {
-                            debugPrint("Say Hello");
-                          },
-                          style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all(Colors.transparent),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  )
-                              ),
-                              side: MaterialStateProperty.all(
-                                BorderSide(
-                                    color: Colors.grey[300]!,
-                                    width: 1.0
-                                ),
-                              )
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(
+                          Colors.transparent,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
-                          child: const Text(
-                            'Say Hi',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14
-                            ),
-                            textAlign: TextAlign.center,
-                          )
+                        ),
+                        side: MaterialStateProperty.all(
+                          BorderSide(color: Colors.grey[300]!, width: 1.0),
+                        ),
                       ),
-                    )
-                  ],
-                ),
+                      child: const Text(
+                        'Say Hi',
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: const Text('Custom Radio Button'),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Custom Radio Button'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Column(
+                children: [
+                  // This goes to the build method
+                  _customRadioButton(value: 'A', option: 'Option A'),
+                  const SizedBox(height: 16),
+                  _customRadioButton(value: 'B', option: 'Option B'),
+                  const SizedBox(height: 16),
+                  _customRadioButton(value: 'C', option: 'Option C'),
+                  const SizedBox(height: 16),
+                  _customRadioButton(value: 'D', option: 'Option D'),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Column(
-                  children: [
-                    // This goes to the build method
-                    _customRadioButton(value: 'A', option: 'Option A'),
-                    const SizedBox(height: 16),
-                    _customRadioButton(value: 'B', option: 'Option B'),
-                    const SizedBox(height: 16),
-                    _customRadioButton(value: 'C', option: 'Option C'),
-                    const SizedBox(height: 16),
-                    _customRadioButton(value: 'D', option: 'Option D'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _customRadioButton({value = 'A', option = 'Option A'}){
+  Widget _customRadioButton({value = 'A', option = 'Option A'}) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           _val3 = value;
         });
@@ -298,23 +286,24 @@ class _RadioButtonWidgetPageState extends State<RadioButtonWidgetPage> {
             width: 30,
             height: 30,
             decoration: BoxDecoration(
-                border: Border.all(
-                    width: 1,
-                    color: _val3==value?Colors.pinkAccent:Colors.grey
-                ),
-                borderRadius: const BorderRadius.all(
-                    Radius.circular(2)
-                ),
-                color: _val3==value?Colors.pinkAccent:Colors.white
+              border: Border.all(
+                width: 1,
+                color: _val3 == value ? Colors.pinkAccent : Colors.grey,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(2)),
+              color: _val3 == value ? Colors.pinkAccent : Colors.white,
             ),
             child: Center(
-                child: Text(value, style: TextStyle(
-                    color: _val3==value?Colors.white:black21
-                ))
+              child: Text(
+                value,
+                style: TextStyle(
+                  color: _val3 == value ? Colors.white : black21,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 16),
-          Text(option)
+          Text(option),
         ],
       ),
     );

@@ -5,7 +5,13 @@ class StudentModel {
   late String studentGender;
   late String studentAddress;
 
-  StudentModel({required this.studentId, required this.studentName, required this.studentPhoneNumber, required this.studentGender, required this.studentAddress});
+  StudentModel({
+    required this.studentId,
+    required this.studentName,
+    required this.studentPhoneNumber,
+    required this.studentGender,
+    required this.studentAddress,
+  });
 
   StudentModel.fromJson(Map<String, dynamic> json) {
     studentId = json['studentId'];

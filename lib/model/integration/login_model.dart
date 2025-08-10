@@ -4,7 +4,12 @@ class LoginModel {
   late String phoneNumber;
   late String sessionId;
 
-  LoginModel({required this.email, required this.fullName, required this.phoneNumber, required this.sessionId});
+  LoginModel({
+    required this.email,
+    required this.fullName,
+    required this.phoneNumber,
+    required this.sessionId,
+  });
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     email = json['email'];

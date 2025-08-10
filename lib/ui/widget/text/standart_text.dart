@@ -25,21 +25,21 @@ class _StandartTextPageState extends State<StandartTextPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Standart Text',
-                desc: 'This is the example of text without any style'
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text('lorem ipsum dolor sit amet'),
-            ),
-          ],
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Standart Text',
+            desc: 'This is the example of text without any style',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Text('lorem ipsum dolor sit amet'),
+          ),
+        ],
+      ),
     );
   }
 }

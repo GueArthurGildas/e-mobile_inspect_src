@@ -34,8 +34,9 @@ class _FabWithShapePageState extends State<FabWithShapePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'FAB with shape',
-                desc: 'This is the example of fab with shape'),
+              title: 'FAB with shape',
+              desc: 'This is the example of fab with shape',
+            ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: const Text('Below is the example'),
@@ -46,7 +47,9 @@ class _FabWithShapePageState extends State<FabWithShapePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Fluttertoast.showToast(
-              msg: 'FAB Pressed', toastLength: Toast.LENGTH_SHORT);
+            msg: 'FAB Pressed',
+            toastLength: Toast.LENGTH_SHORT,
+          );
         },
         backgroundColor: Colors.pinkAccent,
         shape: const RoundedRectangleBorder(),

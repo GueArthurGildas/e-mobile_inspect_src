@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -144,8 +143,6 @@ class DatabaseHelper {
     );
         ''');
 
-
-
         await db.execute('''
           CREATE TABLE IF NOT EXISTS types_engins (
         id INTEGER PRIMARY KEY,
@@ -155,7 +152,6 @@ class DatabaseHelper {
     );
 
         ''');
-
 
         await db.execute('''
           CREATE TABLE IF NOT EXISTS etats_engins (
@@ -188,9 +184,6 @@ class DatabaseHelper {
     );
   }
 }
-
-
-
 
 // await db.execute('''CREATE TABLE IF NOT EXISTS activite_navires ( id INTEGER NOT NULL , created_at TEXT NULL DEFAULT NULL, updated_at TEXT NULL DEFAULT NULL, libelle TEXT NOT NULL, PRIMARY );''');
 // await db.execute('''CREATE TABLE IF NOT EXISTS activite_navire_inspections ( id INTEGER NOT NULL , created_at TEXT NULL DEFAULT NULL, updated_at TEXT NULL DEFAULT NULL, activite_navire_id INTEGER NOT NULL, inspection_id INTEGER NOT NULL, PRIMARY );''');

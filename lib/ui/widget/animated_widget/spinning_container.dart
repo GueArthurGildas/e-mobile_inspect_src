@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class SpinningContainer extends AnimatedWidget {
-  const SpinningContainer({
-    super.key,
-    required AnimationController controller,
-  }) : super(listenable: controller);
+  const SpinningContainer({super.key, required AnimationController controller})
+    : super(listenable: controller);
 
   Animation<double> get _progress => listenable as Animation<double>;
 

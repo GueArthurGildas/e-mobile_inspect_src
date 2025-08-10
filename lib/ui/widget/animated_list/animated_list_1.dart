@@ -29,23 +29,23 @@ class _AnimatedList1PageState extends State<AnimatedList1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: AnimatedList(
-          // Key to call remove and insert item methods from anywhere
-          key: _listKey,
-          initialItemCount: _data.length,
-          itemBuilder: (context, index, animation) {
-            return _buildItem(_data[index], animation, index);
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blue,
-          onPressed: (){
-            _insertSingleItem();
-          },
-          child: const Icon(Icons.add),
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: AnimatedList(
+        // Key to call remove and insert item methods from anywhere
+        key: _listKey,
+        initialItemCount: _data.length,
+        itemBuilder: (context, index, animation) {
+          return _buildItem(_data[index], animation, index);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        onPressed: () {
+          _insertSingleItem();
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
@@ -57,16 +57,10 @@ class _AnimatedList1PageState extends State<AnimatedList1Page> {
         child: Card(
           elevation: 5.0,
           child: ListTile(
-            title: Text(
-              item,
-              style: const TextStyle(fontSize: 20),
-            ),
+            title: Text(item, style: const TextStyle(fontSize: 20)),
             trailing: GestureDetector(
-              child: const Icon(
-                Icons.remove_circle,
-                color: Colors.red,
-              ),
-              onTap: (){
+              child: const Icon(Icons.remove_circle, color: Colors.red),
+              onTap: () {
                 _removeSingleItems(index);
               },
             ),
@@ -77,14 +71,14 @@ class _AnimatedList1PageState extends State<AnimatedList1Page> {
   }
 
   /// Method to add an item to an index in a list
-  void _insertSingleItem(){
+  void _insertSingleItem() {
     int insertIndex;
-    if(_data.isNotEmpty){
+    if (_data.isNotEmpty) {
       insertIndex = _data.length;
     } else {
       insertIndex = 0;
     }
-    String item = 'Item ${insertIndex+1}';
+    String item = 'Item ${insertIndex + 1}';
     _data.insert(insertIndex, item);
     _listKey.currentState!.insertItem(insertIndex);
   }
@@ -100,6 +94,7 @@ class _AnimatedList1PageState extends State<AnimatedList1Page> {
       // A method to build the Card widget.
       return _buildItem(removedItem, animation, removeAt);
     }
+
     _listKey.currentState!.removeItem(removeIndex, builder);
   }
 }

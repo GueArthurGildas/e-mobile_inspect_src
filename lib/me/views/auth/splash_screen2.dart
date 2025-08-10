@@ -3,27 +3,45 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/ui/screen/signin/signin1.dart';
 
+import '../inspection/inspection_controller.dart';
 
 class SplashScreen2 extends StatefulWidget {
+  const SplashScreen2({super.key});
+
   static String id = "splash_screen2";
 
   @override
-  _SplashScreen2State createState() => _SplashScreen2State();
+  State<SplashScreen2> createState() => _SplashScreen2State();
 }
 
 class _SplashScreen2State extends State<SplashScreen2> {
+  final InspectionController _controller = InspectionController();
 
   @override
   void initState() {
     super.initState();
+    //_init();
+
     // Délai avant de naviguer vers l'écran de connexion
-    Timer(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => Signin1Page()),
       );
     });
   }
+
+  // Future<void> _init() async {
+  //   try {
+  //     await _controller.loadData();
+  //   } finally {
+  //     if (!mounted) return;
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (_) => Signin1Page()),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +82,13 @@ class _SplashScreen2State extends State<SplashScreen2> {
                 child: Text(
                   "Please wait while your changes are synchronized.",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
 }

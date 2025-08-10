@@ -5,10 +5,12 @@ class AnimatedDefaultTextstylePage extends StatefulWidget {
   const AnimatedDefaultTextstylePage({super.key});
 
   @override
-  State<AnimatedDefaultTextstylePage> createState() => _AnimatedDefaultTextstylePageState();
+  State<AnimatedDefaultTextstylePage> createState() =>
+      _AnimatedDefaultTextstylePageState();
 }
 
-class _AnimatedDefaultTextstylePageState extends State<AnimatedDefaultTextstylePage> {
+class _AnimatedDefaultTextstylePageState
+    extends State<AnimatedDefaultTextstylePage> {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -38,28 +40,29 @@ class _AnimatedDefaultTextstylePageState extends State<AnimatedDefaultTextstyleP
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Default Textstyle',
-                desc: 'Animated version of DefaultTextStyle which automatically transitions the default text style (the text style to apply to descendant Text widgets without explicit style) over a given duration whenever the given style changes.',
-                icon: Icons.animation
+              title: 'Animated Default Textstyle',
+              desc:
+                  'Animated version of DefaultTextStyle which automatically transitions the default text style (the text style to apply to descendant Text widgets without explicit style) over a given duration whenever the given style changes.',
+              icon: Icons.animation,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: _globalWidget.createButton(
-                  buttonName: 'Change',
-                  onPressed: (){
-                    setState(() {
-                      if(_first){
-                        _fontSize = 24;
-                        _fontWeight = FontWeight.normal;
-                        _color = Colors.black;
-                      } else {
-                        _fontSize = 36;
-                        _fontWeight = FontWeight.bold;
-                        _color = Colors.blue;
-                      }
-                      _first = !_first;
-                    });
-                  }
+                buttonName: 'Change',
+                onPressed: () {
+                  setState(() {
+                    if (_first) {
+                      _fontSize = 24;
+                      _fontWeight = FontWeight.normal;
+                      _color = Colors.black;
+                    } else {
+                      _fontSize = 36;
+                      _fontWeight = FontWeight.bold;
+                      _color = Colors.blue;
+                    }
+                    _first = !_first;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
@@ -74,7 +77,7 @@ class _AnimatedDefaultTextstylePageState extends State<AnimatedDefaultTextstyleP
                 ),
                 child: const Text('This text will change'),
               ),
-            )
+            ),
           ],
         ),
       ),

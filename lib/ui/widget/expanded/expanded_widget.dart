@@ -25,66 +25,68 @@ class _ExpandedWidgetPageState extends State<ExpandedWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget2(
-                title: 'Expanded Widget',
-                desc: 'Expanded Widget used to fit the rest of screen.',
-                icon: Icons.sync_alt
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 10, bottom: 8),
-                child: const Text('Horizontal expanded')
-            ),
-            Container(
-              height: 100,
-              color: Colors.grey[200],
-              child: Row(
-                children: [
-                  Container(
-                    width: 50,
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget2(
+            title: 'Expanded Widget',
+            desc: 'Expanded Widget used to fit the rest of screen.',
+            icon: Icons.sync_alt,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 8),
+            child: const Text('Horizontal expanded'),
+          ),
+          Container(
+            height: 100,
+            color: Colors.grey[200],
+            child: Row(
+              children: [
+                Container(width: 50, height: 50, color: Colors.pinkAccent),
+                Expanded(
+                  child: Container(
                     height: 50,
-                    color: Colors.pinkAccent,
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      color: Colors.green,
-                      child: const Center(child: Text('Expanded', style: TextStyle(color: Colors.white))),
+                    color: Colors.green,
+                    child: const Center(
+                      child: Text(
+                        'Expanded',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-            Container(
-                margin: const EdgeInsets.only(top: 20, bottom: 8),
-                child: const Text('Vertical expanded')
-            ),
-            Container(
-              height: 300,
-              color: Colors.grey[200],
-              child: Column(
-                children: [
-                  Container(
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 8),
+            child: const Text('Vertical expanded'),
+          ),
+          Container(
+            height: 300,
+            color: Colors.grey[200],
+            child: Column(
+              children: [
+                Container(width: 100, height: 50, color: Colors.pinkAccent),
+                Expanded(
+                  child: Container(
                     width: 100,
-                    height: 50,
-                    color: Colors.pinkAccent,
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: 100,
-                      color: Colors.green,
-                      child: const Center(child: Text('Expanded', style: TextStyle(color: Colors.white))),
+                    color: Colors.green,
+                    child: const Center(
+                      child: Text(
+                        'Expanded',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  )
-                ],
-              ),
-            )
-          ],
-        )
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

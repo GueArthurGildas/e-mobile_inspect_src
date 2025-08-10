@@ -30,10 +30,7 @@ class _AgentsShipingScreenState extends State<AgentsShipingScreen> {
       appBar: AppBar(
         title: const Text('AgentsShiping'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _load,
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
         ],
       ),
       body: _loading
@@ -42,9 +39,7 @@ class _AgentsShipingScreenState extends State<AgentsShipingScreen> {
               itemCount: _controller.items.length,
               itemBuilder: (context, index) {
                 final item = _controller.items[index];
-                return ListTile(
-                  title: Text(item.toMap().toString()),
-                );
+                return ListTile(title: Text(item.toMap().toString()));
               },
             ),
     );

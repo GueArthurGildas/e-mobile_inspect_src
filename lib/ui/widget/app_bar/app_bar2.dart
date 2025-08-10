@@ -36,14 +36,17 @@ class _AppBar2PageState extends State<AppBar2Page> {
             children: [
               Container(
                 child: _globalWidget.createDetailWidget(
-                    title: 'App Bar 2 - Image Title',
-                    desc: 'This is the example of App Bar with image title'
+                  title: 'App Bar 2 - Image Title',
+                  desc: 'This is the example of App Bar with image title',
                 ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: AppBar(
-                  title: Image.asset('assets/images/logo_horizontal.png', height: 24),
+                  title: Image.asset(
+                    'assets/images/logo_horizontal.png',
+                    height: 24,
+                  ),
                   centerTitle: true,
                 ),
               ),

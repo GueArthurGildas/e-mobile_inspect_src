@@ -5,7 +5,8 @@ class ListviewWithBuilderPage extends StatefulWidget {
   const ListviewWithBuilderPage({super.key});
 
   @override
-  State<ListviewWithBuilderPage> createState() => _ListviewWithBuilderPageState();
+  State<ListviewWithBuilderPage> createState() =>
+      _ListviewWithBuilderPageState();
 }
 
 class _ListviewWithBuilderPageState extends State<ListviewWithBuilderPage> {
@@ -36,7 +37,7 @@ class _ListviewWithBuilderPageState extends State<ListviewWithBuilderPage> {
     "Android Other 7",
     "Android Other 8",
     "Android Other 9",
-    "Android Other 10"
+    "Android Other 10",
   ];
 
   @override
@@ -52,18 +53,18 @@ class _ListviewWithBuilderPageState extends State<ListviewWithBuilderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView.builder(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(androidVersions[index]),
-            );
-          },
-          itemCount: androidVersions.length,
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        itemBuilder: (context, index) {
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(androidVersions[index]),
+          );
+        },
+        itemCount: androidVersions.length,
+      ),
     );
   }
 }

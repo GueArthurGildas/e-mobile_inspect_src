@@ -42,85 +42,95 @@ class _Signin4PageState extends State<Signin4Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView(
-      padding: const EdgeInsets.fromLTRB(30, 120, 30, 30),
-      children: <Widget>[
-        Center(
-            child: Image.asset('assets/images/logo_horizontal.png',
-                color: _mainColor, height: 30)),
-        const SizedBox(
-          height: 80,
-        ),
-        Text('Sign In',
-            style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.bold, color: _mainColor)),
-        TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          style: TextStyle(color: _color1),
-          decoration: InputDecoration(
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: _mainColor, width: 2.0)),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: _underlineColor),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(30, 120, 30, 30),
+        children: <Widget>[
+          Center(
+            child: Image.asset(
+              'assets/images/logo_horizontal.png',
+              color: _mainColor,
+              height: 30,
             ),
-            labelText: 'Email',
-            labelStyle: TextStyle(color: _color2),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        TextField(
-          obscureText: _obscureText,
-          style: TextStyle(color: _color1),
-          decoration: InputDecoration(
-            focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: _mainColor, width: 2.0)),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: _underlineColor),
+          const SizedBox(height: 80),
+          Text(
+            'Sign In',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: _mainColor,
             ),
-            labelText: 'Password',
-            labelStyle: TextStyle(color: _color2),
-            suffixIcon: IconButton(
+          ),
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            style: TextStyle(color: _color1),
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _mainColor, width: 2.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _underlineColor),
+              ),
+              labelText: 'Email',
+              labelStyle: TextStyle(color: _color2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          TextField(
+            obscureText: _obscureText,
+            style: TextStyle(color: _color1),
+            decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _mainColor, width: 2.0),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: _underlineColor),
+              ),
+              labelText: 'Password',
+              labelStyle: TextStyle(color: _color2),
+              suffixIcon: IconButton(
                 icon: Icon(_iconVisible, color: Colors.grey[400], size: 20),
                 onPressed: () {
                   _toggleObscureText();
-                }),
+                },
+              ),
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Align(
+          const SizedBox(height: 20),
+          Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
               onTap: () {
                 Fluttertoast.showToast(
-                    msg: 'Click forgot password',
-                    toastLength: Toast.LENGTH_SHORT);
+                  msg: 'Click forgot password',
+                  toastLength: Toast.LENGTH_SHORT,
+                );
                 FocusScope.of(context).unfocus();
               },
               child: Text(
                 'Forgot password?',
                 style: TextStyle(color: _mainColor, fontSize: 13),
               ),
-            )),
-        const SizedBox(
-          height: 40,
-        ),
-        TextButton(
+            ),
+          ),
+          const SizedBox(height: 40),
+          TextButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith<Color>(
                 (Set<MaterialState> states) => _mainColor,
               ),
               overlayColor: MaterialStateProperty.all(Colors.transparent),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(3.0),
-              )),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3.0),
+                ),
+              ),
             ),
             onPressed: () {
               Fluttertoast.showToast(
-                  msg: 'Click login', toastLength: Toast.LENGTH_SHORT);
+                msg: 'Click login',
+                toastLength: Toast.LENGTH_SHORT,
+              );
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
@@ -129,85 +139,86 @@ class _Signin4PageState extends State<Signin4Page> {
                 style: TextStyle(fontSize: 16, color: Colors.white),
                 textAlign: TextAlign.center,
               ),
-            )),
-        const SizedBox(
-          height: 40,
-        ),
-        Center(
-          child: Text(
-            'Or sign in with',
-            style: TextStyle(fontSize: 13, color: _color3),
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Container(
-          margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  Fluttertoast.showToast(
+          const SizedBox(height: 40),
+          Center(
+            child: Text(
+              'Or sign in with',
+              style: TextStyle(fontSize: 13, color: _color3),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Fluttertoast.showToast(
                       msg: 'Signin with google',
-                      toastLength: Toast.LENGTH_SHORT);
-                },
-                child: const Image(
-                  image: AssetImage("assets/images/google.png"),
-                  width: 40,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  },
+                  child: const Image(
+                    image: AssetImage("assets/images/google.png"),
+                    width: 40,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Fluttertoast.showToast(
+                GestureDetector(
+                  onTap: () {
+                    Fluttertoast.showToast(
                       msg: 'Signin with facebook',
-                      toastLength: Toast.LENGTH_SHORT);
-                },
-                child: const Image(
-                  image: AssetImage("assets/images/facebook.png"),
-                  width: 40,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  },
+                  child: const Image(
+                    image: AssetImage("assets/images/facebook.png"),
+                    width: 40,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Fluttertoast.showToast(
+                GestureDetector(
+                  onTap: () {
+                    Fluttertoast.showToast(
                       msg: 'Signin with twitter',
-                      toastLength: Toast.LENGTH_SHORT);
-                },
-                child: const Image(
-                  image: AssetImage("assets/images/twitter.png"),
-                  width: 40,
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
+                  },
+                  child: const Image(
+                    image: AssetImage("assets/images/twitter.png"),
+                    width: 40,
+                  ),
                 ),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: GestureDetector(
-            onTap: () {
-              Fluttertoast.showToast(
-                  msg: 'Click signup', toastLength: Toast.LENGTH_SHORT);
-              FocusScope.of(context).unfocus();
-            },
-            child: Wrap(
-              children: [
-                Text(
-                  'No account yet? ',
-                  style: TextStyle(fontSize: 13, color: _color3),
-                ),
-                Text(
-                  'Create one',
-                  style: TextStyle(fontSize: 13, color: _mainColor),
-                )
               ],
             ),
           ),
-        ),
-      ],
-    ));
+          const SizedBox(height: 20),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                Fluttertoast.showToast(
+                  msg: 'Click signup',
+                  toastLength: Toast.LENGTH_SHORT,
+                );
+                FocusScope.of(context).unfocus();
+              },
+              child: Wrap(
+                children: [
+                  Text(
+                    'No account yet? ',
+                    style: TextStyle(fontSize: 13, color: _color3),
+                  ),
+                  Text(
+                    'Create one',
+                    style: TextStyle(fontSize: 13, color: _mainColor),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

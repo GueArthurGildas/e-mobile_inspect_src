@@ -5,7 +5,8 @@ class SnackbarWithDurationPage extends StatefulWidget {
   const SnackbarWithDurationPage({super.key});
 
   @override
-  State<SnackbarWithDurationPage> createState() => _SnackbarWithDurationPageState();
+  State<SnackbarWithDurationPage> createState() =>
+      _SnackbarWithDurationPageState();
 }
 
 class _SnackbarWithDurationPageState extends State<SnackbarWithDurationPage> {
@@ -25,35 +26,35 @@ class _SnackbarWithDurationPageState extends State<SnackbarWithDurationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Snackbar with duration',
-                  desc: 'This is the example of snackbar with duration'
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Container(
-                  child: _globalWidget.createButton(
-                      buttonName: 'Show snackbar with duration',
-                      onPressed: (){
-                        const snackBar = SnackBar(
-                            duration: Duration(seconds: 10),
-                            content: Text('Snackbar with duration 10 seconds')
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                  ),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Snackbar with duration',
+              desc: 'This is the example of snackbar with duration',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Container(
+                child: _globalWidget.createButton(
+                  buttonName: 'Show snackbar with duration',
+                  onPressed: () {
+                    const snackBar = SnackBar(
+                      duration: Duration(seconds: 10),
+                      content: Text('Snackbar with duration 10 seconds'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
                 ),
               ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

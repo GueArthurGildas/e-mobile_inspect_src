@@ -8,7 +8,8 @@ class FadeTransitionPage extends StatefulWidget {
   State<FadeTransitionPage> createState() => _FadeTransitionPageState();
 }
 
-class _FadeTransitionPageState extends State<FadeTransitionPage> with TickerProviderStateMixin {
+class _FadeTransitionPageState extends State<FadeTransitionPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -43,9 +44,9 @@ class _FadeTransitionPageState extends State<FadeTransitionPage> with TickerProv
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Fade Transition',
-                desc: 'Animates the opacity of a widget.',
-                icon: Icons.animation
+              title: 'Fade Transition',
+              desc: 'Animates the opacity of a widget.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
@@ -54,7 +55,7 @@ class _FadeTransitionPageState extends State<FadeTransitionPage> with TickerProv
                 opacity: _animation,
                 child: Image.asset('assets/images/lamp.jpg', height: 200),
               ),
-            )
+            ),
           ],
         ),
       ),

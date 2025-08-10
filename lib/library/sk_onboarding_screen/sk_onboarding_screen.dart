@@ -83,33 +83,35 @@ class SKOnboardingScreenState extends State<SKOnboardingScreen> {
                 Container(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                      onPressed: () {
-                        widget.skipClicked("Skip Tapped");
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 14.0),
-                        child: Text(
-                          'Skip',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontSize: 20,
-                          ),
+                    onPressed: () {
+                      widget.skipClicked("Skip Tapped");
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14.0),
+                      child: Text(
+                        'Skip',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                          fontSize: 20,
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
                 Container(
                   height: pageHeight,
                   color: Colors.transparent,
                   child: PageView(
-                      physics: const ClampingScrollPhysics(),
-                      controller: _pageController,
-                      onPageChanged: (int page) {
-                        setState(() {
-                          _currentPage = page;
-                        });
-                      },
-                      children: buildOnboardingPages()),
+                    physics: const ClampingScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: (int page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
+                    children: buildOnboardingPages(),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -120,8 +122,10 @@ class SKOnboardingScreenState extends State<SKOnboardingScreen> {
                         child: Align(
                           alignment: FractionalOffset.bottomRight,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(right: 20, bottom: 10),
+                            padding: const EdgeInsets.only(
+                              right: 20,
+                              bottom: 10,
+                            ),
                             child: FloatingActionButton(
                               backgroundColor: widget.bgColor,
                               child: Icon(
@@ -165,7 +169,8 @@ class SKOnboardingScreenState extends State<SKOnboardingScreen> {
                       width: size,
                       height: size,
                       url: page.imageFromUrl,
-                      plColor: Colors.transparent),
+                      plColor: Colors.transparent,
+                    ),
             ),
             const SizedBox(height: 30.0),
             Text(
@@ -197,24 +202,31 @@ class SKOnboardingScreenState extends State<SKOnboardingScreen> {
       child: Container(
         height: 50.0,
         decoration: BoxDecoration(
-            color: widget.themeColor,
-            borderRadius: const BorderRadius.all(Radius.circular(6.0))),
+          color: widget.themeColor,
+          borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+        ),
         child: const Center(
           child: Text(
             'Get Started',
             style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500),
+              color: Colors.white,
+              fontSize: 20.0,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),
     );
 
     return Padding(
-        padding: const EdgeInsets.only(
-            left: 20.0, right: 20.0, top: 5.0, bottom: 30.0),
-        child: loginButtonWithGesture);
+      padding: const EdgeInsets.only(
+        left: 20.0,
+        right: 20.0,
+        top: 5.0,
+        bottom: 30.0,
+      ),
+      child: loginButtonWithGesture,
+    );
   }
 
   void _getStartedTapped() {

@@ -35,109 +35,110 @@ class _AnimatedAlignPageState extends State<AnimatedAlignPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Align',
-                desc: 'Animated version of Align which automatically transitions the child\'s position over a given duration whenever the given alignment changes.',
-                icon: Icons.animation
+              title: 'Animated Align',
+              desc:
+                  'Animated version of Align which automatically transitions the child\'s position over a given duration whenever the given alignment changes.',
+              icon: Icons.animation,
             ),
             Wrap(
               children: [
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Top Left',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.topLeft;
-                        });
-                      }
+                    buttonName: 'Top Left',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.topLeft;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Top Center',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.topCenter;
-                        });
-                      }
+                    buttonName: 'Top Center',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.topCenter;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Top Right',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.topRight;
-                        });
-                      }
+                    buttonName: 'Top Right',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.topRight;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Center Left',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.centerLeft;
-                        });
-                      }
+                    buttonName: 'Center Left',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.centerLeft;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Center',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.center;
-                        });
-                      }
+                    buttonName: 'Center',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.center;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Center Right',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.centerRight;
-                        });
-                      }
+                    buttonName: 'Center Right',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.centerRight;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Bottom Left',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.bottomLeft;
-                        });
-                      }
+                    buttonName: 'Bottom Left',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.bottomLeft;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Bottom Center',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.bottomCenter;
-                        });
-                      }
+                    buttonName: 'Bottom Center',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.bottomCenter;
+                      });
+                    },
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(right: 16, bottom: 16),
                   child: _globalWidget.createButton(
-                      buttonName: 'Bottom Right',
-                      onPressed: (){
-                        setState(() {
-                          _alignment = Alignment.bottomRight;
-                        });
-                      }
+                    buttonName: 'Bottom Right',
+                    onPressed: () {
+                      setState(() {
+                        _alignment = Alignment.bottomRight;
+                      });
+                    },
                   ),
                 ),
               ],
@@ -153,7 +154,7 @@ class _AnimatedAlignPageState extends State<AnimatedAlignPage> {
                 curve: Curves.fastOutSlowIn,
                 child: const FlutterLogo(size: 50.0),
               ),
-            )
+            ),
           ],
         ),
       ),

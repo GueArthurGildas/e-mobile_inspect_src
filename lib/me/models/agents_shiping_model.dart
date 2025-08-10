@@ -7,7 +7,15 @@ class AgentsShiping {
   final dynamic created_at;
   final dynamic updated_at;
 
-  AgentsShiping({required this.id, required this.nom, required this.prenom, required this.contact, required this.photo, required this.created_at, required this.updated_at});
+  AgentsShiping({
+    required this.id,
+    required this.nom,
+    required this.prenom,
+    required this.contact,
+    required this.photo,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory AgentsShiping.fromJson(Map<String, dynamic> json) => AgentsShiping(
     id: json['id'],

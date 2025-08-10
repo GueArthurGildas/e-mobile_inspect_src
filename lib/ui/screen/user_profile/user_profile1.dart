@@ -29,113 +29,145 @@ class _UserProfile1PageState extends State<UserProfile1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: _color1,
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          elevation: 0,
-          centerTitle: true,
-          title: const Text('User Profile', style: TextStyle(
-            fontSize: 18,
-          )),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.all(32),
-          children: [
-            Center(
-              child: GestureDetector(
-                onTap: (){
-                  _showAlertDialog(context);
-                },
-                child: ClipOval(
-                  child: buildCacheNetworkImage(url: '$globalUrl/user/avatar.png', width: 200),
+      appBar: AppBar(
+        backgroundColor: _color1,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('User Profile', style: TextStyle(fontSize: 18)),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(32),
+        children: [
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                _showAlertDialog(context);
+              },
+              child: ClipOval(
+                child: buildCacheNetworkImage(
+                  url: '$globalUrl/user/avatar.png',
+                  width: 200,
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 32),
-              alignment: Alignment.center,
-              child: Text('Robert Steven', style: TextStyle(
-                  fontSize: 18, fontWeight: FontWeight.bold, color: _color2
-              )),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 12),
-              alignment: Alignment.center,
-              child: GestureDetector(
-                onTap: (){
-                  Fluttertoast.showToast(msg: 'Click edit profile', toastLength: Toast.LENGTH_SHORT);
-                },
-                child: Text('edit profile', style: TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.bold, color: _color1, decoration: TextDecoration.underline, decorationThickness: 2
-                )),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 32),
+            alignment: Alignment.center,
+            child: Text(
+              'Robert Steven',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: _color2,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 32),
-              padding: const EdgeInsets.all(32),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                    Radius.circular(10.0)
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 12),
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: () {
+                Fluttertoast.showToast(
+                  msg: 'Click edit profile',
+                  toastLength: Toast.LENGTH_SHORT,
+                );
+              },
+              child: Text(
+                'edit profile',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: _color1,
+                  decoration: TextDecoration.underline,
+                  decorationThickness: 2,
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Name', style: TextStyle(
-                      color: Colors.grey[700], fontSize: 13
-                  )),
-                  const SizedBox(height: 4),
-                  Text('Robert Steven', style: TextStyle(
-                      color: _color3, fontSize: 15, fontWeight: FontWeight.bold
-                  )),
-                  const SizedBox(height: 16),
-                  Text('Email', style: TextStyle(
-                      color: Colors.grey[700], fontSize: 13
-                  )),
-                  const SizedBox(height: 4),
-                  Text('example@domain.com', style: TextStyle(
-                      color: _color3, fontSize: 15, fontWeight: FontWeight.bold
-                  )),
-                  const SizedBox(height: 16),
-                  Text('Phone Number', style: TextStyle(
-                      color: Colors.grey[700], fontSize: 13
-                  )),
-                  const SizedBox(height: 4),
-                  Text('0811888999', style: TextStyle(
-                      color: _color3, fontSize: 15, fontWeight: FontWeight.bold
-                  )),
-                ],
-              ),
-            )
-          ],
-        )
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 32),
+            padding: const EdgeInsets.all(32),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Name',
+                  style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Robert Steven',
+                  style: TextStyle(
+                    color: _color3,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Email',
+                  style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'example@domain.com',
+                  style: TextStyle(
+                    color: _color3,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Phone Number',
+                  style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '0811888999',
+                  style: TextStyle(
+                    color: _color3,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   void _showAlertDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: const Text('No', style: TextStyle(color: softBlue))
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: const Text('No', style: TextStyle(color: softBlue)),
     );
     Widget continueButton = TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-          Fluttertoast.showToast(msg: 'Click edit profile picture', toastLength: Toast.LENGTH_SHORT);
-        },
-        child: const Text('Yes', style: TextStyle(color: softBlue))
+      onPressed: () {
+        Navigator.pop(context);
+        Fluttertoast.showToast(
+          msg: 'Click edit profile picture',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      },
+      child: const Text('Yes', style: TextStyle(color: softBlue)),
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: const Text('Edit Profile Picture ?'),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog

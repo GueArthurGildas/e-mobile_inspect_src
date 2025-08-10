@@ -25,35 +25,35 @@ class _SnackbarColorPageState extends State<SnackbarColorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Snackbar color',
-                  desc: 'This is the example of snackbar with color'
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: Container(
-                  child: _globalWidget.createButton(
-                      buttonName: 'Show snackbar with color',
-                      onPressed: (){
-                        const snackBar = SnackBar(
-                            backgroundColor: Colors.pinkAccent,
-                            content: Text('Snackbar with color')
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                  ),
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Snackbar color',
+              desc: 'This is the example of snackbar with color',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Container(
+                child: _globalWidget.createButton(
+                  buttonName: 'Show snackbar with color',
+                  onPressed: () {
+                    const snackBar = SnackBar(
+                      backgroundColor: Colors.pinkAccent,
+                      content: Text('Snackbar with color'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
                 ),
               ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -25,31 +25,31 @@ class _StandartIconPageState extends State<StandartIconPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Standart Icon',
-                  desc: 'This is the example of icon'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Standart Icon',
+              desc: 'This is the example of icon',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Wrap(
+                spacing: 32,
+                children: [
+                  Icon(Icons.android_outlined),
+                  Icon(Icons.android_outlined, color: Colors.pinkAccent),
+                  Icon(Icons.android_outlined, size: 40),
+                ],
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Wrap(
-                  spacing: 32,
-                  children: [
-                    Icon(Icons.android_outlined),
-                    Icon(Icons.android_outlined, color: Colors.pinkAccent),
-                    Icon(Icons.android_outlined, size: 40),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

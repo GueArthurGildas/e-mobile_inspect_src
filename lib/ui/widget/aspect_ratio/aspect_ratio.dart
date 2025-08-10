@@ -33,9 +33,10 @@ class _AspectRatioPageState extends State<AspectRatioPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Aspect Ratio',
-                desc: 'A widget that attempts to size the child to a specific aspect ratio.',
-                icon: Icons.aspect_ratio
+              title: 'Aspect Ratio',
+              desc:
+                  'A widget that attempts to size the child to a specific aspect ratio.',
+              icon: Icons.aspect_ratio,
             ),
             const SizedBox(height: 16),
             Container(
@@ -47,9 +48,7 @@ class _AspectRatioPageState extends State<AspectRatioPage> {
                 height: 100.0,
                 child: AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: Container(
-                    color: Colors.pinkAccent,
-                  ),
+                  child: Container(color: Colors.pinkAccent),
                 ),
               ),
             ),
@@ -69,7 +68,7 @@ class _AspectRatioPageState extends State<AspectRatioPage> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

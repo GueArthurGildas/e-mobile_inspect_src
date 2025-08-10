@@ -35,8 +35,9 @@ class _FabWithBorderRadiusPageState extends State<FabWithBorderRadiusPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'FAB with border radius',
-                desc: 'This is the example of fab with border radius'),
+              title: 'FAB with border radius',
+              desc: 'This is the example of fab with border radius',
+            ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: const Text('Below is the example'),
@@ -47,11 +48,14 @@ class _FabWithBorderRadiusPageState extends State<FabWithBorderRadiusPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Fluttertoast.showToast(
-              msg: 'FAB Pressed', toastLength: Toast.LENGTH_SHORT);
+            msg: 'FAB Pressed',
+            toastLength: Toast.LENGTH_SHORT,
+          );
         },
         backgroundColor: Colors.pinkAccent,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        ),
         child: const Icon(Icons.add),
       ),
     );

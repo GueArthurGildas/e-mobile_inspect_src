@@ -8,8 +8,9 @@ class CircularClipper extends CustomClipper<Rect> {
   @override
   Rect getClip(Size size) {
     Rect rect = Rect.fromCircle(
-        center: center ?? Offset(size.width / 2, size.height / 2),
-        radius: size.height * fraction);
+      center: center ?? Offset(size.width / 2, size.height / 2),
+      radius: size.height * fraction,
+    );
     return rect;
   }
 

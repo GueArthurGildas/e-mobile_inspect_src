@@ -22,47 +22,44 @@ class _StickySliverPageState extends State<StickySliverPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            const SliverAppBar(
-              title: Text('Sticky Sliver'),
-              floating: true,
-              backgroundColor: Colors.pinkAccent,
-              expandedHeight: 200,
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          const SliverAppBar(
+            title: Text('Sticky Sliver'),
+            floating: true,
+            backgroundColor: Colors.pinkAccent,
+            expandedHeight: 200,
+          ),
+          makeHeader('Header Section 1'),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return ListTile(title: Text('Item #${index + 1}'));
+            }, childCount: 50),
+          ),
+          makeHeader('Header Section 2'),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
             ),
-            makeHeader('Header Section 1'),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index){
-                return ListTile(title: Text('Item #${index+1}'));
-              },
-                childCount: 50,
-              ),
-            ),
-            makeHeader('Header Section 2'),
-            SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-              ) ,
-              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                return Container(
-                  color: _randomColor(index),
-                  child: Center(
-                    child: Text((index+1).toString()),
-                  ),
-                );
-              }, childCount: 50,),
-            ),
-            makeHeader('Header Section 3'),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index){
-                return ListTile(title: Text('Item #${index+1}'));
-              },
-                childCount: 50,
-              ),
-            ),
-          ],
-        )
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return Container(
+                color: _randomColor(index),
+                child: Center(child: Text((index + 1).toString())),
+              );
+            }, childCount: 50),
+          ),
+          makeHeader('Header Section 3'),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return ListTile(title: Text('Item #${index + 1}'));
+            }, childCount: 50),
+          ),
+        ],
+      ),
     );
   }
 
@@ -72,7 +69,10 @@ class _StickySliverPageState extends State<StickySliverPage> {
       delegate: _SliverAppBarDelegate(
         minHeight: 60.0,
         maxHeight: 200.0,
-        child: Container(color: Colors.lightBlue, child: Center(child: Text(headerText))),
+        child: Container(
+          color: Colors.lightBlue,
+          child: Center(child: Text(headerText)),
+        ),
       ),
     );
   }
@@ -92,18 +92,24 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     required this.minHeight,
     required this.maxHeight,
     required this.child,
-  });  final double minHeight;
+  });
+  final double minHeight;
   final double maxHeight;
-  final Widget child;  @override
-  double get minExtent => minHeight;  @override
-  double get maxExtent => math.max(maxHeight, minHeight);  @override
+  final Widget child;
+  @override
+  double get minExtent => minHeight;
+  @override
+  double get maxExtent => math.max(maxHeight, minHeight);
+  @override
   Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent)
-  {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return SizedBox.expand(child: child);
-  }  @override
+  }
+
+  @override
   bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
     return maxHeight != oldDelegate.maxHeight ||
         minHeight != oldDelegate.minHeight ||

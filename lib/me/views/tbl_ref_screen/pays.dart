@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/controllers/pays_controller.dart';
 import 'package:test_app_divkit/me/models/pays_model.dart';
 
-
 class PaysScreen extends StatefulWidget {
   const PaysScreen({super.key});
 
@@ -46,16 +45,16 @@ class _PaysScreenState extends State<PaysScreen> {
           : _controller.pays.isEmpty
           ? const Center(child: Text("Aucun pays trouvé dans la base locale."))
           : ListView.builder(
-        itemCount: _controller.pays.length,
-        itemBuilder: (context, index) {
-          final Pays pays = _controller.pays[index];
-          return ListTile(
-            leading: Text(pays.id.toString()),
-            title: Text(pays.libelle),
-            subtitle: Text(pays.code),
-          );
-        },
-      ),
+              itemCount: _controller.pays.length,
+              itemBuilder: (context, index) {
+                final Pays pays = _controller.pays[index];
+                return ListTile(
+                  leading: Text(pays.id.toString()),
+                  title: Text(pays.libelle),
+                  subtitle: Text(pays.code),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           for (var p in _controller.pays) {

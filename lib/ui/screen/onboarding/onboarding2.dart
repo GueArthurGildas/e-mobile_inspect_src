@@ -15,23 +15,29 @@ class Onboarding2Page extends StatefulWidget {
 class _Onboarding2PageState extends State<Onboarding2Page> {
   final pages = [
     SkOnboardingModel(
-        title: 'Tutorial 1',
-        description: 'This is description of tutorial 1. Lorem ipsum dolor sit amet.',
-        titleColor: Colors.black,
-        descripColor: const Color(0xFF929794),
-        imageAssetPath: 'assets/images/lamp.jpg'),
+      title: 'Tutorial 1',
+      description:
+          'This is description of tutorial 1. Lorem ipsum dolor sit amet.',
+      titleColor: Colors.black,
+      descripColor: const Color(0xFF929794),
+      imageAssetPath: 'assets/images/lamp.jpg',
+    ),
     SkOnboardingModel(
-        title: 'Tutorial 2',
-        description: 'This is description of tutorial 2. Lorem ipsum dolor sit amet.',
-        titleColor: Colors.black,
-        descripColor: const Color(0xFF929794),
-        imageFromUrl: '$globalUrl/onboarding/cart.png'),
+      title: 'Tutorial 2',
+      description:
+          'This is description of tutorial 2. Lorem ipsum dolor sit amet.',
+      titleColor: Colors.black,
+      descripColor: const Color(0xFF929794),
+      imageFromUrl: '$globalUrl/onboarding/cart.png',
+    ),
     SkOnboardingModel(
-        title: 'Tutorial 3',
-        description: 'This is description of tutorial 3. Lorem ipsum dolor sit amet.',
-        titleColor: Colors.black,
-        descripColor: const Color(0xFF929794),
-        imageFromUrl: '$globalUrl/onboarding/delivery.png'),
+      title: 'Tutorial 3',
+      description:
+          'This is description of tutorial 3. Lorem ipsum dolor sit amet.',
+      titleColor: Colors.black,
+      descripColor: const Color(0xFF929794),
+      imageFromUrl: '$globalUrl/onboarding/delivery.png',
+    ),
   ];
 
   @override
@@ -47,22 +53,28 @@ class _Onboarding2PageState extends State<Onboarding2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.dark,
-          ),
-          child: SKOnboardingScreen(
-            bgColor: Colors.white,
-            themeColor: const Color(0xFFf74269),
-            pages: pages,
-            skipClicked: (value) {
-              Fluttertoast.showToast(msg: 'Click skip', toastLength: Toast.LENGTH_SHORT);
-            },
-            getStartedClicked: (value) {
-              Fluttertoast.showToast(msg: 'Click get started', toastLength: Toast.LENGTH_SHORT);
-            },
-          ),
-        )
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        child: SKOnboardingScreen(
+          bgColor: Colors.white,
+          themeColor: const Color(0xFFf74269),
+          pages: pages,
+          skipClicked: (value) {
+            Fluttertoast.showToast(
+              msg: 'Click skip',
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+          getStartedClicked: (value) {
+            Fluttertoast.showToast(
+              msg: 'Click get started',
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+        ),
+      ),
     );
   }
 }

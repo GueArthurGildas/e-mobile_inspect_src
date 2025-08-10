@@ -27,91 +27,98 @@ class _User1PageState extends State<User1Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.black, //change your color here
-          ),
-          elevation: 0,
-          title: const Text(
-            'Account',
-            style: TextStyle(
-                fontSize: 18,
-                color: Colors.black
-            ),
-          ),
-          backgroundColor: Colors.white,
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          actions: [
-            GestureDetector(
-                onTap: () {
-                  Fluttertoast.showToast(msg: 'Click message', toastLength: Toast.LENGTH_SHORT);
-                },
-                child: Icon(Icons.email, color: _color1)),
-            IconButton(
-                icon: Icon(Icons.notifications, color: _color1,),
-                onPressed: () {
-                  Fluttertoast.showToast(msg: 'Click notification', toastLength: Toast.LENGTH_SHORT);
-                }),
-          ],
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(1.0),
-              child: Container(
-                color: Colors.grey[100],
-                height: 1.0,
-              )),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
         ),
-        body: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            _createAccountInformation(),
-            _createListMenu('Change Password'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Set Address'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Order List'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Review'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Payment Method'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Last Seen Product'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Change Language'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Notification Setting'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('About'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Terms and Conditions'),
-            Divider(height: 0, color: Colors.grey[400]),
-            _createListMenu('Privacy Policy'),
-            Divider(height: 0, color: Colors.grey[400]),
-            Container(
-              margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: (){
-                  Fluttertoast.showToast(msg: 'Click log out', toastLength: Toast.LENGTH_SHORT);
-                },
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.power_settings_new, size: 20, color: assentColor),
-                    SizedBox(width: 8),
-                    Text('Sign Out', style: TextStyle(
-                        fontSize: 15, color: assentColor
-                    )),
-                  ],
-                ),
+        elevation: 0,
+        title: const Text(
+          'Account',
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
+        backgroundColor: Colors.white,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Fluttertoast.showToast(
+                msg: 'Click message',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+            child: Icon(Icons.email, color: _color1),
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications, color: _color1),
+            onPressed: () {
+              Fluttertoast.showToast(
+                msg: 'Click notification',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey[100], height: 1.0),
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          _createAccountInformation(),
+          _createListMenu('Change Password'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Set Address'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Order List'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Review'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Payment Method'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Last Seen Product'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Change Language'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Notification Setting'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('About'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Terms and Conditions'),
+          Divider(height: 0, color: Colors.grey[400]),
+          _createListMenu('Privacy Policy'),
+          Divider(height: 0, color: Colors.grey[400]),
+          Container(
+            margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                Fluttertoast.showToast(
+                  msg: 'Click log out',
+                  toastLength: Toast.LENGTH_SHORT,
+                );
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.power_settings_new, size: 20, color: assentColor),
+                  SizedBox(width: 8),
+                  Text(
+                    'Sign Out',
+                    style: TextStyle(fontSize: 15, color: assentColor),
+                  ),
+                ],
               ),
             ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _createAccountInformation(){
-    final double profilePictureSize = MediaQuery.of(context).size.width/4;
+  Widget _createAccountInformation() {
+    final double profilePictureSize = MediaQuery.of(context).size.width / 4;
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
       child: Row(
@@ -122,75 +129,86 @@ class _User1PageState extends State<User1Page> {
             height: profilePictureSize,
             child: GestureDetector(
               onTap: () {
-                Fluttertoast.showToast(msg: 'Click picture', toastLength: Toast.LENGTH_SHORT);
+                Fluttertoast.showToast(
+                  msg: 'Click picture',
+                  toastLength: Toast.LENGTH_SHORT,
+                );
               },
               child: CircleAvatar(
                 backgroundColor: Colors.grey[200],
                 radius: profilePictureSize,
                 child: CircleAvatar(
                   backgroundColor: Colors.white,
-                  radius: profilePictureSize-4,
+                  radius: profilePictureSize - 4,
                   child: Hero(
                     tag: 'profilePicture',
                     child: ClipOval(
-                        child: buildCacheNetworkImage(width: profilePictureSize-4, height: profilePictureSize-4, url: '$globalUrl/user/avatar.png')
+                      child: buildCacheNetworkImage(
+                        width: profilePictureSize - 4,
+                        height: profilePictureSize - 4,
+                        url: '$globalUrl/user/avatar.png',
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            width: 16,
-          ),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Robert Steven', style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold
-                )),
-                const SizedBox(
-                  height: 8,
+                const Text(
+                  'Robert Steven',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 8),
                 GestureDetector(
-                  onTap: (){
-                    Fluttertoast.showToast(msg: 'Click account information / user profile', toastLength: Toast.LENGTH_SHORT);
+                  onTap: () {
+                    Fluttertoast.showToast(
+                      msg: 'Click account information / user profile',
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
                   },
                   child: Row(
                     children: [
-                      Text('Account Information', style: TextStyle(
-                          fontSize: 14, color: _color1
-                      )),
-                      const SizedBox(
-                        width: 8,
+                      Text(
+                        'Account Information',
+                        style: TextStyle(fontSize: 14, color: _color1),
                       ),
-                      const Icon(Icons.chevron_right, size: 20, color: softGrey)
+                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.chevron_right,
+                        size: 20,
+                        color: softGrey,
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  Widget _createListMenu(String menuTitle){
+  Widget _createListMenu(String menuTitle) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: (){
-        Fluttertoast.showToast(msg: 'Click $menuTitle', toastLength: Toast.LENGTH_SHORT);
+      onTap: () {
+        Fluttertoast.showToast(
+          msg: 'Click $menuTitle',
+          toastLength: Toast.LENGTH_SHORT,
+        );
       },
       child: Container(
         margin: const EdgeInsets.fromLTRB(0, 18, 0, 18),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(menuTitle, style: TextStyle(
-                fontSize: 15, color: _color2
-            )),
+            Text(menuTitle, style: TextStyle(fontSize: 15, color: _color2)),
             const Icon(Icons.chevron_right, size: 20, color: softGrey),
           ],
         ),

@@ -25,27 +25,27 @@ class _StandartColumnPageState extends State<StandartColumnPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            _globalWidget.createDetailWidget(
-                title: 'Standart Column',
-                desc: 'This is the example of column without any style'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          _globalWidget.createDetailWidget(
+            title: 'Standart Column',
+            desc: 'This is the example of column without any style',
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: const Column(
+              children: [
+                Text('Top Side'),
+                Text('Middle Side'),
+                Text('Bottom Side'),
+              ],
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Column(
-                children: [
-                  Text('Top Side'),
-                  Text('Middle Side'),
-                  Text('Bottom Side'),
-                ],
-              ),
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 }

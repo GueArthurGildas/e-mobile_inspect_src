@@ -26,47 +26,44 @@ class _PopupMenuButton3PageState extends State<PopupMenuButton3Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Popup Menu Button 3 - On Selected',
-                  desc: 'This is the example of Popup Menu Button with on selected'
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Popup Menu Button 3 - On Selected',
+              desc: 'This is the example of Popup Menu Button with on selected',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: PopupMenuButton<int>(
+                itemBuilder: (context) => [
+                  const PopupMenuItem(value: 1, child: Text('Option 1')),
+                  const PopupMenuItem(value: 2, child: Text('Option 2')),
+                  const PopupMenuItem(value: 3, child: Text('Option 3')),
+                ],
+                initialValue: 2,
+                onCanceled: () {
+                  Fluttertoast.showToast(
+                    msg: 'You have canceled the menu.',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                },
+                onSelected: (value) {
+                  Fluttertoast.showToast(
+                    msg: 'value : $value',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
+                },
+                icon: const Icon(Icons.menu),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: PopupMenuButton<int>(
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 1,
-                      child: Text('Option 1'),
-                    ),
-                    const PopupMenuItem(
-                      value: 2,
-                      child: Text('Option 2'),
-                    ),
-                    const PopupMenuItem(
-                      value: 3,
-                      child: Text('Option 3'),
-                    ),
-                  ],
-                  initialValue: 2,
-                  onCanceled: () {
-                    Fluttertoast.showToast(msg: 'You have canceled the menu.', toastLength: Toast.LENGTH_SHORT);
-                  },
-                  onSelected: (value) {
-                    Fluttertoast.showToast(msg: 'value : $value', toastLength: Toast.LENGTH_SHORT);
-                  },
-                  icon: const Icon(Icons.menu),
-                ),
-              )
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

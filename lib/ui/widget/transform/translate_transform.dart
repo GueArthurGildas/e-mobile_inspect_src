@@ -25,65 +25,61 @@ class _TranslateTransformPageState extends State<TranslateTransformPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Translate Transform',
-                  desc: 'This is the example of translate transform on container'
-              ),
-              Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: const Text('Original')
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                // this is the start of example
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Translate Transform',
+              desc: 'This is the example of translate transform on container',
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: const Text('Original'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              // this is the start of example
+              child: Container(height: 50, width: 50, color: Colors.pinkAccent),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Offset 100, 0'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              // this is the start of example
+              child: Transform.translate(
+                offset: const Offset(100.0, 0.0),
                 child: Container(
                   height: 50,
                   width: 50,
                   color: Colors.pinkAccent,
                 ),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: const Text('Offset 100, 0')
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                // this is the start of example
-                child: Transform.translate(
-                  offset: const Offset(100.0, 0.0),
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.pinkAccent,
-                  ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              child: const Text('Offset 100, 50'),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              // this is the start of example
+              child: Transform.translate(
+                offset: const Offset(100.0, 50.0),
+                child: Container(
+                  height: 50,
+                  width: 50,
+                  color: Colors.pinkAccent,
                 ),
               ),
-              Container(
-                  margin: const EdgeInsets.only(top: 20),
-                  child: const Text('Offset 100, 50')
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                // this is the start of example
-                child: Transform.translate(
-                  offset: const Offset(100.0, 50.0),
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.pinkAccent,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

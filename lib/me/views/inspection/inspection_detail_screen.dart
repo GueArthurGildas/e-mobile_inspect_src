@@ -19,12 +19,14 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: orange,
-        title: const Text("Navire Status", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Navire Status",
+          style: TextStyle(color: Colors.white),
+        ),
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
         elevation: 1,
       ),
-
 
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -53,8 +55,11 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
                     shape: BoxShape.circle,
                     color: const Color(0xFFFF6A00).withOpacity(0.1),
                   ),
-                  child: Icon(Icons.directions_boat_filled,
-                      color: const Color(0xFFFF6A00), size: 40),
+                  child: Icon(
+                    Icons.directions_boat_filled,
+                    color: const Color(0xFFFF6A00),
+                    size: 40,
+                  ),
                 ),
                 const SizedBox(width: 16),
 
@@ -73,9 +78,16 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          Icon(Icons.circle, size: 10, color: const Color(0xFF2E7D32)),
+                          Icon(
+                            Icons.circle,
+                            size: 10,
+                            color: const Color(0xFF2E7D32),
+                          ),
                           const SizedBox(width: 6),
-                          Text("Inspection en cours", style: TextStyle(color: Color(0xFF2E7D32))),
+                          Text(
+                            "Inspection en cours",
+                            style: TextStyle(color: Color(0xFF2E7D32)),
+                          ),
                         ],
                       ),
                     ],
@@ -88,8 +100,14 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
           _sectionHeader("Inspection prévue entre"),
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: Text("08:00 - 09:30",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: orange)),
+            child: Text(
+              "08:00 - 09:30",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: orange,
+              ),
+            ),
           ),
 
           _sectionDivider(),
@@ -97,11 +115,36 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
           _sectionHeader("État d’avancement"),
           Column(
             children: [
-              _statusTile("Inspection en cours", "L’inspection est en cours sur le quai C2", true, green),
-              _statusTile("À quai", "Le navire est arrivé à quai", false, orange),
-              _statusTile("En approche", "Le navire est proche du port", false, Colors.grey),
-              _statusTile("En mer", "Le navire est encore en mer", false, Colors.grey),
-              _statusTile("Inspection programmée", "Inspection enregistrée", false, Colors.grey),
+              _statusTile(
+                "Inspection en cours",
+                "L’inspection est en cours sur le quai C2",
+                true,
+                green,
+              ),
+              _statusTile(
+                "À quai",
+                "Le navire est arrivé à quai",
+                false,
+                orange,
+              ),
+              _statusTile(
+                "En approche",
+                "Le navire est proche du port",
+                false,
+                Colors.grey,
+              ),
+              _statusTile(
+                "En mer",
+                "Le navire est encore en mer",
+                false,
+                Colors.grey,
+              ),
+              _statusTile(
+                "Inspection programmée",
+                "Inspection enregistrée",
+                false,
+                Colors.grey,
+              ),
             ],
           ),
 
@@ -124,7 +167,9 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
           _sectionDivider(),
 
           _sectionHeader("Note pour l’inspecteur"),
-          _animatedNote("Le navire doit être inspecté à son arrivée à quai. Vérifier tous les documents."),
+          _animatedNote(
+            "Le navire doit être inspecté à son arrivée à quai. Vérifier tous les documents.",
+          ),
 
           _sectionDivider(),
 
@@ -178,14 +223,17 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
         ],
       ),
 
-
       // ✅ Boutons fixes en bas
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, -1)),
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              offset: Offset(0, -1),
+            ),
           ],
         ),
         child: Row(
@@ -201,7 +249,10 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
                 elevation: 0,
                 backgroundColor: Colors.white,
                 side: BorderSide(color: orange),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -242,12 +293,21 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
       padding: const EdgeInsets.only(bottom: 6),
       child: Text(
         title,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: orange),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: orange,
+        ),
       ),
     );
   }
 
-  Widget _statusTile(String title, String subtitle, bool isActive, Color color) {
+  Widget _statusTile(
+    String title,
+    String subtitle,
+    bool isActive,
+    Color color,
+  ) {
     return AnimatedContainer(
       duration: animDuration,
       curve: Curves.easeInOut,
@@ -256,13 +316,12 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
         children: [
           Column(
             children: [
-              Icon(Icons.radio_button_checked,
-                  size: 20, color: isActive ? color : Colors.grey),
-              Container(
-                height: 30,
-                width: 2,
-                color: Colors.grey.shade300,
+              Icon(
+                Icons.radio_button_checked,
+                size: 20,
+                color: isActive ? color : Colors.grey,
               ),
+              Container(height: 30, width: 2, color: Colors.grey.shade300),
             ],
           ),
           const SizedBox(width: 12),
@@ -270,10 +329,13 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: isActive ? color : Colors.black)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: isActive ? color : Colors.black,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(subtitle, style: const TextStyle(color: Colors.black54)),
               ],
@@ -289,7 +351,13 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Expanded(flex: 4, child: Text(title, style: const TextStyle(fontWeight: FontWeight.w600))),
+          Expanded(
+            flex: 4,
+            child: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
           Expanded(flex: 6, child: Text(value)),
         ],
       ),
@@ -323,7 +391,7 @@ class _NavireStatusPageState extends State<NavireStatusPage> {
         borderRadius: BorderRadius.circular(8),
         color: Colors.grey[50],
         boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 2, offset: Offset(0, 2))
+          BoxShadow(color: Colors.black12, blurRadius: 2, offset: Offset(0, 2)),
         ],
       ),
       child: Text(text),

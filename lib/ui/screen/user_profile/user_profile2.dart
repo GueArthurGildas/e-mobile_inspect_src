@@ -33,14 +33,16 @@ class _UserProfile2PageState extends State<UserProfile2Page> {
   @override
   Widget build(BuildContext context) {
     double topHeight = MediaQuery.of(context).size.height / 3;
-    if(kIsWeb){
+    if (kIsWeb) {
       topHeight = MediaQuery.of(context).size.height / 2.5;
     }
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: Platform.isIOS?SystemUiOverlayStyle.light:const SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.light
-        ),
+        value: Platform.isIOS
+            ? SystemUiOverlayStyle.light
+            : const SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
+              ),
         child: SingleChildScrollView(
           child: Stack(
             children: <Widget>[
@@ -49,37 +51,52 @@ class _UserProfile2PageState extends State<UserProfile2Page> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                 height: topHeight,
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [_gradientTop, _gradientBottom],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
+                  gradient: LinearGradient(
+                    colors: [_gradientTop, _gradientBottom],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     GestureDetector(
-                        onTap: () {
-                          Navigator.of(context, rootNavigator: true).pop();
-                        },
-                        child: const Icon(Icons.arrow_back, color: Colors.white)),
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      child: const Icon(Icons.arrow_back, color: Colors.white),
+                    ),
                     GestureDetector(
-                        onTap: () {
-                          Fluttertoast.showToast(msg: 'Click edit profile', toastLength: Toast.LENGTH_SHORT);
-                        },
-                        child: const Text('Edit', style: TextStyle(color: Colors.white))),
+                      onTap: () {
+                        Fluttertoast.showToast(
+                          msg: 'Click edit profile',
+                          toastLength: Toast.LENGTH_SHORT,
+                        );
+                      },
+                      child: const Text(
+                        'Edit',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Container(
                 alignment: Alignment.topCenter,
-                margin:
-                EdgeInsets.only(top: (MediaQuery.of(context).size.height / 8)),
-                child: Image.asset('assets/images/logo_horizontal.png', height: 30, color: Colors.white),
+                margin: EdgeInsets.only(
+                  top: (MediaQuery.of(context).size.height / 8),
+                ),
+                child: Image.asset(
+                  'assets/images/logo_horizontal.png',
+                  height: 30,
+                  color: Colors.white,
+                ),
               ),
               Container(
                 alignment: Alignment.topCenter,
                 margin: EdgeInsets.only(
-                    top: (topHeight) -
-                        MediaQuery.of(context).size.width / 5.5),
+                  top: (topHeight) - MediaQuery.of(context).size.width / 5.5,
+                ),
                 child: Column(
                   children: <Widget>[
                     GestureDetector(
@@ -93,7 +110,10 @@ class _UserProfile2PageState extends State<UserProfile2Page> {
                           backgroundColor: Colors.white,
                           radius: (MediaQuery.of(context).size.width / 5.5) - 4,
                           child: ClipOval(
-                              child: buildCacheNetworkImage(url: '$globalUrl/user/avatar.png', width: 300)
+                            child: buildCacheNetworkImage(
+                              url: '$globalUrl/user/avatar.png',
+                              width: 300,
+                            ),
                           ),
                         ),
                       ),
@@ -108,12 +128,17 @@ class _UserProfile2PageState extends State<UserProfile2Page> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Icon(Icons.person, color: _color1, size: 20),
-                              const SizedBox(width: 20,),
-                              Flexible(child:
-                                Text('Robert Steven', style: TextStyle(
-                                  fontSize: 16, color: _color2, fontWeight: FontWeight.w600
-                                ))
-                              )
+                              const SizedBox(width: 20),
+                              Flexible(
+                                child: Text(
+                                  'Robert Steven',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: _color2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 24),
@@ -121,33 +146,47 @@ class _UserProfile2PageState extends State<UserProfile2Page> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Icon(Icons.email, color: _color1, size: 20),
-                              const SizedBox(width: 20,),
-                              Flexible(child:
-                                Text('example@domain.com', style: TextStyle(
-                                  fontSize: 16, color: _color2, fontWeight: FontWeight.w600
-                                ))
-                              )
+                              const SizedBox(width: 20),
+                              Flexible(
+                                child: Text(
+                                  'example@domain.com',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: _color2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 24),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Icon(Icons.phone_android, color: _color1, size: 20),
-                              const SizedBox(width: 20,),
-                              Flexible(child:
-                                Text('0811888999', style: TextStyle(
-                                  fontSize: 16, color: _color2, fontWeight: FontWeight.w600
-                                ))
-                              )
+                              Icon(
+                                Icons.phone_android,
+                                color: _color1,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 20),
+                              Flexible(
+                                child: Text(
+                                  '0811888999',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: _color2,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -158,26 +197,26 @@ class _UserProfile2PageState extends State<UserProfile2Page> {
   void _showAlertDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: const Text('No', style: TextStyle(color: softBlue))
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: const Text('No', style: TextStyle(color: softBlue)),
     );
     Widget continueButton = TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-          Fluttertoast.showToast(msg: 'Click edit profile picture', toastLength: Toast.LENGTH_SHORT);
-        },
-        child: const Text('Yes', style: TextStyle(color: softBlue))
+      onPressed: () {
+        Navigator.pop(context);
+        Fluttertoast.showToast(
+          msg: 'Click edit profile picture',
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      },
+      child: const Text('Yes', style: TextStyle(color: softBlue)),
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       content: const Text('Edit Profile Picture ?'),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
+      actions: [cancelButton, continueButton],
     );
 
     // show the dialog

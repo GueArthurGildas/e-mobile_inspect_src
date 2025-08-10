@@ -35,36 +35,36 @@ class _AnimatedList5PageState extends State<AnimatedList5Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.all(16),
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            Row(
-              children: [
-                _globalWidget.createButton(
-                    buttonName: 'Add',
-                    onPressed: (){
-                      _insertSingleItem();
-                    }
-                ),
-                const SizedBox(width: 16),
-                const Text('Combine Animation')
-              ],
-            ),
-            AnimatedList(
-              primary: false,
-              shrinkWrap: true,
-              // Key to call remove and insert item methods from anywhere
-              key: _listKey,
-              initialItemCount: _data.length,
-              itemBuilder: (context, index, animation) {
-                return _buildItem(_data[index], animation, index);
-              },
-            ),
-          ],
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          Row(
+            children: [
+              _globalWidget.createButton(
+                buttonName: 'Add',
+                onPressed: () {
+                  _insertSingleItem();
+                },
+              ),
+              const SizedBox(width: 16),
+              const Text('Combine Animation'),
+            ],
+          ),
+          AnimatedList(
+            primary: false,
+            shrinkWrap: true,
+            // Key to call remove and insert item methods from anywhere
+            key: _listKey,
+            initialItemCount: _data.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(_data[index], animation, index);
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -84,16 +84,10 @@ class _AnimatedList5PageState extends State<AnimatedList5Page> {
             child: Card(
               elevation: 5.0,
               child: ListTile(
-                title: Text(
-                  item,
-                  style: const TextStyle(fontSize: 20),
-                ),
+                title: Text(item, style: const TextStyle(fontSize: 20)),
                 trailing: GestureDetector(
-                  child: const Icon(
-                    Icons.remove_circle,
-                    color: Colors.red,
-                  ),
-                  onTap: (){
+                  child: const Icon(Icons.remove_circle, color: Colors.red),
+                  onTap: () {
                     _removeSingleItems(index);
                   },
                 ),
@@ -106,9 +100,9 @@ class _AnimatedList5PageState extends State<AnimatedList5Page> {
   }
 
   /// Method to add an item to an index in a list
-  void _insertSingleItem(){
+  void _insertSingleItem() {
     int insertIndex;
-    if(_data.isNotEmpty){
+    if (_data.isNotEmpty) {
       insertIndex = _data.length;
     } else {
       insertIndex = 0;
@@ -129,6 +123,7 @@ class _AnimatedList5PageState extends State<AnimatedList5Page> {
       // A method to build the Card widget.
       return _buildItem(removedItem, animation, removeAt);
     }
+
     _listKey.currentState!.removeItem(removeIndex, builder);
   }
 }

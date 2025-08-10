@@ -5,10 +5,12 @@ class DecoratedBoxTransitionPage extends StatefulWidget {
   const DecoratedBoxTransitionPage({super.key});
 
   @override
-  State<DecoratedBoxTransitionPage> createState() => _DecoratedBoxTransitionPageState();
+  State<DecoratedBoxTransitionPage> createState() =>
+      _DecoratedBoxTransitionPageState();
 }
 
-class _DecoratedBoxTransitionPageState extends State<DecoratedBoxTransitionPage> with TickerProviderStateMixin {
+class _DecoratedBoxTransitionPageState extends State<DecoratedBoxTransitionPage>
+    with TickerProviderStateMixin {
   // initialize global widget
   final _globalWidget = GlobalWidget();
 
@@ -24,14 +26,12 @@ class _DecoratedBoxTransitionPageState extends State<DecoratedBoxTransitionPage>
           blurRadius: 10.0,
           spreadRadius: 3.0,
           offset: Offset(0, 6.0),
-        )
+        ),
       ],
     ),
     end: BoxDecoration(
       color: const Color(0xFFFFFFFF),
-      border: Border.all(
-        style: BorderStyle.none,
-      ),
+      border: Border.all(style: BorderStyle.none),
       borderRadius: BorderRadius.zero,
       // No shadow.
     ),
@@ -64,9 +64,10 @@ class _DecoratedBoxTransitionPageState extends State<DecoratedBoxTransitionPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Decorated Box Transition',
-                desc: 'Animated version of a DecoratedBox that animates the different properties of its Decoration.',
-                icon: Icons.animation
+              title: 'Decorated Box Transition',
+              desc:
+                  'Animated version of a DecoratedBox that animates the different properties of its Decoration.',
+              icon: Icons.animation,
             ),
             const SizedBox(height: 16),
             Container(
@@ -78,10 +79,14 @@ class _DecoratedBoxTransitionPageState extends State<DecoratedBoxTransitionPage>
                   width: 200,
                   height: 200,
                   padding: const EdgeInsets.all(10),
-                  child: const Icon(Icons.star, color: Colors.orange, size: 100),
+                  child: const Icon(
+                    Icons.star,
+                    color: Colors.orange,
+                    size: 100,
+                  ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

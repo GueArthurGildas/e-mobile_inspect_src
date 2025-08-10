@@ -17,7 +17,6 @@ class HomeMenuPage extends StatelessWidget {
   final Color green = const Color(0xFF2E7D32);
   final Duration animDuration = const Duration(milliseconds: 400);
 
-
   @override
   Widget build(BuildContext context) {
     final Color myOrangeColor = const Color(0xFFFF6A00);
@@ -105,9 +104,12 @@ class HomeMenuPage extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, AppRoutes.pendingInspection);
+                                  context,
+                                  AppRoutes.pendingInspection,
+                                );
                                 Fluttertoast.showToast(
-                                    msg: 'goToPedingInspcetionClick');
+                                  msg: 'goToPedingInspcetionClick',
+                                );
                               },
                               child: _StatItem(
                                 label: "En attente",
@@ -129,17 +131,20 @@ class HomeMenuPage extends StatelessWidget {
                       const SizedBox(height: 12),
                       Row(
                         children: [
-                          const Icon(Icons.info_outline,
-                              size: 20, color: Colors.grey),
+                          const Icon(
+                            Icons.info_outline,
+                            size: 20,
+                            color: Colors.grey,
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               note,
                               style: TextStyle(color: Colors.grey[800]),
                             ),
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -168,11 +173,8 @@ class HomeMenuPage extends StatelessWidget {
                   onTap: () {},
                 ),
               ],
-
             ),
           ),
-
-
         ),
       ),
 
@@ -182,16 +184,21 @@ class HomeMenuPage extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, -1)),
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              offset: Offset(0, -1),
+            ),
           ],
         ),
-        child:
-        Row(
+        child: Row(
           children: [
             // Premier bouton : prend 1/3 de la largeur
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () { /* Action PDF */ },
+                onPressed: () {
+                  /* Action PDF */
+                },
                 icon: Icon(Icons.picture_as_pdf, color: orange),
                 label: Text("Fiche PDF", style: TextStyle(color: orange)),
                 style: ElevatedButton.styleFrom(
@@ -210,7 +217,9 @@ class HomeMenuPage extends StatelessWidget {
             // Deuxième bouton : même proportion
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () { /* Action PDF */ },
+                onPressed: () {
+                  /* Action PDF */
+                },
                 icon: Icon(Icons.picture_as_pdf, color: orange),
                 label: Text("Fiche PDF", style: TextStyle(color: orange)),
                 style: ElevatedButton.styleFrom(
@@ -229,7 +238,9 @@ class HomeMenuPage extends StatelessWidget {
             // Troisième bouton : même proportion
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () { /* Action PDF */ },
+                onPressed: () {
+                  /* Action PDF */
+                },
                 icon: Icon(Icons.picture_as_pdf, color: orange),
                 label: Text("Fiche PDF", style: TextStyle(color: orange)),
                 style: ElevatedButton.styleFrom(
@@ -244,8 +255,7 @@ class HomeMenuPage extends StatelessWidget {
               ),
             ),
           ],
-        )
-
+        ),
       ),
     );
   }
@@ -259,7 +269,9 @@ class HomeMenuPage extends StatelessWidget {
             tag: 'profilePicture',
             child: ClipOval(
               child: buildCacheNetworkImage(
-                  url: '$globalUrl/user/avatar.png', width: 50),
+                url: '$globalUrl/user/avatar.png',
+                width: 50,
+              ),
             ),
           ),
           Expanded(
@@ -268,31 +280,40 @@ class HomeMenuPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Gue Arthur',
-                      style: TextStyle(
-                          color: myGreenColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16)),
+                  Text(
+                    'Gue Arthur',
+                    style: TextStyle(
+                      color: myGreenColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.only(top: 6),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 9, vertical: 6),
+                      horizontal: 9,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10)),
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.star, color: myGreenColor, size: 12),
                         const SizedBox(width: 4),
-                        Text('Administrateur',
-                            style: TextStyle(
-                                color: myGreenColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9))
+                        Text(
+                          'Administrateur',
+                          style: TextStyle(
+                            color: myGreenColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9,
+                          ),
+                        ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -307,10 +328,14 @@ class HomeMenuPage extends StatelessWidget {
             onTap: () {
               Fluttertoast.showToast(msg: 'Click log out in ');
             },
-            child: Text('Log Out',
-                style: TextStyle(
-                    color: myGreenColor, fontWeight: FontWeight.bold)),
-          )
+            child: Text(
+              'Log Out',
+              style: TextStyle(
+                color: myGreenColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -333,14 +358,16 @@ class _StatItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label,
-            style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+        Text(label, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
         const SizedBox(height: 4),
-        Text(value,
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: color)),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
+        ),
       ],
     );
   }
@@ -376,10 +403,7 @@ class _MenuButton extends StatelessWidget {
           children: [
             Icon(icon, color: color),
             const SizedBox(width: 16),
-            Text(
-              label,
-              style: TextStyle(fontSize: 18, color: color),
-            ),
+            Text(label, style: TextStyle(fontSize: 18, color: color)),
             const Spacer(),
             const Icon(Icons.arrow_forward_ios, size: 16),
           ],

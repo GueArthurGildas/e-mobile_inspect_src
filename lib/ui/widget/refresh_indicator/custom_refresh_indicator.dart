@@ -28,31 +28,35 @@ class _CustomRefreshIndicatorPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: RefreshIndicator(
+        color: Colors.pinkAccent,
         backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: RefreshIndicator(
-          color: Colors.pinkAccent,
-          backgroundColor: Colors.white,
-          strokeWidth: 4,
-          onRefresh: refreshData,
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Custom Refresh Indicator',
-                  desc:
-                      'This is the example of refresh indicator with custom color'),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8),
-                child: const Text('Pull from the top to refresh this page'),
-              ),
-            ],
-          ),
-        ));
+        strokeWidth: 4,
+        onRefresh: refreshData,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Custom Refresh Indicator',
+              desc:
+                  'This is the example of refresh indicator with custom color',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: const Text('Pull from the top to refresh this page'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future refreshData() async {
     Fluttertoast.showToast(
-        msg: 'This page has been refresh', toastLength: Toast.LENGTH_SHORT);
+      msg: 'This page has been refresh',
+      toastLength: Toast.LENGTH_SHORT,
+    );
   }
 }

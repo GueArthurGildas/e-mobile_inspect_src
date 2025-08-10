@@ -36,16 +36,13 @@ class _AppBar1PageState extends State<AppBar1Page> {
             children: [
               Container(
                 child: _globalWidget.createDetailWidget(
-                    title: 'App Bar 1 - Standart',
-                    desc: 'This is the example of standart App Bar'
+                  title: 'App Bar 1 - Standart',
+                  desc: 'This is the example of standart App Bar',
                 ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 8),
-                child: AppBar(
-                  title: const Text('Title'),
-                  centerTitle: true,
-                ),
+                child: AppBar(title: const Text('Title'), centerTitle: true),
               ),
             ],
           ),

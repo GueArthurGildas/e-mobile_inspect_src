@@ -35,19 +35,20 @@ class _AnimatedPositionedPageState extends State<AnimatedPositionedPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Positioned',
-                desc: 'Animated version of Positioned which automatically transitions the child\'s position over a given duration whenever the given position changes.',
-                icon: Icons.animation
+              title: 'Animated Positioned',
+              desc:
+                  'Animated version of Positioned which automatically transitions the child\'s position over a given duration whenever the given position changes.',
+              icon: Icons.animation,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: _globalWidget.createButton(
-                  buttonName: 'Change',
-                  onPressed: (){
-                    setState(() {
-                      _first = !_first;
-                    });
-                  }
+                buttonName: 'Change',
+                onPressed: () {
+                  setState(() {
+                    _first = !_first;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
@@ -67,16 +68,17 @@ class _AnimatedPositionedPageState extends State<AnimatedPositionedPage> {
                       child: Container(
                         color: Colors.pinkAccent,
                         child: const Center(
-                          child: Text('Hello', style: TextStyle(
-                            color: Colors.white
-                          )),
+                          child: Text(
+                            'Hello',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

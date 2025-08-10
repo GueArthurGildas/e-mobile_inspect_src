@@ -29,57 +29,77 @@ class _SafeAreaWidgetListPageState extends State<SafeAreaWidgetListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          children: [
-            const Text('Safe Area Widget',
-                style: TextStyle(
-                    fontSize: 18, color: black21, fontWeight: FontWeight.w500)),
-            Container(
-              margin: const EdgeInsets.only(top: 24),
-              child: Row(
-                children: [
-                  const Flexible(
-                      flex: 5,
-                      child: Text(
-                          'A widget that insets its child by sufficient padding to avoid intrusions by the operating system. Only can be test on Android and iOS.',
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: black77,
-                              letterSpacing: 0.5))),
-                  Flexible(
-                      flex: 2,
-                      child: Container(
-                          alignment: Alignment.center,
-                          child: const Icon(Icons.settings_overscan,
-                              size: 50, color: softBlue)))
-                ],
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        children: [
+          const Text(
+            'Safe Area Widget',
+            style: TextStyle(
+              fontSize: 18,
+              color: black21,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 24),
+            child: Row(
+              children: [
+                const Flexible(
+                  flex: 5,
+                  child: Text(
+                    'A widget that insets its child by sufficient padding to avoid intrusions by the operating system. Only can be test on Android and iOS.',
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: black77,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: const Icon(
+                      Icons.settings_overscan,
+                      size: 50,
+                      color: softBlue,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 48),
+            child: const Text(
+              'List',
+              style: TextStyle(
+                fontSize: 18,
+                color: black21,
+                fontWeight: FontWeight.w500,
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 48),
-              child: const Text('List',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: black21,
-                      fontWeight: FontWeight.w500)),
-            ),
-            const SizedBox(height: 18),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Without Safe Area',
-                page: const WithoutSafeAreaPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'With Safe Area',
-                page: const WithSafeAreaPage()),
-            _globalWidget.screenDetailList(
-                context: context,
-                title: 'Setting Side Only Top',
-                page: const SettingSidePage()),
-          ],
-        ));
+          ),
+          const SizedBox(height: 18),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Without Safe Area',
+            page: const WithoutSafeAreaPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'With Safe Area',
+            page: const WithSafeAreaPage(),
+          ),
+          _globalWidget.screenDetailList(
+            context: context,
+            title: 'Setting Side Only Top',
+            page: const SettingSidePage(),
+          ),
+        ],
+      ),
+    );
   }
 }

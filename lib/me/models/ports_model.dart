@@ -4,7 +4,12 @@ class Ports {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Ports({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  Ports({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Ports.fromJson(Map<String, dynamic> json) => Ports(
     id: json['id'],

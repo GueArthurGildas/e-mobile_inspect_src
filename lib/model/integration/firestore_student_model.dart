@@ -5,7 +5,13 @@ class FirestoreStudentModel {
   late String studentGender;
   late String studentAddress;
 
-  FirestoreStudentModel({required this.studentId, required this.studentName, required this.studentPhoneNumber, required this.studentGender, required this.studentAddress});
+  FirestoreStudentModel({
+    required this.studentId,
+    required this.studentName,
+    required this.studentPhoneNumber,
+    required this.studentGender,
+    required this.studentAddress,
+  });
 
   FirestoreStudentModel.fromJson(Map<String, dynamic> json) {
     studentId = json['studentId'];

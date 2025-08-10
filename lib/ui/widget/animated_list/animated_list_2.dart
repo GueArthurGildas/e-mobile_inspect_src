@@ -37,47 +37,47 @@ class _AnimatedList2PageState extends State<AnimatedList2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView(
-          padding: const EdgeInsets.all(16),
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            Wrap(
-              spacing: 16,
-              children: [
-                _globalWidget.createButton(
-                    buttonName: 'Add to the first',
-                    onPressed: (){
-                      _insertSingleItem('first');
-                    }
-                ),
-                _globalWidget.createButton(
-                    buttonName: 'Add to the last',
-                    onPressed: (){
-                      _insertSingleItem('last');
-                    }
-                ),
-                _globalWidget.createButton(
-                    buttonName: 'Add to the middle',
-                    onPressed: (){
-                      _insertSingleItem('middle');
-                    }
-                ),
-              ],
-            ),
-            AnimatedList(
-              primary: false,
-              shrinkWrap: true,
-              // Key to call remove and insert item methods from anywhere
-              key: _listKey,
-              initialItemCount: _data.length,
-              itemBuilder: (context, index, animation) {
-                return _buildItem(_data[index], animation, index);
-              },
-            ),
-          ],
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          Wrap(
+            spacing: 16,
+            children: [
+              _globalWidget.createButton(
+                buttonName: 'Add to the first',
+                onPressed: () {
+                  _insertSingleItem('first');
+                },
+              ),
+              _globalWidget.createButton(
+                buttonName: 'Add to the last',
+                onPressed: () {
+                  _insertSingleItem('last');
+                },
+              ),
+              _globalWidget.createButton(
+                buttonName: 'Add to the middle',
+                onPressed: () {
+                  _insertSingleItem('middle');
+                },
+              ),
+            ],
+          ),
+          AnimatedList(
+            primary: false,
+            shrinkWrap: true,
+            // Key to call remove and insert item methods from anywhere
+            key: _listKey,
+            initialItemCount: _data.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(_data[index], animation, index);
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -89,16 +89,10 @@ class _AnimatedList2PageState extends State<AnimatedList2Page> {
         child: Card(
           elevation: 5.0,
           child: ListTile(
-            title: Text(
-              item,
-              style: const TextStyle(fontSize: 20),
-            ),
+            title: Text(item, style: const TextStyle(fontSize: 20)),
             trailing: GestureDetector(
-              child: const Icon(
-                Icons.remove_circle,
-                color: Colors.red,
-              ),
-              onTap: (){
+              child: const Icon(Icons.remove_circle, color: Colors.red),
+              onTap: () {
                 _removeSingleItems(index);
               },
             ),
@@ -109,12 +103,12 @@ class _AnimatedList2PageState extends State<AnimatedList2Page> {
   }
 
   /// Method to add an item to an index in a list
-  void _insertSingleItem(String position){
+  void _insertSingleItem(String position) {
     int insertIndex;
-    if(position == 'first'){
+    if (position == 'first') {
       insertIndex = 0;
-    } else if(position == 'middle'){
-      insertIndex = (_data.length/2).ceil();
+    } else if (position == 'middle') {
+      insertIndex = (_data.length / 2).ceil();
     } else {
       insertIndex = _data.length;
     }
@@ -134,6 +128,7 @@ class _AnimatedList2PageState extends State<AnimatedList2Page> {
       // A method to build the Card widget.
       return _buildItem(removedItem, animation, removeAt);
     }
+
     _listKey.currentState!.removeItem(removeIndex, builder);
   }
 }

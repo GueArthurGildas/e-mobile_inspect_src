@@ -14,8 +14,10 @@ class UsersPage extends StatelessWidget {
         appBar: AppBar(title: Text('Utilisateurs')),
         body: Consumer<UserController>(
           builder: (context, ctrl, _) {
-            if (ctrl.isLoading) return Center(child: CircularProgressIndicator());
-            if (ctrl.users.isEmpty) return Center(child: Text('Aucun utilisateur'));
+            if (ctrl.isLoading)
+              return Center(child: CircularProgressIndicator());
+            if (ctrl.users.isEmpty)
+              return Center(child: Text('Aucun utilisateur'));
             return ListView.builder(
               itemCount: ctrl.users.length,
               itemBuilder: (context, i) {

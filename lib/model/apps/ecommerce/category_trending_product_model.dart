@@ -8,10 +8,17 @@ class CategoryTrendingProductModel {
   late double rating;
   late int review;
 
-  CategoryTrendingProductModel({required this.id, required this.name, required this.price, required this.image, required this.rating, required this.review});
+  CategoryTrendingProductModel({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.image,
+    required this.rating,
+    required this.review,
+  });
 }
 
-List<CategoryTrendingProductModel> categoryTrendingProductData =[
+List<CategoryTrendingProductModel> categoryTrendingProductData = [
   CategoryTrendingProductModel(
     id: 1,
     name: 'IWO 8 Smart Watch Apple iWatch Mirror For Android iPhone',
@@ -46,7 +53,8 @@ List<CategoryTrendingProductModel> categoryTrendingProductData =[
   ),
   CategoryTrendingProductModel(
     id: 5,
-    name: 'APPLE AIRPODS PRO WITH WIRELESS CHARGING ORIGINAL - AIRPOD - Free Silicone',
+    name:
+        'APPLE AIRPODS PRO WITH WIRELESS CHARGING ORIGINAL - AIRPOD - Free Silicone',
     price: 219,
     image: '$globalUrl/apps/ecommerce/product/61.jpg',
     rating: 5,
@@ -69,11 +77,11 @@ List<CategoryTrendingProductModel> categoryTrendingProductData =[
     review: 98,
   ),
   CategoryTrendingProductModel(
-      id: 8,
-      name: 'Apple Pencil 1 - Original Apple Garansi Resmi Inter',
-      price: 99,
-      image: '$globalUrl/apps/ecommerce/product/70.jpg',
-      rating: 5,
-      review: 8
-  )
+    id: 8,
+    name: 'Apple Pencil 1 - Original Apple Garansi Resmi Inter',
+    price: 99,
+    image: '$globalUrl/apps/ecommerce/product/70.jpg',
+    rating: 5,
+    review: 8,
+  ),
 ];

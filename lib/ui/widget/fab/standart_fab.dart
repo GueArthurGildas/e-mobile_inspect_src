@@ -34,8 +34,9 @@ class _StandartFabPageState extends State<StandartFabPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'Standart FAB',
-                desc: 'This is the example of fab without any style'),
+              title: 'Standart FAB',
+              desc: 'This is the example of fab without any style',
+            ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: const Text('Below is the example of FAB'),
@@ -46,7 +47,9 @@ class _StandartFabPageState extends State<StandartFabPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Fluttertoast.showToast(
-              msg: 'FAB Pressed', toastLength: Toast.LENGTH_SHORT);
+            msg: 'FAB Pressed',
+            toastLength: Toast.LENGTH_SHORT,
+          );
         },
         child: const Icon(Icons.add),
       ),

@@ -27,49 +27,47 @@ class _AnimatedContainer2PageState extends State<AnimatedContainer2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Animated Container 2',
-                  desc: 'This is the example of animated container'
-              ),
-              _globalWidget.createButton(
-                  buttonName: 'Change color to green',
-                  onPressed: (){
-                    setState(() {
-                      _containerColor = Colors.green;
-                    });
-                  }
-              ),
-              const SizedBox(height: 8),
-              _globalWidget.createButton(
-                  buttonName: 'Change color to orange',
-                  onPressed: (){
-                    setState(() {
-                      _containerColor = Colors.orangeAccent;
-                    });
-                  }
-              ),
-              const SizedBox(height: 16),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                width: 100,
-                height: 100,
-                color: _containerColor,
-                child: const Center(
-                    child: Text('container', style: TextStyle(
-                        color: Colors.white
-                    ))
-                ), // please note that width of container will not work if the container is inside ListView
-              ),
-            ],
-          ),
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Animated Container 2',
+              desc: 'This is the example of animated container',
+            ),
+            _globalWidget.createButton(
+              buttonName: 'Change color to green',
+              onPressed: () {
+                setState(() {
+                  _containerColor = Colors.green;
+                });
+              },
+            ),
+            const SizedBox(height: 8),
+            _globalWidget.createButton(
+              buttonName: 'Change color to orange',
+              onPressed: () {
+                setState(() {
+                  _containerColor = Colors.orangeAccent;
+                });
+              },
+            ),
+            const SizedBox(height: 16),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              width: 100,
+              height: 100,
+              color: _containerColor,
+              child: const Center(
+                child: Text('container', style: TextStyle(color: Colors.white)),
+              ), // please note that width of container will not work if the container is inside ListView
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

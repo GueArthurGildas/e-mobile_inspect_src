@@ -34,8 +34,9 @@ class _FabWithLabelPageState extends State<FabWithLabelPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget(
-                title: 'FAB with label',
-                desc: 'This is the example of fab with label'),
+              title: 'FAB with label',
+              desc: 'This is the example of fab with label',
+            ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: const Text('Below is the example'),
@@ -46,7 +47,9 @@ class _FabWithLabelPageState extends State<FabWithLabelPage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Fluttertoast.showToast(
-              msg: 'FAB Pressed', toastLength: Toast.LENGTH_SHORT);
+            msg: 'FAB Pressed',
+            toastLength: Toast.LENGTH_SHORT,
+          );
         },
         icon: const Icon(Icons.add),
         label: const Text('Add Data'),

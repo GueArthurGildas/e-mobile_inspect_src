@@ -33,39 +33,78 @@ class _Home2PageState extends State<Home2Page> {
 
   @override
   void initState() {
-    _bannerData
-        .add(BannerSliderModel(id: 1, image: '$globalUrl/home_banner/1.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 2, image: '$globalUrl/home_banner/2.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 3, image: '$globalUrl/home_banner/3.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 4, image: '$globalUrl/home_banner/4.jpg'));
-    _bannerData
-        .add(BannerSliderModel(id: 5, image: '$globalUrl/home_banner/5.jpg'));
+    _bannerData.add(
+      BannerSliderModel(id: 1, image: '$globalUrl/home_banner/1.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 2, image: '$globalUrl/home_banner/2.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 3, image: '$globalUrl/home_banner/3.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 4, image: '$globalUrl/home_banner/4.jpg'),
+    );
+    _bannerData.add(
+      BannerSliderModel(id: 5, image: '$globalUrl/home_banner/5.jpg'),
+    );
 
-    _movieData.add(BannerSliderModel(
-        id: 1, name: 'Bloodshot', image: '$globalUrl/movie/bloodshot.jpg'));
-    _movieData.add(BannerSliderModel(
-        id: 2, name: 'Dolittle', image: '$globalUrl/movie/dolittle.jpg'));
-    _movieData.add(BannerSliderModel(
+    _movieData.add(
+      BannerSliderModel(
+        id: 1,
+        name: 'Bloodshot',
+        image: '$globalUrl/movie/bloodshot.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
+        id: 2,
+        name: 'Dolittle',
+        image: '$globalUrl/movie/dolittle.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
         id: 3,
         name: 'The Invisible Man',
-        image: '$globalUrl/movie/invisible_man.jpg'));
-    _movieData.add(BannerSliderModel(
-        id: 4, name: 'Peninsula', image: '$globalUrl/movie/peninsula.jpg'));
-    _movieData.add(BannerSliderModel(
+        image: '$globalUrl/movie/invisible_man.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
+        id: 4,
+        name: 'Peninsula',
+        image: '$globalUrl/movie/peninsula.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
         id: 5,
         name: 'Train to Busan',
-        image: '$globalUrl/movie/train_to_busan.jpg'));
-    _movieData.add(BannerSliderModel(
-        id: 6, name: 'Venom', image: '$globalUrl/movie/venom.jpg'));
-    _movieData.add(BannerSliderModel(
-        id: 7, name: '#Alive', image: '$globalUrl/movie/alive.jpg'));
-    _movieData.add(BannerSliderModel(
+        image: '$globalUrl/movie/train_to_busan.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
+        id: 6,
+        name: 'Venom',
+        image: '$globalUrl/movie/venom.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
+        id: 7,
+        name: '#Alive',
+        image: '$globalUrl/movie/alive.jpg',
+      ),
+    );
+    _movieData.add(
+      BannerSliderModel(
         id: 8,
         name: 'Avengers: Endgame',
-        image: '$globalUrl/movie/avenger.jpg'));
+        image: '$globalUrl/movie/avenger.jpg',
+      ),
+    );
 
     _movieTitle = _movieData[0].name!;
 
@@ -80,100 +119,122 @@ class _Home2PageState extends State<Home2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(color: Colors.grey[100], height: 1.0),
+        ),
+        title: Image.asset('assets/images/logo_horizontal.png', height: 24),
         backgroundColor: Colors.white,
-        appBar: AppBar(
-            centerTitle: true,
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
-            elevation: 0,
-            bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(1.0),
-                child: Container(
-                  color: Colors.grey[100],
-                  height: 1.0,
-                )),
-            title: Image.asset('assets/images/logo_horizontal.png', height: 24),
-            backgroundColor: Colors.white,
-            leading: IconButton(
-                icon: Icon(Icons.account_circle, color: _color1),
-                onPressed: () {
-                  Fluttertoast.showToast(
-                      msg: 'Click account', toastLength: Toast.LENGTH_SHORT);
-                }),
-            actions: <Widget>[
-              IconButton(
-                  icon: _globalWidget.customNotifIcon(
-                      count: 8, notifColor: _color1, labelColor: _color3),
-                  onPressed: () {
-                    Fluttertoast.showToast(
-                        msg: 'Click notification',
-                        toastLength: Toast.LENGTH_SHORT);
-                  }),
-            ]),
-        body: ListView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            GestureDetector(
-              onTap: () {
-                Fluttertoast.showToast(
-                    msg: 'Click location', toastLength: Toast.LENGTH_SHORT);
-              },
-              child: Container(
-                color: Colors.grey[100],
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.location_on, color: Colors.grey[700]),
-                        const SizedBox(width: 8),
-                        const Text('NEW YORK')
-                      ],
-                    ),
-                    Icon(Icons.keyboard_arrow_down, color: Colors.grey[700])
-                  ],
-                ),
+        leading: IconButton(
+          icon: Icon(Icons.account_circle, color: _color1),
+          onPressed: () {
+            Fluttertoast.showToast(
+              msg: 'Click account',
+              toastLength: Toast.LENGTH_SHORT,
+            );
+          },
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: _globalWidget.customNotifIcon(
+              count: 8,
+              notifColor: _color1,
+              labelColor: _color3,
+            ),
+            onPressed: () {
+              Fluttertoast.showToast(
+                msg: 'Click notification',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: [
+          GestureDetector(
+            onTap: () {
+              Fluttertoast.showToast(
+                msg: 'Click location',
+                toastLength: Toast.LENGTH_SHORT,
+              );
+            },
+            child: Container(
+              color: Colors.grey[100],
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.location_on, color: Colors.grey[700]),
+                      const SizedBox(width: 8),
+                      const Text('NEW YORK'),
+                    ],
+                  ),
+                  Icon(Icons.keyboard_arrow_down, color: Colors.grey[700]),
+                ],
               ),
             ),
-            _buildHomeBanner(),
-            _nowShowing(),
-            _movieNews(),
-            _comingSoon()
-          ],
+          ),
+          _buildHomeBanner(),
+          _nowShowing(),
+          _movieNews(),
+          _comingSoon(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        selectedFontSize: 8,
+        unselectedFontSize: 8,
+        iconSize: 28,
+        selectedLabelStyle: TextStyle(
+          color: _currentIndex == 1 ? _color3 : _color1,
+          fontWeight: FontWeight.bold,
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-          onTap: (value) {
-            setState(() {
-              _currentIndex = value;
-            });
-          },
-          selectedFontSize: 8,
-          unselectedFontSize: 8,
-          iconSize: 28,
-          selectedLabelStyle: TextStyle(
-              color: _currentIndex == 1 ? _color3 : _color1,
-              fontWeight: FontWeight.bold),
-          unselectedLabelStyle:
-              TextStyle(color: _color2, fontWeight: FontWeight.bold),
-          selectedItemColor: _currentIndex == 1 ? _color3 : _color1,
-          unselectedItemColor: _color2,
-          items: [
-            BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(Icons.home,
-                    color: _currentIndex == 0 ? _color1 : _color2)),
-            BottomNavigationBarItem(
-                label: 'Cinema',
-                icon: Icon(Icons.movie,
-                    color: _currentIndex == 1 ? _color3 : _color2)),
-            BottomNavigationBarItem(
-                label: 'Ticket',
-                icon: Icon(Icons.label,
-                    color: _currentIndex == 2 ? _color1 : _color2))
-          ],
-        ));
+        unselectedLabelStyle: TextStyle(
+          color: _color2,
+          fontWeight: FontWeight.bold,
+        ),
+        selectedItemColor: _currentIndex == 1 ? _color3 : _color1,
+        unselectedItemColor: _color2,
+        items: [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(
+              Icons.home,
+              color: _currentIndex == 0 ? _color1 : _color2,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: 'Cinema',
+            icon: Icon(
+              Icons.movie,
+              color: _currentIndex == 1 ? _color3 : _color2,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: 'Ticket',
+            icon: Icon(
+              Icons.label,
+              color: _currentIndex == 2 ? _color1 : _color2,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildHomeBanner() {
@@ -181,27 +242,35 @@ class _Home2PageState extends State<Home2Page> {
       children: [
         CarouselSlider(
           items: _bannerData
-              .map((item) => GestureDetector(
+              .map(
+                (item) => GestureDetector(
                   onTap: () {
                     Fluttertoast.showToast(
-                        msg: 'Click banner ${item.id}',
-                        toastLength: Toast.LENGTH_SHORT);
+                      msg: 'Click banner ${item.id}',
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
                   },
                   child: buildCacheNetworkImage(
-                      width: 1000, height: 0, url: item.image)))
+                    width: 1000,
+                    height: 0,
+                    url: item.image,
+                  ),
+                ),
+              )
               .toList(),
           options: CarouselOptions(
-              aspectRatio: 2.5,
-              viewportFraction: 1.0,
-              autoPlay: true,
-              autoPlayInterval: const Duration(seconds: 6),
-              autoPlayAnimationDuration: const Duration(milliseconds: 300),
-              enlargeCenterPage: false,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _currentImageSlider = index;
-                });
-              }),
+            aspectRatio: 2.5,
+            viewportFraction: 1.0,
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 6),
+            autoPlayAnimationDuration: const Duration(milliseconds: 300),
+            enlargeCenterPage: false,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _currentImageSlider = index;
+              });
+            },
+          ),
         ),
         Positioned(
           bottom: 0,
@@ -215,8 +284,10 @@ class _Home2PageState extends State<Home2Page> {
                 duration: const Duration(milliseconds: 150),
                 width: _currentImageSlider == index ? 10 : 5,
                 height: _currentImageSlider == index ? 10 : 5,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 4.0,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
@@ -237,50 +308,58 @@ class _Home2PageState extends State<Home2Page> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Now Showing',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  )),
+              const Text(
+                'Now Showing',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               GestureDetector(
                 onTap: () {
                   Fluttertoast.showToast(
-                      msg: 'Click view all', toastLength: Toast.LENGTH_SHORT);
+                    msg: 'Click view all',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
                 },
-                child: const Text('View All',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    )),
-              )
+                child: const Text(
+                  'View All',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         ),
         CarouselSlider(
           items: _movieData
-              .map((item) => ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    child: buildCacheNetworkImage(height: 350, url: item.image),
-                  ))
+              .map(
+                (item) => ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                  child: buildCacheNetworkImage(height: 350, url: item.image),
+                ),
+              )
               .toList(),
           options: CarouselOptions(
-              height: 350,
-              viewportFraction: 0.62,
-              autoPlay: false,
-              enlargeCenterPage: false,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _movieTitle = _movieData[index].name!;
-                });
-              }),
+            height: 350,
+            viewportFraction: 0.62,
+            autoPlay: false,
+            enlargeCenterPage: false,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _movieTitle = _movieData[index].name!;
+              });
+            },
+          ),
         ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(_movieTitle,
-              style: TextStyle(
-                  fontSize: 28, color: _color2, fontWeight: FontWeight.bold)),
+          child: Text(
+            _movieTitle,
+            style: TextStyle(
+              fontSize: 28,
+              color: _color2,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        Divider(color: Colors.grey[300])
+        Divider(color: Colors.grey[300]),
       ],
     );
   }
@@ -295,22 +374,22 @@ class _Home2PageState extends State<Home2Page> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Movie News',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  )),
+              const Text(
+                'Movie News',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               GestureDetector(
                 onTap: () {
                   Fluttertoast.showToast(
-                      msg: 'Click view all', toastLength: Toast.LENGTH_SHORT);
+                    msg: 'Click view all',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
                 },
-                child: const Text('View All',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    )),
-              )
+                child: const Text(
+                  'View All',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         ),
@@ -323,8 +402,9 @@ class _Home2PageState extends State<Home2Page> {
                   GestureDetector(
                     onTap: () {
                       Fluttertoast.showToast(
-                          msg: 'Click ${_movieData[index].name!}',
-                          toastLength: Toast.LENGTH_SHORT);
+                        msg: 'Click ${_movieData[index].name!}',
+                        toastLength: Toast.LENGTH_SHORT,
+                      );
                     },
                     child: Container(
                       height: boxSize,
@@ -334,15 +414,16 @@ class _Home2PageState extends State<Home2Page> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(4)),
-                              child: buildCacheNetworkImage(
-                                  width: boxSize,
-                                  height: boxSize,
-                                  url: _movieData[index].image)),
-                          const SizedBox(
-                            width: 10,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(4),
+                            ),
+                            child: buildCacheNetworkImage(
+                              width: boxSize,
+                              height: boxSize,
+                              url: _movieData[index].image,
+                            ),
                           ),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,51 +431,68 @@ class _Home2PageState extends State<Home2Page> {
                               children: [
                                 Text(
                                   'This movie has a title, and the title of this movie is ${_movieData[index].name!}',
-                                  style:
-                                      TextStyle(fontSize: 14, color: _color2),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: _color2,
+                                  ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const Row(
                                   children: [
-                                    Icon(Icons.visibility,
-                                        color: Colors.grey, size: 11),
+                                    Icon(
+                                      Icons.visibility,
+                                      color: Colors.grey,
+                                      size: 11,
+                                    ),
                                     SizedBox(width: 2),
-                                    Text('134',
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 11)),
+                                    Text(
+                                      '134',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 11,
+                                      ),
+                                    ),
                                     SizedBox(width: 8),
-                                    Icon(Icons.thumb_up,
-                                        color: Colors.grey, size: 11),
+                                    Icon(
+                                      Icons.thumb_up,
+                                      color: Colors.grey,
+                                      size: 11,
+                                    ),
                                     SizedBox(width: 2),
-                                    Text('20',
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 11)),
+                                    Text(
+                                      '20',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 11,
+                                      ),
+                                    ),
                                     Spacer(),
-                                    Text('1 week ago',
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 11))
+                                    Text(
+                                      '1 week ago',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 11,
+                                      ),
+                                    ),
                                   ],
-                                )
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
                   ),
                   (index == _bannerData.length - 1)
                       ? const Wrap()
-                      : Divider(
-                          height: 0,
-                          color: Colors.grey[400],
-                        )
+                      : Divider(height: 0, color: Colors.grey[400]),
                 ],
               );
             }),
           ),
         ),
-        Divider(color: Colors.grey[300])
+        Divider(color: Colors.grey[300]),
       ],
     );
   }
@@ -411,22 +509,22 @@ class _Home2PageState extends State<Home2Page> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Coming Soon',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  )),
+              const Text(
+                'Coming Soon',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               GestureDetector(
                 onTap: () {
                   Fluttertoast.showToast(
-                      msg: 'Click view all', toastLength: Toast.LENGTH_SHORT);
+                    msg: 'Click view all',
+                    toastLength: Toast.LENGTH_SHORT,
+                  );
                 },
-                child: const Text('View All',
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                    )),
-              )
+                child: const Text(
+                  'View All',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         ),
@@ -444,16 +542,20 @@ class _Home2PageState extends State<Home2Page> {
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
                     Fluttertoast.showToast(
-                        msg: 'Click ${_movieData[index].name!}',
-                        toastLength: Toast.LENGTH_SHORT);
+                      msg: 'Click ${_movieData[index].name!}',
+                      toastLength: Toast.LENGTH_SHORT,
+                    );
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: buildCacheNetworkImage(
-                              width: boxSize, url: _movieData[index].image)),
+                        borderRadius: BorderRadius.circular(10),
+                        child: buildCacheNetworkImage(
+                          width: boxSize,
+                          url: _movieData[index].image,
+                        ),
+                      ),
                       Container(
                         margin: const EdgeInsets.only(top: 12),
                         child: Column(
@@ -463,7 +565,9 @@ class _Home2PageState extends State<Home2Page> {
                             Text(
                               _movieData[index].name!,
                               style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),

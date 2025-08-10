@@ -21,24 +21,22 @@ class _SliverList2PageState extends State<SliverList2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            const SliverAppBar(
-              title: Text('Sliver List Method 2'),
-              floating: true,
-              backgroundColor: Colors.pinkAccent,
-              expandedHeight: 200,
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index){
-                return ListTile(title: Text('Item #${index+1}'));
-              },
-                childCount: 100,
-              ),
-            ),
-          ],
-        )
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          const SliverAppBar(
+            title: Text('Sliver List Method 2'),
+            floating: true,
+            backgroundColor: Colors.pinkAccent,
+            expandedHeight: 200,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return ListTile(title: Text('Item #${index + 1}'));
+            }, childCount: 100),
+          ),
+        ],
+      ),
     );
   }
 }

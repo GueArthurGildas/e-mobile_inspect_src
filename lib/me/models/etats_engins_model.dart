@@ -4,7 +4,12 @@ class EtatsEngins {
   final dynamic created_at;
   final dynamic updated_at;
 
-  EtatsEngins({required this.id, required this.libelle, required this.created_at, required this.updated_at});
+  EtatsEngins({
+    required this.id,
+    required this.libelle,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory EtatsEngins.fromJson(Map<String, dynamic> json) => EtatsEngins(
     id: json['id'],

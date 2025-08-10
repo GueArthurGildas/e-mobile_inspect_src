@@ -1,4 +1,3 @@
-
 class AppRoutes {
   static const String splash = '/';
   static const String splash2 = '/plash2';
@@ -12,4 +11,15 @@ class AppRoutes {
   // static const String inspectionDetail = '/inspection-detail';
   // static const String inspectionForm = '/inspection-form';
   // static const String profile = '/profile';
+
+  static const String inspectionInformationsInitiales =
+      '/inspection/informations-generales';
+  static const String inspectionInformationsResponsables =
+      '/inspection/informations-equipage';
+  static const String inspectionDocuments = '/inspection/documents';
+  static const String inspectionInformationsEngins =
+      '/inspection/informations-engins';
+  static const String inspectionInformationsInfractions =
+      '/inspection/informations-infractions';
+  static const String inspectionSoumission = '/inspection/soumission';
 }

@@ -25,22 +25,22 @@ class _GridviewHeightPageState extends State<GridviewHeightPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: GridView.count(
-            padding: const EdgeInsets.all(8),
-            // to change height of gridview, we should change childAspectRatio
-            childAspectRatio: 0.5,
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            children: List.generate(24, (index) {
-              return Card(
-                elevation: 5,
-                child: Center(
-                  child: Text((index + 1).toString()),
-                ),
-              );
-            })));
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: GridView.count(
+        padding: const EdgeInsets.all(8),
+        // to change height of gridview, we should change childAspectRatio
+        childAspectRatio: 0.5,
+        crossAxisCount: 2,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 8.0,
+        children: List.generate(24, (index) {
+          return Card(
+            elevation: 5,
+            child: Center(child: Text((index + 1).toString())),
+          );
+        }),
+      ),
+    );
   }
 }

@@ -36,24 +36,25 @@ class _AnimatedSizePageState extends State<AnimatedSizePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Size',
-                desc: 'Animated widget that automatically transitions its size over a given duration whenever the given child\'s size changes.',
-                icon: Icons.animation
+              title: 'Animated Size',
+              desc:
+                  'Animated widget that automatically transitions its size over a given duration whenever the given child\'s size changes.',
+              icon: Icons.animation,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: _globalWidget.createButton(
-                  buttonName: 'Change',
-                  onPressed: (){
-                    setState(() {
-                      if(_first){
-                        _size = 200;
-                      } else {
-                        _size = 100;
-                      }
-                      _first = !_first;
-                    });
-                  }
+                buttonName: 'Change',
+                onPressed: () {
+                  setState(() {
+                    if (_first) {
+                      _size = 200;
+                    } else {
+                      _size = 100;
+                    }
+                    _first = !_first;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
@@ -64,7 +65,7 @@ class _AnimatedSizePageState extends State<AnimatedSizePage> {
                 duration: const Duration(seconds: 1),
                 child: FlutterLogo(size: _size),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -1,4 +1,3 @@
-
 // lib/services/user_service.dart
 
 import 'package:http/http.dart' as http;
@@ -6,7 +5,8 @@ import 'package:test_app_divkit/me/models/user_model.dart';
 import 'dart:convert';
 
 class UserService {
-  static const String _baseUrl = 'https://www.mirah-csp.com/api/v1/___T_api_users';
+  static const String _baseUrl =
+      'https://www.mirah-csp.com/api/v1/___T_api_users';
   static const String _baseUrl_create = '';
 
   final http.Client _client;

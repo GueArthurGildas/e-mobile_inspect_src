@@ -10,29 +10,36 @@ class ChatModel {
   final String? _date;
   final bool? _read;
 
-  ChatModel(this._id, this._type, this._isTextImageDate, this._message, this._date, this._read);
+  ChatModel(
+    this._id,
+    this._type,
+    this._isTextImageDate,
+    this._message,
+    this._date,
+    this._read,
+  );
 
-  int get getId{
+  int get getId {
     return _id;
   }
 
-  String? get getType{
+  String? get getType {
     return _type;
   }
 
-  String get getTextImageDate{
+  String get getTextImageDate {
     return _isTextImageDate;
   }
 
-  String get getMessage{
+  String get getMessage {
     return _message;
   }
 
-  String? get getDate{
+  String? get getDate {
     return _date;
   }
 
-  bool? get getRead{
+  bool? get getRead {
     return _read;
   }
 }

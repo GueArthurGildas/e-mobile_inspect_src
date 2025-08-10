@@ -21,50 +21,49 @@ class _SliverCombinePageState extends State<SliverCombinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            const SliverAppBar(
-              title: Text('Sliver Combine'),
-              floating: true,
-              backgroundColor: Colors.pinkAccent,
-              expandedHeight: 200,
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: <Widget>[
+          const SliverAppBar(
+            title: Text('Sliver Combine'),
+            floating: true,
+            backgroundColor: Colors.pinkAccent,
+            expandedHeight: 200,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return ListTile(title: Text('Item #${index + 1}'));
+            }, childCount: 20),
+          ),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index){
-                return ListTile(title: Text('Item #${index+1}'));
-              },
-                childCount: 20,
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              return Container(
+                color: _randomColor(index),
+                child: Center(child: Text((index + 1).toString())),
+              );
+            }, childCount: 20),
+          ),
+          SliverToBoxAdapter(
+            child: Center(
+              child: Container(
+                height: 20,
+                width: 20,
+                margin: const EdgeInsets.all(16),
+                child: const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 2.0,
+                ),
               ),
             ),
-            SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-              ) ,
-              delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                return Container(
-                  color: _randomColor(index),
-                  child: Center(
-                    child: Text((index+1).toString()),
-                  ),
-                );
-              }, childCount: 20,),
-            ),
-            SliverToBoxAdapter(
-              child: Center(
-                child: Container(
-                  height: 20,
-                  width: 20,
-                  margin: const EdgeInsets.all(16),
-                  child: const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                    strokeWidth: 2.0,
-                  ),
-                ),
-              )
-            ),
-          ],
-        )
+          ),
+        ],
+      ),
     );
   }
 

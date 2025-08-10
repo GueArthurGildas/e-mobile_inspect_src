@@ -25,57 +25,61 @@ class _TableWidthPageState extends State<TableWidthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _globalWidget.createDetailWidget(
-                  title: 'Table Width',
-                  desc: 'This is the example to change width of the table'
-              ),
-              Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Table(
-                    border: TableBorder.all(),
-                    columnWidths: const {0: FractionColumnWidth(.4), 1: FractionColumnWidth(.2), 2: FractionColumnWidth(.4)},
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _globalWidget.createDetailWidget(
+              title: 'Table Width',
+              desc: 'This is the example to change width of the table',
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              child: Table(
+                border: TableBorder.all(),
+                columnWidths: const {
+                  0: FractionColumnWidth(.4),
+                  1: FractionColumnWidth(.2),
+                  2: FractionColumnWidth(.4),
+                },
+                children: [
+                  TableRow(
                     children: [
-                      TableRow(
-                          children: [
-                            TableCell(child: mediumHeight('1')),
-                            TableCell(child: highHeight('2')),
-                            const TableCell(
-                              verticalAlignment: TableCellVerticalAlignment.middle,
-                              child: Center(child: Text('3'))
-                            ),
-                          ]
+                      TableCell(child: mediumHeight('1')),
+                      TableCell(child: highHeight('2')),
+                      const TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: Center(child: Text('3')),
                       ),
-                      const TableRow(
-                          children: [
-                            TableCell(child: Center(child: Text('4'))),
-                            TableCell(child: Center(child: Text('5'))),
-                            TableCell(child: Center(child: Text('6'))),
-                          ]
-                      ),
-                      const TableRow(
-                          children: [
-                            TableCell(child: Center(child: Text('7'))),
-                            TableCell(child: Center(child: Text('8'))),
-                            TableCell(child: Center(child: Text('9'))),
-                          ]
-                      )
                     ],
-                  )
+                  ),
+                  const TableRow(
+                    children: [
+                      TableCell(child: Center(child: Text('4'))),
+                      TableCell(child: Center(child: Text('5'))),
+                      TableCell(child: Center(child: Text('6'))),
+                    ],
+                  ),
+                  const TableRow(
+                    children: [
+                      TableCell(child: Center(child: Text('7'))),
+                      TableCell(child: Center(child: Text('8'))),
+                      TableCell(child: Center(child: Text('9'))),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-        )
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget mediumHeight(String text){
+  Widget mediumHeight(String text) {
     return Container(
       height: 100,
       color: Colors.pinkAccent,
@@ -83,7 +87,7 @@ class _TableWidthPageState extends State<TableWidthPage> {
     );
   }
 
-  Widget highHeight(String text){
+  Widget highHeight(String text) {
     return Container(
       height: 200,
       color: Colors.orangeAccent,

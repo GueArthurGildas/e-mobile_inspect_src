@@ -35,7 +35,8 @@ class _Signin1PageState extends State<Signin1Page> {
         value: Platform.isIOS
             ? SystemUiOverlayStyle.dark
             : const SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.dark),
+                statusBarIconBrightness: Brightness.dark,
+              ),
         child: ListView(
           padding: const EdgeInsets.fromLTRB(32, 72, 32, 24),
           children: [
@@ -95,9 +96,11 @@ class _Signin1PageState extends State<Signin1Page> {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(_buttonColor),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3.0),
-                )),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3.0),
+                  ),
+                ),
               ),
               onPressed: () {
                 Fluttertoast.showToast(
@@ -105,7 +108,8 @@ class _Signin1PageState extends State<Signin1Page> {
                   toastLength: Toast.LENGTH_SHORT,
                 );
 
-                Navigator.pushNamed(context, AppRoutes.homeMenu);
+                // Navigator.pushNamed(context, AppRoutes.homeMenu);
+                Navigator.pushNamed(context, AppRoutes.inspectionWizard);
               },
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
@@ -145,7 +149,9 @@ class _Signin1PageState extends State<Signin1Page> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: _primaryColor),
-                        borderRadius: const BorderRadius.all(Radius.circular(4)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(4),
+                        ),
                       ),
                       child: const Image(
                         image: AssetImage('assets/images/google.png'),

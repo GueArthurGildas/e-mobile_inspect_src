@@ -13,7 +13,7 @@ Category Data Information
 width = 110px
 height = 110px
  */
-List<CategoryModel> categoryData =[
+List<CategoryModel> categoryData = [
   CategoryModel(
     id: 1,
     name: 'Fashion',

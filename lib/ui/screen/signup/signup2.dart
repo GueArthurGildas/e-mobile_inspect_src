@@ -44,180 +44,204 @@ class _Signup2PageState extends State<Signup2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: Platform.isIOS?SystemUiOverlayStyle.light:const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light
-          ),
-          child: Stack(
-            children: <Widget>[
-              // top blue background gradient
-              Container(
-                height: MediaQuery.of(context).size.height / 3.5,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [_gradientTop, _gradientBottom],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter)),
+      backgroundColor: Colors.white,
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: Platform.isIOS
+            ? SystemUiOverlayStyle.light
+            : const SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
               ),
-              // set your logo here
-              Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height / 20, 0, 0),
-                  alignment: Alignment.topCenter,
-                  child: Image.asset('assets/images/logo_dark.png', height: 120)),
-              ListView(
-                children: <Widget>[
-                  // create form login
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 5,
-                    margin: EdgeInsets.fromLTRB(32, MediaQuery.of(context).size.height / 3.5 - 72, 32, 0),
-                    color: Colors.white,
-                    child: Container(
-                        margin: const EdgeInsets.fromLTRB(24, 0, 24, 20),
-                        child: Column(
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Center(
-                              child: Text(
-                                'SIGN UP',
-                                style: TextStyle(
-                                    color: _mainColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextField(
-                              keyboardType: TextInputType.text,
-                              decoration: InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey[600]!)),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: _underlineColor),
-                                  ),
-                                  labelText: 'Name',
-                                  labelStyle: TextStyle(color: Colors.grey[700])),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextField(
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey[600]!)),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: _underlineColor),
-                                  ),
-                                  labelText: 'Phone Number',
-                                  labelStyle: TextStyle(color: Colors.grey[700]!)),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextField(
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey[600]!)),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: _underlineColor),
-                                  ),
-                                  labelText: 'Email',
-                                  labelStyle: TextStyle(color: Colors.grey[700])),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            TextField(
-                              obscureText: _obscureText,
-                              decoration: InputDecoration(
-                                focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey[600]!)),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: _underlineColor),
-                                ),
-                                labelText: 'Password',
-                                labelStyle: TextStyle(color: Colors.grey[700]),
-                                suffixIcon: IconButton(
-                                    icon: Icon(_iconVisible, color: Colors.grey[700], size: 20),
-                                    onPressed: () {
-                                      _toggleObscureText();
-                                    }),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            SizedBox(
-                              width: double.maxFinite,
-                              child: TextButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                          (Set<MaterialState> states) => _mainColor,
-                                    ),
-                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                    shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        )
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Fluttertoast.showToast(msg: 'Click create account', toastLength: Toast.LENGTH_SHORT);
-                                  },
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5),
-                                    child: Text(
-                                      'CREATE ACCOUNT',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  )
-                              ),
-                            ),
-                          ],
-                        )),
+        child: Stack(
+          children: <Widget>[
+            // top blue background gradient
+            Container(
+              height: MediaQuery.of(context).size.height / 3.5,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [_gradientTop, _gradientBottom],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+            // set your logo here
+            Container(
+              margin: EdgeInsets.fromLTRB(
+                0,
+                MediaQuery.of(context).size.height / 20,
+                0,
+                0,
+              ),
+              alignment: Alignment.topCenter,
+              child: Image.asset('assets/images/logo_dark.png', height: 120),
+            ),
+            ListView(
+              children: <Widget>[
+                // create form login
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  const SizedBox(
-                    height: 50,
+                  elevation: 5,
+                  margin: EdgeInsets.fromLTRB(
+                    32,
+                    MediaQuery.of(context).size.height / 3.5 - 72,
+                    32,
+                    0,
                   ),
-                  // create sign up link
-                  Center(
-                    child: Wrap(
+                  color: Colors.white,
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                    child: Column(
                       children: <Widget>[
-                        const Text('Already have an account? '),
-                        GestureDetector(
-                          onTap: () {
-                            Fluttertoast.showToast(msg: 'Click signin', toastLength: Toast.LENGTH_SHORT);
-                          },
+                        const SizedBox(height: 40),
+                        Center(
                           child: Text(
-                            'Sign In',
+                            'SIGN UP',
                             style: TextStyle(
-                                color: _mainColor,
-                                fontWeight: FontWeight.w700),
+                              color: _mainColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
-                        )
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[600]!),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: _underlineColor),
+                            ),
+                            labelText: 'Name',
+                            labelStyle: TextStyle(color: Colors.grey[700]),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[600]!),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: _underlineColor),
+                            ),
+                            labelText: 'Phone Number',
+                            labelStyle: TextStyle(color: Colors.grey[700]!),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[600]!),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: _underlineColor),
+                            ),
+                            labelText: 'Email',
+                            labelStyle: TextStyle(color: Colors.grey[700]),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextField(
+                          obscureText: _obscureText,
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey[600]!),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: _underlineColor),
+                            ),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(color: Colors.grey[700]),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _iconVisible,
+                                color: Colors.grey[700],
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                _toggleObscureText();
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 40),
+                        SizedBox(
+                          width: double.maxFinite,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) => _mainColor,
+                                  ),
+                              overlayColor: MaterialStateProperty.all(
+                                Colors.transparent,
+                              ),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              Fluttertoast.showToast(
+                                msg: 'Click create account',
+                                toastLength: Toast.LENGTH_SHORT,
+                              );
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: Text(
+                                'CREATE ACCOUNT',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
+                ),
+                const SizedBox(height: 50),
+                // create sign up link
+                Center(
+                  child: Wrap(
+                    children: <Widget>[
+                      const Text('Already have an account? '),
+                      GestureDetector(
+                        onTap: () {
+                          Fluttertoast.showToast(
+                            msg: 'Click signin',
+                            toastLength: Toast.LENGTH_SHORT,
+                          );
+                        },
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: _mainColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              )
-            ],
-          ),
-        )
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

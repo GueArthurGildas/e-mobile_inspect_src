@@ -5,7 +5,8 @@ class AnimatedPhysicalModelPage extends StatefulWidget {
   const AnimatedPhysicalModelPage({super.key});
 
   @override
-  State<AnimatedPhysicalModelPage> createState() => _AnimatedPhysicalModelPageState();
+  State<AnimatedPhysicalModelPage> createState() =>
+      _AnimatedPhysicalModelPageState();
 }
 
 class _AnimatedPhysicalModelPageState extends State<AnimatedPhysicalModelPage> {
@@ -35,19 +36,19 @@ class _AnimatedPhysicalModelPageState extends State<AnimatedPhysicalModelPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _globalWidget.createDetailWidget2(
-                title: 'Animated Physical Model',
-                desc: 'Animated version of PhysicalModel.',
-                icon: Icons.animation
+              title: 'Animated Physical Model',
+              desc: 'Animated version of PhysicalModel.',
+              icon: Icons.animation,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               child: _globalWidget.createButton(
-                  buttonName: 'Change',
-                  onPressed: (){
-                    setState(() {
-                      _first = !_first;
-                    });
-                  }
+                buttonName: 'Change',
+                onPressed: () {
+                  setState(() {
+                    _first = !_first;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16),
@@ -67,12 +68,10 @@ class _AnimatedPhysicalModelPageState extends State<AnimatedPhysicalModelPage> {
                   height: 120.0,
                   width: 120.0,
                   color: Colors.blue[50],
-                  child: const FlutterLogo(
-                    size: 100,
-                  ),
+                  child: const FlutterLogo(size: 100),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

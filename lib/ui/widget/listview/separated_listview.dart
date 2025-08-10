@@ -36,7 +36,7 @@ class _SeparatedListviewPageState extends State<SeparatedListviewPage> {
     "Android Other 7",
     "Android Other 8",
     "Android Other 9",
-    "Android Other 10"
+    "Android Other 10",
   ];
 
   @override
@@ -52,22 +52,20 @@ class _SeparatedListviewPageState extends State<SeparatedListviewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: _globalWidget.globalAppBar(),
-        body: ListView.separated(
-          separatorBuilder: (context, index) {
-            return const Divider(
-              color: Colors.grey,
-            );
-          },
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(androidVersions[index]),
-            );
-          },
-          itemCount: androidVersions.length,
-        )
+      backgroundColor: Colors.white,
+      appBar: _globalWidget.globalAppBar(),
+      body: ListView.separated(
+        separatorBuilder: (context, index) {
+          return const Divider(color: Colors.grey);
+        },
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(androidVersions[index]),
+          );
+        },
+        itemCount: androidVersions.length,
+      ),
     );
   }
 }

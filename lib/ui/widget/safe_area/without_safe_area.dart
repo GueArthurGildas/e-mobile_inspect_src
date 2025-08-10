@@ -21,22 +21,22 @@ class _WithoutSafeAreaPageState extends State<WithoutSafeAreaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          color: Colors.pinkAccent,
-          child: const Text(
-              'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-                  'a b c d e f g h i j k l m n o p q r s t u v w x y z'
-          ),
-        )
+      backgroundColor: Colors.white,
+      body: Container(
+        color: Colors.pinkAccent,
+        child: const Text(
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z'
+          'a b c d e f g h i j k l m n o p q r s t u v w x y z',
+        ),
+      ),
     );
   }
 }

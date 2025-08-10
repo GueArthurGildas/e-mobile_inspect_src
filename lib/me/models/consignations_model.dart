@@ -9,7 +9,17 @@ class Consignations {
   final dynamic created_at;
   final dynamic updated_at;
 
-  Consignations({required this.id, required this.nom_societe, required this.contact, required this.situation_geo, required this.persone_contact, required this.email_contact, required this.tel_contact, required this.created_at, required this.updated_at});
+  Consignations({
+    required this.id,
+    required this.nom_societe,
+    required this.contact,
+    required this.situation_geo,
+    required this.persone_contact,
+    required this.email_contact,
+    required this.tel_contact,
+    required this.created_at,
+    required this.updated_at,
+  });
 
   factory Consignations.fromJson(Map<String, dynamic> json) => Consignations(
     id: json['id'],

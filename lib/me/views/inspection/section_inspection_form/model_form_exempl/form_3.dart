@@ -50,18 +50,24 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
         children: [
           Icon(icon ?? Icons.circle, color: color ?? orange),
           const SizedBox(width: 8),
-          Text(title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: color ?? orange,
-              )),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color ?? orange,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget inputField(String label, TextEditingController controller, {int maxLines = 1}) {
+  Widget inputField(
+    String label,
+    TextEditingController controller, {
+    int maxLines = 1,
+  }) {
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
@@ -83,13 +89,19 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            sectionTitle("🛥️  INFOS GÉNÉRALES", icon: Icons.info_outline_rounded),
+            sectionTitle(
+              "🛥️  INFOS GÉNÉRALES",
+              icon: Icons.info_outline_rounded,
+            ),
             inputField("Titre de l'inspection", titreController),
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(labelText: "Type d'inspection"),
-              items: ['Complète', 'Rapide', 'Surprise'].map((e) =>
-                  DropdownMenuItem(value: e, child: Text(e))).toList(),
+              items: [
+                'Complète',
+                'Rapide',
+                'Surprise',
+              ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
               onChanged: (val) => setState(() => typeInspection = val),
               validator: (val) => val == null ? 'Sélection requise' : null,
             ),
@@ -100,10 +112,14 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
                   child: InkWell(
                     onTap: pickDate,
                     child: InputDecorator(
-                      decoration: const InputDecoration(labelText: "Date prévue"),
-                      child: Text(date != null
-                          ? DateFormat.yMMMMd('fr_FR').format(date!)
-                          : "Choisir une date"),
+                      decoration: const InputDecoration(
+                        labelText: "Date prévue",
+                      ),
+                      child: Text(
+                        date != null
+                            ? DateFormat.yMMMMd('fr_FR').format(date!)
+                            : "Choisir une date",
+                      ),
                     ),
                   ),
                 ),
@@ -112,10 +128,14 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
                   child: InkWell(
                     onTap: pickTime,
                     child: InputDecorator(
-                      decoration: const InputDecoration(labelText: "Heure prévue"),
-                      child: Text(heure != null
-                          ? heure!.format(context)
-                          : "Choisir une heure"),
+                      decoration: const InputDecoration(
+                        labelText: "Heure prévue",
+                      ),
+                      child: Text(
+                        heure != null
+                            ? heure!.format(context)
+                            : "Choisir une heure",
+                      ),
                     ),
                   ),
                 ),
@@ -124,9 +144,11 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
             const SizedBox(height: 12),
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(labelText: "Port d’inspection"),
-              items: ['Abidjan', 'San Pedro', 'Sassandra']
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  .toList(),
+              items: [
+                'Abidjan',
+                'San Pedro',
+                'Sassandra',
+              ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
               onChanged: (val) => setState(() => port = val),
               validator: (val) => val == null ? 'Sélection requise' : null,
             ),
@@ -134,12 +156,20 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
             inputField("Lieu géographique (GPS ou Zone)", lieuController),
 
             const SizedBox(height: 24),
-            sectionTitle("👥  ÉQUIPE EN CHARGE", icon: Icons.group, color: green),
+            sectionTitle(
+              "👥  ÉQUIPE EN CHARGE",
+              icon: Icons.group,
+              color: green,
+            ),
             DropdownButtonFormField<String>(
-              decoration: const InputDecoration(labelText: "Inspecteur principal"),
-              items: ['KONE', 'N’Guessan', 'Traoré']
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-                  .toList(),
+              decoration: const InputDecoration(
+                labelText: "Inspecteur principal",
+              ),
+              items: [
+                'KONE',
+                'N’Guessan',
+                'Traoré',
+              ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
               onChanged: (val) => setState(() => inspecteur = val),
               validator: (val) => val == null ? 'Sélection requise' : null,
             ),
@@ -151,10 +181,22 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
             ),
 
             const SizedBox(height: 24),
-            sectionTitle("📄  CONTEXTE & OBSERVATIONS", icon: Icons.article, color: Colors.black87),
+            sectionTitle(
+              "📄  CONTEXTE & OBSERVATIONS",
+              icon: Icons.article,
+              color: Colors.black87,
+            ),
             inputField("Contexte ou mission", contexteController, maxLines: 2),
-            inputField("Consignes particulières", consignesController, maxLines: 2),
-            inputField("Observations générales", observationsController, maxLines: 3),
+            inputField(
+              "Consignes particulières",
+              consignesController,
+              maxLines: 2,
+            ),
+            inputField(
+              "Observations générales",
+              observationsController,
+              maxLines: 3,
+            ),
 
             const SizedBox(height: 30),
             ElevatedButton.icon(
@@ -171,7 +213,9 @@ class _InfosGeneralesScreenState extends State<InfosGeneralesScreen> {
                 backgroundColor: orange,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
           ],

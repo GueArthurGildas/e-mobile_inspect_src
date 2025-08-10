@@ -20,21 +20,18 @@ class _TabbarWithControllerPageState extends State<TabbarWithControllerPage>
   ];
 
   final List<Widget> _tabContentList = <Widget>[
-    const Center(
-      child: Text('Content 1'),
-    ),
-    const Center(
-      child: Text('Content 2'),
-    ),
-    const Center(
-      child: Text('Content 3'),
-    ),
+    const Center(child: Text('Content 1')),
+    const Center(child: Text('Content 2')),
+    const Center(child: Text('Content 3')),
   ];
 
   @override
   void initState() {
     _tabController = TabController(
-        vsync: this, length: _tabBarList.length, initialIndex: _tabIndex);
+      vsync: this,
+      length: _tabBarList.length,
+      initialIndex: _tabIndex,
+    );
     super.initState();
   }
 
@@ -47,35 +44,34 @@ class _TabbarWithControllerPageState extends State<TabbarWithControllerPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "TabBar with Controller",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          bottom: TabBar(
-            controller: _tabController,
-            onTap: (position) {
-              setState(() {
-                _tabIndex = position;
-              });
-              debugPrint('idx : $_tabIndex');
-            },
-            tabs: _tabBarList,
-          ),
-          backgroundColor: Colors.pinkAccent,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "TabBar with Controller",
+          style: TextStyle(fontSize: 16),
         ),
-        body: DefaultTabController(
-          length: _tabBarList.length,
-          child: TabBarView(
-            controller: _tabController,
-            children: _tabContentList.map((Widget content) {
-              return content;
-            }).toList(),
-          ),
-        ));
+        bottom: TabBar(
+          controller: _tabController,
+          onTap: (position) {
+            setState(() {
+              _tabIndex = position;
+            });
+            debugPrint('idx : $_tabIndex');
+          },
+          tabs: _tabBarList,
+        ),
+        backgroundColor: Colors.pinkAccent,
+      ),
+      body: DefaultTabController(
+        length: _tabBarList.length,
+        child: TabBarView(
+          controller: _tabController,
+          children: _tabContentList.map((Widget content) {
+            return content;
+          }).toList(),
+        ),
+      ),
+    );
   }
 }
