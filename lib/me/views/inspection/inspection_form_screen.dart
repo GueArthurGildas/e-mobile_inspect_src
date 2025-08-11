@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/controllers/sync_controller.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
 import 'package:test_app_divkit/me/views/shared/app_bar.dart';
 
@@ -20,6 +21,7 @@ class InspectionWizardScreen extends StatefulWidget {
 class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
   int currentStep = 0;
   final Map<String, dynamic> _wizardData = {};
+  final SyncController _syncController = SyncController.instance;
 
   final List<WizardOption> steps = [
     WizardOption(
@@ -54,11 +56,12 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
     ),
   ];
 
+  bool _isLoading = false;
+
   final Color orange = const Color(0xFFFF6A00);
   final Color disabledButton = const Color(0xA4FF6A00);
   final Color green = const Color(0xFF006400);
   final Color bg = const Color(0xFFF9F9F9);
-
 
   @override
   void initState() {
@@ -75,8 +78,24 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bg,
-      appBar: CustomAppBar(title: "Réalisation de l'Inspection"),
-      body: SafeArea(
+      appBar: CustomAppBar(
+        title: "Réalisation de l'Inspection",
+        customActions: [
+          IconButton(
+            onPressed: () async {
+              setState(() => _isLoading = true);
+              await _syncController.syncAll();
+              setState(() => _isLoading = false);
+            },
+            icon: const Icon(Icons.cloud_download_outlined),
+          ),
+        ],
+      ),
+      body: _isLoading
+          ? Center(
+              child: const CircularProgressIndicator(color: Color(0xFFFF6A00)),
+            )
+          : SafeArea(
               child: Column(
                 children: [
                   const SizedBox(height: 16),
@@ -143,7 +162,8 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                                       await Navigator.pushNamed<dynamic>(
                                         context,
                                         steps[index].route,
-                                        arguments: _wizardData[steps[index].key],
+                                        arguments:
+                                            _wizardData[steps[index].key],
                                       );
 
                                   if (stepData != null) {

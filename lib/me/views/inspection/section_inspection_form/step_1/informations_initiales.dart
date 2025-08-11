@@ -94,7 +94,7 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: "Informations initiales"),
       body: _loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator(color: Color(0xFFFF6A00)))
           : SafeArea(
               child: AppForm(controls: _buildControls(), formKey: _formKey),
             ),

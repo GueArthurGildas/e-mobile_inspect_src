@@ -195,7 +195,7 @@ class _SearchableSheetState extends State<SearchableSheet> {
                     },
                   )
                 : Center(
-                    child: Text("La recherche ne correspond a aucun element"),
+                    child: Text("Aucun element trouve"),
                   ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/models/types_documents_model.dart';
 
 class LocalFileItem {
   final String path;
@@ -8,9 +9,11 @@ class LocalFileItem {
   bool isSelected;
   bool isSaved;
   int? size;
+  TypesDocuments? type;
 
   LocalFileItem({
     required this.path,
+    this.type,
     this.isSelected = false,
     this.isSaved = false,
     this.size,
@@ -18,10 +21,17 @@ class LocalFileItem {
 }
 
 class FileManagerScreen extends StatefulWidget {
-  const FileManagerScreen({super.key, this.savedFiles, this.onUploadSelected, this.onDelete});
+  const FileManagerScreen({
+    super.key,
+    this.savedFiles,
+    this.onPickFile,
+    this.onUploadSelected,
+    this.onDelete,
+  });
 
   final List<LocalFileItem>? savedFiles;
   final Function(List<LocalFileItem> filesToUpload)? onUploadSelected;
+  final Future<dynamic>? Function(List<LocalFileItem> files)? onPickFile;
   final Function(List<LocalFileItem> files)? onDelete;
 
   @override
@@ -32,7 +42,6 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
   final List<LocalFileItem> _pickedFiles = [];
   bool _isLoading = false;
 
-  // Computed properties for selection state
   bool get allSelected =>
       _pickedFiles.isNotEmpty && _pickedFiles.every((file) => file.isSelected);
 
@@ -70,12 +79,25 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
     });
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
+        allowMultiple: false,
         type: FileType.any,
-        // allowedExtensions: ['jpg', 'pdf', 'doc'],
+        // allowedExtensions: ['jpg', 'pdf', 'doc', 'xlsx'],
       );
 
       if (result != null && result.files.isNotEmpty) {
+        bool waitForResult = widget.onPickFile != null;
+        dynamic res = widget.onPickFile?.call(
+          result.files
+              .map((f) => LocalFileItem(path: f.path!, size: f.size))
+              .toList(),
+        );
+        waitForResult &= res is Future<dynamic> || res is Future<void>;
+
+        if (waitForResult) {
+          res = await res;
+          if (res == null) return;
+        }
+
         setState(() {
           for (var loadedFile in result.files) {
             if (loadedFile.path != null) {
@@ -134,7 +156,6 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
   @override
   void initState() {
     super.initState();
-    // print(widget.savedFiles);
     if (widget.savedFiles != null) {
       setState(() {
         _pickedFiles.addAll(widget.savedFiles!);
@@ -232,7 +253,9 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
                           Expanded(
                             child: Text(
                               fileItem.name,
-                              style: const TextStyle(fontWeight: FontWeight.w600),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),

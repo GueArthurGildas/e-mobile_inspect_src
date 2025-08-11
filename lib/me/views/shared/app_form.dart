@@ -153,7 +153,7 @@ class _AppFormState extends State<AppForm> {
                       items: control.searchDropdownItems,
                       onChanged: (item) {
                         formData[control.name] = item;
-                        control.onChanged!(item);
+                        if (control.onChanged != null) control.onChanged!(item);
                       },
                       required: control.required,
                     ),

@@ -3,6 +3,7 @@ import 'package:test_app_divkit/me/models/etats_engins_model.dart';
 import 'package:test_app_divkit/me/models/types_engins_model.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/engine_bottomsheet.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/engins_listview.dart'; // Ensure EngineItem is defined here or imported
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/step_four_controller.dart';
 import 'package:test_app_divkit/me/views/shared/app_bar.dart';
 import 'package:test_app_divkit/me/views/shared/app_dropdown_search.dart';
 import 'package:test_app_divkit/me/views/shared/common.dart';
@@ -15,105 +16,57 @@ class FormInfosEnginsScreen extends StatefulWidget {
 }
 
 class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
-  Map<String, List<dynamic>>? _routeData;
-  Map<String, dynamic> _formData = {};
+  final StepFourController _controller = StepFourController();
+  late Map<String, dynamic> _data;
   List<EngineItem> _installedEngines = [];
 
   bool _isLoading = false;
-
   static const Color _orangeColor = Color(0xFFFF6A00);
 
   @override
   void initState() {
     super.initState();
+
+    if (mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _loadDataFromRoute();
+      });
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _loadDataFromRoute();
   }
 
-  void _loadDataFromRoute() {
-    final data =
+  void _loadDataFromRoute() async {
+    _data =
         ModalRoute.of(context)?.settings.arguments
-            as Map<String, List<dynamic>>?;
+            as dynamic ?? {};
+    await _controller.loadData();
 
-    if (data != null && data != _routeData) {
-      _isLoading = true;
-
-      setState(() {
-        _routeData = data;
-        _formData = Map<String, dynamic>.from(
-          _routeData?['formData']?[0] ?? <String, dynamic>{},
-        ); // Make a mutable copy
-
-        // Initialize _installedEngines from _formData
-        final enginesData = _formData['enginsInstalles'];
-        if (enginesData is List) {
-          _installedEngines = enginesData
-              .map((item) {
-                if (item is EngineItem) return item;
-                if (item is Map<String, dynamic>) {
-                  return EngineItem.fromObject(item);
-                }
-                return null;
-              })
-              .whereType<EngineItem>()
-              .toList();
-        } else {
-          _installedEngines = [];
+    final enginesData = _data['enginsInstalles'];
+    if (enginesData is List) {
+      _installedEngines = enginesData
+          .map((item) {
+        if (item is EngineItem) return item;
+        if (item is Map<String, dynamic>) {
+          return EngineItem.fromObject(item);
         }
-        _formData['enginsInstalles'] = _installedEngines;
-        _isLoading = false;
-      });
-    } else if (data == null &&
-        ModalRoute.of(context)?.settings.arguments == null) {
-      setState(() {
-        _isLoading = false;
-      });
+        return null;
+      })
+          .whereType<EngineItem>()
+          .toList();
+    } else {
+      _installedEngines = [];
     }
+    _data['enginsInstalles'] = _installedEngines;
+
+    _isLoading = false;
   }
 
-  List<EtatsEngins> get _etatsEngins {
-    final data = _routeData?['etatsEngins'];
-    if (data is List<EtatsEngins>) {
-      return data.isNotEmpty ? data : _defaultEtatsEngins;
-    }
-    return _defaultEtatsEngins;
-
-    // return data;
-  }
-
-  List<TypesEngins> get _typesEngins {
-    final data = _routeData?['typesEngins'];
-    if (data is List<TypesEngins>) {
-      return data.isNotEmpty ? data : _defaultTypesEngins;
-    }
-    return _defaultTypesEngins;
-
-    // return data;
-  }
-
-  // Placeholder default data
-  static final List<EtatsEngins> _defaultEtatsEngins = List.generate(
-    5,
-    (index) => EtatsEngins(
-      id: index,
-      libelle: "État par défaut ${index + 1}",
-      created_at: null,
-      updated_at: null,
-    ),
-  );
-  static final List<TypesEngins> _defaultTypesEngins = List.generate(
-    5,
-    (index) => TypesEngins(
-      id: index,
-      french_name: "Type par défaut ${index + 1}",
-      created_at: null,
-      updated_at: null,
-    ),
-  );
+  List<EtatsEngins> get _etatsEngins => _controller.etatsEngins;
+  List<TypesEngins> get _typesEngins => _controller.typesEngins;
 
   Future<void> _showAddEngineBottomSheet() async {
     final Map<String, dynamic>? result = await Common.showBottomSheet(
@@ -145,7 +98,7 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
 
       setState(() {
         _installedEngines.add(newEngine);
-        _formData['enginsInstalles'] = _installedEngines;
+        _data['enginsInstalles'] = _installedEngines;
       });
 
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -175,7 +128,7 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
         ),
         FloatingActionButton.extended(
           heroTag: 'fab2',
-          onPressed: () => Navigator.pop(context, _formData['enginsInstalles']),
+          onPressed: () => Navigator.pop(context, _data['enginsInstalles']),
           label: const Text("Enregistrer les modifications"),
           icon: const Icon(Icons.save),
           backgroundColor: _orangeColor,
@@ -190,8 +143,6 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_formData['enginsInstalles'].isEmpty ? _formData : _formData['enginsInstalles'][0].observation);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(

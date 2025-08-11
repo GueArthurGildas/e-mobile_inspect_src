@@ -38,7 +38,6 @@ class _EngineBottomSheetState extends State<EngineBottomSheet> {
         searchDropdownItems: widget.engineTypes
             .map((e) => DropdownItem(id: e.id, value: e, label: e.french_name))
             .toList(),
-        onChanged: (typeEngin) {},
         required: true,
       ),
       FormControl(
@@ -48,7 +47,6 @@ class _EngineBottomSheetState extends State<EngineBottomSheet> {
         searchDropdownItems: widget.engineEtats
             .map((e) => DropdownItem(id: e.id, value: e, label: e.libelle))
             .toList(),
-        onChanged: (etatEngin) {},
         required: true,
       ),
       FormControl(

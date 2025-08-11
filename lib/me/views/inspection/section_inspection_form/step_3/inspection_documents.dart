@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/models/types_documents_model.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_3/step_three_controller.dart';
 import 'package:test_app_divkit/me/views/shared/app_bar.dart';
+import 'package:test_app_divkit/me/views/shared/app_dropdown_search.dart';
+import 'package:test_app_divkit/me/views/shared/app_form.dart';
 import 'package:test_app_divkit/me/views/shared/common.dart';
-
-import '../../../shared/file_manager.dart';
+import 'package:test_app_divkit/me/views/shared/file_manager.dart';
+import 'package:test_app_divkit/me/views/shared/form_control.dart';
 
 class FormInspectionDocumentsScreen extends StatefulWidget {
   const FormInspectionDocumentsScreen({super.key});
@@ -14,37 +18,53 @@ class FormInspectionDocumentsScreen extends StatefulWidget {
 
 class _FormInspectionDocumentsScreenState
     extends State<FormInspectionDocumentsScreen> {
-  Map<String, List<dynamic>>? _data;
-  Map<String, dynamic> _formData = {};
+  late Map<String, dynamic> _data;
+  final StepThreeController _controller = StepThreeController();
+
+  bool _isLoading = true;
 
   static const Color _orangeColor = Color(0xFFFF6A00);
 
   void _handleFilesForUpload(List<LocalFileItem> files) {
     setState(() {
-      _formData['documents'] = files;
+      _data['documents'] = files;
     });
+  }
 
-    // print('Files selected: ${files.map((f) => f.name).toList()}');
-    // ...
+  Future<void> _handlePickFile(
+    BuildContext context,
+    List<LocalFileItem> files,
+  ) async {
+    LocalFileItem file = files.first;
+
+    final dynamic typeDoc = await Common.showBottomSheet(
+      context,
+      SelectDocType(items: _controller.typesDocuments),
+    );
+
+    // print(typeDoc);
+
+    // file.type = typeDoc;
   }
 
   void _handleFilesForDelete(List<LocalFileItem> files) {
     setState(() {
-      _formData['documents'] = files;
+      _data['documents'] = files;
     });
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final newRouteData =
-        ModalRoute.of(context)?.settings.arguments
-            as Map<String, List<dynamic>>?;
+  void initState() {
+    super.initState();
 
-    if (newRouteData != _data) {
-      _data = newRouteData;
-      _formData = _data?['formData']?[0] ?? <String, dynamic>{};
+    if (mounted) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        _data = ModalRoute.of(context)?.settings.arguments as dynamic ?? {};
+        await _controller.loadData();
+      });
     }
+
+    setState(() => _isLoading = false);
   }
 
   Widget _buildChecklistItem(String text) {
@@ -69,19 +89,6 @@ class _FormInspectionDocumentsScreenState
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading =
-        _data == null &&
-        ModalRoute.of(context)?.settings.arguments != null;
-    if (isLoading && _data == null) {
-      _data =
-          ModalRoute.of(context)?.settings.arguments
-              as Map<String, List<dynamic>>?;
-      if (_data != null) {
-        _formData = _data?['formData']?[0] ?? <String, dynamic>{};
-        isLoading = false;
-      }
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
@@ -90,8 +97,10 @@ class _FormInspectionDocumentsScreenState
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SafeArea(
-        child: isLoading
-            ? const Center(child: CircularProgressIndicator(color: _orangeColor))
+        child: _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(color: _orangeColor),
+              )
             : SingleChildScrollView(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -157,7 +166,9 @@ class _FormInspectionDocumentsScreenState
                                     top: Radius.circular(20.0),
                                   ),
                                   child: FileManagerScreen(
-                                    savedFiles: _formData['documents'],
+                                    savedFiles: _data['documents'],
+                                    onPickFile: (files) =>
+                                        _handlePickFile(context, files),
                                     onUploadSelected: _handleFilesForUpload,
                                     onDelete: _handleFilesForDelete,
                                   ),
@@ -182,10 +193,46 @@ class _FormInspectionDocumentsScreenState
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20.0),
                   ],
                 ),
               ),
+      ),
+    );
+  }
+}
+
+class SelectDocType extends StatefulWidget {
+  const SelectDocType({super.key, required this.items});
+
+  final List<TypesDocuments> items;
+
+  @override
+  State<SelectDocType> createState() => _SelectDocTypeState();
+}
+
+class _SelectDocTypeState extends State<SelectDocType> {
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: AppForm(
+          controls: [
+            FormControl(type: ControlType.label, name: "", label: "Choix du type de document", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0)),
+            FormControl(
+              name: "typeDocument",
+              label: "Type de documents",
+              type: ControlType.dropdownSearch,
+              searchDropdownItems: widget.items
+                  .map((t) => DropdownItem(id: t.id, value: t, label: t.libelle))
+                  .toList(),
+              required: true,
+            ),
+          ],
+          formKey: _formKey,
+        ),
       ),
     );
   }

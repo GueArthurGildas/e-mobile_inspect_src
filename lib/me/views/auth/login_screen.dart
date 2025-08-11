@@ -1,8 +1,8 @@
-import 'package:test_app_divkit/me/routes/app_routes.dart';
-import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test_app_divkit/me/routes/app_routes.dart';
+import 'package:universal_io/io.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -34,8 +34,8 @@ class _LoginPageState extends State<LoginPage> {
         value: Platform.isIOS
             ? SystemUiOverlayStyle.dark
             : const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
+                statusBarIconBrightness: Brightness.dark,
+              ),
         child: ListView(
           padding: const EdgeInsets.fromLTRB(32, 72, 32, 24),
           children: [
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: _underlineColor),
                 ),
-                labelText: 'Password',
+                labelText: 'Mot de passe',
                 labelStyle: TextStyle(color: _primaryColor),
                 suffixIcon: IconButton(
                   icon: Icon(_iconVisible, color: _primaryColor, size: 20),
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 );
               },
               child: Text(
-                'Forgot Password?',
+                'Mot de passe oublié?',
                 style: TextStyle(color: _primaryColor, fontSize: 13),
                 textAlign: TextAlign.right,
               ),
@@ -101,14 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              onPressed: () {
-                Fluttertoast.showToast(
-                  msg: 'Click login',
-                  toastLength: Toast.LENGTH_SHORT,
-                );
-
-                Navigator.pushNamed(context, AppRoutes.sync);
-              },
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.sync),
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
                 child: Text(

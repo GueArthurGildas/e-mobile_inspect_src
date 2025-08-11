@@ -5,16 +5,19 @@ import 'package:test_app_divkit/me/controllers/etats_engins_controller.dart';
 import 'package:test_app_divkit/me/controllers/pays_controller.dart';
 import 'package:test_app_divkit/me/controllers/ports_controller.dart';
 import 'package:test_app_divkit/me/controllers/typenavires_controller.dart';
+import 'package:test_app_divkit/me/controllers/types_documents_controller.dart';
 import 'package:test_app_divkit/me/controllers/types_engins_controller.dart';
 
 enum ControllerKey {
-  ports, // pavillons,
+  ports,
+  // pavillons,
   typesNavire,
   pays,
   consignataires,
   agents,
   etatsEngins,
   typesEngins,
+  typesDocuments,
 }
 
 class SyncController extends ChangeNotifier {
@@ -29,6 +32,7 @@ class SyncController extends ChangeNotifier {
     ControllerKey.agents: AgentsShipingController(),
     ControllerKey.etatsEngins: EtatsEnginsController(),
     ControllerKey.typesEngins: TypesEnginsController(),
+    ControllerKey.typesDocuments: TypesDocumentsController(),
   };
 
   static final SyncController _instance = SyncController._();
