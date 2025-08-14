@@ -1,6 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/models/types_documents_model.dart';
+
 
 class LocalFileItem {
   final String path;
@@ -9,7 +9,7 @@ class LocalFileItem {
   bool isSelected;
   bool isSaved;
   int? size;
-  TypesDocuments? type;
+  dynamic type;
 
   LocalFileItem({
     required this.path,
@@ -86,41 +86,42 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
 
       if (result != null && result.files.isNotEmpty) {
         bool waitForResult = widget.onPickFile != null;
-        dynamic res = widget.onPickFile?.call(
+        dynamic res = await widget.onPickFile?.call(
           result.files
               .map((f) => LocalFileItem(path: f.path!, size: f.size))
               .toList(),
         );
-        waitForResult &= res is Future<dynamic> || res is Future<void>;
+        // waitForResult &= res is Future<dynamic> || res is Future<void>;
 
-        if (waitForResult) {
-          res = await res;
-          if (res == null) return;
+        if (waitForResult && res == null) {
+          return;
         }
 
         setState(() {
           for (var loadedFile in result.files) {
             if (loadedFile.path != null) {
-              // Avoid adding duplicates
               if (!_pickedFiles.any(
                 (existingFile) =>
                     LocalFileItem(path: existingFile.path).name ==
                     LocalFileItem(path: loadedFile.path!).name,
               )) {
                 _pickedFiles.add(
-                  LocalFileItem(path: loadedFile.path!, size: loadedFile.size),
+                  LocalFileItem(path: loadedFile.path!, size: loadedFile.size, type: res),
                 );
               } else {
-                // print('duplicate file');
+                print('duplicate file');
               }
+            } else {
+              print('something');
             }
           }
         });
       } else {
-        // print('Aucun fichier selectionne.');
+        print('Aucun fichier selectionne.');
       }
     } catch (e) {
-      // print('Error picking files: $e');
+      print('Error picking files: $e');
+      rethrow;
     } finally {
       setState(() {
         _isLoading = false;

@@ -107,7 +107,6 @@ class _SyncScreenState extends State<SyncScreen> {
     }
   }
 
-  // custom widgets
   Widget _buildInitializingView() {
     return _buildMessageView(
       icon: Icons.hourglass_empty,

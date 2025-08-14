@@ -2,6 +2,21 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+enum DBTables {
+  activites_navires,
+  agent_shipings,
+  consignations,
+  types_documents,
+  users,
+  zones_capture,
+  presentation_produit,
+  pays,
+  types_engins,
+  etats_engins,
+  especes,
+  conservations
+}
+
 class DatabaseHelper {
   static Database? _db;
 
@@ -22,6 +37,9 @@ class DatabaseHelper {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
+        // free space - for storage optimisation
+        await db.execute('VACUUM;');
+
         await db.execute('''
           CREATE TABLE IF NOT EXISTS pays (
             id INTEGER PRIMARY KEY,

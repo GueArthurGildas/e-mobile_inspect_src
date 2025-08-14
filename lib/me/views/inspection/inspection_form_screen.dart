@@ -47,12 +47,12 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
     WizardOption(
       title: "Contrôle des captures sur le navire",
       key: 'controleCaptures',
-      route: AppRoutes.inspectionInformationsInfractions,
+      route: AppRoutes.inspectionControleCaptures,
     ),
     WizardOption(
       title: "Conformité aux mesures & programmes applicables",
       key: 'conformiteReglementaire',
-      route: AppRoutes.inspectionSoumission,
+      route: AppRoutes.inspectionLastStep,
     ),
   ];
 

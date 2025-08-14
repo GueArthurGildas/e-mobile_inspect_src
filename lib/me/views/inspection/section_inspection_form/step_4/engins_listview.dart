@@ -25,9 +25,10 @@ class EngineItem {
 }
 
 class EngineListView extends StatefulWidget {
-  const EngineListView({super.key, this.engines = const []});
+  const EngineListView({super.key, this.engines = const [], required this.onDelete});
 
   final List<EngineItem> engines;
+  final Function(EngineItem) onDelete;
 
   @override
   State<EngineListView> createState() => _EngineListViewState();
@@ -38,9 +39,7 @@ class _EngineListViewState extends State<EngineListView> {
     return Dismissible(
       key: Key(engine.key),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {
-        print(direction);
-      },
+      onDismissed: (direction) => widget.onDelete(engine),
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,

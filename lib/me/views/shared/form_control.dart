@@ -31,7 +31,10 @@ class FormControl {
   final String? suffixText;
   final List<DropdownOption>? options;
   final TextEditingController? controller;
+  final TextInputType? keyboardType;
   final bool required;
+  final bool asyncSearch;
+  final SearchQuery? asyncSearchQuery;
   final void Function(dynamic)? onChanged;
   final dynamic initialValue;
   final List<FormControl>? fields;
@@ -51,12 +54,15 @@ class FormControl {
     this.suffixText,
     this.options,
     this.controller,
+    this.keyboardType = TextInputType.text,
     this.required = false,
     this.onChanged,
     this.initialValue,
     this.fields,
     this.fileItems = const [],
     this.searchDropdownItems = const [],
+    this.asyncSearch = false,
+    this.asyncSearchQuery,
     this.style,
     this.separator,
     this.child

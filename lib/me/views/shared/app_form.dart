@@ -61,6 +61,10 @@ class _AppFormState extends State<AppForm> {
           ...widget.controls.map((control) {
             Widget field;
 
+            if (!control.visible) {
+              return SizedBox.shrink();
+            }
+
             switch (control.type) {
               case ControlType.label:
                 field = Column(
@@ -75,6 +79,7 @@ class _AppFormState extends State<AppForm> {
                 formData[control.name] = control.controller?.text;
                 field = TextFormField(
                   controller: control.controller,
+                  keyboardType: control.keyboardType,
                   decoration: InputDecoration(
                     labelText: control.label,
                     suffixText: control.suffixText,
@@ -116,7 +121,7 @@ class _AppFormState extends State<AppForm> {
                 field = DropdownButtonFormField<String>(
                   isExpanded: true,
                   value: control.initialValue,
-                  decoration: InputDecoration(labelText: control.label),
+                  decoration: InputDecoration(label: Text(control.label)),
                   items: control.options!
                       .map(
                         (e) => DropdownMenuItem(
@@ -155,6 +160,8 @@ class _AppFormState extends State<AppForm> {
                         formData[control.name] = item;
                         if (control.onChanged != null) control.onChanged!(item);
                       },
+                      asyncSearch: control.asyncSearch,
+                      asyncSearchQuery: control.asyncSearchQuery,
                       required: control.required,
                     ),
                   ],
@@ -292,7 +299,7 @@ class _AppFormState extends State<AppForm> {
             }
 
             return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.only(bottom: 20),
               child: field,
             );
           }),
@@ -304,7 +311,7 @@ class _AppFormState extends State<AppForm> {
             child: ElevatedButton.icon(
               onPressed: () {
                 if (widget.formKey.currentState!.validate()) {
-                  print(formData);
+                  // print(formData);
                   Navigator.pop(context, formData);
                 }
               },

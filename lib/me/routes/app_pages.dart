@@ -10,8 +10,8 @@ import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_2/informations_responsables.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_3/inspection_documents.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_4/informations_engins.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_5/informations_infractions.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_6/inspection_soumission.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_5/controle_captures.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_6/inspection_last_step.dart';
 
 import 'app_routes.dart';
 
@@ -56,14 +56,14 @@ class AppPages {
           builder: (_) => const FormInfosEnginsScreen(),
           settings: settings,
         );
-      case AppRoutes.inspectionInformationsInfractions:
+      case AppRoutes.inspectionControleCaptures:
         return MaterialPageRoute<Map<String, dynamic>?>(
-          builder: (_) => const FormInfosInfractionsScreen(),
+          builder: (_) => const FormControleCapturesScreen(),
           settings: settings,
         );
-      case AppRoutes.inspectionSoumission:
+      case AppRoutes.inspectionLastStep:
         return MaterialPageRoute<Map<String, dynamic>?>(
-          builder: (_) => const FormInspectionSoumissionScreen(),
+          builder: (_) => const InspectionLastStep(),
           settings: settings,
         );
 

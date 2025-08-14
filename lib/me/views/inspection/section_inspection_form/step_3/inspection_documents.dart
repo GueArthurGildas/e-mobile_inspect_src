@@ -31,20 +31,15 @@ class _FormInspectionDocumentsScreenState
     });
   }
 
-  Future<void> _handlePickFile(
+  Future<dynamic> _handlePickFile(
     BuildContext context,
-    List<LocalFileItem> files,
   ) async {
-    LocalFileItem file = files.first;
-
     final dynamic typeDoc = await Common.showBottomSheet(
       context,
       SelectDocType(items: _controller.typesDocuments),
     );
 
-    // print(typeDoc);
-
-    // file.type = typeDoc;
+    return typeDoc;
   }
 
   void _handleFilesForDelete(List<LocalFileItem> files) {
@@ -168,7 +163,7 @@ class _FormInspectionDocumentsScreenState
                                   child: FileManagerScreen(
                                     savedFiles: _data['documents'],
                                     onPickFile: (files) =>
-                                        _handlePickFile(context, files),
+                                        _handlePickFile(context),
                                     onUploadSelected: _handleFilesForUpload,
                                     onDelete: _handleFilesForDelete,
                                   ),

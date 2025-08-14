@@ -17,7 +17,7 @@ class FormInfosEnginsScreen extends StatefulWidget {
 
 class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
   final StepFourController _controller = StepFourController();
-  late Map<String, dynamic> _data;
+  late dynamic _data;
   List<EngineItem> _installedEngines = [];
 
   bool _isLoading = false;
@@ -40,21 +40,19 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
   }
 
   void _loadDataFromRoute() async {
-    _data =
-        ModalRoute.of(context)?.settings.arguments
-            as dynamic ?? {};
+    _data = ModalRoute.of(context)?.settings.arguments as dynamic ?? {};
     await _controller.loadData();
 
     final enginesData = _data['enginsInstalles'];
     if (enginesData is List) {
       _installedEngines = enginesData
           .map((item) {
-        if (item is EngineItem) return item;
-        if (item is Map<String, dynamic>) {
-          return EngineItem.fromObject(item);
-        }
-        return null;
-      })
+            if (item is EngineItem) return item;
+            if (item is Map<String, dynamic>) {
+              return EngineItem.fromObject(item);
+            }
+            return null;
+          })
           .whereType<EngineItem>()
           .toList();
     } else {
@@ -152,7 +150,17 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
       ),
       body: (_isLoading)
           ? const Center(child: CircularProgressIndicator(color: _orangeColor))
-          : SafeArea(child: EngineListView(engines: _installedEngines)),
+          : SafeArea(
+              child: EngineListView(
+                engines: _installedEngines,
+                onDelete: (item) {
+                  setState(() {
+                    _installedEngines.remove(item);
+                    _data['enginsInstalles'] = _installedEngines;
+                  });
+                },
+              ),
+            ),
       floatingActionButton: _buildFloatingActionButton(),
     );
   }
