@@ -22,7 +22,7 @@ class _PaysScreenState extends State<PaysScreen> {
 
   Future<void> _loadData() async {
     setState(() => _loading = true);
-    await _controller.loadAndSync();
+    await _controller.loadLocalOnly();
     print("Nombre de pays chargés : \${_controller.pays.length}");
     setState(() => _loading = false);
   }

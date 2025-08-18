@@ -27,12 +27,12 @@ class StepOneController {
                 .items
             as List<Ports>?) ??
         [];
-    pavillonsList =
-        /*((_syncController.getController(ControllerKey.pavillons)
-                    as PavillonsController)
-                .items
-            as List<Pavillons>?) ?? */
-        [];
+    // pavillonsList =
+    //     ((_syncController.getController(ControllerKey.pays)
+    //                 as PavillonsController)
+    //             .items
+    //         as List<Pavillons>?) ??
+    //     [];
     typesNavireList =
         ((_syncController.getController(ControllerKey.typesNavire)
                     as TypenaviresController)

@@ -4,9 +4,11 @@ import 'package:test_app_divkit/me/controllers/user_controller.dart';
 import 'package:test_app_divkit/me/services/api_get/user_api_service.dart';
 import 'package:test_app_divkit/me/views/auth/myHome.dart';
 import 'package:test_app_divkit/me/views/auth/splash_screen.dart';
+import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_form_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_list_screen.dart';
+import 'package:test_app_divkit/me/views/inspection/inspection_screen_load.dart';
 import 'package:test_app_divkit/me/views/inspection/inspections_test_sync_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_1.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_2.dart';
@@ -54,7 +56,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 
-
+//
 //
 // void main() {
 //   runApp(
@@ -82,7 +84,7 @@ import 'package:flutter/material.dart';
 //         theme: ThemeData(
 //           primarySwatch: Colors.blue,
 //         ),
-//         home: DashboardScreen(),//InspectionScreen(),////PendingInspectionPage(),//ActivitesNaviresScreen(),//PaysScreen(),//UsersPage(),
+//         home: DashboardScreen()//FormulaireInspectionStyleBanking()//InspectionScreen(),//WalletScreen()//DashboardScreen(),//InspectionScreen(),////PendingInspectionPage(),//ActivitesNaviresScreen(),//PaysScreen(),//UsersPage(),
 //       ),
 //     );
 //   }
@@ -128,6 +130,7 @@ class MenuPrincipalScreen extends StatelessWidget {
     {'title': 'ZonesCapture', 'screen': const ZonesCaptureScreen()},
     {'title': 'Presentations', 'screen': const PresentationsScreen()},
     {'title': 'Conservations', 'screen': const ConservationsScreen()},
+    {'title': 'inspection', 'screen': const InspectionsScreen()},
   ];
 
   @override

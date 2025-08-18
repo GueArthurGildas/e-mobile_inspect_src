@@ -20,7 +20,7 @@ class _PresentationsScreenState extends State<PresentationsScreen> {
 
   Future<void> _load() async {
     setState(() => _loading = true);
-    await _controller.loadAndSync();
+    await _controller.loadLocalOnly();
     setState(() => _loading = false);
   }
 

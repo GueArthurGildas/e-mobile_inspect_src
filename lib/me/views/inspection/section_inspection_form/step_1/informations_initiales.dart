@@ -121,6 +121,8 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         type: ControlType.date,
         initialValue: _data['dateArriveeEffective'],
       ),
+
+
       FormControl(
         name: 'dateDebutInspection',
         label: "Date de début de l'inspection",
@@ -151,19 +153,19 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
                 ? _controller.portsList.first.id.toString()
                 : null),
       ),
-      FormControl(
-        name: 'pavillonNavire',
-        label: "Pavillon du navire",
-        type: ControlType.dropdown,
-        options: _controller.pavillonsList
-            .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
-            .toList(),
-        initialValue:
-            _data['pavillonNavire'] ??
-            (_controller.pavillonsList.isNotEmpty
-                ? _controller.pavillonsList.first.id.toString()
-                : null),
-      ),
+      // FormControl(
+      //   name: 'pavillonNavire',
+      //   label: "Pavillon du navire",
+      //   type: ControlType.dropdown,
+      //   options: _controller.pavillonsList
+      //       .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
+      //       .toList(),
+      //   initialValue:
+      //       _data['pavillonNavire'] ??
+      //       (_controller.pavillonsList.isNotEmpty
+      //           ? _controller.pavillonsList.first.id.toString()
+      //           : null),
+      // ),
       FormControl(
         name: 'typeNavire',
         label: "Type de navire",

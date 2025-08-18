@@ -3,6 +3,7 @@ import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
 import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
 import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
 import 'package:test_app_divkit/me/controllers/etats_engins_controller.dart';
+import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
 import 'package:test_app_divkit/me/controllers/pays_controller.dart';
 import 'package:test_app_divkit/me/controllers/ports_controller.dart';
 import 'package:test_app_divkit/me/controllers/presentations_controller.dart';
@@ -27,6 +28,7 @@ enum ControllerKey {
   zonesCapture,
   presentationsProduit,
   conservationsProduit,
+  inspections
 }
 
 class SyncController extends ChangeNotifier {
@@ -46,6 +48,7 @@ class SyncController extends ChangeNotifier {
     ControllerKey.zonesCapture: ZonesCaptureController(),
     ControllerKey.presentationsProduit: PresentationsController(),
     ControllerKey.conservationsProduit: ConservationsController(),
+    ControllerKey.inspections: InspectionController(),
   };
 
   static final SyncController _instance = SyncController._();

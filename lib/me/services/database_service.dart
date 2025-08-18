@@ -31,7 +31,7 @@ class DatabaseHelper {
     final path = join(directory.path, 'inspection.db');
 
     // À activer temporairement si tu veux forcer la recréation
-    // await deleteDatabase(path);
+    //await deleteDatabase(path);
 
     return await openDatabase(
       path,
@@ -249,7 +249,10 @@ class DatabaseHelper {
     observa_embarq_status TEXT,
     respect_mesure_id INTEGER,
     navire_fao_id INTEGER,
-    sync INTEGER DEFAULT 0
+    sync INTEGER DEFAULT 0,
+    payload_json TEXT,
+    json_field TEXT NOT NULL DEFAULT '{}'
+    
   );
 ''');
 

@@ -1,19 +1,20 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
+import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
 
-class ConservationsScreen extends StatefulWidget {
-  const ConservationsScreen({super.key});
+class InspectionsScreen extends StatefulWidget {
+  const InspectionsScreen({super.key});
 
   @override
-  State<ConservationsScreen> createState() => _ConservationsScreenState();
+  State<InspectionsScreen> createState() => _InspectionsScreenState();
 }
 
-class _ConservationsScreenState extends State<ConservationsScreen> {
-  final ConservationsController _controller = ConservationsController();
+class _InspectionsScreenState extends State<InspectionsScreen> {
+  final InspectionController _controller = InspectionController();
+
   bool _loading = true;
   String _loadingMessage = "Chargement...";
-  String? _error; // <- pour afficher le message d'erreur à l'écran
+  String? _error;
 
   @override
   void initState() {
@@ -40,16 +41,15 @@ class _ConservationsScreenState extends State<ConservationsScreen> {
     });
 
     try {
-      // 1) Vérifier l'accès internet AVANT l'appel API
       final online = await _hasInternet();
       if (!online) {
         throw const SocketException("No Internet");
       }
 
-      // 2) Synchro avec l’API
+      // 1) Sync API -> local
       await _controller.loadAndSync();
     } catch (e) {
-      // 3) Afficher une erreur visible à l'écran
+      // 2) Message d’erreur visible
       _error = "Pas de connexion internet. Affichage des données locales.";
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -61,14 +61,14 @@ class _ConservationsScreenState extends State<ConservationsScreen> {
       }
     }
 
-    // 4) Toujours recharger le local
+    // 3) Toujours recharger le local pour l’affichage
     await _controller.loadLocalOnly();
 
     if (!mounted) return;
     setState(() => _loading = false);
   }
 
-  /// Vérifie une vraie connectivité internet (pas juste Wi-Fi/4G)
+  /// Vérifie une vraie connectivité internet
   Future<bool> _hasInternet() async {
     try {
       final result = await InternetAddress.lookup('example.com');
@@ -121,12 +121,20 @@ class _ConservationsScreenState extends State<ConservationsScreen> {
             ),
           ),
         Expanded(
-          child: ListView.builder(
-            itemCount: _controller.items.length,
-            itemBuilder: (context, index) {
-              final item = _controller.items[index];
-              return ListTile(title: Text(item.toMap().toString()));
-            },
+          child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: _controller.items.length,
+              itemBuilder: (context, index) {
+                final item = _controller.items[index];
+                // Adapte l’affichage selon ton modèle (id, titre, etc.)
+                return ListTile(
+                  title: Text("Inspection #${item.id ?? '—'}"),
+                  subtitle: Text(item.toMap().toString()),
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -134,7 +142,7 @@ class _ConservationsScreenState extends State<ConservationsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conservations'),
+        title: const Text('Inspections'),
         actions: [
           IconButton(icon: const Icon(Icons.refresh), onPressed: _refresh),
         ],

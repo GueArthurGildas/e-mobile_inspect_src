@@ -311,7 +311,7 @@ class _AppFormState extends State<AppForm> {
             child: ElevatedButton.icon(
               onPressed: () {
                 if (widget.formKey.currentState!.validate()) {
-                  // print(formData);
+                  print(formData);
                   Navigator.pop(context, formData);
                 }
               },

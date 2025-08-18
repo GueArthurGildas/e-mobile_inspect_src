@@ -20,7 +20,7 @@ class _PortsScreenState extends State<PortsScreen> {
 
   Future<void> _load() async {
     setState(() => _loading = true);
-    await _controller.loadAndSync();
+    await _controller.loadLocalOnly();
     setState(() => _loading = false);
   }
 

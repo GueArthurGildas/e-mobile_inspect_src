@@ -5,6 +5,7 @@ import 'package:test_app_divkit/me/services/api_get/inspections_service.dart';
 
 class InspectionController extends ChangeNotifier {
   final InspectionService _service = InspectionService();
+
   List<Inspection> _items = [];
 
   List<Inspection> get items => _items;
@@ -14,7 +15,6 @@ class InspectionController extends ChangeNotifier {
     try {
       await _service.syncToLocal();
       _items = await _service.getAll();
-
       notifyListeners();
     } catch (e) {
       print('Erreur Inspection : $e');

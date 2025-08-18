@@ -53,7 +53,7 @@ class InspectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => InspectionController()..loadAndSync(),
+      create: (_) => InspectionController()..loadLocalOnly(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Liste des inspections'),

@@ -45,6 +45,7 @@ class Inspection {
   final int? respectMesureId;
   final int? navireFaoId;
   final int sync;
+  final String? jsonField;
 
   Inspection({
     required this.id,
@@ -91,7 +92,9 @@ class Inspection {
     this.observaEmbarqStatus,
     this.respectMesureId,
     this.navireFaoId,
+    this.jsonField,
     this.sync = 0,
+
   });
 
   factory Inspection.fromJson(Map<String, dynamic> json) {
@@ -141,6 +144,7 @@ class Inspection {
       respectMesureId: json['respect_mesure_id'],
       navireFaoId: json['navire_fao_id'],
       sync: json['sync'] ?? 0,
+      jsonField: json['json_field'],
     );
   }
 
@@ -191,6 +195,7 @@ class Inspection {
       'respect_mesure_id': respectMesureId,
       'navire_fao_id': navireFaoId,
       'sync': sync,
+      'json_field': jsonField,
     };
 
   }
@@ -243,6 +248,7 @@ class Inspection {
       respectMesureId: map['respect_mesure_id'],
       navireFaoId: map['navire_fao_id'],
       sync: map['sync'] ?? 0,
+      jsonField : map['json_field']
     );
   }
 
@@ -294,6 +300,7 @@ class Inspection {
       'respect_mesure_id': respectMesureId,
       'navire_fao_id': navireFaoId,
       'sync': sync,
+      'json_field' : jsonField,
     };
   }
 
