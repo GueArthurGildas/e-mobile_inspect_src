@@ -69,6 +69,7 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
   }
 
   void saveStepData(String key, dynamic data) {
+    print(data);
     setState(() {
       _wizardData[key] = data;
     });
@@ -157,7 +158,7 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                                 color: isActive ? orange : Colors.black87,
                               ),
                               onTap: () async {
-                                if (index <= currentStep || true) {
+                                if (index <= currentStep) {
                                   final dynamic stepData =
                                       await Navigator.pushNamed<dynamic>(
                                         context,

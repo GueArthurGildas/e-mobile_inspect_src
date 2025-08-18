@@ -38,7 +38,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (Database db, int version) async {
         // free space - for storage optimisation
-        await db.execute('VACUUM;');
+        // await db.execute('VACUUM;');
 
         await db.execute('''
           CREATE TABLE IF NOT EXISTS pays (

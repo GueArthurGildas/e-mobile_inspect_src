@@ -120,12 +120,12 @@ class _LoginPageState extends State<LoginPage> {
               child: GestureDetector(
                 onTap: () {
                   Fluttertoast.showToast(
-                    msg: 'Click signup',
+                    msg: 'Contactez un administrateur',
                     toastLength: Toast.LENGTH_SHORT,
                   );
                 },
                 child: Text(
-                  'No account yet? Create one',
+                  'Pas encore de compte ? Creez-vous en un',
                   style: TextStyle(fontSize: 15, color: _primaryColor),
                 ),
               ),

@@ -31,9 +31,7 @@ class _FormInspectionDocumentsScreenState
     });
   }
 
-  Future<dynamic> _handlePickFile(
-    BuildContext context,
-  ) async {
+  Future<dynamic> _handlePickFile(BuildContext context) async {
     final dynamic typeDoc = await Common.showBottomSheet(
       context,
       SelectDocType(items: _controller.typesDocuments),
@@ -148,7 +146,7 @@ class _FormInspectionDocumentsScreenState
                         ),
                         label: const Text(
                           'Gérer les documents',
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {
                           Common.showBottomSheet(
@@ -174,16 +172,6 @@ class _FormInspectionDocumentsScreenState
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _orangeColor,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24.0,
-                            vertical: 12.0,
-                          ),
-                          textStyle: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
                           elevation: 3.0,
                         ),
                       ),
@@ -191,6 +179,17 @@ class _FormInspectionDocumentsScreenState
                   ],
                 ),
               ),
+      ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () => Navigator.pop(context, _data),
+        style: ElevatedButton.styleFrom(backgroundColor: _orangeColor),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+          child: Text(
+            "Enregistrer les modifications",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
       ),
     );
   }
@@ -215,13 +214,20 @@ class _SelectDocTypeState extends State<SelectDocType> {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: AppForm(
           controls: [
-            FormControl(type: ControlType.label, name: "", label: "Choix du type de document", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0)),
+            FormControl(
+              type: ControlType.label,
+              name: "",
+              label: "Choix du type de document",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0),
+            ),
             FormControl(
               name: "typeDocument",
               label: "Type de documents",
               type: ControlType.dropdownSearch,
               searchDropdownItems: widget.items
-                  .map((t) => DropdownItem(id: t.id, value: t, label: t.libelle))
+                  .map(
+                    (t) => DropdownItem(id: t.id, value: t, label: t.libelle),
+                  )
                   .toList(),
               required: true,
             ),

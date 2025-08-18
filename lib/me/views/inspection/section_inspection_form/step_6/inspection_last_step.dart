@@ -43,16 +43,22 @@ class _InspectionLastStepState extends State<InspectionLastStep> {
         _data =
             ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
 
-        for (var field in textFields) {
-          if (_data.containsKey(field['name']!)) {
-            int index = textFields.indexWhere(
-              (element) => element['name'] == field['name'],
-            );
-            textFields[index]['value'] = _data[field['name']!];
+        // print(_data);
+
+        setState(() {
+          for (var field in textFields) {
+            if (_data.containsKey(field['name']!)) {
+              int index = textFields.indexWhere(
+                    (element) => element['name'] == field['name'],
+              );
+              textFields[index]['value'] = _data[field['name']!];
+            }
+
+            _controller.setController(field['name']!, field['value']);
           }
 
-          _controller.setController(field['name']!, field['value']);
-        }
+          _showDetailField = _data['infractionObservee'] ?? false;
+        });
       });
     }
 

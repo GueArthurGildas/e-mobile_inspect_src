@@ -44,9 +44,7 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
 
   bool get allSelected =>
       _pickedFiles.isNotEmpty && _pickedFiles.every((file) => file.isSelected);
-
   bool get noneSelected => _pickedFiles.every((file) => !file.isSelected);
-
   int get selectedCount => _pickedFiles.where((file) => file.isSelected).length;
 
   void _toggleSelection(int index) {
@@ -148,6 +146,7 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
   }
 
   String _formatBytes(int bytes, int decimals) {
+    // helper to format bytes to human readable format - gemini
     if (bytes <= 0) return "0 B";
     const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     var i = (bytes.toString().length - 1) ~/ 3;
@@ -249,17 +248,20 @@ class _FileManagerScreenState extends State<FileManagerScreen> {
                     child: ListTile(
                       leading: _getFileIcon(fileItem.name),
                       title: Row(
-                        spacing: 5.0,
+                        spacing: 10.0,
                         children: [
-                          Expanded(
-                            child: Text(
-                              fileItem.name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                          Container(
+                            constraints: BoxConstraints(
+                              maxWidth: MediaQuery.of(context).size.width * 0.5,
                             ),
-                          ),
+                            child: Text(
+                                fileItem.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                           ),
                           Text(
                             fileItem.isSaved ? '(sauvegardé)' : '',
                             style: const TextStyle(

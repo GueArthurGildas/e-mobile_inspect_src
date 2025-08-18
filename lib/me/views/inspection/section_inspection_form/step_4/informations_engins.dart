@@ -58,7 +58,8 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
     } else {
       _installedEngines = [];
     }
-    _data['enginsInstalles'] = _installedEngines;
+
+    setState(() => _data['enginsInstalles'] = _installedEngines);
 
     _isLoading = false;
   }
@@ -126,7 +127,7 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
         ),
         FloatingActionButton.extended(
           heroTag: 'fab2',
-          onPressed: () => Navigator.pop(context, _data['enginsInstalles']),
+          onPressed: () => Navigator.pop(context, _data),
           label: const Text("Enregistrer les modifications"),
           icon: const Icon(Icons.save),
           backgroundColor: _orangeColor,

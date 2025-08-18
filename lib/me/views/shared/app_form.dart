@@ -29,17 +29,13 @@ class _AppFormState extends State<AppForm> {
   void initState() {
     super.initState();
 
+    // seed formData once
     for (var control in widget.controls) {
       switch (control.type) {
         case ControlType.date:
-          formData[control.name] = control.initialValue;
-          break;
         case ControlType.time:
           formData[control.name] = control.initialValue;
           break;
-        // case ControlType.switchTile:
-        //   formData[control.name] = control.initialValue ?? false;
-        //   break;
         default:
           if (control.controller != null) {
             formData[control.name] = control.controller!.text;
@@ -52,287 +48,292 @@ class _AppFormState extends State<AppForm> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
     return Form(
       key: widget.formKey,
-      child: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(16),
-        children: [
-          ...widget.controls.map((control) {
-            Widget field;
+      child: AnimatedPadding(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+        padding: EdgeInsets.only(bottom: bottomInset),
+        child: ListView(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(16),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          children: [
+            ...widget.controls.map((control) {
+              if (!control.visible) {
+                return const SizedBox.shrink();
+              }
 
-            if (!control.visible) {
-              return SizedBox.shrink();
-            }
+              late Widget field;
 
-            switch (control.type) {
-              case ControlType.label:
-                field = Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    control.separator ?? SizedBox.shrink(),
-                    Text(control.label, style: control.style),
-                  ],
-                );
+              switch (control.type) {
+                case ControlType.label:
+                  field = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      control.separator ?? const SizedBox.shrink(),
+                      Text(control.label, style: control.style),
+                    ],
+                  );
+                  break;
 
-              case ControlType.text:
-                formData[control.name] = control.controller?.text;
-                field = TextFormField(
-                  controller: control.controller,
-                  keyboardType: control.keyboardType,
-                  decoration: InputDecoration(
-                    labelText: control.label,
-                    suffixText: control.suffixText,
-                    hintText: control.hint,
-                  ),
-                  validator: control.required
-                      ? (val) => (val == null || val.isEmpty)
-                            ? "Ce champ est requis"
-                            : null
-                      : null,
-                  onChanged: (val) {
-                    formData[control.name] = val;
-                  },
-                );
-                break;
+                case ControlType.text:
+                  String? validator(String? val, RegExp? regExp) {
+                    final text = (val ?? '').trim();
 
-              case ControlType.textarea:
-                formData[control.name] = control.controller?.text;
-                field = TextFormField(
-                  controller: control.controller,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    labelText: control.label,
-                    alignLabelWithHint: true,
-                  ),
-                  onChanged: (val) {
-                    formData[control.name] = val;
-                  },
-                  validator: control.required
-                      ? (val) => (val == null || val.isEmpty)
-                            ? "Ce champ est requis"
-                            : null
-                      : null,
-                );
-                break;
+                    if (control.required && text.isEmpty) {
+                      return "Ce champ est requis";
+                    }
 
-              case ControlType.dropdown:
-                formData[control.name] = control.initialValue;
-                field = DropdownButtonFormField<String>(
-                  isExpanded: true,
-                  value: control.initialValue,
-                  decoration: InputDecoration(label: Text(control.label)),
-                  items: control.options!
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e.id.toString(),
+                    if (text.isNotEmpty &&
+                        regExp != null &&
+                        !regExp.hasMatch(text)) {
+                      return "La saisie est incorrecte";
+                    }
+
+                    return null;
+                  }
+
+                  final regExp = control.pattern != null
+                      ? RegExp(control.pattern!)
+                      : null;
+                  formData[control.name] = control.controller?.text;
+                  field = TextFormField(
+                    controller: control.controller,
+                    keyboardType: control.keyboardType,
+                    decoration: InputDecoration(
+                      labelText: control.label,
+                      suffixText: control.suffixText,
+                      hintText: control.hint,
+                    ),
+                    validator: (val) => validator(val, regExp),
+                    onChanged: (val) => formData[control.name] = val,
+                    textInputAction: TextInputAction.next,
+                  );
+                  break;
+
+                case ControlType.textarea:
+                  formData[control.name] = control.controller?.text;
+                  field = TextFormField(
+                    controller: control.controller,
+                    maxLines: 4,
+                    decoration: const InputDecoration(
+                      alignLabelWithHint: true,
+                    ).copyWith(labelText: control.label),
+                    onChanged: (val) => formData[control.name] = val,
+                    validator: control.required
+                        ? (val) => (val == null || val.isEmpty)
+                              ? "Ce champ est requis"
+                              : null
+                        : null,
+                  );
+                  break;
+
+                case ControlType.dropdown:
+                  final current =
+                      (formData[control.name] as String?) ??
+                      control.initialValue;
+                  field = DropdownButtonFormField<String>(
+                    isExpanded: true,
+                    value: current,
+                    decoration: InputDecoration(label: Text(control.label)),
+                    items: control.options!
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e.id.toString(),
+                            child: Text(
+                              e.libelle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        formData[control.name] = val;
+                      });
+                      control.onChanged?.call(val);
+                    },
+                    validator: control.required
+                        ? (val) => (val == null || val.isEmpty)
+                              ? "Ce champ est requis"
+                              : null
+                        : null,
+                  );
+                  break;
+
+                case ControlType.dropdownSearch:
+                  field = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 6.0),
+                      Text(control.label),
+                      AppSearchableDropdown(
+                        hintText: control.hint,
+                        items: control.searchDropdownItems,
+                        onChanged: (item) {
+                          setState(() {
+                            formData[control.name] = item;
+                          });
+                          control.onChanged?.call(item);
+                        },
+                        asyncSearch: control.asyncSearch,
+                        asyncSearchQuery: control.asyncSearchQuery,
+                        required: control.required,
+                      ),
+                    ],
+                  );
+                  break;
+
+                case ControlType.date:
+                  final current =
+                      (formData[control.name] as DateTime?) ??
+                      control.initialValue;
+                  field = FormField<DateTime>(
+                    // ensure unique key
+                    key: ValueKey('date_${control.name}'),
+                    initialValue: current,
+                    validator: control.required
+                        ? (val) => val == null ? "Ce champ est requis" : null
+                        : null,
+                    autovalidateMode: AutovalidateMode.always,
+                    builder: (FormFieldState<DateTime> state) {
+                      return InkWell(
+                        onTap: () async {
+                          final pickedDate = await Common.pickDate(context);
+                          if (pickedDate != null) {
+                            state.didChange(pickedDate);
+                            state.validate();
+                            setState(() {
+                              formData[control.name] = pickedDate;
+                            });
+                          }
+                        },
+                        child: InputDecorator(
+                          decoration: InputDecoration(
+                            labelText: control.label,
+                            errorText: state.errorText,
+                          ),
                           child: Text(
-                            e.libelle,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                            state.value != null
+                                ? DateFormat.yMMMMd(
+                                    'fr_FR',
+                                  ).format(state.value!)
+                                : "Choisir une date",
                           ),
                         ),
-                      )
-                      .toList(),
-                  onChanged: (val) {
-                    formData[control.name] = val;
-                    if (control.onChanged != null) control.onChanged!(val);
-                  },
-                  validator: control.required
-                      ? (val) => val == null || val.isEmpty
-                            ? "Ce champ est requis"
-                            : null
-                      : null,
-                );
-                break;
+                      );
+                    },
+                  );
+                  break;
 
-              case ControlType.dropdownSearch:
-                field = Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 5.0,
-                  children: [
-                    const SizedBox(height: 6.0),
-                    Text(control.label),
-                    AppSearchableDropdown(
-                      hintText: control.hint,
-                      items: control.searchDropdownItems,
-                      onChanged: (item) {
-                        formData[control.name] = item;
-                        if (control.onChanged != null) control.onChanged!(item);
-                      },
-                      asyncSearch: control.asyncSearch,
-                      asyncSearchQuery: control.asyncSearchQuery,
-                      required: control.required,
-                    ),
-                  ],
-                );
-                break;
-
-              case ControlType.date:
-                field = FormField<DateTime>(
-                  initialValue: control.initialValue, // DateTime.now(),
-                  validator: control.required
-                      ? (val) => val == null ? "Ce champ est requis" : null
-                      : null,
-                  builder: (FormFieldState<DateTime> state) {
-                    return InkWell(
-                      onTap: () async {
-                        final pickedDate = await Common.pickDate(context);
-                        if (pickedDate != null) {
-                          state.didChange(pickedDate);
-                          setState(() {
-                            formData[control.name] = pickedDate;
-                          });
-                        }
-                      },
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          labelText: control.label,
-                          errorText: state.errorText,
-                        ),
-                        child: Text(
-                          state.value != null
-                              ? DateFormat.yMMMMd('fr_FR').format(state.value!)
-                              : "Choisir une date",
-                        ),
-                      ),
-                    );
-                  },
-                );
-                break;
-
-              case ControlType.time:
-                final time =
-                    control.initialValue ??
-                    formData[control.name] as TimeOfDay?;
-                field = InkWell(
-                  onTap: () async {
-                    final pickedTime = await Common.pickTime(context);
-                    if (pickedTime != null) {
-                      setState(() {
-                        formData[control.name] = pickedTime;
-                      });
-                    }
-                  },
-                  child: InputDecorator(
-                    decoration: InputDecoration(labelText: control.label),
-                    child: Text(
-                      time != null ? time.format(context) : "Choisir une heure",
-                    ),
-                  ),
-                );
-                break;
-
-              case ControlType.switchTile:
-                dynamic currentValue = formData[control.name];
-                bool switchIsOn;
-
-                if (currentValue is Map) {
-                  switchIsOn = currentValue['present'] ?? false;
-                } else if (currentValue is bool) {
-                  switchIsOn = currentValue;
-                } else {
-                  switchIsOn = (control.initialValue is Map)
-                      ? (control.initialValue['present'] ?? false)
-                      : (control.initialValue ?? false);
-                }
-
-                field = SwitchListTile(
-                  value: switchIsOn,
-                  activeColor: Colors.orange,
-                  title: Text(control.label),
-                  onChanged: (val) {
-                    setState(() {
-                      var currentDataForControl = formData[control.name];
-                      if (currentDataForControl is Map) {
-                        formData[control.name] = Map<String, dynamic>.from({
-                          ...currentDataForControl,
-                          'present': val,
+                case ControlType.time:
+                  final current =
+                      (formData[control.name] as TimeOfDay?) ??
+                      control.initialValue;
+                  field = InkWell(
+                    onTap: () async {
+                      final pickedTime = await Common.pickTime(context);
+                      if (pickedTime != null) {
+                        setState(() {
+                          formData[control.name] = pickedTime;
                         });
-                      } else {
-                        formData[control.name] = val;
                       }
-                    });
-                    if (control.onChanged != null) control.onChanged!(val);
-                  },
-                );
-                break;
+                    },
+                    child: InputDecorator(
+                      decoration: InputDecoration(labelText: control.label),
+                      child: Text(
+                        current != null
+                            ? current.format(context)
+                            : "Choisir une heure",
+                      ),
+                    ),
+                  );
+                  break;
 
-              case ControlType.button:
-                field = control.visible
-                    ? control.child ?? SizedBox.shrink()
-                    : SizedBox.shrink();
+                case ControlType.switchTile:
+                  bool extractBool(dynamic value) {
+                    if (value is Map) return value['present'] ?? false;
+                    if (value is bool) return value;
+                    return false;
+                  }
 
-              case ControlType.file:
-                field = FileManagerScreen();
+                  final currentValue = formData[control.name];
+                  final switchIsOn = extractBool(currentValue)
+                      ? true
+                      : extractBool(control.initialValue);
 
-              // case ControlType.controlsField:
-              //   field = Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       Text(
-              //         control.label,
-              //         style: const TextStyle(fontWeight: FontWeight.w600),
-              //       ),
-              //       const SizedBox(height: 10),
-              //       ...?control.fields?.map(
-              //         (nestedField) => Padding(
-              //           padding: const EdgeInsets.only(top: 8.0),
-              //           child: TextFormField(
-              //             controller: nestedField.controller,
-              //             decoration: InputDecoration(
-              //               labelText: nestedField.label,
-              //               suffixText: nestedField.suffixText,
-              //               hintText: nestedField.hint,
-              //             ),
-              //             validator: nestedField.required
-              //                 ? (val) => (val == null || val.isEmpty)
-              //                       ? "Ce champ est requis"
-              //                       : null
-              //                 : null,
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   );
-              //   break;
-            }
+                  field = SwitchListTile(
+                    value: switchIsOn,
+                    activeColor: Colors.orange,
+                    title: Text(control.label),
+                    onChanged: (val) {
+                      setState(() {
+                        final currentDataForControl = formData[control.name];
+                        if (currentDataForControl is Map) {
+                          formData[control.name] = {
+                            ...currentDataForControl,
+                            'present': val,
+                          };
+                        } else {
+                          formData[control.name] = val;
+                        }
+                      });
+                      control.onChanged?.call(val);
+                    },
+                  );
+                  break;
 
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: field,
-            );
-          }),
+                case ControlType.button:
+                  field = control.visible
+                      ? (control.child ?? const SizedBox.shrink())
+                      : const SizedBox.shrink();
+                  break;
 
-          if (widget.children != null) ...widget.children!,
+                case ControlType.file:
+                  field = const FileManagerScreen();
+                  break;
+              }
 
-          Padding(
-            padding: EdgeInsets.only(top: 25.0),
-            child: ElevatedButton.icon(
-              onPressed: () {
-                if (widget.formKey.currentState!.validate()) {
-                  // print(formData);
-                  Navigator.pop(context, formData);
-                }
-              },
-              icon: const Icon(Icons.save, color: Colors.white),
-              label: const Text(
-                "Enregistrer",
-                style: TextStyle(color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFF6A00),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 14,
+              return Padding(
+                key: ValueKey(control.name), // stable key per field
+                padding: const EdgeInsets.only(bottom: 20),
+                child: field,
+              );
+            }),
+
+            if (widget.children != null) ...widget.children!,
+
+            Padding(
+              padding: const EdgeInsets.only(top: 25.0),
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  if (widget.formKey.currentState!.validate()) {
+                    Navigator.pop(context, formData);
+                  }
+                },
+                icon: const Icon(Icons.save, color: Colors.white),
+                label: const Text(
+                  "Enregistrer",
+                  style: TextStyle(color: Colors.white),
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFF6A00),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 14,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

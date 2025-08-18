@@ -97,6 +97,7 @@ class _FormInfosResponsablesScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: "Informations sur les responsables"),
       body: SafeArea(

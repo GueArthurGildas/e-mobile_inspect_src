@@ -33,7 +33,7 @@ class ActivitesNaviresService {
   Future<List<ActivitesNavires>> getAll() async {
     final db = await _db;
     final maps = await db.query('activites_navires');
-    print(maps.isEmpty);
+    // print(maps.isEmpty);
     return maps.map((e) => ActivitesNavires.fromMap(e)).toList();
   }
 }

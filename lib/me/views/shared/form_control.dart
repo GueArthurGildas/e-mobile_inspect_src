@@ -44,6 +44,7 @@ class FormControl {
   final Widget? separator;
   final Widget? child;
   final bool visible;
+  final String? pattern;
 
   FormControl({
     required this.type,
@@ -55,6 +56,7 @@ class FormControl {
     this.options,
     this.controller,
     this.keyboardType = TextInputType.text,
+    this.pattern,
     this.required = false,
     this.onChanged,
     this.initialValue,

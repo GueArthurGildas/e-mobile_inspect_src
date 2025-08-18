@@ -37,7 +37,10 @@ class _FormControleCapturesScreenState
 
     if (mounted) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        _data = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
+        _data =
+            ModalRoute.of(context)?.settings.arguments
+                as Map<String, dynamic>? ??
+            {};
         await _controller.loadData();
       });
     }
@@ -68,34 +71,52 @@ class _FormControleCapturesScreenState
   Widget _buildDataView(String key) {
     final List<dynamic> data = _data[key] ?? [];
 
-    return data.isEmpty ?
-        Center(child: Text('Aucune donnée..'),):
-        ListView(
-          padding: const EdgeInsets.all(16.0),
-          children: data.map((item) {
-            int index = data.indexOf(item);
+    return data.isEmpty
+        ? Center(child: Text('Aucune donnée..'))
+        : ListView(
+            padding: const EdgeInsets.all(16.0),
+            children: data.map((item) {
+              int index = data.indexOf(item);
 
-            return Dismissible(
-              key: Key(index.toString()),
-              direction: DismissDirection.endToStart,
-              onDismissed: (direction) => setState(() {
-                data.removeAt(index);
-                _data[key] = data;
-              }),
-              background: Container(
-                color: Colors.red,
-                alignment: Alignment.centerRight,
-                padding: EdgeInsets.only(right: 20.0),
-                child: Icon(Icons.delete, color: Colors.white),
-              ),
-              child: ListTile(
-                title: Text("$key - Test"),
-                trailing: Icon(Icons.remove, color: Colors.red),
-              ),
-            );
-          }).toList()
-        )
-    ;
+              return Dismissible(
+                key: Key(index.toString()),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) => setState(() {
+                  data.removeAt(index);
+                  _data[key] = data;
+                }),
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: Icon(Icons.delete, color: Colors.white),
+                ),
+                child: ListTile(
+                  title: Text(
+                    (item['especes'] as DropdownItem).label,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  subtitle: Text(
+                    "${(item['presentation'] as DropdownItem).label} (${(item['conservation'] as DropdownItem).label})",
+                  ),
+                  trailing: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "${item['quantiteDeclaree'] ?? item['quantiteObservee']} KG",
+                      style: TextStyle(
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          );
   }
 
   @override
@@ -106,7 +127,9 @@ class _FormControleCapturesScreenState
       child: Scaffold(
         appBar: CustomAppBar(title: "Contrôle des captures sur le navire"),
         body: _isLoading
-            ? const Center(child: CircularProgressIndicator(color: _orangeColor))
+            ? const Center(
+                child: CircularProgressIndicator(color: _orangeColor),
+              )
             : SafeArea(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(20.0),
@@ -143,7 +166,7 @@ class _FormControleCapturesScreenState
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
-                            "Veuillez cliquer sur les boutons ci-dessous pour sélectionner la présence d'une espèce et ajouter les détails correspondants.",
+                            "Veuillez cliquer sur les boutons ci-dessous pour sélectionner la présence d'une espèce et ajouter les détails correspondants.\n\n(?) Pour supprimer un element de la liste, glissez-le vers la gauche.",
                             style: TextStyle(
                               // fontSize: 15.0,
                               color: Colors.black54,
@@ -153,8 +176,10 @@ class _FormControleCapturesScreenState
                           ),
                         ),
                       ),
-      
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.06,
+                      ),
                       Center(
                         child: OutlinedButton(
                           onPressed: () => Navigator.push(
@@ -212,17 +237,20 @@ class _FormControleCapturesScreenState
             FABAction(
               icon: Icons.add_outlined,
               label: "Captures débarquées",
+              foreground: Colors.grey[800]!,
               onPressed: () async {
                 dynamic result = await _toggleBottomSheet(
                   context,
                   "capturesDebarquees",
                   "Captures débarquées",
                 );
-      
+
                 if (result != null) {
                   setState(() {
                     if ((_data as Map).containsKey("capturesDebarquees")) {
-                      (_data["capturesDebarquees"] as List<dynamic>).add(result);
+                      (_data["capturesDebarquees"] as List<dynamic>).add(
+                        result,
+                      );
                     } else {
                       (_data as Map)["capturesDebarquees"] = [result];
                     }
@@ -233,13 +261,14 @@ class _FormControleCapturesScreenState
             FABAction(
               icon: Icons.add_outlined,
               label: "Captures restées à bord du navire",
+              foreground: Colors.grey[800]!,
               onPressed: () async {
                 dynamic result = await _toggleBottomSheet(
                   context,
                   "capturesABord",
                   "Captures restées à bord du navire",
                 );
-      
+
                 if (result != null) {
                   setState(() {
                     if ((_data as Map).containsKey("capturesABord")) {
@@ -254,22 +283,32 @@ class _FormControleCapturesScreenState
             FABAction(
               icon: Icons.add_outlined,
               label: "Spécimens protégés, vénéneux ou interdits",
+              foreground: Colors.grey[800]!,
               onPressed: () async {
                 dynamic result = await _toggleCaptureInterditesBottomSheet(
                   context,
                   "capturesInterdites",
                 );
-      
+
                 if (result != null) {
                   setState(() {
                     if ((_data as Map).containsKey("capturesInterdites")) {
-                      ((_data as Map)["capturesInterdites"] as List).addAll(result);
+                      ((_data as Map)["capturesInterdites"] as List).addAll(
+                        result,
+                      );
                     } else {
                       (_data as Map)["capturesInterdites"] = [result];
                     }
                   });
                 }
               },
+            ),
+            FABAction(
+              icon: Icons.save,
+              label: "Enregistrer les modifications",
+              onPressed: () => Navigator.pop(context, _data),
+              fabBackground: _orangeColor,
+              foreground: Colors.white,
             ),
           ],
         ),
@@ -315,24 +354,18 @@ class _FormControleCapturesScreenState
         name: "presentation",
         label: "Présentation du produit",
         required: true,
-        searchDropdownItems: [],
-        asyncSearch: true,
-        asyncSearchQuery: SearchQuery(
-          table: DBTables.presentation_produit,
-          column: 'libelle',
-        ),
+        searchDropdownItems: _controller.presentationsList
+            .map((p) => DropdownItem(value: p, id: p.id, label: p.libelle))
+            .toList(),
       ),
       FormControl(
         type: ControlType.dropdownSearch,
         name: "conservation",
         label: "Conservation du produit",
         required: true,
-        searchDropdownItems: [],
-        asyncSearch: true,
-        asyncSearchQuery: SearchQuery(
-          table: DBTables.conservations,
-          column: 'libelle',
-        ),
+        searchDropdownItems: _controller.conservationsList
+            .map((c) => DropdownItem(value: c, id: c.id, label: c.libelle))
+            .toList(),
       ),
       FormControl(
         type: ControlType.text,
@@ -340,6 +373,7 @@ class _FormControleCapturesScreenState
         label: "Quantité observée",
         suffixText: "Kg",
         keyboardType: TextInputType.number,
+        required: true,
       ),
     ];
 
@@ -395,24 +429,18 @@ class _FormControleCapturesScreenState
         name: "presentation",
         label: "Présentation du produit",
         required: true,
-        searchDropdownItems: [],
-        asyncSearch: true,
-        asyncSearchQuery: SearchQuery(
-          table: DBTables.presentation_produit,
-          column: 'libelle',
-        ),
+        searchDropdownItems: _controller.presentationsList
+            .map((p) => DropdownItem(value: p, id: p.id, label: p.libelle))
+            .toList(),
       ),
       FormControl(
         type: ControlType.dropdownSearch,
         name: "conservation",
         label: "Conservation du produit",
         required: true,
-        searchDropdownItems: [],
-        asyncSearch: true,
-        asyncSearchQuery: SearchQuery(
-          table: DBTables.conservations,
-          column: 'libelle',
-        ),
+        searchDropdownItems: _controller.conservationsList
+            .map((c) => DropdownItem(value: c, id: c.id, label: c.libelle))
+            .toList(),
       ),
       FormControl(
         type: ControlType.text,
@@ -420,6 +448,7 @@ class _FormControleCapturesScreenState
         label: "Quantité déclarée",
         suffixText: "Kg",
         keyboardType: TextInputType.number,
+        required: true,
       ),
       FormControl(
         type: ControlType.text,
@@ -427,6 +456,7 @@ class _FormControleCapturesScreenState
         label: "Quantité retenue à bord",
         suffixText: "Kg",
         keyboardType: TextInputType.number,
+        required: true,
       ),
     ];
 

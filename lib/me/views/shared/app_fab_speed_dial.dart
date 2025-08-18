@@ -4,8 +4,12 @@ class FABAction {
   final IconData icon;
   final String label;
   final VoidCallback onPressed;
+  final Color fabBackground;
+  final Color foreground;
 
   const FABAction({
+    this.fabBackground = const Color(0xFFE2E0F9),
+    this.foreground = Colors.black,
     required this.icon,
     required this.label,
     required this.onPressed,
@@ -78,7 +82,7 @@ class _AppFABSpeedDialState extends State<AppFABSpeedDial>
     });
   }
 
-  Widget _buildMenuItem(IconData icon, int index, VoidCallback onTap) {
+  Widget _buildMenuItem(FABAction action, int index) {
     final offsetY = (index + 1) * 55.0;
 
     return AnimatedPositioned(
@@ -86,29 +90,26 @@ class _AppFABSpeedDialState extends State<AppFABSpeedDial>
       bottom: _isOpen ? offsetY + 30 : 15,
       right: 16,
       child: GestureDetector(
-        onTap: () {
-          onTap();
-          // _toggleMenu();
-        },
+        onTap: () => action.onPressed(),
         child: Container(
           constraints: BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width * 0.85,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
-            color: const Color(0xFFE2E0F9),
+            color: action.fabBackground,
             borderRadius: BorderRadius.circular(40),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (_isOpen) Icon(icon, color: Colors.grey[800]),
+              if (_isOpen) Icon(action.icon, color: action.foreground),
               const SizedBox(width: 8),
               Flexible(
                 child: Text(
                   _labels[index],
                   style: TextStyle(
-                    color: Colors.grey[800],
+                    color: action.foreground,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -127,7 +128,7 @@ class _AppFABSpeedDialState extends State<AppFABSpeedDial>
       clipBehavior: Clip.none,
       children: [
         for (final (index, FABAction action) in widget.fabActions.indexed)
-          _buildMenuItem(action.icon, index, action.onPressed),
+          _buildMenuItem(action, index),
         Positioned(
           bottom: 16,
           right: 16,

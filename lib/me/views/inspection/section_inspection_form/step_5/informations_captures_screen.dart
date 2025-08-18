@@ -12,6 +12,8 @@ class InformationsCapturesScreen extends StatefulWidget {
 }
 
 class _InformationsCapturesScreenState extends State<InformationsCapturesScreen> {
+  final _tipKey = GlobalKey<TooltipState>();
+
   static const Color _orangeColor = Color(0xFFFF6A00);
 
   @override
@@ -38,7 +40,7 @@ class _InformationsCapturesScreenState extends State<InformationsCapturesScreen>
         ),
         body: TabBarView(
           children: widget.tabBarViews,
-        ),
+        )
       ),
     );
   }

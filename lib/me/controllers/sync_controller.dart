@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/controllers/activites_navires_controller.dart';
 import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
 import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
 import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
@@ -15,7 +16,6 @@ import 'especes_controller.dart';
 
 enum ControllerKey {
   ports,
-  // pavillons,
   typesNavire,
   pays,
   consignataires,
@@ -27,6 +27,7 @@ enum ControllerKey {
   zonesCapture,
   presentationsProduit,
   conservationsProduit,
+  activitesNavires
 }
 
 class SyncController extends ChangeNotifier {
@@ -34,7 +35,6 @@ class SyncController extends ChangeNotifier {
 
   final Map<ControllerKey, dynamic> controllers = {
     ControllerKey.ports: PortsController(),
-    // ControllerKey.pavillons: PavillonsController(),
     ControllerKey.typesNavire: TypenaviresController(),
     ControllerKey.pays: PaysController(),
     ControllerKey.consignataires: ConsignationsController(),
@@ -46,6 +46,7 @@ class SyncController extends ChangeNotifier {
     ControllerKey.zonesCapture: ZonesCaptureController(),
     ControllerKey.presentationsProduit: PresentationsController(),
     ControllerKey.conservationsProduit: ConservationsController(),
+    ControllerKey.activitesNavires: ActivitesNaviresController()
   };
 
   static final SyncController _instance = SyncController._();

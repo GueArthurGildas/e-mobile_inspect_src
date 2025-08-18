@@ -3,8 +3,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
 import 'package:test_app_divkit/me/views/shared/common.dart';
 
-enum QueryOp { and, or }
-
 class DropdownItem {
   final dynamic id;
   final dynamic value;
@@ -164,9 +162,7 @@ class _SearchableSheetState extends State<SearchableSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading ?
-        Center(child: CircularProgressIndicator(color: orangeColor,),):
-      Container(
+    return Container(
       height: MediaQuery.of(context).size.height * 0.6,
       margin: EdgeInsets.only(top: 5.0),
       padding: EdgeInsets.all(10.0),
@@ -219,7 +215,9 @@ class _SearchableSheetState extends State<SearchableSheet> {
             ),
           ),
           Expanded(
-            child: _filteredItems.isNotEmpty
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator(color: orangeColor))
+                : _filteredItems.isNotEmpty
                 ? ListView.builder(
                     itemCount: _filteredItems.length,
                     itemBuilder: (context, index) {

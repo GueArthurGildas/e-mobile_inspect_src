@@ -23,7 +23,6 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   late Map<String, dynamic> _data;
   final StepOneController _controller = StepOneController();
 
-  late TextEditingController _titreController;
   late TextEditingController _observationsController;
   late TextEditingController _maillageController;
   late TextEditingController _dimensionsCalesController;
@@ -52,7 +51,6 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   }
 
   void _initControllers() {
-    _titreController = TextEditingController();
     _observationsController = TextEditingController();
     _maillageController = TextEditingController();
     _dimensionsCalesController = TextEditingController();
@@ -66,7 +64,6 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
     _data = routeData ?? {};
     await _controller.loadData();
 
-    _titreController.text = _data['titre'] ?? '';
     _observationsController.text = _data['observation'] ?? '';
     _maillageController.text = _data['maillage'] ?? '';
     _dimensionsCalesController.text = _data['dimensionsCales'] ?? '';
@@ -78,7 +75,6 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
 
   @override
   void dispose() {
-    _titreController.dispose();
     _observationsController.dispose();
     _maillageController.dispose();
     _dimensionsCalesController.dispose();
@@ -91,6 +87,7 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: "Informations initiales"),
       body: _loading
@@ -120,12 +117,14 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         label: "Date d'arrivée effective du navire",
         type: ControlType.date,
         initialValue: _data['dateArriveeEffective'],
+        required: true
       ),
       FormControl(
         name: 'dateDebutInspection',
         label: "Date de début de l'inspection",
         type: ControlType.date,
         initialValue: _data['dateDebutInspection'],
+        required: true
       ),
       FormControl(
         type: ControlType.label,
@@ -150,19 +149,21 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
             (_controller.portsList.isNotEmpty
                 ? _controller.portsList.first.id.toString()
                 : null),
+        required: true
       ),
       FormControl(
         name: 'pavillonNavire',
         label: "Pavillon du navire",
         type: ControlType.dropdown,
-        options: _controller.pavillonsList
+        options: _controller.paysList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
             _data['pavillonNavire'] ??
-            (_controller.pavillonsList.isNotEmpty
-                ? _controller.pavillonsList.first.id.toString()
+            (_controller.paysList.isNotEmpty
+                ? _controller.paysList.first.id.toString()
                 : null),
+        required: true
       ),
       FormControl(
         name: 'typeNavire',
@@ -176,14 +177,17 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
             (_controller.typesNavireList.isNotEmpty
                 ? _controller.typesNavireList.first.id.toString()
                 : null),
+        required: true
       ),
       FormControl(
         name: "maillage",
         label: "Maillage",
         type: ControlType.text,
+        keyboardType: TextInputType.number,
         controller: _maillageController,
         hint: "40",
         suffixText: "mm",
+        required: true
       ),
       FormControl(
         name: "dimensionsCales",
@@ -192,6 +196,8 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         type: ControlType.text,
         hint: "10x5",
         suffixText: "m",
+        required: true,
+        // pattern: r"^\d[xX]\d$"
       ),
       FormControl(
         name: "marquageNavire",
@@ -199,6 +205,7 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         controller: _marquageNavireController,
         type: ControlType.text,
         hint: "ABC123",
+        required: true
       ),
       FormControl(
         name: "baliseVMS",
@@ -206,38 +213,43 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         controller: _baliseVMSController,
         type: ControlType.text,
         hint: "VMS-98754",
+        required: true
       ),
       FormControl(
         name: 'paysEscale',
         label: "Pays d'escale",
         type: ControlType.dropdown,
-        options: _controller.pays
+        options: _controller.paysList
             .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
             .toList(),
         initialValue:
             _data['paysEscale'] ??
-            (_controller.pays.isNotEmpty
-                ? _controller.pays.first.id.toString()
+            (_controller.paysList.isNotEmpty
+                ? _controller.paysList.first.id.toString()
                 : null),
+        required: true
       ),
       FormControl(
         name: 'portEscale',
         label: "Port d'escale",
-        type: ControlType.dropdown,
-        options: _controller.portsList
-            .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
-            .toList(),
-        initialValue:
-            _data['portEscale'] ??
-            (_controller.portsList.isNotEmpty
-                ? _controller.portsList.first.id.toString()
-                : null),
+        type: ControlType.text,
+        // type: ControlType.dropdown,
+        // options: _controller.portsList
+        //     .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
+        //     .toList(),
+        // initialValue:
+        //     _data['portEscale'] ??
+        //     (_controller.portsList.isNotEmpty
+        //         ? _controller.portsList.first.id.toString()
+        //         : null),
+        required: true
       ),
       FormControl(
         name: 'dateEscaleNavire',
         label: "Date d'escale",
         type: ControlType.date,
         initialValue: _data['dateEscaleNavire'],
+        required: true
       ),
       FormControl(
         name: 'demandePrealablePort',
@@ -322,15 +334,15 @@ class _FormInfosInitialesScreenState extends State<FormInfosInitialesScreen> {
         name: 'objet',
         label: "Objet",
         type: ControlType.dropdown,
-        options: _controller.motifsEntreeList
-            .map((e) => DropdownOption(id: e.id, libelle: e.libelle))
+        options: _controller.activitesNaviresList
+            .map((a) => DropdownOption(id: a.id, libelle: a.libelle))
             .toList(),
         initialValue:
             _data['objet'] ??
-            (_controller.motifsEntreeList.isNotEmpty
-                ? _controller.motifsEntreeList.first.id.toString()
+            (_controller.activitesNaviresList.isNotEmpty
+                ? _controller.activitesNaviresList.first.id.toString()
                 : null),
-        controller: _objetController,
+        required: true
       ),
       FormControl(
         name: 'observation',
