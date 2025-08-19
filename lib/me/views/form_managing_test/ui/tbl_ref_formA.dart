@@ -8,8 +8,8 @@ import 'package:test_app_divkit/me/models/pays_model.dart';
 import 'package:test_app_divkit/me/models/ports_model.dart';
 import 'package:test_app_divkit/me/models/typenavires_model.dart';
 
-class StepOneController {
-  StepOneController();
+class MyStepOneController {
+  MyStepOneController();
 
   final SyncController _syncController = SyncController.instance;
 
@@ -24,9 +24,9 @@ class StepOneController {
 
     portsList =
         ((_syncController.getController(ControllerKey.ports) as PortsController)
-                .items
-            as List<Ports>?) ??
-        [];
+            .items
+        as List<Ports>?) ??
+            [];
     // pavillonsList =
     //     ((_syncController.getController(ControllerKey.pays)
     //                 as PavillonsController)
@@ -35,15 +35,15 @@ class StepOneController {
     //     [];
     typesNavireList =
         ((_syncController.getController(ControllerKey.typesNavire)
-                    as TypenaviresController)
-                .items
-            as List<Typenavires>?) ??
-        [];
+        as TypenaviresController)
+            .items
+        as List<Typenavires>?) ??
+            [];
     pays =
         ((_syncController.getController(ControllerKey.pays) as PaysController)
-                .pays
-            as List<Pays>?) ??
-        [];
+            .pays
+        as List<Pays>?) ??
+            [];
     motifsEntreeList = [];
   }
 }

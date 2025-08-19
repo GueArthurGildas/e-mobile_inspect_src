@@ -205,18 +205,22 @@ class _WizardScreenState extends State<WizardScreen> {
           }
         },
         controlsBuilder: (context, details) {
+          final isRtl = Directionality.of(context) == TextDirection.rtl;
           return Row(
             children: [
               if (_current < 3)
-                FilledButton(
+                FilledButton.icon(
                   onPressed: details.onStepContinue,
-                  child: const Text('Continuer'),
+                  label: const Text('Continuer'),
+                  icon: Icon(isRtl ? Icons.arrow_back : Icons.arrow_forward),
+
                 ),
               if (_current > 0) ...[
                 const SizedBox(width: 12),
-                TextButton(
+                TextButton.icon(
                   onPressed: details.onStepCancel,
-                  child: const Text('Retour'),
+                  icon: Icon(isRtl ? Icons.arrow_forward : Icons.arrow_back),
+                  label: const Text('Retour'),
                 ),
               ],
             ],
