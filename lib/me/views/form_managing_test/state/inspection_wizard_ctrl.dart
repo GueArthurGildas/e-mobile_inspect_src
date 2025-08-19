@@ -54,7 +54,7 @@ class InspectionWizardCtrl extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, dynamic> section(String key) =>
+  Map<dynamic, dynamic> section(String key) =>   /// ici j'ai changé en dynamic , j'esoère qu'il n'yaura pas de sucis
       _deepCopy(_global[key] ?? {});
 
   Future<void> saveSection(String key, Map<String, dynamic> sectionData) async {
