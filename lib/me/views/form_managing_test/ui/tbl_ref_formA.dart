@@ -1,8 +1,10 @@
+import 'package:test_app_divkit/me/controllers/activites_navires_controller.dart';
 import 'package:test_app_divkit/me/controllers/pavillons_controller.dart';
 import 'package:test_app_divkit/me/controllers/pays_controller.dart';
 import 'package:test_app_divkit/me/controllers/ports_controller.dart';
 import 'package:test_app_divkit/me/controllers/sync_controller.dart';
 import 'package:test_app_divkit/me/controllers/typenavires_controller.dart';
+import 'package:test_app_divkit/me/models/activites_navires_model.dart';
 import 'package:test_app_divkit/me/models/pavillons_model.dart';
 import 'package:test_app_divkit/me/models/pays_model.dart';
 import 'package:test_app_divkit/me/models/ports_model.dart';
@@ -17,7 +19,7 @@ class MyStepOneController {
   // late List<Pavillons> pavillonsList;
   late List<Typenavires> typesNavireList;
   late List<Pays> pays;
-  late List<dynamic> motifsEntreeList;
+  late List<ActivitesNavires> motifsEntreeList;
 
   Future<void> loadData() async {
     await _syncController.loadAll();
@@ -44,6 +46,9 @@ class MyStepOneController {
             .pays
         as List<Pays>?) ??
             [];
-    motifsEntreeList = [];
+    motifsEntreeList =  ((_syncController.getController(ControllerKey.motifEntree) as ActivitesNaviresController)
+        .items
+    as List<ActivitesNavires>?) ??
+        [];
   }
 }

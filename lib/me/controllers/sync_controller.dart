@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_app_divkit/me/controllers/activites_navires_controller.dart';
 import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
 import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
 import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
@@ -28,7 +29,8 @@ enum ControllerKey {
   zonesCapture,
   presentationsProduit,
   conservationsProduit,
-  inspections
+  inspections,
+  motifEntree /// code renseigné par moi
 }
 
 class SyncController extends ChangeNotifier {
@@ -49,6 +51,7 @@ class SyncController extends ChangeNotifier {
     ControllerKey.presentationsProduit: PresentationsController(),
     ControllerKey.conservationsProduit: ConservationsController(),
     ControllerKey.inspections: InspectionController(),
+    ControllerKey.motifEntree : ActivitesNaviresController()
   };
 
   static final SyncController _instance = SyncController._();

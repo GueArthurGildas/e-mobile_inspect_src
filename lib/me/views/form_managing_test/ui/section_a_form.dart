@@ -72,6 +72,37 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
       };
 
 
+    // Construire _local['objets'] à partir de l'existant (objet) ou de initial['objets']
+    final List<Map<String, dynamic>> selectedObjets = [];
+    if (initial['objets'] is List) {
+      for (final e in (initial['objets'] as List)) {
+        if (e is Map) {
+          selectedObjets.add({
+            'id': e['id'].toString(),
+            'libelle': (e['libelle'] ?? '').toString(),
+          });
+        }
+      }
+    } else if (initial['objet'] != null) {
+      final id = initial['objet'].toString();
+      final match = _stepCtrl.motifsEntreeList.where((m) => m.id.toString() == id);
+      if (match.isNotEmpty) {
+        selectedObjets.add({
+          'id': id,
+          'libelle': (match.first.libelle ?? '').toString(),
+        });
+      }
+    }
+
+// Assigner dans _local
+    _local['objets'] = selectedObjets;
+
+// Et garder _local['objet'] synchronisé si vide
+    if (_local['objet'] == null && selectedObjets.isNotEmpty) {
+      _local['objet'] = selectedObjets.first['id'];
+    }
+
+
   }
   @override
   void initState() {
@@ -79,6 +110,52 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
     _initRefs(); // charge les listes de référence
 
   }
+
+
+  String _motifsDisplayText() {
+    final List<Map<String, dynamic>> list =
+        ((_local['objets'] as List?)?.cast<Map<String, dynamic>>()) ?? const [];
+    if (list.isEmpty) return '';
+    if (list.length <= 2) {
+      return list.map((m) => (m['libelle'] ?? '').toString()).join(', ');
+    }
+    return '${list[0]['libelle']}, ${list[1]['libelle']} +${list.length - 2} autres';
+  }
+
+  Future<void> _openMotifMultiPicker() async {
+    final List<Map<String, dynamic>> current =
+        ((_local['objets'] as List?)?.cast<Map<String, dynamic>>()) ?? const [];
+
+    final picked = await showModalBottomSheet<List<Map<String, String>>>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (ctx) => _MotifMultiPickerSheet(
+        items: _stepCtrl.motifsEntreeList,                 // source
+        initialSelectedIds: current.map((e) => e['id']!.toString()).toSet(),
+      ),
+    );
+
+    if (picked != null) {
+      setState(() {
+        // picked: List<Map<String,String>> {[id, libelle]}
+        _local['objets'] = picked
+            .map((m) => {'id': m['id']!, 'libelle': m['libelle']!})
+            .toList();
+
+        // Compatibilité: garder 'objet' sur le premier élément si présent
+        _local['objet'] = picked.isNotEmpty ? picked.first['id'] : null;
+      });
+    }
+  }
+
+
+
+
 
   @override
   bool get wantKeepAlive => true;
@@ -97,6 +174,67 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
       });
     }
   }
+
+  String? _labelForTypeNavire(String? id) {
+    if (id == null) return null;
+    final match = _stepCtrl.typesNavireList.where((e) => e.id.toString() == id);
+    if (match.isEmpty) return null;
+    return match.first.libelle?.toString();
+  }
+
+  String? _labelForPays(String? id) {
+    if (id == null) return null;
+    final match = _stepCtrl.pays.where((e) => e.id.toString() == id);
+    if (match.isEmpty) return null;
+    return match.first.libelle?.toString();
+  }
+
+  Future<void> _openPaysPicker() async {
+    final picked = await showModalBottomSheet<_PaysPickResult>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (ctx) => _PaysPickerSheet(
+        items: _stepCtrl.pays,                       // ta liste de Pays
+        initialId: _local['paysEscale'] as String?,  // id actuellement sélectionné
+      ),
+    );
+
+    if (picked != null) {
+      setState(() {
+        _local['paysEscale'] = picked.id; // id en String
+      });
+    }
+  }
+
+
+
+  Future<void> _openTypeNavirePicker() async {
+    final picked = await showModalBottomSheet<_TypeNavirePickResult>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (ctx) => _TypeNavirePickerSheet(
+        items: _stepCtrl.typesNavireList,
+        initialId: _local['typeNavire'] as String?,
+      ),
+    );
+
+    if (picked != null) {
+      setState(() {
+        _local['typeNavire'] = picked.id; // id en String
+      });
+    }
+  }
+
 
   DateTime? _tryParseDate(dynamic v) {
     // Accepte DateTime, String ISO, ou null
@@ -192,15 +330,65 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
           const SizedBox(height: 12),
 
           // Type de navire
-          DropdownButtonFormField<String>(
-            value: (_local['typeNavire'] as String?),
-            decoration: const InputDecoration(labelText: "Type de navire"),
-            items: _stepCtrl.typesNavireList
-                .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
-                .toList(),
-            onChanged: (v) => setState(() => _local['typeNavire'] = v),
+          // DropdownButtonFormField<String>(
+          //   value: (_local['typeNavire'] as String?),
+          //   decoration: const InputDecoration(labelText: "Type de navire"),
+          //   items: _stepCtrl.typesNavireList
+          //       .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
+          //       .toList(),
+          //   onChanged: (v) => setState(() => _local['typeNavire'] = v),
+          //   validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+          // ),
+
+          FormField<String>(
+            initialValue: _local['typeNavire'] as String?,
             validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            builder: (state) {
+              final labelText = "Type de navire";
+              final selectedLabel = _labelForTypeNavire(_local['typeNavire'] as String?);
+              final hasError = state.hasError;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: _stepCtrl.typesNavireList.isEmpty ? null : () async {
+                      await _openTypeNavirePicker();
+                      // synchronise la valeur du FormField avec _local
+                      state.didChange(_local['typeNavire'] as String?);
+                    },
+                    child: InputDecorator(
+                      isEmpty: selectedLabel == null || selectedLabel.isEmpty,
+                      decoration: InputDecoration(
+                        labelText: labelText,
+                        errorText: hasError ? state.errorText : null,
+                        suffixIcon: const Icon(Icons.search),
+                        enabled: _stepCtrl.typesNavireList.isNotEmpty,
+                      ),
+                      child: Text(
+                        selectedLabel ?? 'Sélectionner…',
+                        style: TextStyle(
+                          color: (selectedLabel == null)
+                              ? Theme.of(context).hintColor
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_stepCtrl.typesNavireList.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 6),
+                      child: Text(
+                        "Aucune donnée disponible. Synchronisez d'abord.",
+                        style: TextStyle(fontSize: 12, color: Colors.redAccent),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
+          const SizedBox(height: 12),
+
           const SizedBox(height: 12),
 
           // Maillage (mm)
@@ -240,15 +428,65 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
           const SizedBox(height: 12),
 
           // Pays d'escale
-          DropdownButtonFormField<String>(
-            value: (_local['paysEscale'] as String?),
-            decoration: const InputDecoration(labelText: "Pays d'escale"),
-            items: _stepCtrl.pays
-                .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
-                .toList(),
-            onChanged: (v) => setState(() => _local['paysEscale'] = v),
+          // DropdownButtonFormField<String>(
+          //   value: (_local['paysEscale'] as String?),
+          //   decoration: const InputDecoration(labelText: "Pays d'escale"),
+          //   items: _stepCtrl.pays
+          //       .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
+          //       .toList(),
+          //   onChanged: (v) => setState(() => _local['paysEscale'] = v),
+          //   validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+          // ),
+          FormField<String>(
+            initialValue: _local['paysEscale'] as String?,
             validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            builder: (state) {
+              final selectedLabel = _labelForPays(_local['paysEscale'] as String?);
+              final hasError = state.hasError;
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: _stepCtrl.pays.isEmpty ? null : () async {
+                      await _openPaysPicker();
+                      // synchronise la valeur du FormField avec _local
+                      state.didChange(_local['paysEscale'] as String?);
+                    },
+                    child: InputDecorator(
+                      isEmpty: selectedLabel == null || selectedLabel.isEmpty,
+                      decoration: InputDecoration(
+                        labelText: "Pays d'escale",
+                        errorText: hasError ? state.errorText : null,
+                        suffixIcon: const Icon(Icons.search),
+                        enabled: _stepCtrl.pays.isNotEmpty,
+                      ),
+                      child: Text(
+                        selectedLabel ?? 'Sélectionner…',
+                        style: TextStyle(
+                          color: (selectedLabel == null)
+                              ? Theme.of(context).hintColor
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_stepCtrl.pays.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 6),
+                      child: Text(
+                        "Aucune donnée disponible. Synchronisez d'abord.",
+                        style: TextStyle(fontSize: 12, color: Colors.redAccent),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
+          const SizedBox(height: 12),
+
+
           const SizedBox(height: 12),
 
           // Port d'escale
@@ -347,15 +585,69 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
           const SizedBox(height: 20),
 
           // Objet (motif)
-          DropdownButtonFormField<String>(
-            value: (_local['objet'] as String?),
-            decoration: const InputDecoration(labelText: "Objet"),
-            items: _stepCtrl.motifsEntreeList
-                .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
-                .toList(),
-            onChanged: (v) => setState(() => _local['objet'] = v),
-            // validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+          // DropdownButtonFormField<String>(
+          //   value: (_local['objet'] as String?),
+          //   decoration: const InputDecoration(labelText: "Objet"),
+          //   items: _stepCtrl.motifsEntreeList
+          //       .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
+          //       .toList(),
+          //   onChanged: (v) => setState(() => _local['objet'] = v),
+          //   // validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+          // ),
+
+          FormField<String>(
+            validator: (_) {
+              final List list = (_local['objets'] as List?) ?? const [];
+              return list.isEmpty ? 'Requis' : null;
+            },
+            builder: (state) {
+              final hasError = state.hasError;
+              final text = _motifsDisplayText();
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(8),
+                    onTap: _stepCtrl.motifsEntreeList.isEmpty ? null : () async {
+                      await _openMotifMultiPicker();
+                      // sync FormField (on passe un texte, mais la validation lit _local['objets'])
+                      state.didChange(_motifsDisplayText());
+                    },
+                    child: InputDecorator(
+                      isEmpty: text == 'Sélectionner…',
+                      decoration: InputDecoration(
+                        labelText: "Objet (motif d'entrée au port)",
+                        errorText: hasError ? state.errorText : null,
+                        suffixIcon: const Icon(Icons.search),
+                        enabled: _stepCtrl.motifsEntreeList.isNotEmpty,
+                      ),
+                      child: Text(
+                        text,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: (text == 'Sélectionner…')
+                              ? Theme.of(context).hintColor
+                              : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_stepCtrl.motifsEntreeList.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 6),
+                      child: Text(
+                        "Aucune donnée disponible. Synchronisez d'abord.",
+                        style: TextStyle(fontSize: 12, color: Colors.redAccent),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
+          const SizedBox(height: 12),
+
           const SizedBox(height: 12),
 
           // Observation (textarea)
@@ -389,3 +681,426 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
     );
   }
 }
+
+class _TypeNavirePickResult {
+  final String id;
+  final String label;
+  _TypeNavirePickResult({required this.id, required this.label});
+}
+
+class _TypeNavirePickerSheet extends StatefulWidget {
+  const _TypeNavirePickerSheet({
+    required this.items,
+    this.initialId,
+  });
+
+  final List<dynamic> items; // List<Typenavires>
+  final String? initialId;
+
+  @override
+  State<_TypeNavirePickerSheet> createState() => _TypeNavirePickerSheetState();
+}
+
+class _TypeNavirePickerSheetState extends State<_TypeNavirePickerSheet> {
+  final TextEditingController _searchCtrl = TextEditingController();
+  late List<dynamic> _filtered;
+
+  @override
+  void initState() {
+    super.initState();
+    _filtered = List.of(widget.items);
+    _searchCtrl.addListener(_applyFilter);
+  }
+
+  void _applyFilter() {
+    final q = _searchCtrl.text.toLowerCase().trim();
+    setState(() {
+      if (q.isEmpty) {
+        _filtered = List.of(widget.items);
+      } else {
+        _filtered = widget.items.where((e) {
+          final label = (e.libelle ?? '').toString().toLowerCase();
+          final id = e.id.toString().toLowerCase();
+          return label.contains(q) || id.contains(q);
+        }).toList();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottom),
+      child: DraggableScrollableSheet(
+        expand: false,
+        // Donne plus de hauteur en paysage:
+        minChildSize: 0.30,
+        initialChildSize: 0.85,
+        maxChildSize: 0.95,
+        builder: (ctx, scrollController) {
+          return ListView(
+            controller: scrollController,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            children: [
+              const SizedBox(height: 8),
+              Center(
+                child: Container(
+                  width: 40, height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                "Rechercher un type de navire",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _searchCtrl,
+                textInputAction: TextInputAction.search,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: "Nom…",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // ⚠️ Pas de ListView imbriqué : on mappe directement
+              ..._filtered.map((e) {
+                final id = e.id.toString();
+                final label = (e.libelle ?? '').toString();
+                final selected = widget.initialId == id;
+
+                return ListTile(
+                  title: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  // ⬅️ plus de subtitle avec l’ID
+                  trailing: selected ? const Icon(Icons.check, color: Colors.green) : null,
+                  onTap: () {
+                    Navigator.of(context).pop(
+                      _TypeNavirePickResult(id: id, label: label),
+                    );
+                  },
+                );
+              }).toList(),
+
+              const SizedBox(height: 12),
+            ],
+          );
+        },
+      ),
+
+    );
+  }
+}
+
+class _PaysPickResult {
+  final String id;
+  final String label;
+  _PaysPickResult({required this.id, required this.label});
+}
+
+class _PaysPickerSheet extends StatefulWidget {
+  const _PaysPickerSheet({
+    required this.items,    // List<Pays>
+    this.initialId,
+  });
+
+  final List<dynamic> items;
+  final String? initialId;
+
+  @override
+  State<_PaysPickerSheet> createState() => _PaysPickerSheetState();
+}
+
+class _PaysPickerSheetState extends State<_PaysPickerSheet> {
+  final TextEditingController _searchCtrl = TextEditingController();
+  late List<dynamic> _filtered;
+
+  @override
+  void initState() {
+    super.initState();
+    _filtered = List.of(widget.items);
+    _searchCtrl.addListener(_applyFilter);
+  }
+
+  void _applyFilter() {
+    final q = _searchCtrl.text.toLowerCase().trim();
+    setState(() {
+      if (q.isEmpty) {
+        _filtered = List.of(widget.items);
+      } else {
+        _filtered = widget.items.where((e) {
+          final label = (e.libelle ?? '').toString().toLowerCase();
+          final id = e.id.toString().toLowerCase();
+          return label.contains(q) || id.contains(q);
+        }).toList();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottom),
+      child: DraggableScrollableSheet(
+        expand: false,
+        // Donne plus de hauteur en paysage:
+        minChildSize: 0.30,
+        initialChildSize: 0.85,
+        maxChildSize: 0.95,
+        builder: (ctx, scrollController) {
+          return ListView(
+            controller: scrollController,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            children: [
+              const SizedBox(height: 8),
+              Center(
+                child: Container(
+                  width: 40, height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                "Rechercher un pays",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _searchCtrl,
+                textInputAction: TextInputAction.search,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: "Nom…",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // ⚠️ Pas de ListView imbriqué : on mappe directement
+              ..._filtered.map((e) {
+                final id = e.id.toString();
+                final label = (e.libelle ?? '').toString();
+                final selected = widget.initialId == id;
+
+                return ListTile(
+                  title: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  // ⬅️ plus de subtitle avec l’ID
+                  trailing: selected ? const Icon(Icons.check, color: Colors.green) : null,
+                  onTap: () {
+                    Navigator.of(context).pop(
+                      _PaysPickResult(id: id, label: label),
+                    );
+                  },
+                );
+              }).toList(),
+
+              const SizedBox(height: 12),
+            ],
+          );
+        },
+      ),
+    );
+
+  }
+}
+
+
+
+class _MotifMultiPickerSheet extends StatefulWidget {
+  const _MotifMultiPickerSheet({
+    required this.items,                // List<dynamic> avec .id et .libelle
+    required this.initialSelectedIds,   // Set<String>
+  });
+
+  final List<dynamic> items;
+  final Set<String> initialSelectedIds;
+
+  @override
+  State<_MotifMultiPickerSheet> createState() => _MotifMultiPickerSheetState();
+}
+
+class _MotifMultiPickerSheetState extends State<_MotifMultiPickerSheet> {
+  final TextEditingController _searchCtrl = TextEditingController();
+  late List<dynamic> _filtered;
+  late Set<String> _selected; // ids sélectionnés
+
+  @override
+  void initState() {
+    super.initState();
+    _filtered = List.of(widget.items);
+    _selected = Set<String>.from(widget.initialSelectedIds);
+    _searchCtrl.addListener(_applyFilter);
+  }
+
+  void _applyFilter() {
+    final q = _searchCtrl.text.toLowerCase().trim();
+    setState(() {
+      if (q.isEmpty) {
+        _filtered = List.of(widget.items);
+      } else {
+        _filtered = widget.items.where((e) {
+          final label = (e.libelle ?? '').toString().toLowerCase();
+          return label.contains(q); // pas de recherche par ID
+        }).toList();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
+  void _toggle(String id) {
+    setState(() {
+      if (_selected.contains(id)) {
+        _selected.remove(id);
+      } else {
+        _selected.add(id);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final inset = MediaQuery.of(context).viewInsets.bottom;
+
+    return Padding(
+      padding: EdgeInsets.only(bottom: inset),
+      child: DraggableScrollableSheet(
+        expand: false,
+        minChildSize: 0.30,
+        initialChildSize: 0.85,
+        maxChildSize: 0.95,
+        builder: (ctx, scrollController) {
+          return Column(
+            children: [
+              // poignée
+              const SizedBox(height: 8),
+              Container(
+                width: 40, height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              // Titre
+              const Text(
+                "Sélectionner un ou plusieurs motifs",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const SizedBox(height: 8),
+
+              // Recherche
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: TextField(
+                  controller: _searchCtrl,
+                  textInputAction: TextInputAction.search,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    hintText: "Motif…",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // Liste (scroll unique -> évite l'overflow)
+              Expanded(
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: _filtered.length,
+                  itemBuilder: (ctx, i) {
+                    final e = _filtered[i];
+                    final id = e.id.toString();
+                    final label = (e.libelle ?? '').toString();
+                    final selected = _selected.contains(id);
+
+                    return CheckboxListTile(
+                      value: selected,
+                      onChanged: (_) => _toggle(id),
+                      title: Text(label,
+                          maxLines: 1, overflow: TextOverflow.ellipsis),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16),
+                    );
+                  },
+                ),
+              ),
+
+              // Barre d'action collée en bas
+              SafeArea(
+                top: false,
+                child: Padding(
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    children: [
+                      TextButton(
+                        onPressed: () => setState(() => _selected.clear()),
+                        child: const Text("Effacer"),
+                      ),
+                      const Spacer(),
+                      FilledButton(
+                        onPressed: () {
+                          // Construire le résultat {id, libelle} sans afficher d'ID dans l'UI
+                          final list = <Map<String, String>>[];
+                          for (final e in widget.items) {
+                            final id = e.id.toString();
+                            if (_selected.contains(id)) {
+                              list.add({
+                                'id': id,
+                                'libelle': (e.libelle ?? '').toString(),
+                              });
+                            }
+                          }
+                          Navigator.of(context).pop(list);
+                        },
+                        child: const Text("Appliquer"),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+

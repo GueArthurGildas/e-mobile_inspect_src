@@ -6,6 +6,29 @@ import '../data/db.dart';
 import '../state/inspection_wizard_ctrl.dart';
 import 'wizard_screen.dart';
 
+
+import 'package:test_app_divkit/me/views/inspection/inspection_screen_load.dart';
+import 'package:test_app_divkit/me/views/inspection/inspections_test_sync_screen.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_1.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_2.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/model_form_exempl/form_3.dart';
+import 'package:test_app_divkit/me/views/inspection/section_inspection_form/section1.dart';
+import 'package:test_app_divkit/me/views/inspection/welcome_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/pays.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/activites_navires_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/agents_shiping_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/conservations_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/consignations_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/especes_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/etats_engins_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/pavillons_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/ports_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/presentations_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/typenavires_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/types_documents_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/types_engins_screen.dart';
+import 'package:test_app_divkit/me/views/tbl_ref_screen/zones_capture_screen.dart';
+
 class InspectionListScreen extends StatefulWidget {
   const InspectionListScreen({super.key});
   @override
@@ -87,6 +110,23 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
     await _reload();
   }
 
+  final List<Map<String, dynamic>> ressources = [
+    {'title': 'Pavillons', 'screen': const PaysScreen()},
+    {'title': 'Typenavires', 'screen': const TypenaviresScreen()},
+    {'title': 'Ports', 'screen': const PortsScreen()},
+    {'title': 'ActivitesNavires', 'screen': const ActivitesNaviresScreen()},
+    {'title': 'Consignations', 'screen': const ConsignationsScreen()},
+    {'title': 'AgentsShiping', 'screen': const AgentsShipingScreen()},
+    {'title': 'TypesDocuments', 'screen': const TypesDocumentsScreen()},
+    {'title': 'TypesEngins', 'screen': const TypesEnginsScreen()},
+    {'title': 'EtatsEngins', 'screen': const EtatsEnginsScreen()},
+    {'title': 'Especes', 'screen': const EspecesScreen()},
+    {'title': 'ZonesCapture', 'screen': const ZonesCaptureScreen()},
+    {'title': 'Presentations', 'screen': const PresentationsScreen()},
+    {'title': 'Conservations', 'screen': const ConservationsScreen()},
+    {'title': 'inspection', 'screen': const InspectionsScreen()},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,20 +179,28 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          final db = await AppDb.instance;
-          final newId = await db.insert('inspection', {'json_field': jsonEncode({})});
-          if (!mounted) return;
-          await Navigator.push(
+        // onPressed: () async {
+        //   final db = await AppDb.instance;
+        //   final newId = await db.insert('inspection', {'json_field': jsonEncode({})});
+        //   if (!mounted) return;
+        //   await Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
+        //       create: (_) => InspectionWizardCtrl(),
+        //         child: WizardScreen(inspectionId: newId, key: ValueKey('wizard_$newId')),
+        //       ),
+        //     ),
+        //   );
+        //   await _reload();
+        // },
+
+        onPressed:() {
+
+          Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
-              create: (_) => InspectionWizardCtrl(),
-                child: WizardScreen(inspectionId: newId, key: ValueKey('wizard_$newId')),
-              ),
-            ),
+            MaterialPageRoute(builder: (_) => ressources[ressources.length-1]['screen']),
           );
-          await _reload();
         },
         icon: const Icon(Icons.add),
         label: const Text('Nouvelle'),
