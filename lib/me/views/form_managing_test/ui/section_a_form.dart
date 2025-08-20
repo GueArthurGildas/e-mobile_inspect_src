@@ -68,7 +68,11 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
 
         // Switch / objet imbriqué
         'demandePrealablePort': initial['demandePrealablePort'] ?? false,
-        'observateurEmbarque' : initial['observateurEmbarque'] ?? {'present': false},
+        // 'observateurEmbarque' : initial['observateurEmbarque'] ?? {'present': false},
+        'observateurEmbarque': (initial['observateurEmbarque'] is Map)
+            ? initial['observateurEmbarque']
+            : {'present': false},
+
       };
 
 
@@ -104,6 +108,104 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
 
 
   }
+
+  Future<void> _openObservateurSheet() async {
+    final current = Map<String, dynamic>.from(
+      (_local['observateurEmbarque'] as Map?) ?? const {},
+    );
+
+    final Map<String, dynamic>? data = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (ctx) => _ObservateurSheet(initial: current),
+    );
+
+    if (!mounted) return;
+    if (data != null) {
+      setState(() {
+        _local['observateurEmbarque'] = {
+          'present': true,
+          ...data, // nom, prenom, fonction, entreprise, numeroDoc
+        };
+      });
+    }
+  }
+
+  Widget _buildObservateurSummary(Map obs) {
+    final nom = (obs['nom'] ?? '').toString();
+    final prenom = (obs['prenom'] ?? '').toString();
+    final fonction = (obs['fonction'] ?? '').toString();
+    final entreprise = (obs['entreprise'] ?? '').toString();
+    final numeroDoc = (obs['numeroDoc'] ?? '').toString();
+
+    if ((nom + prenom + fonction + entreprise + numeroDoc).trim().isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: Text(
+          "Aucune information saisie pour l’observateur.",
+          style: TextStyle(fontSize: 12, color: Theme.of(context).hintColor),
+        ),
+      );
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.black12.withOpacity(0.04),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.black12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _summaryRow("Nom & Prénom", [nom, prenom].where((e) => e.isNotEmpty).join(' ')),
+          _summaryRow("Fonction", fonction),
+          _summaryRow("Entreprise", entreprise),
+          _summaryRow("N° Passeport / NumCIV", numeroDoc),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              onPressed: _openObservateurSheet,
+              icon: const Icon(Icons.edit),
+              label: const Text("Modifier"),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _summaryRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 160,
+            child: Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              value.isEmpty ? "-" : value,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -265,8 +367,11 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
     }
     final ctrl = context.read<InspectionWizardCtrl>();
 
-    final bool observateurPresent =
-        ((_local['observateurEmbarque'] ?? const {'present': false})['present'] ?? false) == true;
+    // Observateur embarqué ?
+    final Map<String, dynamic> _obs =
+    Map<String, dynamic>.from((_local['observateurEmbarque'] as Map?) ?? const {'present': false});
+    final bool observateurPresent = (_obs['present'] ?? false) == true;
+
 
     return Form(
       key: _key,
@@ -518,6 +623,31 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
             onChanged: (v) => setState(() => _local['demandePrealablePort'] = v),
           ),
           const SizedBox(height: 8),
+
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            title: const Text("Observateur embarqué ?"),
+            value: observateurPresent,
+            onChanged: (value) async {
+              if (value == true) {
+                // Active et ouvre la feuille pour saisir/éditer
+                await _openObservateurSheet();
+                // Si l’utilisateur a fermé sans enregistrer, on garde present=true mais on conserve l’existant
+                if (!mounted) return;
+                setState(() {
+                  _local['observateurEmbarque'] ??= {'present': true};
+                  (_local['observateurEmbarque'] as Map)['present'] = true;
+                });
+              } else {
+                setState(() {
+                  _local['observateurEmbarque'] = {'present': false};
+                });
+              }
+            },
+          ),
+
+          if (observateurPresent) _buildObservateurSummary(_obs),
+
 
           // Observateur embarqué ?
           // SwitchListTile(
@@ -1103,4 +1233,143 @@ class _MotifMultiPickerSheetState extends State<_MotifMultiPickerSheet> {
   }
 }
 
+class _ObservateurSheet extends StatefulWidget {
+  const _ObservateurSheet({required this.initial});
+  final Map<String, dynamic> initial;
+
+  @override
+  State<_ObservateurSheet> createState() => _ObservateurSheetState();
+}
+
+class _ObservateurSheetState extends State<_ObservateurSheet> {
+  late final TextEditingController _nomCtrl;
+  late final TextEditingController _prenomCtrl;
+  late final TextEditingController _fonctionCtrl;
+  late final TextEditingController _entrepriseCtrl;
+  late final TextEditingController _numeroDocCtrl;
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _nomCtrl = TextEditingController(text: (widget.initial['nom'] ?? '').toString());
+    _prenomCtrl = TextEditingController(text: (widget.initial['prenom'] ?? '').toString());
+    _fonctionCtrl = TextEditingController(text: (widget.initial['fonction'] ?? '').toString());
+    _entrepriseCtrl = TextEditingController(text: (widget.initial['entreprise'] ?? '').toString());
+    _numeroDocCtrl = TextEditingController(text: (widget.initial['numeroDoc'] ?? '').toString());
+  }
+
+  @override
+  void dispose() {
+    _nomCtrl.dispose();
+    _prenomCtrl.dispose();
+    _fonctionCtrl.dispose();
+    _entrepriseCtrl.dispose();
+    _numeroDocCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final inset = MediaQuery.of(context).viewInsets.bottom;
+    return Padding(
+      padding: EdgeInsets.only(bottom: inset),
+      child: DraggableScrollableSheet(
+        expand: false,
+        minChildSize: 0.30,
+        initialChildSize: 0.85,
+        maxChildSize: 0.95,
+        builder: (ctx, scrollController) {
+          return Form(
+            key: _formKey,
+            child: ListView(
+              controller: scrollController,
+              padding: const EdgeInsets.all(16),
+              children: [
+                const SizedBox(height: 8),
+                Center(
+                  child: Container(
+                    width: 40, height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  "Informations de l'observateur",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                const SizedBox(height: 12),
+
+                TextFormField(
+                  controller: _nomCtrl,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: const InputDecoration(labelText: "Nom"),
+                ),
+                const SizedBox(height: 12),
+
+                TextFormField(
+                  controller: _prenomCtrl,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: const InputDecoration(labelText: "Prénom"),
+                ),
+                const SizedBox(height: 12),
+
+                TextFormField(
+                  controller: _fonctionCtrl,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: const InputDecoration(labelText: "Fonction"),
+                ),
+                const SizedBox(height: 12),
+
+                TextFormField(
+                  controller: _entrepriseCtrl,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: const InputDecoration(labelText: "Entreprise"),
+                ),
+                const SizedBox(height: 12),
+
+                TextFormField(
+                  controller: _numeroDocCtrl,
+                  decoration: const InputDecoration(labelText: "N° Passeport / NumCIV"),
+                ),
+
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(null),
+                      child: const Text("Annuler"),
+                    ),
+                    const Spacer(),
+                    FilledButton.icon(
+                      onPressed: () {
+                        // si tu veux forcer nom/prénom, ajoute un validator ici
+                        final result = <String, dynamic>{
+                          'nom': _nomCtrl.text.trim(),
+                          'prenom': _prenomCtrl.text.trim(),
+                          'fonction': _fonctionCtrl.text.trim(),
+                          'entreprise': _entrepriseCtrl.text.trim(),
+                          'numeroDoc': _numeroDocCtrl.text.trim(),
+                        };
+                        Navigator.of(context).pop(result);
+                      },
+                      icon: const Icon(Icons.save),
+                      label: const Text("Enregistrer"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
 
