@@ -18,6 +18,18 @@ class LocalFileItem {
     this.isSaved = false,
     this.size,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'path': path,
+      'isSelected': isSelected,
+      'isSaved': isSaved,
+      'size': size,
+      'type': type,
+    };
+  }
+
+  Map<String, dynamic> toJson() => toMap();
 }
 
 class FileManagerScreen extends StatefulWidget {

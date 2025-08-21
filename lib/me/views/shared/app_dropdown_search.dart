@@ -17,6 +17,15 @@ class DropdownItem {
   });
 
   String get key => "$id-$label".hashCode.toString();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'value': value,
+      'label': label,
+      'isSelected': isSelected,
+    };
+  }
 }
 
 class SearchQuery {

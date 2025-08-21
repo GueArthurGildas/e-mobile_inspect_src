@@ -8,6 +8,7 @@ import 'package:test_app_divkit/me/views/shared/app_bar.dart';
 import 'package:test_app_divkit/me/views/shared/app_dropdown_search.dart';
 import 'package:test_app_divkit/me/views/shared/common.dart';
 
+
 class FormInfosEnginsScreen extends StatefulWidget {
   const FormInfosEnginsScreen({super.key});
 
@@ -71,13 +72,7 @@ class _FormInfosEnginsScreenState extends State<FormInfosEnginsScreen> {
     final Map<String, dynamic>? result = await Common.showBottomSheet(
       context,
       EngineBottomSheet(
-        engineEtats: _etatsEngins
-            .where(
-              (e) => _installedEngines
-                  .where((i) => (i).etatsEngins.id == e.id)
-                  .isEmpty,
-            )
-            .toList(),
+        engineEtats: _etatsEngins,
         engineTypes: _typesEngins
             .where(
               (t) => _installedEngines

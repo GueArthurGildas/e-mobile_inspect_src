@@ -1,7 +1,16 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/controllers/sync_controller.dart';
+import 'package:test_app_divkit/me/models/inspection_model.dart';
+import 'package:test_app_divkit/me/models/inspection_payload.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
+import 'package:test_app_divkit/me/services/api_get/inspections_service.dart';
 import 'package:test_app_divkit/me/views/shared/app_bar.dart';
+import 'package:test_app_divkit/me/views/shared/common.dart';
 
 class WizardOption {
   String title;
@@ -69,10 +78,52 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
   }
 
   void saveStepData(String key, dynamic data) {
-    print(data);
     setState(() {
       _wizardData[key] = data;
     });
+  }
+
+  void formatAndSubmit(Map<String, dynamic> data) async {
+    Map<String, dynamic> payload = {};
+    List<String> keys = steps.map((step) => step.key).toList();
+
+    for (String key in keys) {
+      payload.addAll(Map<String, dynamic>.from(data[key]));
+    }
+    // print(payload);
+
+    InspectionPayload inspectionPayload = InspectionPayload.fromMap(payload);
+    try {
+      final encoder = JsonEncoder.withIndent('  ');
+      final jsonString = encoder.convert(inspectionPayload);
+
+      // debugging: create file for test -- it works
+      // read file views/inspection/user_data.json to see output
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File(p.join(dir.path, 'user_data.json'));
+      await file.writeAsString(jsonString);
+      print('Saved to: ${file.path}');
+
+      // logic for submitting inspection payload to api
+      // if connected else insert to db and set var in
+      // share_preferences to use thread to check for connection
+      // and when connected, submit to api
+      bool isConnected = await Common.checkInternetConnection();
+
+      if (isConnected) {
+        // api call
+      } else {
+        // db insert query
+      }
+
+      // since i don't know how you'd handle these states
+      // i leave you test this for now, and tell me what to do
+      // next, M Gué
+      // just in case, that is not AI generated :)
+    } catch (e, st) {
+      print('Failed to save user data: $e\n$st');
+      rethrow;
+    }
   }
 
   @override
@@ -158,7 +209,7 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                                 color: isActive ? orange : Colors.black87,
                               ),
                               onTap: () async {
-                                if (index <= currentStep) {
+                                if (index <= currentStep || true) {
                                   final dynamic stepData =
                                       await Navigator.pushNamed<dynamic>(
                                         context,
@@ -238,7 +289,7 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                             //   );
                             // }
 
-                            if (currentStep == steps.length - 1 || true) {
+                            if (currentStep == steps.length) {
                               // Soumettre
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -248,11 +299,11 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                                 ),
                               );
 
-                              print(_wizardData);
+                              formatAndSubmit(_wizardData);
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: (currentStep == steps.length - 1)
+                            backgroundColor: (currentStep == steps.length)
                                 ? orange
                                 : disabledButton,
                             padding: const EdgeInsets.symmetric(

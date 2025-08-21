@@ -1,0 +1,690 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>eInspec APP - Documentation technique</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2535d5a7-58cc-804c-ac6b-e0c1b83fae9b" class="page sans"><header><h1 class="page-title">eInspec APP - Documentation technique</h1><p class="page-description"></p></header><div class="page-body"><div><p id="2555d5a7-58cc-8000-8ec4-c6f25a72780b" class="">
+</p><h2 id="2535d5a7-58cc-8073-ad5a-eb1bcd8828ec" class="">Contexte</h2><p id="2535d5a7-58cc-8092-bd6b-e6c086edcace" class="">Cette documentation décrit les ajouts et modifications réalisés dans l&#x27;application <strong>eINSPECTION</strong>.</p><p id="2535d5a7-58cc-8031-8929-f198b40535da" class="">L&#x27;objectif principal a été de mettre en place le wizard d&#x27;inspection (multi-étapes), ainsi que la gestion hors-ligne via SQLite et la synchronisation des données.</p><p id="2535d5a7-58cc-8045-bcc0-cdc8ad14da47" class="">J&#x27;ai adapté mon code à l&#x27;architecture déjà en place, afin d&#x27;assurer la compatibilité avec le travail existant.</p><p id="2555d5a7-58cc-802b-8de4-d8c3d01e3542" class="">
+</p><h2 id="2545d5a7-58cc-80c3-b01b-c66114ee3c1a" class="">Écran de synchronisation : <code>SyncScreen</code></h2><ul id="2545d5a7-58cc-80c8-b531-fb64843a438d" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Fichier</span> : <code>sync_screen.dart</code></li></ul><ul id="2545d5a7-58cc-800b-8277-e42751c4be79" class="bulleted-list"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Enum</span> <code><strong>SyncStatus</strong></code> : <code>initializing</code>, <code>syncing</code>, <code>needsInternetToSync</code>, <code>readyToProceed</code>, <code>error</code>.</li></ul><p id="2545d5a7-58cc-8058-aea0-e725f77a4dcc" class=""><strong>Logique</strong> :</p><ol type="1" id="2545d5a7-58cc-8019-9096-c86835bf01e8" class="numbered-list" start="1"><li>Vérifie la connectivité (<code>Common.checkInternetConnection</code>).</li></ol><ol type="1" id="2545d5a7-58cc-8066-8b0d-c0022586045e" class="numbered-list" start="2"><li>Consulte un flag <code>SharedPreferences</code> (<code>AppPrefs</code>) pour savoir si une synchro a déjà eu lieu (<code>sync==true</code>).</li></ol><ol type="1" id="2535d5a7-58cc-806e-b0fa-da5775f46f3b" class="numbered-list" start="3"><li>Si <strong>connecté</strong> et <strong>jamais synchronisé</strong> → <code>syncAll()</code> via <code>SyncController</code>, puis flag <code>sync=true</code>, statut <code>readyToProceed</code>.</li></ol><ol type="1" id="2545d5a7-58cc-8014-a6af-c77dfcd0928f" class="numbered-list" start="4"><li>Si <strong>hors‑ligne</strong> :<ul id="2545d5a7-58cc-8039-8c6a-f9c8bbeb400f" class="bulleted-list"><li style="list-style-type:disc">jamais synchronisé → <code>needsInternetToSync</code> (bloquant),</li></ul><ul id="2545d5a7-58cc-801f-9bc3-d81de5c8274e" class="bulleted-list"><li style="list-style-type:disc">déjà synchronisé → <code>readyToProceed</code> (autorise le mode offline avec le cache local).</li></ul><ul id="2545d5a7-58cc-8021-809e-db2869367d4a" class="bulleted-list"><li style="list-style-type:disc"><strong>Navigation</strong> : une fois <code>readyToProceed</code>, l&#x27;utilisateur peut aller vers le wizard.</li></ul></li></ol><p id="2555d5a7-58cc-8066-a468-f660703dc241" class="">
+</p><h2 id="2545d5a7-58cc-80bd-935a-ee060aae19e6" class="">La page principale : <code>InspectionWizardScreen</code></h2><p id="2545d5a7-58cc-802b-a1b7-cb254598feed" class=""><span style="border-bottom:0.05em solid">Fichier</span> : <code>inspection_form_screen.dart</code></p><p id="2545d5a7-58cc-80ab-8cca-cf37ff4c7d27" class="">Cette page matérialise le <strong>wizard</strong> :</p><ul id="2545d5a7-58cc-8011-a203-ea618d02b066" class="bulleted-list"><li style="list-style-type:disc"><code><strong>WizardOption</strong></code> : structure <code>{title, key, route}</code> définissant chaque étape (intitulé, identifiant logique, route de navigation).</li></ul><ul id="2545d5a7-58cc-8044-ba43-e7767605f602" class="bulleted-list"><li style="list-style-type:disc"><code><strong>currentStep</strong></code> : index de l&#x27;étape sélectionnée (UI met en surbrillance la carte de l&#x27;étape).</li></ul><ul id="2545d5a7-58cc-80f2-8502-d0067f8f014c" class="bulleted-list"><li style="list-style-type:disc"><strong>Navigation</strong> : appui sur une ligne d&#x27;étape -&gt; met à jour <code>currentStep</code> (et/ou <code>Navigator.pushNamed</code> via <code>route</code>).</li></ul><ul id="2545d5a7-58cc-801c-8676-e9c4a11a0941" class="bulleted-list"><li style="list-style-type:disc"><strong>Dépendances clés</strong> :</li></ul><ul id="2545d5a7-58cc-80b6-bed4-d74f315b09b1" class="bulleted-list"><li style="list-style-type:disc"><code>SyncController.instance</code> : charge les données (pays, ports, types, etc.)</li></ul><p id="2545d5a7-58cc-80d8-99c3-ebc7f21af017" class=""><em><strong>SyncController </strong></em><em>correspond au controleur permettant de faire la synchronisation des données locales à celles en ligne lorsque l&#x27;utilisateur se connecte la première fois, et qu&#x27;il a accès à internet, et permet aussi de récupérer les données depuis la base de données lorsque la syncrhonisation est déjà faite.</em></p><ul id="2545d5a7-58cc-80eb-963b-d95af3f9e3fb" class="bulleted-list"><li style="list-style-type:disc"><code>AppRoutes</code> : noms de routes vers les écrans d&#x27;étape (<code>step_1</code> → <code>step_6</code>).</li></ul><p id="2545d5a7-58cc-80cd-9844-c58c03591146" class="">
+</p><p id="2545d5a7-58cc-80be-8424-e57d28d8f964" class=""><strong>Rôle fonctionnel</strong></p><ol type="1" id="2545d5a7-58cc-80b9-a369-f3ae7fc2be59" class="numbered-list" start="1"><li><strong>Lister</strong> les étapes dans l&#x27;ordre :<ul id="2545d5a7-58cc-805d-b02d-ec00a16a2f1a" class="bulleted-list"><li style="list-style-type:disc">&quot;Informations initiales&quot; → <code>AppRoutes.inspectionInformationsInitiales</code></li></ul><ul id="2545d5a7-58cc-803f-a96c-f7638eb79135" class="bulleted-list"><li style="list-style-type:disc">&quot;Informations responsables&quot; → <code>AppRoutes.inspectionInfosResponsables</code></li></ul><ul id="2545d5a7-58cc-8098-b506-c7e2c6d4b4c8" class="bulleted-list"><li style="list-style-type:disc">&quot;Informations sur les documents de l&#x27;inspection&quot; → <code>AppRoutes.inspectionDocuments</code></li></ul><ul id="2545d5a7-58cc-8003-bf68-e548a0e03b26" class="bulleted-list"><li style="list-style-type:disc">&quot;Contrôle des engins&quot; → <code>AppRoutes.&lt;i&gt;inspectionInformationsEngins&lt;/i&gt;</code></li></ul><ul id="2545d5a7-58cc-808d-a222-eb987bf3faee" class="bulleted-list"><li style="list-style-type:disc">&quot;Contrôle des captures&quot; → <code>AppRoutes.inspectionControleCaptures</code></li></ul><ul id="2545d5a7-58cc-8038-be8f-ca876f925cd9" class="bulleted-list"><li style="list-style-type:disc">&quot;Conformité…/Dernière étape&quot; → <code>AppRoutes.inspectionLastStep</code> </li></ul></li></ol><ol type="1" id="2545d5a7-58cc-8029-9dff-c86fed854779" class="numbered-list" start="2"><li><strong>Diriger</strong> l&#x27;utilisateur vers l&#x27;écran ciblé.</li></ol><ol type="1" id="2545d5a7-58cc-8084-b5cc-e7f09ad2bec5" class="numbered-list" start="3"><li><strong>Réagir</strong> à l&#x27;état de synchronisation (via <code>SyncController</code>) si l&#x27;accès à certains contenus nécessite des données locales.</li></ol><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2555d5a7-58cc-801f-9a32-db8aa38cdc80"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="2545d5a7-58cc-800b-8c3c-eb7bd8fcc8c0" class="">À noter : la logique de validation est implémentée dans chaque écran via AppForm/FormControl. La page principale ne valide pas les champs ; elle orchestre seulement la navigation et la récupération des entrées lorsque les modifications sont enregistrées.</p></div></figure><p id="2555d5a7-58cc-80c3-a26d-c8fd28c4cdd8" class="">
+</p><h2 id="2545d5a7-58cc-80ee-833f-d1f93f56873f" class="">Écrans par étape &amp; controllers</h2><p id="2545d5a7-58cc-800a-a9dd-e736f36e3459" class="">Chaque dossier <code>step_X</code> contient généralement :</p><ul id="2545d5a7-58cc-806e-b8f8-c732ab529a08" class="bulleted-list"><li style="list-style-type:disc">Un <strong>écran</strong> <code>Form…Screen</code> (UI + formulaire),</li></ul><ul id="2545d5a7-58cc-80b2-93aa-f4454af77fa1" class="bulleted-list"><li style="list-style-type:disc">Un <strong>controller</strong> <code>StepXController</code> (chargement des listes).</li></ul><p id="2545d5a7-58cc-8070-89ac-cf2e3b6a4295" class="">
+</p><p id="2545d5a7-58cc-8008-b5f6-f268ff7ebb49" class=""><strong>Pages</strong></p><ul id="2545d5a7-58cc-8077-8909-f6af691c15a9" class="bulleted-list"><li style="list-style-type:disc"><strong>Step 1 – Informations initiales</strong><ul id="2545d5a7-58cc-801b-8a6b-f2aa53d8f2df" class="bulleted-list"><li style="list-style-type:circle"><code>informations_initiales.dart</code> : construit un <code>AppForm</code> avec des <code>FormControl</code> (pays, ports, activité, etc.),</li></ul><ul id="2545d5a7-58cc-800f-93b4-d9cc0453c6e6" class="bulleted-list"><li style="list-style-type:circle"><code>step_one_controller.dart</code> : charge <code>paysList</code>, <code>portsList</code>, <code>typesNavireList</code> via <code>SyncController</code> (et ses sous‑controllers : <code>PortsController</code>, etc.).</li></ul><ul id="2545d5a7-58cc-8047-b5ab-dfb025cfd50f" class="bulleted-list"><li style="list-style-type:circle"><code>extra_fields_page.dart</code> : <em>bottom‑sheet/page</em> pour champs additionnels dynamiques.</li></ul></li></ul><ul id="2545d5a7-58cc-8017-924d-e57d4a675f83" class="bulleted-list"><li style="list-style-type:disc"><strong>Step 2 – Responsables</strong><ul id="2545d5a7-58cc-8081-8b67-f85494f9c9f6" class="bulleted-list"><li style="list-style-type:circle"><code>informations_responsables.dart</code> : formulaire des responsables (capitaine, armateur, contacts…),</li></ul><ul id="2545d5a7-58cc-8043-9a9a-c4ff363ea783" class="bulleted-list"><li style="list-style-type:circle"><code>step_two_controller.dart</code> : logique associée (chargement des données si nécessaires).</li></ul></li></ul><ul id="2545d5a7-58cc-80b7-b9ee-d9f708c5e5de" class="bulleted-list"><li style="list-style-type:disc"><strong>Step 4 – Engins</strong><ul id="2545d5a7-58cc-8069-b242-c33ff28c0b8a" class="bulleted-list"><li style="list-style-type:circle"><code>engins_listview.dart</code>, <code>engine_bottomsheet.dart</code>, <code>informations_engins.dart</code> : gestion des entrées par engin,</li></ul><ul id="2545d5a7-58cc-80af-a6b3-d20e63de98cb" class="bulleted-list"><li style="list-style-type:circle"><code>step_four_controller.dart</code> : charge <code>etatsEngins</code> &amp; <code>typesEngins</code> depuis <code>SyncController</code>.</li></ul></li></ul><ul id="2545d5a7-58cc-8083-846f-efea3a17d552" class="bulleted-list"><li style="list-style-type:disc"><strong>Step 5 – Captures</strong><ul id="2545d5a7-58cc-8080-9a30-c27f30fe23de" class="bulleted-list"><li style="list-style-type:circle"><code>controle_captures.dart</code>, <code>informations_captures_screen.dart</code> : lignes de capture, quantités, espèces,</li></ul><ul id="2545d5a7-58cc-80b0-88af-e73cb6bb4e18" class="bulleted-list"><li style="list-style-type:circle"><code>step_five_controller.dart</code> : logique associée.</li></ul></li></ul><ul id="2545d5a7-58cc-8009-aee5-d75864c54ade" class="bulleted-list"><li style="list-style-type:disc"><strong>Step 6 – Dernière étape / Récap</strong><ul id="2545d5a7-58cc-804f-a8f2-fed84390f68d" class="bulleted-list"><li style="list-style-type:circle"><code>inspection_last_step.dart</code></li></ul><ul id="2545d5a7-58cc-8015-88bb-d16ae1838c3d" class="bulleted-list"><li style="list-style-type:circle"><code>step_six_controller.dart</code></li></ul></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2555d5a7-58cc-80bb-a583-c6442649c64b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="2545d5a7-58cc-80b7-b76e-fad76ffde7bc" class="">Principe : chaque écran déclare ses <em>FormControl </em>et confie la validation au Form global (via formKey), et ses contrôles sont utilisés par le widget AppForm pour créer le visuel. Les controllers d&#x27;étape chargent les listes (référentiels) depuis la base locale via SyncController.</p></div></figure><p id="2555d5a7-58cc-809b-b1d1-d6a46a31f960" class="">
+</p><h2 id="2545d5a7-58cc-8069-8260-e531394a4024" class="">Les <em>custom widgets</em> &amp; logique associée</h2><h3 id="2545d5a7-58cc-80dd-9849-c49af01eaf8e" class=""><code>CustomAppBar</code> (<code>shared/app_bar.dart</code>)</h3><ul id="2545d5a7-58cc-8004-8d47-ee7d484bfb4c" class="bulleted-list"><li style="list-style-type:disc">Hérite de <code>AppBar</code> et expose <strong>des paramètres haut‑niveau</strong> : <code>backgroundColor</code>, <code>foregroundColor</code>, <code>centerTitle</code>, <code>customActions</code>, etc.</li></ul><ul id="2545d5a7-58cc-8045-811a-cda9ee89edc5" class="bulleted-list"><li style="list-style-type:disc">But : <strong>standardiser</strong> la barre d&#x27;app et réduire le code répétitif.</li></ul><h3 id="2545d5a7-58cc-80bd-b57a-d3ebaa61e4c1" class=""><code>BaseButton</code> + <code>AppButton</code> (<code>shared/base_button.dart</code>, <code>shared/app_button.dart</code>)</h3><ul id="2545d5a7-58cc-8001-8f2f-caeef946c813" class="bulleted-list"><li style="list-style-type:disc"><code>BaseButton</code> : fine surcouche <code>CupertinoButton</code> (gestion <code>disabledColor</code>, padding/size neutres). C&#x27;est le <strong>socle</strong>.</li></ul><ul id="2545d5a7-58cc-80c2-8524-f8de44dca39e" class="bulleted-list"><li style="list-style-type:disc"><code>AppButton</code> : déclinaisons <strong>Material</strong> prêtes à l&#x27;emploi :</li></ul><ul id="2545d5a7-58cc-8055-a700-ebcc243ec61b" class="bulleted-list"><li style="list-style-type:disc"><code>AppButton.outline(...)</code>, <code>AppButton.solid(...)</code>, etc. avec icônes pré/suffixes, <code>borderRadius</code>, <code>padding</code>, <code>height/width</code>, <code>enabled</code>…</li></ul><ul id="2545d5a7-58cc-80f6-9104-df5c67459d64" class="bulleted-list"><li style="list-style-type:disc"><strong>Décorrélation style/usage</strong> : on utilise <code>AppButton</code> partout → cohérence visuelle + accessibilité centralisée.</li></ul><h3 id="2545d5a7-58cc-80d8-88cd-da430f4d6d66" class=""><code>AppForm</code> &amp; <code>FormControl</code> (<code>shared/app_form.dart</code>, <code>shared/form_control.dart</code>)</h3><p id="2545d5a7-58cc-8052-a9f2-cc7f7ca024e0" class=""><strong>Cœur du système de formulaire</strong>.</p><ul id="2545d5a7-58cc-8050-9c1d-cb487d5a7fc7" class="bulleted-list"><li style="list-style-type:disc"><code><strong>ControlType</strong></code> (extrait) : <code>label</code>, <code>text</code>, <code>textarea</code>, <code>dropdown</code>, <code>dropdownSearch</code>, <code>date</code>, <code>time</code>, <code>switchTile</code>, <code>button</code>, <code>file</code>.</li></ul><ul id="2545d5a7-58cc-80a9-9ad1-c0132e1043cb" class="bulleted-list"><li style="list-style-type:disc"><code><strong>FormControl</strong></code> : décrit <strong>un champ</strong> :<ul id="2545d5a7-58cc-803d-8cbc-dbfe48033fae" class="bulleted-list"><li style="list-style-type:circle">métadonnées : <code>key</code>, <code>label</code>, <code>placeholder</code>, <code>visible</code>, <code>enabled</code>, <code>style</code>, <code>separator</code>, <code>child</code>…</li></ul><ul id="2545d5a7-58cc-8081-b0ee-f004e9e015ef" class="bulleted-list"><li style="list-style-type:circle">validation : <code>required</code>, <code>minLength</code>, <code>maxLength</code>, <code>pattern</code> (RegExp),</li></ul><ul id="2545d5a7-58cc-8044-9e32-cea44b7658f1" class="bulleted-list"><li style="list-style-type:circle">valeur : <code>initialValue</code>, <code>onChanged</code>,</li></ul><ul id="2545d5a7-58cc-80c5-b1eb-ea5adad832a8" class="bulleted-list"><li style="list-style-type:circle">structures : <code>fields</code> (composés), <code>fileItems</code>, <code>searchDropdownItems</code>, <code>asyncSearch</code>, <code>asyncSearchQuery</code>.</li></ul></li></ul><ul id="2545d5a7-58cc-80b0-b171-d2bc2185834c" class="bulleted-list"><li style="list-style-type:disc"><code><strong>AppForm</strong></code> :<ul id="2545d5a7-58cc-805c-ae6e-e95109517705" class="bulleted-list"><li style="list-style-type:circle">prend <code>controls: List&amp;lt;FormControl&amp;gt;</code> + <code>formKey</code> + <code>children</code> optionnels,</li></ul><ul id="2545d5a7-58cc-808d-916e-f2f56d0ccf27" class="bulleted-list"><li style="list-style-type:circle"><strong>génère dynamiquement</strong> les <em>Widgets</em> en fonction de <code>ControlType</code>, via un <code>switch</code> interne,</li></ul><ul id="2545d5a7-58cc-80d1-834b-dcc1c096ba3e" class="bulleted-list"><li style="list-style-type:circle">gère le <strong>clavier</strong> (dismiss on drag), les <strong>marges/paddings</strong>, et un <code><strong>SafeArea</strong></code> avec adaptation à l&#x27;inset bas,</li></ul><ul id="2545d5a7-58cc-8057-bb3f-d544d17cc66c" class="bulleted-list"><li style="list-style-type:circle">délègue aux sous‑widgets spécialisés pour certains types (<code>AppDropdownSearch</code>, <code>FileManager</code>, pickers <code>Common</code>).</li></ul></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2555d5a7-58cc-80ae-a71b-f9951a56c50b"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="2545d5a7-58cc-8096-a7b0-d35d3373aa18" class="">Intérêt : ajouter un champ ne nécessite pas de recoder l&#x27;UI ; on ajoute un FormControl. La validation reste centralisée et uniforme.</p></div></figure><h3 id="2545d5a7-58cc-8045-a10f-dcf93619349f" class=""><code>AppDropdownSearch</code> (<code>shared/app_dropdown_search.dart</code>)</h3><ul id="2545d5a7-58cc-805d-a555-c5c4f11c5b13" class="bulleted-list"><li style="list-style-type:disc">Objet <code>DropdownItem { id, value, label, isSelected }</code>.</li></ul><ul id="2545d5a7-58cc-80c7-88ae-eec228fe1991" class="bulleted-list"><li style="list-style-type:disc">Supporte :<ul id="2545d5a7-58cc-80fc-9e8c-f7ca8ecb2648" class="bulleted-list"><li style="list-style-type:circle"><strong>recherche locale</strong> (dans <code>searchDropdownItems</code>),</li></ul><ul id="2545d5a7-58cc-8072-8f81-e20dae50f584" class="bulleted-list"><li style="list-style-type:circle"><strong>recherche asynchrone</strong> (<code>asyncSearch=true</code> + <code>asyncSearchQuery</code>),</li></ul></li></ul><ul id="2545d5a7-58cc-8053-b33f-cefe2826965f" class="bulleted-list"><li style="list-style-type:disc">UI : champ de recherche, liste scrollable, indicateur de sélection, <strong>état contrôlé</strong> (<code>selectedItem</code>).</li></ul><ul id="2545d5a7-58cc-80b6-bcb8-fcec8ba5d4d8" class="bulleted-list"><li style="list-style-type:disc"><strong>Motif d&#x27;usage</strong> : listes volumineuses (espèces, etc.) avec filtrage efficient.</li></ul><p id="2545d5a7-58cc-80ac-b8e6-e9093b70237e" class="">
+</p><p id="2545d5a7-58cc-8001-b458-dc93b561c6da" class=""><strong>Fonctionnement</strong> :</p><ul id="2545d5a7-58cc-80ef-8569-f1609d3f17b4" class="bulleted-list"><li style="list-style-type:disc"><strong>Recherche synchrone (locale)</strong><ul id="2545d5a7-58cc-8051-9c1d-edd5777ab176" class="bulleted-list"><li style="list-style-type:circle"><strong>Mécanisme</strong> :<p id="2545d5a7-58cc-80df-853e-d2eae494b343" class="">→ L&#x27;utilisateur tape du texte dans le champ de recherche.</p><p id="2545d5a7-58cc-8080-8fcb-f56e7199e38c" class="">→ La fonction <code>searchDropdownItems</code> parcourt la liste locale d&#x27;objets <code>DropdownItem</code> ; ces options sont chargées lors de l&#x27;initialisation du contrôle par le biais du controleur de la page où le contrôle est créé.</p><p id="2545d5a7-58cc-8092-967c-d719c9ec3ded" class="">→ Un filtrage est fait sur <code>label</code> (en minuscule pour ignorer la casse).</p><p id="2545d5a7-58cc-80f1-9414-f62246aa67ed" class="">→ Le widget met à jour la liste affichée en temps réel.</p><ul id="2545d5a7-58cc-80a8-86e4-cccc2e8331b6" class="bulleted-list"><li style="list-style-type:square"><strong>Contexte d&#x27;usage</strong> :</li></ul><p id="2545d5a7-58cc-80bd-8b9d-db99ce883c81" class="">→ Quand la liste de données est déjà disponible dans l&#x27;application et facile à charger au niveau du controleur.</p><p id="2545d5a7-58cc-80c8-af87-c368e3fd0cd6" class="">→ Typiquement : liste des <strong>pays </strong>ou <strong>ports </strong>déjà synchronisés dans la base locale.</p></li></ul></li></ul><ul id="2545d5a7-58cc-80ee-8830-d61fe339ff99" class="bulleted-list"><li style="list-style-type:disc"><strong>Recherche asynchrone (API / service externe)</strong><ul id="2545d5a7-58cc-80cf-b89f-d7dfdba68f69" class="bulleted-list"><li style="list-style-type:circle"><strong>Mécanisme</strong> :<p id="2545d5a7-58cc-8057-b6b9-ed1f5a1f2ac2" class="">→ Si <code>asyncSearch=true</code>, au lieu de filtrer la liste locale, le widget appelle la fonction <code>asyncSearchQuery</code> fournie en paramètre.</p><p id="2545d5a7-58cc-809c-b0d9-d79e75d174ef" class="">→ Cette fonction est une <strong>requête SQLite différée</strong>.</p><p id="2545d5a7-58cc-8027-8ed5-c75c1851b068" class="">→ Les résultats retournés sont ensuite transformés en liste de <code>DropdownItem</code>.</p><p id="2545d5a7-58cc-80ae-a45e-dfafc3628839" class="">→ Le widget met à jour son <code>state</code> avec ces résultats.</p><ul id="2545d5a7-58cc-80f6-89c3-d1a48e6ce256" class="bulleted-list"><li style="list-style-type:square"><strong>Contexte d&#x27;usage</strong> :</li></ul><p id="2545d5a7-58cc-8003-9df6-cac669335284" class="">→ Quand la liste est <strong>trop volumineuse</strong> pour être récupérée lors du la page, pour éviter de ralentir le chargement (par exemple, des milliers d&#x27;espèces).</p><p id="2545d5a7-58cc-80db-8a07-f4986887dc22" class="">→ Pas encore actif, mais pourrait permettre de faire des recherches réseau, quand connecté à internet.</p></li></ul></li></ul><h3 id="2545d5a7-58cc-8060-ad96-c580c91e81a0" class=""><code>FileManager</code> (<code>shared/file_manager.dart</code>)</h3><ul id="2545d5a7-58cc-8026-87f8-db92740b71db" class="bulleted-list"><li style="list-style-type:disc">Modèle <code>LocalFileItem { path, name, isSelected, isSaved, size, type }</code>.</li></ul><ul id="2545d5a7-58cc-8073-a98e-cf378e525583" class="bulleted-list"><li style="list-style-type:disc">Opérations : <code><strong>_pickFiles()</strong></code> via <code>file_picker</code> → ajoute dans <code>_pickedFiles</code> (de type <code>LocalFileItem</code>).</li></ul><ul id="2545d5a7-58cc-80ea-945f-dc2b47836c08" class="bulleted-list"><li style="list-style-type:disc"><strong>Sélection multiple</strong> / inversion, <strong>suppression</strong> (<code>_removeSelectedFiles()</code>),</li></ul><ul id="2545d5a7-58cc-8089-9b46-ed2bc989bd75" class="bulleted-list"><li style="list-style-type:disc"><strong>Callbacks</strong> <code>onPick</code>, <code>onDelete</code> pour remonter l&#x27;état au parent.</li></ul><ul id="2545d5a7-58cc-8093-ba7f-e907d40bae66" class="bulleted-list"><li style="list-style-type:disc">UI : liste des fichiers choisis (nom, taille), cases de sélection, actions (Ajouter / Supprimer).</li></ul><h3 id="2545d5a7-58cc-80c2-ad98-e3afc6dc631c" class=""><code>AppFABSpeedDial</code> (<code>shared/app_fab_speed_dial.dart</code>)</h3><ul id="2545d5a7-58cc-80e1-90cd-f754169fba95" class="bulleted-list"><li style="list-style-type:disc"><code>FABAction { icon, label, onPressed, fabBackground, foreground }</code>.</li></ul><ul id="2545d5a7-58cc-80bd-9622-de20a6fe2b3f" class="bulleted-list"><li style="list-style-type:disc">Animations avec <code>AnimationController</code> + <code>ScaleTransition/FadeTransition</code>, ouverture/fermeture via <code>_toggleMenu()</code>.</li></ul><ul id="2545d5a7-58cc-8098-89f3-e95f089dbad6" class="bulleted-list"><li style="list-style-type:disc">But : proposer <strong>plusieurs actions rapides</strong> (ex. &quot;Sauvegarder&quot;, &quot;Valider&quot;, &quot;Partager&quot;) depuis un seul FAB.</li></ul><h3 id="2545d5a7-58cc-8080-83c0-d7b8e6f06e46" class=""><code>Common</code> (<code>shared/common.dart</code>)</h3><ul id="2545d5a7-58cc-80b1-b39d-e9a0e358dc01" class="bulleted-list"><li style="list-style-type:disc">Utilitaires UI : <code>pickDate()</code>, <code>pickTime()</code>, <code>showSnackBar()</code>, etc.</li></ul><ul id="2545d5a7-58cc-80c3-842f-f69c9dd508a0" class="bulleted-list"><li style="list-style-type:disc"><strong>Réseau</strong> : <code>checkInternetConnection()</code> (résolution DNS simple) pour déterminer l&#x27;accès.</li></ul><h3 id="2545d5a7-58cc-80f4-9cec-f67fc7fef08c" class=""><code>AppPrefs</code> (<code>shared/app_preferences.dart</code>)</h3><ul id="2545d5a7-58cc-8017-b428-cb9de65b35ab" class="bulleted-list"><li style="list-style-type:disc">Mince surcouche <strong>SharedPreferences</strong> : <code>setString/getString</code>, <code>setBool/getBool</code>, <code>setInt/getInt</code>.</li></ul><ul id="2545d5a7-58cc-8010-a6de-de7028c1a4a5" class="bulleted-list"><li style="list-style-type:disc">Utilisé notamment par <code>SyncScreen</code> pour mémoriser l&#x27;état de synchro.</li></ul><p id="2535d5a7-58cc-80be-9c71-ec7b10305d15" class="">
+</p></div><p id="2555d5a7-58cc-8049-9f13-c9e5344358ad" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
