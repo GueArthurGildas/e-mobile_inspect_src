@@ -1,0 +1,78 @@
+{
+  "id": null,
+  "createdAt": null,
+  "updatedAt": null,
+  "dateArriveeEffective": null,
+  "dateDebutInspection": null,
+  "portInspection": "1",
+  "pavillonNavire": "1",
+  "typeNavire": "1",
+  "paysEscale": "1",
+  "maillage": "",
+  "dimensionsCales": "",
+  "marquageNavire": "",
+  "baliseVMS": "",
+  "portEscale": null,
+  "dateEscaleNavire": null,
+  "demandePrealablePort": false,
+  "observateurEmbarque": {
+    "present": false,
+    "nom": null,
+    "prenom": null,
+    "societe": null,
+    "numeroPasseport": null,
+    "dateExpirationPasseport": null
+  },
+  "motifEntreePort": {
+    "objet": [
+      "1"
+    ],
+    "observation": ""
+  },
+  "societeConsignataire": "12",
+  "agentShipping": "6",
+  "capitaine": {
+    "nom": "",
+    "passeport": "",
+    "nationalite": "1",
+    "dateExpirationPasseport": null
+  },
+  "proprietaireNavire": {
+    "nomProprietaire": "",
+    "nationalite": "1"
+  },
+  "documents": null,
+  "enginsInstalles": [
+    {
+      "typesEngin": 1,
+      "etatsEngin": 2,
+      "observation": "tets"
+    }
+  ],
+  "capturesDebarquees": [],
+  "capturesABord": [],
+  "capturesInterdites": [
+    {
+      "especes": 45655,
+      "zonesCapture": 2,
+      "presentation": 1,
+      "conservation": 5,
+      "quantiteObservee": "10",
+      "quantiteDeclaree": null,
+      "quantiteRetenue": null
+    }
+  ],
+  "infractionObservee": false,
+  "detailInfractions": null,
+  "referenceInstrumentsJuridiques": "",
+  "commentairesCapitaine": "",
+  "mesuresPrises": "",
+  "journaux_bord": null,
+  "observations_supplementaires_1": "",
+  "doc_captures": null,
+  "observations_supplementaires_2": "",
+  "info_commerciale": null,
+  "observations_supplementaires_3": "",
+  "engins_examine_psma": null,
+  "remarques_supplementaires": ""
+}
