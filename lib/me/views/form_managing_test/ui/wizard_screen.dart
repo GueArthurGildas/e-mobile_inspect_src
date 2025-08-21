@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/section_e_form.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/validation_screen.dart';
 import '../state/inspection_wizard_ctrl.dart';
 import 'section_a_form.dart';
@@ -195,7 +196,7 @@ class _WizardScreenState extends State<WizardScreen> {
           }
         },
         onStepContinue: () {
-          if (_current < 3) {
+          if (_current < 4) {
             _goToStepWithSpinner(_current + 1);
           }
         },
@@ -208,7 +209,7 @@ class _WizardScreenState extends State<WizardScreen> {
           final isRtl = Directionality.of(context) == TextDirection.rtl;
           return Row(
             children: [
-              if (_current < 3)
+              if (_current < 4)
                 FilledButton.icon(
                   onPressed: details.onStepContinue,
                   label: const Text('Continuer'),
@@ -248,12 +249,19 @@ class _WizardScreenState extends State<WizardScreen> {
           Step(
             title: const FittedBox(fit: BoxFit.scaleDown, child: Text('Section D')),
             isActive: _current >= 3,
-            state: _current == 3 ? StepState.editing : StepState.indexed,
+            state: _current > 3 ? StepState.editing : StepState.indexed,
             content: SectionDForm(key: ValueKey('D_${ctrl.inspectionId}')),
           ),
+          Step(
+            title: const FittedBox(fit: BoxFit.scaleDown, child: Text('Section E')),
+            isActive: _current >= 4,
+            state: _current == 4 ? StepState.editing : StepState.indexed,
+            content: SectionEForm(key: ValueKey('E_${ctrl.inspectionId}')),
+          ),
+
         ],
       ),
-      bottomNavigationBar: loading || _current != 3
+      bottomNavigationBar: loading || _current != 4
           ? null
           : SafeArea(
         child: Padding(

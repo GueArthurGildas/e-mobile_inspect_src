@@ -78,6 +78,7 @@ dependencies:
   provider: ^6.1.5
   percent_indicator: ^4.2.5
   permission_handler: ^12.0.0+1
+  image_picker: ^1.0.7
 #  # photofilters: 3.0.1 must wait for the update because not compatible with the new package image
   pin_code_fields: 8.0.1
 #  share_plus: ^11.0.0

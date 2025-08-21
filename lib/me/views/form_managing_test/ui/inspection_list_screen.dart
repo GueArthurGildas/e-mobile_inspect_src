@@ -193,13 +193,14 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
         //     ),
         //   );
         //   await _reload();
+
         // },
 
         onPressed:() {
 
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => ressources[8]['screen']),
+            MaterialPageRoute(builder: (_) => ressources[ressources.length-1]['screen']),
           );
         },
         icon: const Icon(Icons.add),
