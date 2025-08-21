@@ -43,7 +43,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
     super.initState();
     _future = _getAll();
 
-    print(_future);
+    //print(_future);
   }
 
   Future<List<Map<String, dynamic>>> _getAll() async {

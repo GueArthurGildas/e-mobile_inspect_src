@@ -247,7 +247,7 @@ class _InspectionWizardScreenState extends State<InspectionWizardScreen> {
                                 ),
                               );
 
-                              print(_wizardData);
+                              //print(_wizardData);
                             }
                           },
                           style: ElevatedButton.styleFrom(

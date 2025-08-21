@@ -38,6 +38,11 @@ class InspectionWizardCtrl extends ChangeNotifier {
         for (final k in _versions.keys) {
           _versions[k] = (_global[k]?["sectionVersion"] ?? 0) as int;
         }
+
+        //
+        final dynamic myVa =  await  _global;
+        print(myVa);
+
         notifyListeners();
         return;
       }

@@ -7,6 +7,7 @@ import 'package:test_app_divkit/me/views/form_managing_test/ui/tbl_ref_formE.dar
 import '../state/inspection_wizard_ctrl.dart';
 
 
+
 // ======================================================
 // SECTION E
 // ======================================================
@@ -83,8 +84,19 @@ class _SectionEFormState extends State<SectionEForm>
       e['quantiteRetenue']  = _numToStr(e['quantiteRetenue'])  ?? '';
 
       e['observations'] = (e['observations'] ?? '').toString();
-      final img = (e['imagePath'] ?? '').toString().trim();
-      e['imagePath'] = img.isEmpty ? null : img;
+
+      // --- Compat + normalisation images ---
+      // Accepte soit imagePath (string), soit imagePaths (List<String>)
+      final legacy = (e['imagePath'] ?? '').toString().trim();
+      final list = e['imagePaths'];
+      if (list is List) {
+        e['imagePaths'] = list.map((x) => x?.toString() ?? '').where((p) => p.isNotEmpty).toList();
+      } else if (legacy.isNotEmpty) {
+        e['imagePaths'] = [legacy];
+      } else {
+        e['imagePaths'] = <String>[];
+      }
+      e.remove('imagePath');
 
       e['uuid'] = (e['uuid'] ?? UniqueKey().toString()).toString();
       return e;
@@ -308,7 +320,7 @@ class _SectionEFormState extends State<SectionEForm>
 }
 
 // =========================
-// Listing catégorie
+// Listing catégorie (nouvelle présentation de carte)
 // =========================
 class _CategoryBlock extends StatelessWidget {
   const _CategoryBlock({
@@ -337,6 +349,14 @@ class _CategoryBlock extends StatelessWidget {
     if (v == null) return 0;
     if (v is num) return v.toDouble();
     return double.tryParse(v.toString().replaceAll(',', '.')) ?? 0;
+  }
+
+  void _openGallery(BuildContext context, List<String> paths, int index) {
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (_) => _ImageGalleryScreen(paths: paths, initialIndex: index),
+      ),
+    );
   }
 
   @override
@@ -375,61 +395,181 @@ class _CategoryBlock extends StatelessWidget {
             ),
 
           ...items.map((e) {
-            final imgPath = (e['imagePath'] ?? '').toString();
-            final imgFile = imgPath.isNotEmpty ? File(imgPath) : null;
-
             final zones = (e['zoneIds'] as List?)?.map((x) => x.toString()).toList() ?? <String>[];
+            final List<String> imgs =
+            (e['imagePaths'] is List) ? (e['imagePaths'] as List).map((x) => x.toString()).toList() : [];
+
+            final especeLabel = labelEspece(e['especeId']?.toString()) ?? '(Espèce inconnue)';
+            final presLabel = labelPresentation(e['presentationId']?.toString()) ?? '-';
+            final consLabel = labelConservation(e['conservationId']?.toString()) ?? '-';
+
+            final qObs = (e['quantiteObservee'] ?? '-').toString();
+            final qDec = (e['quantiteDeclaree'] ?? '-').toString();
+            final qRet = (e['quantiteRetenue'] ?? '-').toString();
+            final obs = (e['observations'] ?? '').toString();
 
             return Card(
               margin: const EdgeInsets.symmetric(vertical: 6),
-              child: ListTile(
-                leading: imgFile != null && imgFile.existsSync()
-                    ? ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: Image.file(imgFile, width: 50, height: 50, fit: BoxFit.cover),
-                )
-                    : const CircleAvatar(child: Icon(Icons.image)),
-                title: Text(labelEspece(e['especeId']?.toString()) ?? '(Espèce)'),
-                subtitle: Column(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 10),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (zones.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Wrap(
-                          spacing: 6,
-                          runSpacing: -6,
-                          children: zones
-                              .map((id) => Chip(
-                            label: Text(buildZones([id])),
-                            visualDensity: VisualDensity.compact,
-                          ))
-                              .toList(),
+                    // Ligne titre + menu
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Wrap(
+                            runSpacing: 8,
+                            spacing: 8,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              // Espèce mise en avant
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange.withOpacity(.08),
+                                  border: Border.all(color: Colors.orange.withOpacity(.25)),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Icon(Icons.add_chart_outlined, size: 16), // nécessite Flutter 3.16+, sinon Icons.set_meal
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      especeLabel,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Présentation
+                              Chip(
+                                label: Text('Prés: $presLabel'),
+                                visualDensity: VisualDensity.compact,
+                              ),
+                              // Conservation
+                              Chip(
+                                label: Text('Cons: $consLabel'),
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            ],
+                          ),
+                        ),
+                        PopupMenuButton<String>(
+                          onSelected: (v) {
+                            if (v == 'edit') onEdit(e);
+                            if (v == 'del') onDelete(e);
+                          },
+                          itemBuilder: (ctx) => const [
+                            PopupMenuItem(value: 'edit', child: Text('Modifier')),
+                            PopupMenuItem(value: 'del', child: Text('Supprimer')),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Quantités (bandeau)
+                    Row(
+                      children: [
+                        _QtyBadge(label: 'Observée', value: qObs),
+                        const SizedBox(width: 8),
+                        _QtyBadge(label: 'Déclarée', value: qDec),
+                        const SizedBox(width: 8),
+                        _QtyBadge(label: 'Retenue', value: qRet),
+                      ],
+                    ),
+
+                    // Zones
+                    if (zones.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: -6,
+                        children: zones
+                            .map((id) => Chip(
+                          label: Text(buildZones([id])),
+                          visualDensity: VisualDensity.compact,
+                        ))
+                            .toList(),
+                      ),
+                    ],
+
+                    // Observations
+                    if (obs.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text("Observations : $obs"),
+                    ],
+
+                    // Images : mini-galerie horizontale
+                    if (imgs.isNotEmpty) ...[
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 72,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: imgs.length,
+                          separatorBuilder: (_, __) => const SizedBox(width: 8),
+                          itemBuilder: (ctx, i) {
+                            final p = imgs[i];
+                            final f = File(p);
+                            if (!f.existsSync()) return const SizedBox.shrink();
+                            return GestureDetector(
+                              onTap: () => _openGallery(context, imgs, i),
+                              child: Hero(
+                                tag: 'img-$p',
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.file(f, width: 72, height: 72, fit: BoxFit.cover),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    Text("Prés.: ${labelPresentation(e['presentationId']?.toString()) ?? '-'}"
-                        " • Cons.: ${labelConservation(e['conservationId']?.toString()) ?? '-'}"),
-                    Text("Obs./Décl./Ret.: "
-                        "${e['quantiteObservee'] ?? '-'} / "
-                        "${e['quantiteDeclaree'] ?? '-'} / "
-                        "${e['quantiteRetenue'] ?? '-'} Kg"),
-                    if ((e['observations'] ?? '').toString().isNotEmpty)
-                      Text("Obs.: ${e['observations']}"),
-                  ],
-                ),
-                trailing: PopupMenuButton<String>(
-                  onSelected: (v) {
-                    if (v == 'edit') onEdit(e);
-                    if (v == 'del') onDelete(e);
-                  },
-                  itemBuilder: (ctx) => const [
-                    PopupMenuItem(value: 'edit', child: Text('Modifier')),
-                    PopupMenuItem(value: 'del', child: Text('Supprimer')),
+                    ],
                   ],
                 ),
               ),
             );
           }),
+        ],
+      ),
+    );
+  }
+}
+
+class _QtyBadge extends StatelessWidget {
+  const _QtyBadge({required this.label, required this.value});
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(width: 6),
+          Text("$value Kg"),
         ],
       ),
     );
@@ -467,7 +607,7 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
   String? _qDec;
   String? _qRet;
   String? _observations;
-  String? _imagePath;
+  List<String> _imagePaths = []; // multi-images
 
   @override
   void initState() {
@@ -482,14 +622,31 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
       _qDec = i['quantiteDeclaree']?.toString();
       _qRet = i['quantiteRetenue']?.toString();
       _observations = i['observations']?.toString();
-      final p = (i['imagePath'] ?? '').toString();
-      _imagePath = p.isEmpty ? null : p;
+
+      final p = i['imagePaths'];
+      if (p is List) {
+        _imagePaths = p.map((x) => x?.toString() ?? '').where((s) => s.isNotEmpty).toList();
+      } else {
+        final legacy = (i['imagePath'] ?? '').toString();
+        _imagePaths = legacy.isEmpty ? [] : [legacy];
+      }
     }
   }
 
-  Future<void> _pickImage(ImageSource src) async {
-    final x = await _picker.pickImage(source: src, imageQuality: 75);
-    if (x != null) setState(() => _imagePath = x.path);
+  Future<void> _pickFromCamera() async {
+    final x = await _picker.pickImage(source: ImageSource.camera, imageQuality: 75);
+    if (x != null && _imagePaths.length < 3) {
+      setState(() => _imagePaths = [..._imagePaths, x.path]);
+    }
+  }
+
+  Future<void> _pickFromGallery() async {
+    final xs = await _picker.pickMultiImage(imageQuality: 75);
+    if (xs.isNotEmpty) {
+      final rest = 3 - _imagePaths.length;
+      final toAdd = xs.take(rest).map((f) => f.path);
+      setState(() => _imagePaths = [..._imagePaths, ...toAdd]);
+    }
   }
 
   Future<_PickResult<String>?> _openSinglePicker({
@@ -539,6 +696,14 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
     return res;
   }
 
+  void _openGallery(BuildContext context, List<String> paths, int index) {
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (_) => _ImageGalleryScreen(paths: paths, initialIndex: index),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
@@ -546,7 +711,7 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
     String? labelEspece(String? id) {
       if (id == null) return null;
       final m = widget.stepCtrl.especes.where((e) => e.id.toString() == id).toList();
-      return m.isEmpty ? null : (m.first.libelle ??  '').toString();
+      return m.isEmpty ? null : (m.first.libelle ?? '').toString();
     }
 
     String zonesText(List<String> ids) {
@@ -623,11 +788,9 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
                       },
                       child: InputDecorator(
                         isEmpty: _zoneIds.isEmpty,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Zones de captures",
-                          errorText: _zoneIds.isEmpty ? 'Requis' : null,
-                          suffixIcon: const Icon(Icons.search),
-                          enabled: widget.stepCtrl.zonesCapture.isNotEmpty,
+                          suffixIcon: Icon(Icons.search),
                         ),
                         child: _zoneIds.isEmpty
                             ? Text('Sélectionner…', style: TextStyle(color: Theme.of(context).hintColor))
@@ -725,30 +888,55 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
                     ),
 
                     const SizedBox(height: 16),
+
+                    // Sélection multi-images + grille
                     Row(
                       children: [
                         OutlinedButton.icon(
-                          onPressed: () => _pickImage(ImageSource.camera),
+                          onPressed: _imagePaths.length >= 3 ? null : _pickFromCamera,
                           icon: const Icon(Icons.photo_camera),
                           label: const Text('Prendre photo'),
                         ),
                         const SizedBox(width: 8),
                         OutlinedButton.icon(
-                          onPressed: () => _pickImage(ImageSource.gallery),
+                          onPressed: _imagePaths.length >= 3 ? null : _pickFromGallery,
                           icon: const Icon(Icons.photo_library),
                           label: const Text('Galerie'),
                         ),
                         const Spacer(),
-                        if (_imagePath != null)
-                          SizedBox(
-                            width: 56, height: 56,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: Image.file(File(_imagePath!), fit: BoxFit.cover),
-                            ),
-                          ),
+                        Text("${_imagePaths.length}/3"),
                       ],
                     ),
+                    const SizedBox(height: 10),
+
+                    if (_imagePaths.isNotEmpty)
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _imagePaths.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 1,
+                        ),
+                        itemBuilder: (ctx, i) {
+                          final p = _imagePaths[i];
+                          return GestureDetector(
+                            onTap: () => _openGallery(context, _imagePaths, i),
+                            onLongPress: () {
+                              setState(() => _imagePaths.removeAt(i));
+                            },
+                            child: Hero(
+                              tag: 'img-$p',
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.file(File(p), fit: BoxFit.cover),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
 
                     const SizedBox(height: 20),
                     Align(
@@ -778,7 +966,7 @@ class _EntryFormSheetState extends State<_EntryFormSheet> {
                             'quantiteDeclaree': _qDec,
                             'quantiteRetenue': _qRet,
                             'observations': _observations,
-                            'imagePath': _imagePath,
+                            'imagePaths': _imagePaths, // multi
                           };
 
                           Navigator.of(context, rootNavigator: true).pop(result); // IMPORTANT
@@ -1103,6 +1291,76 @@ class _SimplePickerSheetState<E, T> extends State<_SimplePickerSheet<E, T>> {
               }).toList(),
               const SizedBox(height: 12),
             ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+// =========================
+// Plein écran : galerie image (zoom + swipe)
+// =========================
+class _ImageGalleryScreen extends StatefulWidget {
+  const _ImageGalleryScreen({
+    required this.paths,
+    this.initialIndex = 0,
+  });
+
+  final List<String> paths;
+  final int initialIndex;
+
+  @override
+  State<_ImageGalleryScreen> createState() => _ImageGalleryScreenState();
+}
+
+class _ImageGalleryScreenState extends State<_ImageGalleryScreen> {
+  late final PageController _pageCtrl;
+  late int _index;
+
+  @override
+  void initState() {
+    super.initState();
+    _index = widget.initialIndex.clamp(0, widget.paths.length - 1);
+    _pageCtrl = PageController(initialPage: _index);
+  }
+
+  @override
+  void dispose() {
+    _pageCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          "${_index + 1} / ${widget.paths.length}",
+          style: const TextStyle(color: Colors.white),
+        ),
+      ),
+      body: PageView.builder(
+        controller: _pageCtrl,
+        onPageChanged: (i) => setState(() => _index = i),
+        itemCount: widget.paths.length,
+        itemBuilder: (_, i) {
+          final p = widget.paths[i];
+          final f = File(p);
+          return Center(
+            child: Hero(
+              tag: 'img-$p',
+              child: InteractiveViewer(
+                minScale: 1,
+                maxScale: 5,
+                child: f.existsSync()
+                    ? Image.file(f, fit: BoxFit.contain)
+                    : const Icon(Icons.broken_image, color: Colors.white70, size: 64),
+              ),
+            ),
           );
         },
       ),

@@ -20,6 +20,7 @@ class _InspectionsScreenState extends State<InspectionsScreen> {
   void initState() {
     super.initState();
     _loadLocal();
+
   }
 
   Future<void> _loadLocal() async {
@@ -130,8 +131,8 @@ class _InspectionsScreenState extends State<InspectionsScreen> {
                 final item = _controller.items[index];
                 // Adapte l’affichage selon ton modèle (id, titre, etc.)
                 return ListTile(
-                  title: Text("Inspection #${item.id ?? '—'}"),
-                  subtitle: Text(item.toMap().toString()),
+                  title: SelectableText("Inspection #${item.id ?? '—'}"),
+                  subtitle: SelectableText(item.toMap().toString()),
                 );
               },
             ),
