@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:test_app_divkit/me/services/database_service.dart'; // DatabaseHelper
+import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_screen_load.dart';
 import '../state/inspection_wizard_ctrl.dart';
 import 'wizard_screen.dart';
@@ -306,25 +307,30 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
             ),
 
             // Actions
+            // Actions
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton.filledTonal(
-                    tooltip: 'Action',
-                    onPressed: onArrowTap,
-                    icon: const Icon(Icons.north_east),
-                  ),
+                  // Flèche — visible seulement si statut != 2
+                  if (statutId != 2)
+                    IconButton.filledTonal(
+                      tooltip: 'Lancer l’inspection',
+                      onPressed: onArrowTap, // -> lance le Wizard (inchangé côté appelant)
+                      icon: const Icon(Icons.north_east),
+                    ),
                   const SizedBox(width: 8),
+                  // Œil — ouvre le détail
                   IconButton.filled(
-                    tooltip: 'Ouvrir',
-                    onPressed: onOpen,
+                    tooltip: 'Voir le détail',
+                    onPressed: onOpen, // -> ouvre l’écran de détail (voir appel ci-dessous)
                     icon: const Icon(Icons.remove_red_eye),
                   ),
                 ],
               ),
             ),
+
           ],
         ),
       ),
@@ -452,12 +458,23 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       final cols = Map<String, dynamic>.from(r['cols'] ?? {});
                       final data = Map<String, dynamic>.from(r['data'] ?? {});
 
-                      return _inspectionCard(
+                      return  _inspectionCard(
                         context: ctx,
                         id: id,
                         cols: cols,
                         data: data,
+                        // OUVRIR LE DÉTAIL (œil + tap sur la card)
                         onOpen: () async {
+                          await Navigator.push(
+                            ctx,
+                            MaterialPageRoute(
+                              builder: (_) => InspectionDetailScreen(inspectionId: id),
+                            ),
+                          );
+                          await _reload();
+                        },
+                        // LANCER L’INSPECTION (flèche)
+                        onArrowTap: () async {
                           await Navigator.push(
                             ctx,
                             MaterialPageRoute(
@@ -469,10 +486,8 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                           );
                           await _reload();
                         },
-                        onArrowTap: () {
-                          // action secondaire optionnelle
-                        },
                       );
+
                     },
                   ),
                 );
