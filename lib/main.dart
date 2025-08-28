@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserController>(
-      create: (_) => UserController()..loadUsers(),
+      create: (_) => UserController()..loadLocalOnly(),
       child: MaterialApp(
         title: 'Flutter CRUD Demo',
         theme: ThemeData(

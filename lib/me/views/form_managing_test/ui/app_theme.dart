@@ -47,7 +47,7 @@ ThemeData buildAppTheme() {
     // Boutons Filled (tu utilises FilledButton dans le wizard)
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: const WidgetStatePropertyAll(kOrange),
+        backgroundColor: const WidgetStatePropertyAll(Colors.white),//const WidgetStatePropertyAll(kOrange),
         foregroundColor: const WidgetStatePropertyAll(Colors.white),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

@@ -2,67 +2,89 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
 import 'package:test_app_divkit/me/config/api_constants.dart';
-import 'package:test_app_divkit/me/models/inspection.dart';
-import 'package:test_app_divkit/me/models/inspection_model.dart';
+import 'package:test_app_divkit/me/models/inspection_model.dart'; // ❌ à retirer
 import 'package:test_app_divkit/me/services/database_service.dart';
 
 class InspectionService {
   Future<Database> get _db async => await DatabaseHelper.database;
 
-  /// 🔹 1. Récupération des inspections depuis l’API
-  Future<List<Inspection>> fetchFromApi() async {
-    final response = await http.get(Uri.parse(base_url_api + 'inspections'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      return data.map((json) => Inspection.fromJson(json)).toList();
-    } else {
-      throw Exception('Erreur API inspections');
-    }
+  String get _endpoint {
+    // Sécurise le slash final
+    final base = base_url_api ;
+    return '${base}inspections';
   }
 
-  /// 🔹 2. Insertion d’une inspection en local SQLite
+  /// 1) API -> Liste<Inspection> (robuste aux différents formats)
+  Future<List<Inspection>> fetchFromApi() async {
+    final response = await http.get(Uri.parse(_endpoint));
+    if (response.statusCode != 200) {
+      throw Exception('Erreur API inspections: HTTP ${response.statusCode}');
+    }
+
+    final decoded = jsonDecode(response.body);
+
+    // Normalise en liste :
+    // - si l'API renvoie une liste: [ {...}, {...} ]
+    // - si elle renvoie un objet: { ... }
+    // - si elle renvoie { data: [...] }
+    final List<dynamic> arr = decoded is List
+        ? decoded
+        : (decoded is Map && decoded['data'] is List)
+        ? decoded['data'] as List
+        : [decoded];
+
+    return arr
+        .map((e) => Inspection.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// 2) Insert local (navire* seront encodés en TEXT via toMap())
   Future<void> insert(Inspection inspection) async {
     final db = await _db;
     await db.insert(
       'inspections',
       inspection.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace, // remplace si déjà existant
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  /// 🔹 3. Synchronisation des données locales depuis l’API
+  /// 3) Sync API -> local (transaction)
   Future<void> syncToLocal() async {
     final list = await fetchFromApi();
-    for (var item in list) {
-      await insert(item);
-    }
+    final db = await _db;
+    await db.transaction((txn) async {
+      for (final item in list) {
+        await txn.insert(
+          'inspections',
+          item.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    });
   }
 
-  /// 🔹 4. Récupération de toutes les inspections locales
+  /// 4) Lecture locale
   Future<List<Inspection>> getAll() async {
     final db = await _db;
-    final maps = await db.query('inspections');
-    return maps.map((map) => Inspection.fromMap(map)).toList();
+    final maps = await db.query('inspections', orderBy: 'id DESC');
+    return maps.map((m) => Inspection.fromMap(m)).toList();
   }
 
-  /// 🔹 5. Récupération par ID
+  /// 5) Lecture par id
   Future<Inspection?> getById(int id) async {
     final db = await _db;
     final maps = await db.query('inspections', where: 'id = ?', whereArgs: [id]);
-    if (maps.isNotEmpty) {
-      return Inspection.fromMap(maps.first);
-    }
+    if (maps.isNotEmpty) return Inspection.fromMap(maps.first);
     return null;
   }
 
-  /// 🔹 6. Suppression d’une inspection
+  /// 6) Suppression
   Future<void> deleteById(int id) async {
     final db = await _db;
     await db.delete('inspections', where: 'id = ?', whereArgs: [id]);
   }
 
-  /// 🔹 7. Nettoyage complet de la table inspections
+  /// 7) Truncate
   Future<void> clearTable() async {
     final db = await _db;
     await db.delete('inspections');

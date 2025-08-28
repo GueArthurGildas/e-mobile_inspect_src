@@ -95,24 +95,37 @@ class DatabaseHelper {
           );
         ''');
 
+        // await db.execute('''
+        //   CREATE TABLE IF NOT EXISTS users (
+        //     id INTEGER PRIMARY KEY,
+        //     name TEXT NOT NULL,
+        //     prenom TEXT,
+        //     email TEXT NOT NULL,
+        //     telephone TEXT,
+        //     email_verified_at TEXT,
+        //     password TEXT NOT NULL,
+        //     typeutilisateur_id INTEGER,
+        //     remember_token TEXT,
+        //     deleted_at TEXT,
+        //     created_at TEXT,
+        //     updated_at TEXT,
+        //     statut_user_id INTEGER,
+        //     pays_id INTEGER
+        //   );
+        // ''');
+
         await db.execute('''
-          CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL,
-            prenom TEXT,
-            email TEXT NOT NULL,
-            telephone TEXT,
-            email_verified_at TEXT,
-            password TEXT NOT NULL,
-            typeutilisateur_id INTEGER,
-            remember_token TEXT,
-            deleted_at TEXT,
-            created_at TEXT,
-            updated_at TEXT,
-            statut_user_id INTEGER,
-            pays_id INTEGER
-          );
+            name TEXT,
+            email TEXT,
+            json_role TEXT,
+            field_json_inspect_done TEXT,
+            field_json_inspect_pending TEXT
+        );
         ''');
+
+
 
         await db.execute('''
           CREATE TABLE IF NOT EXISTS zones_capture (
@@ -251,8 +264,9 @@ class DatabaseHelper {
     navire_fao_id INTEGER,
     sync INTEGER DEFAULT 0,
     payload_json TEXT,
-    json_field TEXT NOT NULL DEFAULT '{}'
-    
+    json_field TEXT NOT NULL DEFAULT '{}',
+    navire TEXT NOT NULL DEFAULT '{}',
+    navire_json TEXT NOT NULL DEFAULT '{}'
   );
 ''');
 
