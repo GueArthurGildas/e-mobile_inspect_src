@@ -121,9 +121,13 @@ class DatabaseHelper {
             email TEXT,
             json_role TEXT,
             field_json_inspect_done TEXT,
-            field_json_inspect_pending TEXT
+            field_json_inspect_pending TEXT,
+            sync INTEGER DEFAULT 0
+            
         );
         ''');
+
+
 
 
 

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:test_app_divkit/me/services/database_service.dart'; // DatabaseHelper
 import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_detail_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspection_screen_load.dart';
+import 'package:test_app_divkit/me/views/users/user_form.dart';
 import '../state/inspection_wizard_ctrl.dart';
 import 'wizard_screen.dart';
 
@@ -253,7 +254,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
 
   ({String label, Color color}) _statusInfo(int? id) {
     switch (id) {
-      case 0: return (label: 'En attente', color: Colors.orange);
+      case 5: return (label: 'En attente', color: Colors.orange);
       case 1: return (label: 'En cours',  color: Colors.blue);
       case 2: return (label: 'Terminé',   color: Colors.green);
       default: return (label: 'Inconnu',  color: Colors.grey);
@@ -442,235 +443,237 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Inspections (DB direct)')),
-
-      // On conserve le FAB et la route via ressources[ressources.length-1]['screen']
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => ressources[ressources.length - 1]['screen']),
-          );
-        },
-        icon: const Icon(Icons.add),
-        label: const Text('Nouvelle'),
-      ),
-
-      body: Column(
-        children: [
-          // Barre de recherche + filtre statut + bouton Rechercher
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-            child: Row(
-              children: [
-                // Champ ID
-                Expanded(
-                  child: TextField(
-                    controller: _searchCtrl,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: 'Rechercher une inspection par ID…',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    ),
-                    // onChanged: (v) => setState(() {}), // si tu veux filtrer en live
-                  ),
-                ),
-                const SizedBox(width: 8),
-
-                // Filtre statut
-                SizedBox(
-                  width: 190,
-                  child: DropdownButtonFormField<int>(
-                    value: _statusFilter ?? -1, // -1 => Tous
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    ),
-                    items: const [
-                      DropdownMenuItem(value: -1, child: Text('Tous les statuts')),
-                      DropdownMenuItem(value: 0, child: Text('En attente')),
-                      DropdownMenuItem(value: 1, child: Text('En cours')),
-                      DropdownMenuItem(value: 2, child: Text('Terminé')),
-                    ],
-                    onChanged: (v) {
-                      setState(() {
-                        _statusFilter = (v == null || v == -1) ? null : v;
-                        _showAlert = true; // ✅ ré-affiche l’alerte quand on change le filtre
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 3),
-
-                // Bouton rechercher (affiche un modal loader)
-                // Bouton rechercher (affiche un modal loader)
-                FilledButton.icon(
-                  onPressed: _applyFilters,
-                  icon: const Icon(Icons.manage_search, color: Colors.white),
-                  label: const Text(
-                    'Rechercher',
-                    style: TextStyle(
-                      fontFamily: "Bariol",
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFF27AE60), // vert prononcé
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-
-          // ---- ALERT NB D'ÉLÉMENTS TROUVÉS ----
-          if (_showAlert)
-            FutureBuilder<List<Map<String, dynamic>>>(
-              future: _future,
-              builder: (_, snap) {
-                if (snap.connectionState != ConnectionState.done) return const SizedBox.shrink();
-
-                final all = snap.data ?? [];
-                // Applique les mêmes filtres qu’en bas
-                List<Map<String, dynamic>> items = all;
-                final idSearch = int.tryParse(_searchApplied);
-                if (_searchApplied.isNotEmpty && idSearch != null) {
-                  items = items.where((e) => (e['id'] as int) == idSearch).toList();
-                }
-                if (_statusFilter != null) {
-                  items = items.where((e) {
-                    final cols = e['cols'] as Map<String, dynamic>;
-                    final raw = cols['statut_inspection_id'];
-                    final st = (raw is int) ? raw : int.tryParse('${raw ?? ''}');
-                    return st == _statusFilter;
-                  }).toList();
-                }
-
-                return Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.green.withOpacity(0.4)),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.info_outline, color: Colors.green, size: 20),
-                      const SizedBox(width: 8),
-                      Expanded( // ✅ évite l’overflow
-                        child: Text(
-                          "${items.length} inspection(s) trouvée(s)",
-                          style: const TextStyle(
-                            fontFamily: "Bariol",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.green,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+    return SafeArea(
+      child: Scaffold(
+        //appBar: AppBar(title: const Text('Inspections (DB direct)')),
+      
+        // On conserve le FAB et la route via ressources[ressources.length-1]['screen']
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => ressources[ressources.length - 1]['screen']),
+            );
+          },
+          icon: const Icon(Icons.add),
+          label: const Text('Nouvelle'),
+        ),
+      
+        body: Column(
+          children: [
+            // Barre de recherche + filtre statut + bouton Rechercher
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+              child: Row(
+                children: [
+                  // Champ ID
+                  Expanded(
+                    child: TextField(
+                      controller: _searchCtrl,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        hintText: 'Rechercher une inspection par ID…',
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.close, size: 18, color: Colors.green),
-                        onPressed: () => setState(() => _showAlert = false),
-                        tooltip: 'Masquer',
-                      ),
-                    ],
+                      // onChanged: (v) => setState(() {}), // si tu veux filtrer en live
+                    ),
                   ),
-                );
-              },
+                  const SizedBox(width: 8),
+      
+                  // Filtre statut
+                  SizedBox(
+                    width: 190,
+                    child: DropdownButtonFormField<int>(
+                      value: _statusFilter ?? -1, // -1 => Tous
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      ),
+                      items: const [
+                        DropdownMenuItem(value: -1, child: Text('Tous les statuts')),
+                        DropdownMenuItem(value: 0, child: Text('En attente')),
+                        DropdownMenuItem(value: 1, child: Text('En cours')),
+                        DropdownMenuItem(value: 2, child: Text('Terminé')),
+                      ],
+                      onChanged: (v) {
+                        setState(() {
+                          _statusFilter = (v == null || v == -1) ? null : v;
+                          _showAlert = true; // ✅ ré-affiche l’alerte quand on change le filtre
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 3),
+      
+                  // Bouton rechercher (affiche un modal loader)
+                  // Bouton rechercher (affiche un modal loader)
+                  FilledButton.icon(
+                    onPressed: _applyFilters,
+                    icon: const Icon(Icons.manage_search, color: Colors.white),
+                    label: const Text(
+                      'Rechercher',
+                      style: TextStyle(
+                        fontFamily: "Bariol",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color(0xFF27AE60), // vert prononcé
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+      
+                ],
+              ),
             ),
-
-
-
-          Expanded(
-            child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: _future,
-              builder: (_, snap) {
-                if (snap.connectionState != ConnectionState.done) {
-                  //return const Center(child: CircularProgressIndicator());
-                  return _buildSkeletonList();
-                }
-                if (snap.hasError) {
-                  return Center(child: Text('Erreur: ${snap.error}'));
-                }
-                final all = snap.data ?? [];
-
-                // Filtre ID (appliqué au clic sur Rechercher)
-                List<Map<String, dynamic>> items = all;
-                final idSearch = int.tryParse(_searchApplied);
-                if (_searchApplied.isNotEmpty && idSearch != null) {
-                  items = items.where((e) => (e['id'] as int) == idSearch).toList();
-                }
-
-                // Filtre statut (si sélectionné)
-                if (_statusFilter != null) {
-                  items = items.where((e) {
-                    final cols = e['cols'] as Map<String, dynamic>;
-                    final raw = cols['statut_inspection_id'];
-                    final st = (raw is int) ? raw : int.tryParse('${raw ?? ''}');
-                    return st == _statusFilter;
-                  }).toList();
-                }
-
-                if (items.isEmpty) {
-                  return const Center(child: Text('Aucune inspection.'));
-                }
-
-                return RefreshIndicator(
-                  onRefresh: _reload,
-                  child: ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
-                    itemCount: items.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (ctx, i) {
-                      final r = items[i];
-                      final id = r['id'] as int;
-                      final cols = Map<String, dynamic>.from(r['cols'] ?? {});
-                      final data = Map<String, dynamic>.from(r['data'] ?? {});
-
-                      return  _inspectionCard(
-                        context: ctx,
-                        id: id,
-                        cols: cols,
-                        data: data,
-                        // OUVRIR LE DÉTAIL (œil + tap sur la card)
-                        onOpen: () async {
-                          await _openPreviewWithLoader(ctx, r); // 👈 nouveau
-                        },
-
-                        // LANCER L’INSPECTION (flèche)
-                        onArrowTap: () async {
-                          await Navigator.push(
-                            ctx,
-                            MaterialPageRoute(
-                              builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
-                                create: (_) => InspectionWizardCtrl(),
-                                child: WizardScreen(inspectionId: id, key: ValueKey('wizard_$id')),
-                              ),
+      
+            // ---- ALERT NB D'ÉLÉMENTS TROUVÉS ----
+            if (_showAlert)
+              FutureBuilder<List<Map<String, dynamic>>>(
+                future: _future,
+                builder: (_, snap) {
+                  if (snap.connectionState != ConnectionState.done) return const SizedBox.shrink();
+      
+                  final all = snap.data ?? [];
+                  // Applique les mêmes filtres qu’en bas
+                  List<Map<String, dynamic>> items = all;
+                  final idSearch = int.tryParse(_searchApplied);
+                  if (_searchApplied.isNotEmpty && idSearch != null) {
+                    items = items.where((e) => (e['id'] as int) == idSearch).toList();
+                  }
+                  if (_statusFilter != null) {
+                    items = items.where((e) {
+                      final cols = e['cols'] as Map<String, dynamic>;
+                      final raw = cols['statut_inspection_id'];
+                      final st = (raw is int) ? raw : int.tryParse('${raw ?? ''}');
+                      return st == _statusFilter;
+                    }).toList();
+                  }
+      
+                  return Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.green.withOpacity(0.4)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.info_outline, color: Colors.green, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded( // ✅ évite l’overflow
+                          child: Text(
+                            "${items.length} inspection(s) trouvée(s)",
+                            style: const TextStyle(
+                              fontFamily: "Bariol",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.green,
                             ),
-                          );
-                          await _reload();
-                        },
-                      );
-
-                    },
-                  ),
-                );
-              },
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.close, size: 18, color: Colors.green),
+                          onPressed: () => setState(() => _showAlert = false),
+                          tooltip: 'Masquer',
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+      
+      
+      
+            Expanded(
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: _future,
+                builder: (_, snap) {
+                  if (snap.connectionState != ConnectionState.done) {
+                    //return const Center(child: CircularProgressIndicator());
+                    return _buildSkeletonList();
+                  }
+                  if (snap.hasError) {
+                    return Center(child: Text('Erreur: ${snap.error}'));
+                  }
+                  final all = snap.data ?? [];
+      
+                  // Filtre ID (appliqué au clic sur Rechercher)
+                  List<Map<String, dynamic>> items = all;
+                  final idSearch = int.tryParse(_searchApplied);
+                  if (_searchApplied.isNotEmpty && idSearch != null) {
+                    items = items.where((e) => (e['id'] as int) == idSearch).toList();
+                  }
+      
+                  // Filtre statut (si sélectionné)
+                  if (_statusFilter != null) {
+                    items = items.where((e) {
+                      final cols = e['cols'] as Map<String, dynamic>;
+                      final raw = cols['statut_inspection_id'];
+                      final st = (raw is int) ? raw : int.tryParse('${raw ?? ''}');
+                      return st == _statusFilter;
+                    }).toList();
+                  }
+      
+                  if (items.isEmpty) {
+                    return const Center(child: Text('Aucune inspection.'));
+                  }
+      
+                  return RefreshIndicator(
+                    onRefresh: _reload,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                      itemCount: items.length,
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      itemBuilder: (ctx, i) {
+                        final r = items[i];
+                        final id = r['id'] as int;
+                        final cols = Map<String, dynamic>.from(r['cols'] ?? {});
+                        final data = Map<String, dynamic>.from(r['data'] ?? {});
+      
+                        return  _inspectionCard(
+                          context: ctx,
+                          id: id,
+                          cols: cols,
+                          data: data,
+                          // OUVRIR LE DÉTAIL (œil + tap sur la card)
+                          onOpen: () async {
+                            await _openPreviewWithLoader(ctx, r); // 👈 nouveau
+                          },
+      
+                          // LANCER L’INSPECTION (flèche)
+                          onArrowTap: () async {
+                            await Navigator.push(
+                              ctx,
+                              MaterialPageRoute(
+                                builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
+                                  create: (_) => InspectionWizardCtrl(),
+                                  child: WizardScreen(inspectionId: id, key: ValueKey('wizard_$id')),
+                                ),
+                              ),
+                            );
+                            await _reload();
+                          },
+                        );
+      
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -829,6 +832,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
     {'title': 'Presentations', 'screen': const PresentationsScreen()},
     {'title': 'Conservations', 'screen': const ConservationsScreen()},
     {'title': 'inspection', 'screen': const InspectionsScreen()},
+    {'title': 'inspection', 'screen': const UsersScreen()},
   ];
 }
 

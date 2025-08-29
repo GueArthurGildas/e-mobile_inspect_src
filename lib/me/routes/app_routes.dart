@@ -10,7 +10,6 @@ class AppRoutes {
   static const String navireStatus = '/navire-status';
 
   // static const String inspections = '/inspections';
-  // static const String inspectionDetail = '/inspection-detail';
   // static const String inspectionForm = '/inspection-form';
   // static const String profile = '/profile';
 
@@ -24,4 +23,19 @@ class AppRoutes {
   static const String inspectionControleCaptures =
       '/inspection/controle-captures';
   static const String inspectionLastStep = '/inspection/soumission';
+
+  // ✅ Nouvelles routes ajoutées
+  static const String inspectionList = '/inspection/list';
+  static const String inspectionDetail = '/inspection/detail';
+  static const String validation = '/inspection/validation';
+  static const String wizard = '/inspection/wizard-screen';
+
+  static const String profile         = '/profile';
+  static const String inspections     = '/inspections';
+  static const String syncro            = '/sync-center';
+  static const String groups          = '/groups-teams';
+  static const String records         = '/records';
+  static const String settings        = '/settings';
+
+
 }

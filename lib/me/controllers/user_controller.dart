@@ -48,18 +48,18 @@ class UserController extends ChangeNotifier {
   }
 
   /// Création (tu peux garder online-first ou basculer en local-then-sync selon ton service)
-  Future<void> addUser(User user) async {
-    try {
-      _setLoading(true);
-      final newUser = await _service.createUser(user); // ou createUserLocal(...) selon stratégie
-      _users.add(newUser);
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error adding user: $e');
-    } finally {
-      _setLoading(false);
-    }
-  }
+  // Future<void> addUser(User user) async {
+  //   try {
+  //     _setLoading(true);
+  //     final newUser = await _service.createUser(user); // ou createUserLocal(...) selon stratégie
+  //     _users.add(newUser);
+  //     notifyListeners();
+  //   } catch (e) {
+  //     debugPrint('Error adding user: $e');
+  //   } finally {
+  //     _setLoading(false);
+  //   }
+  // }
 
   /// Mise à jour
   Future<void> updateUser(User user) async {

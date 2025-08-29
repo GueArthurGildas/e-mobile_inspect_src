@@ -20,7 +20,6 @@ class _InspectionsScreenState extends State<InspectionsScreen> {
   void initState() {
     super.initState();
     _loadLocal();
-
   }
 
   Future<void> _loadLocal() async {
@@ -48,6 +47,7 @@ class _InspectionsScreenState extends State<InspectionsScreen> {
       }
 
       // 1) Sync API -> local
+
       await _controller.loadAndSync();
     } catch (e) {
       // 2) Message d’erreur visible

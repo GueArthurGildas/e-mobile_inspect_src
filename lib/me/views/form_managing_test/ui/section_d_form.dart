@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/tbl_ref_formD.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
 
 import '../state/inspection_wizard_ctrl.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
@@ -214,6 +215,7 @@ class _SectionDFormState extends State<SectionDForm>
                 label: const Text("Ajouter un engin"),
               ),
               FilledButton.icon(
+                //style: filledOrangeStyle(),
                 onPressed: _engins.isEmpty ? null : _saveAll,
                 icon: const Icon(Icons.save),
                 label: const Text("Enregistrer"),
@@ -456,6 +458,7 @@ class _EnginSheetState extends State<_EnginSheet> {
                         label: const Text("Fermer"),
                       ),
                       FilledButton.icon(
+                        style: filledOrangeStyle(),
                         onPressed: _submit,
                         icon: const Icon(Icons.check_circle_outline),
                         label: const Text("Enregistrer"),

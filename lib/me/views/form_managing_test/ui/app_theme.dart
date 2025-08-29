@@ -45,18 +45,18 @@ ThemeData buildAppTheme() {
       ),
     ),
     // Boutons Filled (tu utilises FilledButton dans le wizard)
-    filledButtonTheme: FilledButtonThemeData(
-      style: ButtonStyle(
-        backgroundColor: const WidgetStatePropertyAll(Colors.white),//const WidgetStatePropertyAll(kOrange),
-        foregroundColor: const WidgetStatePropertyAll(Colors.white),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        ),
-        padding: const WidgetStatePropertyAll(
-          EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        ),
-      ),
-    ),
+    // filledButtonTheme: FilledButtonThemeData(
+    //   style: ButtonStyle(
+    //     backgroundColor: const WidgetStatePropertyAll(Colors.white),//const WidgetStatePropertyAll(kOrange),
+    //     foregroundColor: const WidgetStatePropertyAll(Colors.white),
+    //     shape: WidgetStatePropertyAll(
+    //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    //     ),
+    //     padding: const WidgetStatePropertyAll(
+    //       EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    //     ),
+    //   ),
+    // ),
     // Boutons Outlined (bordure orange)
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(

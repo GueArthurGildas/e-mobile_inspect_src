@@ -60,6 +60,17 @@ class InspectionWizardCtrl extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateInspectionStatus(int id, int newStatus) async {
+    final db = await DatabaseHelper.database;
+    await db.update(
+      'inspections',
+      {'statut_inspection_id': newStatus},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+
   Map<dynamic, dynamic> section(String key) =>   /// ici j'ai changé en dynamic , j'esoère qu'il n'yaura pas de sucis
       _deepCopy(_global[key] ?? {});
 

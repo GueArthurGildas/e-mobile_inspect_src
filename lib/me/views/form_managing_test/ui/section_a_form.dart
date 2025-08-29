@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/tbl_ref_formA.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
 import '../state/inspection_wizard_ctrl.dart';
 
@@ -794,6 +795,7 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
             alignment: Alignment.centerRight,
             child: FilledButton.icon(
               icon: const Icon(Icons.save),
+              style: filledOrangeStyle(),        // <-- ajoute ça
               label: const Text('Sauvegarder cette section'),
               onPressed: () async {
                 if (!_key.currentState!.validate()) return;

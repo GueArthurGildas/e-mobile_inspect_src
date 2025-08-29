@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'dart:async';                 // ⬅️ nécessaire pour StreamSubscription
+import 'package:test_app_divkit/me/routes/app_routes.dart';
+import 'dart:async';
+
+import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
 const kOrange = Colors.orange;
@@ -186,9 +189,32 @@ class WalletScreen extends StatelessWidget {
           ],
         ),
         child: IconButton(
-          icon: const Icon(Icons.home, color: Colors.white),
-          onPressed: () {},
+          icon: Icon(
+            Icons.sailing,
+            color: Colors.white, // blanc pur
+            size: 32,            // augmente la taille (24 par défaut)
+          ),
+
+          onPressed: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (_, __, ___) => const InspectionListScreen(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0); // Départ à droite
+                  const end = Offset.zero;        // Arrivée normale
+                  const curve = Curves.easeInOut; // Douceur de la transition
+
+                  var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                  var offsetAnimation = animation.drive(tween);
+
+                  return SlideTransition(position: offsetAnimation, child: child);
+                },
+                transitionDuration: const Duration(milliseconds: 450), // vitesse douce
+              ),
+            );
+          },
         ),
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
@@ -205,15 +231,49 @@ class WalletScreen extends StatelessWidget {
             height: 65,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Icon(Icons.settings, color: Colors.white),
-                SizedBox(width: 40),
-                Icon(Icons.history, color: Colors.white),
+              children: [
+                // ⚙️ Réglages
+                IconButton(
+                  icon: const Icon(Icons.settings, color: Colors.white),
+                  onPressed: () => _showInfoSheet(
+                    context,
+                    title: "Paramètres",
+                    message:
+                    "Gérez l’apparence, les notifications, la synchronisation, et vos préférences.",
+                    icon: Icons.settings,
+                  ),
+                  tooltip: "Paramètres",
+                ),
+
+                const SizedBox(width: 40), // espace pour l'encoche du FAB
+
+                // // ⏱️ Historique
+                // IconButton(
+                //   icon: const Icon(Icons.history, color: Colors.white),
+                //   onPressed: () => _showInfoSheet(
+                //     context,
+                //     title: "Historique",
+                //     message:
+                //     "Consultez les inspections précédentes, exports et journaux d’activité.",
+                //     icon: Icons.history,
+                //   ),
+                //   tooltip: "Historique",
+                // ),
+
+                // 🚪 Déconnexion
+                // 🚪 Déconnexion avec mini-loader avant le modal
+                IconButton(
+                  icon: const Icon(Icons.logout, color: Colors.white),
+                  tooltip: "Déconnexion",
+                  onPressed: () => _logoutFlow(context),
+                ),
+
               ],
             ),
           ),
         ),
       ),
+
     );
   }
 }
@@ -499,38 +559,69 @@ class _UserSideDrawer extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
+
+
                   ListTile(
                     leading: const Icon(Icons.person_outline),
                     title: const Text("Profil"),
-                    onTap: () {}, // TODO: navigate profil
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.profile);
+                    },
                   ),
+
+
+
                   ListTile(
                     leading: const Icon(Icons.inbox_outlined),
                     title: const Text("Mes inspections"),
                     subtitle: const Text("Voir toutes les inspections"),
-                    onTap: () {}, // TODO
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.inspections);
+                    },
                   ),
+
+
                   ListTile(
                     leading: const Icon(Icons.cloud_sync_outlined),
                     title: const Text("Synchroniser"),
                     subtitle: const Text("Envoyer/recevoir les données"),
-                    onTap: () {}, // TODO
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.syncro);
+                    },
                   ),
+
                   ListTile(
                     leading: const Icon(Icons.group_outlined),
                     title: const Text("Groupes & équipes"),
-                    onTap: () {}, // TODO
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.groups);
+                    },
                   ),
+
+
                   ListTile(
                     leading: const Icon(Icons.bookmark_border),
                     title: const Text("Enregistrements"),
-                    onTap: () {}, // TODO
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.records);
+                    },
                   ),
+
+
                   ListTile(
                     leading: const Icon(Icons.settings_outlined),
                     title: const Text("Paramètres"),
-                    onTap: () {}, // TODO
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.settings);
+                    },
                   ),
+
                 ],
               ),
             ),
@@ -717,4 +808,149 @@ class _StatusPill extends StatelessWidget {
       ),
     );
   }
+}
+
+
+void _showInfoSheet(
+    BuildContext context, {
+      required String title,
+      required String message,
+      required IconData icon,
+    }) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: false,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (_) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(icon, color: Colors.orange),
+                ),
+                const SizedBox(width: 12),
+                Text(title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w800,
+                    )),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              message,
+              style: const TextStyle(fontSize: 14.5, height: 1.35),
+            ),
+            const SizedBox(height: 16),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("Fermer"),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+Future<void> _logoutFlow(BuildContext context) async {
+  // 1) mini-loader (non dismissible) pendant ~600ms
+  await _showTinyLoader(context, const Duration(milliseconds: 600));
+
+  // 2) puis modal de confirmation
+  final shouldLogout = await _confirmLogout(context);
+  if (shouldLogout != true) return;
+
+  // 3) TODO: effacer la session (SharedPreferences / cache / provider)
+  // final prefs = await SharedPreferences.getInstance();
+  // await prefs.remove("auth_token");
+  // await prefs.clear(); // si tu veux tout vider
+
+  // 4) redirection dure vers Login (on nettoie toute la stack)
+  if (context.mounted) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.login,
+          (route) => false,
+    );
+  }
+}
+
+// Mini-loader centré
+Future<void> _showTinyLoader(BuildContext context, Duration d) async {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => const Dialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      child: Center(
+        child: SizedBox(
+          width: 64, height: 64,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 12)],
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(14),
+              child: CircularProgressIndicator(),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  await Future.delayed(d);
+  if (Navigator.of(context).canPop()) Navigator.of(context).pop(); // ferme le loader
+}
+
+// Alerte de confirmation => renvoie true/false
+Future<bool?> _confirmLogout(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: const Text("Déconnexion"),
+      content: const Text(
+          "Voulez-vous vraiment vous déconnecter ?\n"
+              "Vos données locales restent sauvegardées."
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text("Annuler"),
+        ),
+        ElevatedButton.icon(
+          icon: const Icon(Icons.logout),
+          label: const Text("Se déconnecter"),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+          onPressed: () => Navigator.of(context).pop(true),
+        ),
+      ],
+    ),
+  );
 }
