@@ -4,6 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
 import 'package:universal_io/io.dart';
 
+// 🔽 importe ton controller
+import 'package:test_app_divkit/me/controllers/user_controller.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -19,11 +22,96 @@ class _LoginPageState extends State<LoginPage> {
   final Color _primaryColor = const Color(0xFFFF6A00);
   final Color _underlineColor = const Color(0xFFFF6A00);
 
+  // 🔽 AJOUTS
+  final _emailCtrl = TextEditingController();
+  final _passCtrl  = TextEditingController();
+  final UserController _userCtrl = UserController();
+  bool _checking = false;
+
+  @override
+  void dispose() {
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
+    super.dispose();
+  }
+
   void _toggleObscureText() {
     setState(() {
       _obscureText = !_obscureText;
       _iconVisible = _obscureText ? Icons.visibility_off : Icons.visibility;
     });
+  }
+
+  // 🔽 Fonction: vérifie si l'email existe dans la base locale
+  Future<bool> _emailExists(String email) async {
+    // Charge/rafraîchit la liste locale (SQLite)
+    await _userCtrl.loadLocalOnly();
+
+    final e = email.trim().toLowerCase();
+    // Adapte les noms si besoin: _userCtrl.users / u.email
+    return _userCtrl.users.any(
+          (u) => (u.email ?? '').trim().toLowerCase() == e,
+    );
+  }
+
+  // 🔽 Handler du bouton "CONNEXION"
+  Future<void> _onConnexionPressed() async {
+    if (_checking) return;
+
+    final email = _emailCtrl.text.trim();
+    if (email.isEmpty) {
+      Fluttertoast.showToast(
+        msg: "Veuillez saisir votre adresse e-mail.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.orange,
+        textColor: Colors.white,
+        fontSize: 15.0,
+      );
+      return;
+    }
+
+    setState(() => _checking = true);
+    try {
+      final user = await _userCtrl.findLocalByEmail(email);
+      if (user == null) {
+        Fluttertoast.showToast(
+          msg: "Utilisateur introuvable (incohérence locale).",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
+        );
+        return;
+      }
+
+// 💾 Sauver la session (nom, email, id)
+      await _userCtrl.persistCurrentUser(user);
+
+// ✅ feedback + navigation
+      Fluttertoast.showToast(
+        msg: "Bienvenue ${user.name ?? ''}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+
+      if (!mounted) return;
+      Navigator.pushNamed(context, AppRoutes.sync);
+
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Erreur lors de la vérification: $e",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+        fontSize: 15.0,
+      );
+    } finally {
+      if (mounted) setState(() => _checking = false);
+    }
   }
 
   @override
@@ -34,14 +122,17 @@ class _LoginPageState extends State<LoginPage> {
         value: Platform.isIOS
             ? SystemUiOverlayStyle.dark
             : const SystemUiOverlayStyle(
-                statusBarIconBrightness: Brightness.dark,
-              ),
+          statusBarIconBrightness: Brightness.dark,
+        ),
         child: ListView(
           padding: const EdgeInsets.fromLTRB(32, 72, 32, 24),
           children: [
             Image.asset('assets/me/images/MIRAH-BG.png', height: 120),
             const SizedBox(height: 32),
+
+            // 🔽 Ajout controller pour récupérer l'email
             TextField(
+              controller: _emailCtrl,
               keyboardType: TextInputType.emailAddress,
               style: TextStyle(color: _primaryColor),
               cursorColor: _primaryColor,
@@ -57,7 +148,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 24),
+
             TextField(
+              controller: _passCtrl,
               obscureText: _obscureText,
               style: TextStyle(color: _primaryColor),
               cursorColor: _primaryColor,
@@ -77,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 24),
+
             GestureDetector(
               onTap: () {
                 Fluttertoast.showToast(
@@ -91,37 +185,47 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 40),
+
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(_primaryColor),
-                overlayColor: WidgetStateProperty.all(Colors.transparent),
-                shape: WidgetStateProperty.all(
+                // ⚠️ Remplace WidgetStateProperty par MaterialStateProperty
+                backgroundColor: MaterialStateProperty.all(_primaryColor),
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(3.0),
                   ),
                 ),
               ),
-              onPressed: () => Navigator.pushNamed(context, AppRoutes.sync),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 12),
-                child: Text(
+              onPressed: _checking ? null : _onConnexionPressed,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: _checking
+                    ? const SizedBox(
+                  height: 22, width: 22,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                )
+                    : const Text(
                   'CONNEXION',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
               ),
             ),
+
             const SizedBox(height: 60),
             Center(
               child: GestureDetector(
                 onTap: () {
                   Fluttertoast.showToast(
-                    msg: 'Click signup',
-                    toastLength: Toast.LENGTH_SHORT,
+                    msg: "Adresse e-mail ou mot de passe incorrect.",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.TOP, // 👈 affichage en haut
+                    backgroundColor: Colors.black87,
+                    textColor: Colors.white,
+                    fontSize: 15.0,
                   );
                 },
                 child: Text(

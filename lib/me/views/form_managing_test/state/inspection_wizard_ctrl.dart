@@ -64,11 +64,15 @@ class InspectionWizardCtrl extends ChangeNotifier {
     final db = await DatabaseHelper.database;
     await db.update(
       'inspections',
-      {'statut_inspection_id': newStatus},
+      {
+        'statut_inspection_id': newStatus,
+        //'sync': 1, // 🔄 on force sync à 1
+      },
       where: 'id = ?',
       whereArgs: [id],
     );
   }
+
 
 
   Map<dynamic, dynamic> section(String key) =>   /// ici j'ai changé en dynamic , j'esoère qu'il n'yaura pas de sucis

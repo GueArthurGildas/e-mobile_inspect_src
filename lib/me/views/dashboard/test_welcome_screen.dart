@@ -1,18 +1,51 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:test_app_divkit/me/config/api_constants.dart';
+import 'package:test_app_divkit/me/controllers/user_controller.dart';
+import 'package:test_app_divkit/me/models/user_model.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
+import 'package:test_app_divkit/me/services/database_service.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/auto_moving_icon.dart';
 import 'dart:async';
 
-import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';                 // ⬅️ nécessaire pour StreamSubscription
+import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
 const kOrange = Colors.orange;
 const kGreen  = Color(0xFF2ECC71);
 
 
-class WalletScreen extends StatelessWidget {
+class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
+
+  @override
+  State<WalletScreen> createState() => _WalletScreenState();
+}
+
+class _WalletScreenState extends State<WalletScreen> {
+
+  final UserController _userCtrl = UserController();
+  String _displayName = "Utilisateur";
+  User? myUser = User();
+
+
+
+  Future<void> _loadUser() async {
+    final current = await _userCtrl.loadCurrentUser(); // ou getCurrentSession()
+    setState(() {
+       myUser = current;
+      _displayName = current?.name ?? 'Utilisateur';
+    });
+  }
+
+  initState(){
+    _loadUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +57,12 @@ class WalletScreen extends StatelessWidget {
       // Ajoute librement d’autres images dans assets/me/images/
     ];
 
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       // endDrawer: const _UserSideDrawer(), // ⬅️ AJOUT
-      drawer: const _UserSideDrawer(),
+      drawer: _UserSideDrawer(userName: _displayName, myUser: myUser,),
       // Entête FIXE + contenu qui SCROLLE au milieu
       body: Column(
         children: [
@@ -48,7 +83,7 @@ class WalletScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [
+                        children:  [
                           // CircleAvatar(
                           //   radius: 20,
                           //   backgroundColor: Colors.orange,
@@ -65,9 +100,9 @@ class WalletScreen extends StatelessWidget {
                               const SizedBox(width: 10),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children:  [
                                   Text(
-                                    "Bienvenue, user",
+                                    "Bienvenue, $_displayName",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -189,33 +224,36 @@ class WalletScreen extends StatelessWidget {
           ],
         ),
         child: IconButton(
-          icon: Icon(
-            Icons.sailing,
-            color: Colors.white, // blanc pur
-            size: 32,            // augmente la taille (24 par défaut)
+          icon: const AutoMovingIcon(
+            icon: Icons.sailing,
+            size: 32,          // taille de base de l’icône
+            color: Colors.white,
+            ampX: 3,           // amplitude horizontale
+            ampY: 2,           // amplitude verticale
+            duration: Duration(seconds: 2), // vitesse du cycle
+            frame: 40,         // cadre stable (évite que ça déborde)
           ),
-
           onPressed: () {
             Navigator.of(context).push(
               PageRouteBuilder(
                 pageBuilder: (_, __, ___) => const InspectionListScreen(),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  const begin = Offset(1.0, 0.0); // Départ à droite
-                  const end = Offset.zero;        // Arrivée normale
-                  const curve = Curves.easeInOut; // Douceur de la transition
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
 
                   var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
                   var offsetAnimation = animation.drive(tween);
 
                   return SlideTransition(position: offsetAnimation, child: child);
                 },
-                transitionDuration: const Duration(milliseconds: 450), // vitesse douce
+                transitionDuration: const Duration(milliseconds: 450),
               ),
             );
           },
         ),
-
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       bottomNavigationBar: ClipRRect(
@@ -265,7 +303,7 @@ class WalletScreen extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.logout, color: Colors.white),
                   tooltip: "Déconnexion",
-                  onPressed: () => _logoutFlow(context),
+                  onPressed: () { _logoutFlow(context); },
                 ),
 
               ],
@@ -468,20 +506,35 @@ class _ActionRow extends StatelessWidget {
 
 
 class _UserSideDrawer extends StatelessWidget {
-  const _UserSideDrawer();
+
+  final String userName; // propriété immuable
+  User? myUser;
+
+   _UserSideDrawer({ required this.userName, required this.myUser});
+
 
   @override
   Widget build(BuildContext context) {
     // TODO: branche ces valeurs à ton Provider/Controller
-    final String userName   = "Inspecteur";
-    final String userUnit   = "MIRAH • CSP ZEE";
-    final int pendingCount  = 3;  // inspections en attente
-    final int doneCount     = 12; // inspections réalisées
+    //final String userName   = "Inspecteur";
+    final String userRole   = myUser?.primaryRoleName?? '—';
+    final int pendingCount  = myUser?.nbInspectionsDone??0;  // inspections en attente
+    final int doneCount     = myUser?.nbInspectionsPending??0;  // inspections réalisées
+
+
+
+    ///
+    // /               final User user = _controller.users[index];
+    //                 final role = user.primaryRoleName ?? '—';
+    //                 final done = user.nbInspectionsDone;
+    //                 final pending = user.nbInspectionsPending;
+
 
     return Drawer(
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
             // En-tête utilisateur
             Padding(
@@ -499,14 +552,14 @@ class _UserSideDrawer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
 
-                        Text(userName,
+                        Text(myUser?.name??"",
                             style: const TextStyle(
                               fontSize: 16.5,
                               fontWeight: FontWeight.w800,
                             )),
                         const SizedBox(height: 2),
 
-                        Text(userUnit,
+                        Text(userRole,
                             style: const TextStyle(
                               fontSize: 12.5,
                               color: Colors.black54,
@@ -621,6 +674,57 @@ class _UserSideDrawer extends StatelessWidget {
                       Navigator.pushNamed(context, AppRoutes.settings);
                     },
                   ),
+
+
+                  /// ici mon test pour synchroniser les inspection
+                  ListTile(
+                    leading: const Icon(Icons.settings_outlined),
+                    title: const Text("my_sync_test"),
+                    onTap: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (_) => const Center(child: CircularProgressIndicator()),
+                      );
+
+                      String msg;
+                      Color color;
+
+                      try {
+                        final api = InspectionApi(baseUrl: 'https://www.mirah-csp.com/api/v1'); // ⚠️ pas de trailing slash
+                        final service = SyncService(
+                          getDb: () => DatabaseHelper.database,
+                          api: api,
+                          chunkSize: 100,
+                        );
+
+                        final r = await service.run();
+
+                        if (r.error != null) {
+                          msg = r.error!;
+                          color = Colors.red; // ❌
+                        } else if (r.totalPending > 0 && r.totalUpdated == 0) {
+                          msg = 'Aucune ligne modifiée côté serveur (déjà sync=1 ?).'
+                              '\nÀ envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
+                          color = Colors.amber; // ⚠️
+                        } else {
+                          msg = 'Synchronisation terminée.'
+                              '\nÀ envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
+                          color = Colors.green; // ✅
+                        }
+                      } catch (e) {
+                        msg = 'Erreur inattendue: $e';
+                        color = Colors.red;
+                      } finally {
+                        Navigator.of(context).pop();
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(msg), backgroundColor: color),
+                      );
+                    },
+                  ),
+
 
                 ],
               ),
@@ -891,6 +995,8 @@ Future<void> _logoutFlow(BuildContext context) async {
 
   // 4) redirection dure vers Login (on nettoie toute la stack)
   if (context.mounted) {
+
+
     Navigator.pushNamedAndRemoveUntil(
       context,
       AppRoutes.login,
@@ -948,7 +1054,7 @@ Future<bool?> _confirmLogout(BuildContext context) {
           icon: const Icon(Icons.logout),
           label: const Text("Se déconnecter"),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-          onPressed: () => Navigator.of(context).pop(true),
+          onPressed: () { Navigator.of(context).pop(true);  },
         ),
       ],
     ),

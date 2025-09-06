@@ -7,6 +7,20 @@ import 'package:test_app_divkit/me/services/database_service.dart'; // DatabaseH
 import '../state/inspection_wizard_ctrl.dart';
 import 'wizard_screen.dart';
 
+// =======================
+// 🎨 Palette & Effects
+// =======================
+Color get _orange => const Color(0xFFFF6A00);
+Color get _green  => const Color(0xFF2ECC71);
+
+List<BoxShadow> get _softShadow => [
+  BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 16, offset: const Offset(0, 6)),
+  BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 6,  offset: const Offset(0, 2)),
+];
+
+// =======================
+//   Widget
+// =======================
 class InspectionDetailScreen extends StatefulWidget {
   final int inspectionId;
   const InspectionDetailScreen({super.key, required this.inspectionId});
@@ -17,7 +31,6 @@ class InspectionDetailScreen extends StatefulWidget {
 
 class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   late Future<Map<String, dynamic>> _future;
-  Color get _orange => const Color(0xFFFF6A00);
 
   // cache libellés {table: {id: label}}
   final Map<String, Map<int, String>> _labelCache = {};
@@ -154,7 +167,6 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   // -----------------------------------------
 
 
-
   // ---------- Utils ----------
   String _fmtDate(dynamic v) {
     if (v == null) return '-';
@@ -164,7 +176,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
 
   ({String label, Color color}) _statusInfo(int? id) {
     switch (id) {
-      case 0: return (label: 'En attente', color: Colors.orange);
+      case 5: return (label: 'En attente', color: Colors.orange);
       case 1: return (label: 'En cours',  color: Colors.blue);
       case 2: return (label: 'Terminé',   color: Colors.green);
       default: return (label: 'Inconnu',  color: Colors.grey);
@@ -174,7 +186,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   bool _notBlank(Object? x) =>
       x != null && x.toString().trim().isNotEmpty && x.toString().toLowerCase() != 'null';
 
-  // Progress calc → (done, total, pct) — plus précis
+  // Progress calc → (done, total, pct)
   ({int done, int total, double pct}) _progressA(Map<String, dynamic>? a) {
     if (a == null) return (done: 0, total: 16, pct: 0);
     final keys = [
@@ -230,8 +242,8 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
       if (rawList is List) {
         all.addAll(
           rawList
-              .whereType<Map>()                                  // garde seulement les Map
-              .map<Map<String, dynamic>>((m) => Map<String, dynamic>.from(m)), // re-typage fort
+              .whereType<Map>()
+              .map<Map<String, dynamic>>((m) => Map<String, dynamic>.from(m)),
         );
       }
     }
@@ -255,17 +267,19 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   // ---------- UI pieces ----------
   Widget _chipStatus(String text, Color color) {
     return Chip(
-      label: Text(text, style: TextStyle(color: color, fontWeight: FontWeight.w600)),
-      backgroundColor: color.withOpacity(0.12),
-      shape: StadiumBorder(side: BorderSide(color: color.withOpacity(0.35))),
+      label: Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+      backgroundColor: color,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      elevation: 0.6,
     );
   }
 
   Widget _chipInfo(String label, String value) {
     return Chip(
       label: Text('$label: $value'),
-      backgroundColor: Colors.grey.shade100,
-      shape: StadiumBorder(side: BorderSide(color: Colors.grey.shade300)),
+      backgroundColor: Colors.white,
+      shape: StadiumBorder(side: BorderSide(color: _green.withOpacity(0.35))),
+      elevation: 0.3,
     );
   }
 
@@ -275,15 +289,15 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: Colors.black54),
+          Icon(icon, size: 18, color: _orange),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(key, style: const TextStyle(color: Colors.black54)),
+                Text(key, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 2),
-                Text(val.isEmpty ? '-' : val, style: const TextStyle(fontWeight: FontWeight.w600)),
+                Text(val.isEmpty ? '-' : val, style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.black87)),
               ],
             ),
           ),
@@ -292,6 +306,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     );
   }
 
+  // ---- Section Tile (cards unifiées + grand titre d'entête sur fond attrayant)
   Widget _sectionTile({
     required IconData leading,
     required String title,
@@ -301,30 +316,90 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     bool initiallyExpanded = false,
   }) {
     final pct = progress.pct.clamp(0.0, 1.0);
-    final barColor = color ?? _orange;
-    return Card(
-      elevation: 1.5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+
+    // 🔸 Cartes unifiées : même teinte et même accent (orange)
+    final accent = _orange;
+    final unifiedTint = _orange.withOpacity(0.06);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: unifiedTint,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: _softShadow,
+        border: Border.all(color: accent.withOpacity(0.22), width: 1),
+      ),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
+          tilePadding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
           initiallyExpanded: initiallyExpanded,
-          leading: Icon(leading, color: barColor),
+          // Grand bandeau d'entête attrayant avec gros titre
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
-              const SizedBox(height: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [_orange, _green]),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: _softShadow,
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.18),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white30),
+                      ),
+                      child: Icon(leading, color: Colors.white, size: 20),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18, // 👈 grand titre
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Progress bar
               ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: LinearProgressIndicator(value: pct, minHeight: 6, color: barColor),
+                borderRadius: BorderRadius.circular(8),
+                child: Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    Container(height: 8, color: accent.withOpacity(0.18)),
+                    FractionallySizedBox(
+                      widthFactor: pct,
+                      child: Container(
+                        height: 8,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [_orange, _green]),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 4),
-              Text('${progress.done}/${progress.total} champs • ${(pct * 100).round()}%',
-                  style: const TextStyle(color: Colors.black54, fontSize: 12)),
+              Text(
+                '${progress.done}/${progress.total} champs • ${(pct * 100).round()}%',
+                style: const TextStyle(color: Colors.black54, fontSize: 12),
+              ),
             ],
           ),
-          childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          childrenPadding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
           children: [content],
         ),
       ),
@@ -345,12 +420,21 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
         return GestureDetector(
           onTap: () => _showImage(p),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: File(p).existsSync()
-                ? Image.file(File(p), fit: BoxFit.cover)
-                : Container(
-              color: Colors.grey.shade200,
-              child: const Icon(Icons.broken_image),
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              decoration: BoxDecoration(
+                color: _orange.withOpacity(0.06), // unifié avec les cards
+                boxShadow: _softShadow,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: _orange.withOpacity(0.18)),
+              ),
+              child: File(p).existsSync()
+                  ? Image.file(File(p), fit: BoxFit.cover)
+                  : Container(
+                color: Colors.grey.shade100,
+                alignment: Alignment.center,
+                child: const Icon(Icons.broken_image),
+              ),
             ),
           ),
         );
@@ -418,10 +502,11 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
             : int.tryParse('${cols['statut_inspection_id'] ?? ''}');
         final st = _statusInfo(statutId);
 
-        final title =
-        (cols['titre_inspect']?.toString().trim().isNotEmpty ?? false)
-            ? cols['titre_inspect'].toString()
-            : (data['a']?['shipName']?.toString() ?? '(Inspection)');
+        // (Titre calculé commenté dans la version fournie)
+        // final title =
+        // (cols['titre_inspect']?.toString().trim().isNotEmpty ?? false)
+        //     ? cols['titre_inspect'].toString()
+        //     : (data['a']?['shipName']?.toString() ?? '(Inspection)');
 
         final createdAt = _fmtDate(cols['created_at']);
         final updatedAt = _fmtDate(cols['updated_at']);
@@ -442,222 +527,255 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
         final pD = _progressD(d);
         final pE = _progressE(e);
 
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Détail inspection'),
-            actions: [
-              if (statutId != 2)
-                IconButton(
-                  tooltip: 'Lancer l’inspection',
-                  icon: const Icon(Icons.north_east),
-                  onPressed: () async {
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
-                          create: (_) => InspectionWizardCtrl(),
-                          child: WizardScreen(inspectionId: id, key: ValueKey('wizard_$id')),
-                        ),
-                      ),
-                    );
-                    if (mounted) setState(() => _future = _load());
-                  },
-                ),
-            ],
+        // ---------- Thème local pro ----------
+        final base = Theme.of(context);
+        final proTheme = base.copyWith(
+          colorScheme: base.colorScheme.copyWith(
+            primary: _orange,
+            secondary: _green,
+            surface: Colors.white,
+            onPrimary: Colors.white,
+            onSurface: Colors.black87,
           ),
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(12, 10, 12, 24),
-            children: [
-              // Header
-              Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [_orange.withOpacity(0.95), _orange.withOpacity(0.75)],
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
-                            ),
+          appBarTheme: base.appBarTheme.copyWith(
+            backgroundColor: _orange,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: false,
+            titleTextStyle: const TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
+          ),
+          cardTheme: base.cardTheme.copyWith(
+            color: Colors.white,
+            elevation: 2.5,
+            shadowColor: Colors.black12,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            margin: const EdgeInsets.symmetric(vertical: 8),
+          ),
+          chipTheme: base.chipTheme.copyWith(
+            backgroundColor: Colors.grey.shade100,
+            shape: StadiumBorder(side: BorderSide(color: Colors.grey.shade300)),
+            labelStyle: const TextStyle(fontWeight: FontWeight.w600),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          ),
+          floatingActionButtonTheme: base.floatingActionButtonTheme.copyWith(
+            backgroundColor: _green,
+            foregroundColor: Colors.white,
+            elevation: 4,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          ),
+          expansionTileTheme: base.expansionTileTheme.copyWith(
+            iconColor: _orange,
+            collapsedIconColor: _orange,
+            textColor: Colors.black87,
+            collapsedTextColor: Colors.black87,
+            backgroundColor: Colors.transparent,
+            collapsedBackgroundColor: Colors.transparent,
+          ),
+          progressIndicatorTheme: base.progressIndicatorTheme.copyWith(
+            color: _green,
+            linearTrackColor: _green.withOpacity(0.18),
+          ),
+          dividerColor: Colors.transparent,
+        );
+
+        return Theme(
+          data: proTheme,
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Détail inspection'),
+              actions: [
+                // (Actions commentées dans la version fournie)
+              ],
+            ),
+            body: ListView(
+              padding: const EdgeInsets.fromLTRB(12, 10, 12, 24),
+              children: [
+                // =======================
+                // Header (card unifiée mais bandeau distinctif)
+                // =======================
+                Card(
+                  elevation: 3,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(color: _orange.withOpacity(0.18)),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    children: [
+                      // Bandeau haut (dégradé)
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [_orange.withOpacity(0.95), _green.withOpacity(0.95)],
                           ),
-                          const SizedBox(width: 8),
-                          Flexible(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.white24),
-                              ),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const Icon(Icons.folder_open, size: 16, color: Colors.white),
-                                    const SizedBox(width: 6),
-                                    Text(dossierCode, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
-                                  ],
+                          boxShadow: _softShadow,
+                        ),
+                        child: Row(
+                          children: [
+                            // (titre principal volontairement commenté dans votre base)
+                            const SizedBox(width: 8),
+                            Flexible(
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.white24),
+                                ),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.folder_open, size: 16, color: Colors.white),
+                                      const SizedBox(width: 6),
+                                      Text(dossierCode,
+                                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: [
-                              _chipStatus(st.label, st.color),
-                              _chipInfo('Créée le', createdAt),
-                              _chipInfo('MAJ le', updatedAt),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          _kv(Icons.directions_boat, 'Arrivée prévue', prevArrive),
-                          _kv(Icons.assignment_turned_in, 'Inspection prévue', prevInspect),
-                          _kv(Icons.notes, 'Consigne', consigne),
-                        ],
+                      // Corps (fond unifié très léger)
+                      Container(
+                        width: double.infinity,
+                        color: _orange.withOpacity(0.06),
+                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Wrap(
+                              spacing: 8,
+                              runSpacing: 8,
+                              children: [
+                                _chipStatus(st.label, st.color),
+                                // (chips dates commentées dans votre base)
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            _kv(Icons.directions_boat, 'Arrivée prévue', prevArrive),
+                            _kv(Icons.assignment_turned_in, 'Inspection prévue', prevInspect),
+                            _kv(Icons.notes, 'Consigne', consigne),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // SECTION A — TOUS LES CHAMPS
-              _sectionTile(
-                leading: Icons.info_outline,
-                title: 'Section A — Données initiales',
-                progress: pA,
-                initiallyExpanded: true,
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _kv(Icons.event_available, 'Arrivée effective', _fmtDate(a?['dateArriveeEffective'])),
-                    _kv(Icons.event, 'Début inspection', _fmtDate(a?['dateDebutInspection'])),
-                    _kv(Icons.event_note, 'Date escale navire', _fmtDate(a?['dateEscaleNavire'])),
-                    _kv(Icons.place, 'Port inspection',
-                        awaitLabel(a?['portInspection'], ['ports', 'ports_inspection', 'port'])),
-                    _kv(Icons.sailing, 'Type navire',
-                        awaitLabel(a?['typeNavire'], ['typenavires', 'type_navires', 'type_navire'])),
-                    _kv(Icons.flag, 'Pays escale',
-                        awaitLabel(a?['paysEscale'], ['pays', 'countries'])),
-                    _kv(Icons.anchor, 'Port escale',
-                        awaitLabel(a?['portEscale'], ['ports', 'ports_escale'])),
-                    _kv(Icons.label_important, 'Objet', (a?['objet']?.toString() ?? '-')),
-                    _kv(Icons.local_offer, 'Objets multiples',
-                        (a?['objets'] is List) ? (a!['objets'] as List).map((e) => e['libelle']).join(', ') : '-'),
-                    _kv(Icons.grid_on, 'Maillage', a?['maillage']?.toString() ?? '-'),
-                    _kv(Icons.straighten, 'Dimensions des cales', a?['dimensionsCales']?.toString() ?? '-'),
-                    _kv(Icons.directions_boat_filled, 'Marquage navire', a?['marquageNavire']?.toString() ?? '-'),
-                    _kv(Icons.satellite_alt, 'Balise VMS', a?['baliseVMS']?.toString() ?? '-'),
-                    _kv(Icons.info_outline, 'Observation', a?['observation']?.toString() ?? '-'),
-                    _kv(Icons.how_to_vote, 'Demande préalable port',
-                        (a?['demandePrealablePort'] == true) ? 'Oui' : 'Non'),
-                    const SizedBox(height: 8),
-                    const Text('Observateur embarqué', style: TextStyle(fontWeight: FontWeight.w700)),
-                    const SizedBox(height: 6),
-                    _kv(Icons.visibility, 'Présent', (a?['observateurEmbarque']?['present'] == true) ? 'Oui' : 'Non'),
-                    _kv(Icons.person, 'Nom', a?['observateurEmbarque']?['nom']?.toString() ?? '-'),
-                    _kv(Icons.person_outline, 'Prénom', a?['observateurEmbarque']?['prenom']?.toString() ?? '-'),
-                    _kv(Icons.badge, 'Fonction', a?['observateurEmbarque']?['fonction']?.toString() ?? '-'),
-                    _kv(Icons.apartment, 'Entreprise', a?['observateurEmbarque']?['entreprise']?.toString() ?? '-'),
-                    _kv(Icons.credit_card, 'Numéro doc', a?['observateurEmbarque']?['numeroDoc']?.toString() ?? '-'),
-                  ],
-                ),
-              ),
-
-              // SECTION B
-              _sectionTile(
-                leading: Icons.groups_2_outlined,
-                title: 'Section B — Acteurs & Consignation',
-                progress: pB,
-                content: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _kv(Icons.business, 'Société consignataire',
-                        awaitLabel(b?['societeConsignataire'], ['consignations', 'societes_consignataires'])),
-                    _kv(Icons.badge, 'Agent shipping',
-                        awaitLabel(b?['agentShipping'], ['agents_shiping', 'agents_shipping', 'agents_ship'])),
-                    _kv(Icons.flag, 'Nationalité capitaine',
-                        awaitLabel(b?['nationaliteCapitaine'], ['pays', 'countries'])),
-                    _kv(Icons.person, 'Capitaine', b?['nomCapitaine']?.toString() ?? '-'),
-                    _kv(Icons.account_box_rounded, 'Passeport', b?['passeportCapitaine']?.toString() ?? '-'),
-                    _kv(Icons.flag_outlined, 'Nationalité propriétaire',
-                        awaitLabel(b?['nationaliteProprietaire'], ['pays', 'countries'])),
-                    _kv(Icons.person_outline, 'Propriétaire', b?['nomProprietaire']?.toString() ?? '-'),
-                    _kv(Icons.event, 'Expiration passeport', _fmtDate(b?['dateExpirationPasseport'])),
-                  ],
-                ),
-              ),
-
-              // SECTION C
-              _sectionTile(
-                leading: Icons.description_outlined,
-                title: 'Section C — Documents',
-                progress: pC,
-                content: _docsList(c),
-              ),
-
-              // SECTION D
-              _sectionTile(
-                leading: Icons.build_outlined,
-                title: 'Section D — Engins à bord',
-                progress: pD,
-                content: _enginsList(d),
-              ),
-
-              // SECTION E — DÉTAILS COMPLETS CAPTURES
-              _sectionTile(
-                leading: Icons.camera_alt_outlined,
-                title: 'Section E — Captures & Photos (détails complets)',
-                progress: pE,
-                content: _capturesDetailed(e),
-              ),
-            ],
-          ),
-
-          // bouton flotant (wizard) caché si Terminé
-          floatingActionButton: (statutId == 2)
-              ? null
-              : FloatingActionButton.extended(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
-                    create: (_) => InspectionWizardCtrl(),
-                    child: WizardScreen(inspectionId: id, key: ValueKey('wizard_$id')),
+                    ],
                   ),
                 ),
-              );
-              if (mounted) setState(() => _future = _load());
-            },
-            icon: const Icon(Icons.north_east),
-            label: const Text('Lancer l’inspection'),
+
+                const SizedBox(height: 12),
+
+                // =======================
+                // Sections (cards même couleur + grands titres dans entête)
+                // =======================
+
+                // SECTION A — unifiée
+                _sectionTile(
+                  leading: Icons.info_outline,
+                  title: 'Section A — Données initiales',
+                  progress: pA,
+                  initiallyExpanded: true,
+                  color: _orange, // ignoré pour unification interne
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _kv(Icons.event_available, 'Arrivée effective', _fmtDate(a?['dateArriveeEffective'])),
+                      _kv(Icons.event, 'Début inspection', _fmtDate(a?['dateDebutInspection'])),
+                      _kv(Icons.event_note, 'Date escale navire', _fmtDate(a?['dateEscaleNavire'])),
+                      _kv(Icons.place, 'Port inspection',
+                          awaitLabel(a?['portInspection'], ['ports', 'ports_inspection', 'port'])),
+                      _kv(Icons.sailing, 'Type navire',
+                          awaitLabel(a?['typeNavire'], ['typenavires', 'type_navires', 'type_navire'])),
+                      _kv(Icons.flag, 'Pays escale',
+                          awaitLabel(a?['paysEscale'], ['pays', 'countries'])),
+                      _kv(Icons.anchor, 'Port escale',
+                          awaitLabel(a?['portEscale'], ['ports', 'ports_escale'])),
+                      _kv(Icons.label_important, 'Objet', (a?['objet']?.toString() ?? '-')),
+                      _kv(Icons.local_offer, 'Objets multiples',
+                          (a?['objets'] is List) ? (a!['objets'] as List).map((e) => e['libelle']).join(', ') : '-'),
+                      _kv(Icons.grid_on, 'Maillage', a?['maillage']?.toString() ?? '-'),
+                      _kv(Icons.straighten, 'Dimensions des cales', a?['dimensionsCales']?.toString() ?? '-'),
+                      _kv(Icons.directions_boat_filled, 'Marquage navire', a?['marquageNavire']?.toString() ?? '-'),
+                      _kv(Icons.satellite_alt, 'Balise VMS', a?['baliseVMS']?.toString() ?? '-'),
+                      _kv(Icons.info_outline, 'Observation', a?['observation']?.toString() ?? '-'),
+                      _kv(Icons.how_to_vote, 'Demande préalable port',
+                          (a?['demandePrealablePort'] == true) ? 'Oui' : 'Non'),
+                      const SizedBox(height: 8),
+                      const Text('Observateur embarqué', style: TextStyle(fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 6),
+                      _kv(Icons.visibility, 'Présent', (a?['observateurEmbarque']?['present'] == true) ? 'Oui' : 'Non'),
+                      _kv(Icons.person, 'Nom', a?['observateurEmbarque']?['nom']?.toString() ?? '-'),
+                      _kv(Icons.person_outline, 'Prénom', a?['observateurEmbarque']?['prenom']?.toString() ?? '-'),
+                      _kv(Icons.badge, 'Fonction', a?['observateurEmbarque']?['fonction']?.toString() ?? '-'),
+                      _kv(Icons.apartment, 'Entreprise', a?['observateurEmbarque']?['entreprise']?.toString() ?? '-'),
+                      _kv(Icons.credit_card, 'Numéro doc', a?['observateurEmbarque']?['numeroDoc']?.toString() ?? '-'),
+                    ],
+                  ),
+                ),
+
+                // SECTION B — unifiée
+                _sectionTile(
+                  leading: Icons.groups_2_outlined,
+                  title: 'Section B — Acteurs & Consignation',
+                  progress: pB,
+                  color: _orange,
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _kv(Icons.business, 'Société consignataire',
+                          awaitLabel(b?['societeConsignataire'], ['consignations', 'societes_consignataires'])),
+                      _kv(Icons.badge, 'Agent shipping',
+                          awaitLabel(b?['agentShipping'], ['agents_shiping', 'agents_shipping', 'agents_ship'])),
+                      _kv(Icons.flag, 'Nationalité capitaine',
+                          awaitLabel(b?['nationaliteCapitaine'], ['pays', 'countries'])),
+                      _kv(Icons.person, 'Capitaine', b?['nomCapitaine']?.toString() ?? '-'),
+                      _kv(Icons.account_box_rounded, 'Passeport', b?['passeportCapitaine']?.toString() ?? '-'),
+                      _kv(Icons.flag_outlined, 'Nationalité propriétaire',
+                          awaitLabel(b?['nationaliteProprietaire'], ['pays', 'countries'])),
+                      _kv(Icons.person_outline, 'Propriétaire', b?['nomProprietaire']?.toString() ?? '-'),
+                      _kv(Icons.event, 'Expiration passeport', _fmtDate(b?['dateExpirationPasseport'])),
+                    ],
+                  ),
+                ),
+
+                // SECTION C — unifiée
+                _sectionTile(
+                  leading: Icons.description_outlined,
+                  title: 'Section C — Documents',
+                  progress: pC,
+                  color: _orange,
+                  content: _docsList(c),
+                ),
+
+                // SECTION D — unifiée
+                _sectionTile(
+                  leading: Icons.build_outlined,
+                  title: 'Section D — Engins à bord',
+                  progress: pD,
+                  color: _orange,
+                  content: _enginsList(d),
+                ),
+
+                // SECTION E — unifiée
+                _sectionTile(
+                  leading: Icons.camera_alt_outlined,
+                  title: 'Section E — Captures & Photos (détails complets)',
+                  progress: pE,
+                  color: _orange,
+                  content: _capturesDetailed(e),
+                ),
+              ],
+            ),
+
+            // (FAB commenté dans votre base)
           ),
         );
       },
@@ -671,12 +789,28 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     return Column(
       children: List.generate(docs.length, (i) {
         final d = Map<String, dynamic>.from(docs[i] as Map);
-        return ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          leading: const Icon(Icons.article_outlined),
-          title: Text(d['typeDocumentLabel']?.toString() ?? 'Document'),
-          subtitle: Text('ID: ${d['identifiant'] ?? '-'} • Émis: ${d['dateEmission'] ?? '-'} • Expire: ${d['dateExpiration'] ?? '-'}'),
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            color: _orange.withOpacity(0.06), // 👈 même couleur de card
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: _orange.withOpacity(0.18)),
+            boxShadow: _softShadow,
+          ),
+          child: ListTile(
+            dense: true,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            leading: CircleAvatar(
+              backgroundColor: _orange.withOpacity(0.18),
+              child: const Icon(Icons.article_outlined, color: Colors.white, size: 18),
+            ),
+            title: Text(
+                d['typeDocumentLabel']?.toString() ?? 'Document',
+                style: const TextStyle(fontWeight: FontWeight.w700)),
+            subtitle: Text(
+              'ID: ${d['identifiant'] ?? '-'} • Émis: ${d['dateEmission'] ?? '-'} • Expire: ${d['dateExpiration'] ?? '-'}',
+            ),
+          ),
         );
       }),
     );
@@ -688,12 +822,25 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     return Column(
       children: List.generate(engins.length, (i) {
         final e = Map<String, dynamic>.from(engins[i] as Map);
-        return ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          leading: const Icon(Icons.settings_input_antenna),
-          title: Text(e['typeEnginLabel']?.toString() ?? 'Engin'),
-          subtitle: Text('État: ${e['etatEnginLabel'] ?? '-'} • Obs: ${e['observation'] ?? '-'}'),
+        return Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            color: _orange.withOpacity(0.06), // 👈 même couleur de card
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: _orange.withOpacity(0.18)),
+            boxShadow: _softShadow,
+          ),
+          child: ListTile(
+            dense: true,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            leading: CircleAvatar(
+              backgroundColor: _orange.withOpacity(0.18),
+              child: const Icon(Icons.settings_input_antenna, color: Colors.white, size: 18),
+            ),
+            title: Text(e['typeEnginLabel']?.toString() ?? 'Engin',
+                style: const TextStyle(fontWeight: FontWeight.w700)),
+            subtitle: Text('État: ${e['etatEnginLabel'] ?? '-'} • Obs: ${e['observation'] ?? '-'}'),
+          ),
         );
       }),
     );
@@ -720,8 +867,12 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
               final m = Map<String, dynamic>.from(list[i] as Map);
               final paths = (m['imagePaths'] is List) ? List<String>.from(m['imagePaths']) : <String>[];
               return Card(
+                color: _orange.withOpacity(0.06), // 👈 même couleur de card
                 elevation: 1,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: BorderSide(color: _orange.withOpacity(0.18)),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
                   child: Column(
@@ -744,7 +895,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                             builder: (_, s) => _miniChip('Zones', (s.data == null || s.data!.isEmpty) ? '-' : s.data!.join(', ')),
                           ),
                           FutureBuilder<String?>(
-                            future: _lookupLabelFromTables(DatabaseHelper.database, ['presentation_produit'], m['presentationId']),
+                            future: _lookupLabelFromTables(DatabaseHelper.database, ['presentations','presentation_produit'], m['presentationId']),
                             builder: (_, s) => _miniChip('Présentation', s.data ?? (m['presentationId']?.toString() ?? '-')),
                           ),
                           FutureBuilder<String?>(
@@ -795,8 +946,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
 
   // --- Helpers de label async pour Section A/B (UI) ---
   String awaitLabel(dynamic id, List<String> tables) {
-    // Cette version “affiche vite” l’id; un FutureBuilder détaillé pourrait le remplacer.
-    // Pour garder l’UI fluide, on renvoie l’id si pas encore résolu (la plupart des A sont déjà résolus au _load()).
+    // version “affiche-vite” : renvoie le libellé si en cache, sinon l'id
     final intId = int.tryParse(id?.toString() ?? '');
     if (intId == null) return '-';
 

@@ -122,4 +122,22 @@ class UserService {
     final db = await _db;
     await db.delete('users');
   }
+
+  Future<User?> getLocalUserByEmail(String email) async {
+    final db = await _db;
+    final e = email.trim().toLowerCase();
+
+    // ⚠️ Adapte le nom de table/colonnes si besoin
+    final rows = await db.query(
+      'users',
+      where: 'LOWER(email) = ?',
+      whereArgs: [e],
+      limit: 1,
+    );
+
+    if (rows.isEmpty) return null;
+    return User.fromMap(rows.first); // ou fromJson selon ton modèle
+  }
+
+
 }

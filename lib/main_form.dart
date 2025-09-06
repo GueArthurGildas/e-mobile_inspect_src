@@ -42,6 +42,7 @@ void main() async{
   await initializeDateFormatting('fr_FR');
   await AppPrefs.instance.init();
 
+
   runApp(
     MultiProvider(
       providers: [
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
 
         onGenerateRoute:
         AppPages.generateRoute, // gestion des routes dynamiques
-        //routes: AppPages.routes,
+
       ),
     );
   }

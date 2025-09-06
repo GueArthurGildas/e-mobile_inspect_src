@@ -26,6 +26,9 @@ import 'package:test_app_divkit/me/views/tbl_ref_screen/types_engins_screen.dart
 import 'package:test_app_divkit/me/views/tbl_ref_screen/zones_capture_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/inspections_test_sync_screen.dart';
 
+import 'package:test_app_divkit/me/controllers/user_controller.dart'; // ⬅️ add
+
+
 class InspectionListScreen extends StatefulWidget {
   const InspectionListScreen({super.key});
   @override
@@ -416,10 +419,36 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       backgroundColor: const Color(0xFF2ECC71), // vert
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
-                    onPressed: onArrowTap,
+                    onPressed: () async {
+                      // ✅ contrôle rôle (admin ou chef_equipe) avant d'exécuter onArrowTap
+                      final userCtrl = UserController();
+                      final allowed = await userCtrl.canContinueInspection();
+                      if (!allowed) {
+                        await showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: const Text('Accès refusé'),
+                            content: const Text(
+                                "Vous n'avez pas les droits neccessaires !"
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                        return; // ne pas appeler onArrowTap
+                      }
+
+                      // 👇 logique existante conservée : on déclenche le callback fourni
+                      if (onArrowTap != null) onArrowTap();
+                    },
                     icon: const Icon(Icons.play_arrow, color: Colors.white),
                     label: const Text("Lancer", style: TextStyle(color: Colors.white)),
                   ),
+
                 const SizedBox(width: 10),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
@@ -452,7 +481,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ressources[ressources.length - 1]['screen']),
+              MaterialPageRoute(builder: (_) => ressources[ressources.length - 2]['screen']),
             );
           },
           icon: const Icon(Icons.add),
@@ -937,6 +966,28 @@ class _InspectionPreviewSheet extends StatelessWidget {
         final bool isTerminated = (statutId == 2);
 
         // Action du bouton Continuer
+        // Future<void> _onContinue() async {
+        //   if (isTerminated) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(content: Text('Inspection déjà terminée')),
+        //     );
+        //     return;
+        //   }
+        //   Navigator.of(context).pop();
+        //   await Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (_) => ChangeNotifierProvider<InspectionWizardCtrl>(
+        //         create: (_) => InspectionWizardCtrl(),
+        //         child: WizardScreen(
+        //           inspectionId: id,
+        //           key: ValueKey('wizard_$id'),
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // }
+
         Future<void> _onContinue() async {
           if (isTerminated) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -944,6 +995,30 @@ class _InspectionPreviewSheet extends StatelessWidget {
             );
             return;
           }
+
+          // ✅ Contrôle rôle avant d'autoriser l'ouverture du wizard
+          final userCtrl = UserController();
+          final allowed = await userCtrl.canContinueInspection();
+          if (!allowed) {
+            await showDialog(
+              context: context,
+              builder: (_) => AlertDialog(
+                title: const Text('Accès refusé'),
+                content: const Text(
+                    "Seuls les rôles 'admin' ou 'chef_equipe' peuvent continuer une inspection."
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            return;
+          }
+
+          // (logique existante conservée)
           Navigator.of(context).pop();
           await Navigator.push(
             context,
@@ -958,6 +1033,7 @@ class _InspectionPreviewSheet extends StatelessWidget {
             ),
           );
         }
+
 
         return SafeArea(
           top: false,

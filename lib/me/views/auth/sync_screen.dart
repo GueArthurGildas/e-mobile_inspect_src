@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
 import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
@@ -24,6 +25,9 @@ class _SyncScreenState extends State<SyncScreen> {
     super.initState();
     _run();
   }
+
+
+
 
   Future<void> _run() async {
     final start = DateTime.now();
