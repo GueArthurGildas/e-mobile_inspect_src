@@ -35,7 +35,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
     try {
       await Common.checkInternetConnection(); // juste info; on avance quoi qu’il arrive
-      await _controllerInspection.loadAndSync();
+      //await _controllerInspection.loadAndSync();
     } catch (_) {
       // on ignore et on continue offline
     }

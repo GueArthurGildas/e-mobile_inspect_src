@@ -91,16 +91,16 @@ class _WizardScreenState extends State<WizardScreen> {
       'email': u.email,
     }).toList();
 
-// 0.2) Persister dans la section 'e' pour que ça apparaisse dans le JSON généré
+// 0.2) Persister dans la section 'f' pour que ça apparaisse dans le JSON généré
     final ctrl = context.read<InspectionWizardCtrl>();
-    await ctrl.saveSection('e', {
+    await ctrl.saveSection('f', {
       'participants'      : participantsIds,
       'participants_meta' : participantsMeta,
     });
 
 // 0.3) (optionnel mais utile) : merger aussi dans le payload local si tu l’envoies juste après
-    payload['e'] = {
-      ...(payload['e'] ?? {}),
+    payload['f'] = {
+      ...(payload['f'] ?? {}),
       'participants'      : participantsIds,
       'participants_meta' : participantsMeta,
     };

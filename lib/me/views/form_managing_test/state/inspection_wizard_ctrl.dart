@@ -10,8 +10,8 @@ Map<String, dynamic> _deepCopy(Map<String, dynamic> src) =>
 
 class InspectionWizardCtrl extends ChangeNotifier { 
   int? _inspectionId;
-  Map<String, dynamic> _global = {"a": {}, "b": {}, "c": {}, "d": {},"e": {}};
-  final Map<String, int> _versions = {"a": 0, "b": 0, "c": 0, "d": 0,"e": 0};
+  Map<String, dynamic> _global = {"a": {}, "b": {}, "c": {}, "d": {},"e": {},"f": {}};
+  final Map<String, int> _versions = {"a": 0, "b": 0, "c": 0, "d": 0,"e": 0,"f": 0};
 
   int? get inspectionId => _inspectionId;
   Map<String, dynamic> get globalJson => _deepCopy(_global);
@@ -33,6 +33,7 @@ class InspectionWizardCtrl extends ChangeNotifier {
           "c": Map<String, dynamic>.from(map["c"] ?? {}),
           "d": Map<String, dynamic>.from(map["d"] ?? {}),
           "e": Map<String, dynamic>.from(map["e"] ?? {}),
+          "f": Map<String, dynamic>.from(map["e"] ?? {}),
         };
 
         for (final k in _versions.keys) {
@@ -50,7 +51,7 @@ class InspectionWizardCtrl extends ChangeNotifier {
     // Create new empty if id is null or not found
     final newId = await db.insert('inspections', {'json_field': jsonEncode({})});
     _inspectionId = newId;
-    _global = {"a": {}, "b": {}, "c": {}, "d": {},"e": {}};
+    _global = {"a": {}, "b": {}, "c": {}, "d": {},"e": {},"f": {}};
     await db.update(
       'inspections',
       {'json_field': jsonEncode(_global)},
@@ -66,7 +67,7 @@ class InspectionWizardCtrl extends ChangeNotifier {
       'inspections',
       {
         'statut_inspection_id': newStatus,
-        //'sync': 1, // 🔄 on force sync à 1
+        'sync': 0, // 🔄 on force sync à 0 pour qu'il soit pris en compte dans la synchro a envoyer vers laravel
       },
       where: 'id = ?',
       whereArgs: [id],

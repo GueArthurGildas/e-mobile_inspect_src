@@ -925,10 +925,10 @@ class _InspectionPreviewSheet extends StatelessWidget {
     // Définition des sections et état (basé sur json_field / data)
     final sectionsDef = [
       {'code':'A','label':'Infos générales','key':'a'},
-      {'code':'B','label':'Contrôle des documents','key':'b'},
-      {'code':'C','label':'Engins à bord','key':'c'},
-      {'code':'D','label':'Captures','key':'d'},
-      {'code':'E','label':'Conformité & mesures','key':'e'},
+      {'code':'B','label':'Consignat & Agent Shipping','key':'b'},
+      {'code':'C','label':'Contrôle des documents','key':'c'},
+      {'code':'D','label':'Engins à bord','key':'d'},
+      {'code':'E','label':'Captures','key':'e'},
     ];
 
     bool isDone(String key) {

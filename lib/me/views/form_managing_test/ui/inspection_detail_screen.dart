@@ -35,11 +35,99 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   // cache libellés {table: {id: label}}
   final Map<String, Map<int, String>> _labelCache = {};
 
+  bool _showContent = false;
+
   @override
   void initState() {
     super.initState();
     _future = _load();
+
+    // Quand le Future est terminé, on garde un micro "squelette" visuel 300ms
+    _future.whenComplete(() {
+      Future.delayed(const Duration(milliseconds: 1500), () {
+        if (mounted) setState(() => _showContent = true);
+      });
+    });
   }
+
+  /// for loader des partie avant affichage
+  Widget _skeletonBar({double h = 12, double w = double.infinity, EdgeInsets m = const EdgeInsets.symmetric(vertical: 6)}) {
+    return Container(
+      margin: m,
+      height: h,
+      width: w,
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.06),
+        borderRadius: BorderRadius.circular(8),
+      ),
+    );
+  }
+
+  Widget _skeletonSectionBody({int lines = 4}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(lines, (i) => _skeletonBar(w: i.isEven ? double.infinity : 180)),
+    );
+  }
+
+  Widget _skeletonSectionTile({required IconData leading, required String title}) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: _orange.withOpacity(0.06),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: _orange.withOpacity(0.22), width: 1),
+        boxShadow: _softShadow,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // bandeau titre simulé
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [_orange, _green]),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: _softShadow,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.18),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white30),
+                    ),
+                    child: Icon(leading, color: Colors.white, size: 20),
+                  ),
+                  const SizedBox(width: 10),
+                  const Expanded(
+                    child: Text('Chargement…', maxLines: 1, overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            // barre de progression vide
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(height: 8, color: _orange.withOpacity(0.18)),
+            ),
+            const SizedBox(height: 4),
+            const Text('—/— champs • 0%', style: TextStyle(color: Colors.black54, fontSize: 12)),
+            const SizedBox(height: 8),
+            _skeletonSectionBody(lines: 4),
+          ],
+        ),
+      ),
+    );
+  }
+
 
   // -------- LOAD + LABEL RESOLVER ----------
   Future<Map<String, dynamic>> _load() async {
@@ -73,7 +161,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     await _resolveKeyFromA(db, data, 'portEscale', ['ports', 'ports_escale']);
     // section B
     await _resolveKeyFromB(db, data, 'societeConsignataire', ['consignations', 'societes_consignataires']);
-    await _resolveKeyFromB(db, data, 'agentShipping', ['agents_shiping', 'agents_shipping', 'agents_ship']);
+    await _resolveKeyFromB(db, data, 'agentShipping', ['agent_shipings', 'agents_shipping', 'agents_ship']);
     await _resolveKeyFromB(db, data, 'nationaliteCapitaine', ['pays', 'countries']);
     await _resolveKeyFromB(db, data, 'nationaliteProprietaire', ['pays', 'countries']);
     // section E (captures)
@@ -678,47 +766,51 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                 // =======================
 
                 // SECTION A — unifiée
-                _sectionTile(
-                  leading: Icons.info_outline,
-                  title: 'Section A — Données initiales',
-                  progress: pA,
-                  initiallyExpanded: true,
-                  color: _orange, // ignoré pour unification interne
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _kv(Icons.event_available, 'Arrivée effective', _fmtDate(a?['dateArriveeEffective'])),
-                      _kv(Icons.event, 'Début inspection', _fmtDate(a?['dateDebutInspection'])),
-                      _kv(Icons.event_note, 'Date escale navire', _fmtDate(a?['dateEscaleNavire'])),
-                      _kv(Icons.place, 'Port inspection',
-                          awaitLabel(a?['portInspection'], ['ports', 'ports_inspection', 'port'])),
-                      _kv(Icons.sailing, 'Type navire',
-                          awaitLabel(a?['typeNavire'], ['typenavires', 'type_navires', 'type_navire'])),
-                      _kv(Icons.flag, 'Pays escale',
-                          awaitLabel(a?['paysEscale'], ['pays', 'countries'])),
-                      _kv(Icons.anchor, 'Port escale',
-                          awaitLabel(a?['portEscale'], ['ports', 'ports_escale'])),
-                      _kv(Icons.label_important, 'Objet', (a?['objet']?.toString() ?? '-')),
-                      _kv(Icons.local_offer, 'Objets multiples',
-                          (a?['objets'] is List) ? (a!['objets'] as List).map((e) => e['libelle']).join(', ') : '-'),
-                      _kv(Icons.grid_on, 'Maillage', a?['maillage']?.toString() ?? '-'),
-                      _kv(Icons.straighten, 'Dimensions des cales', a?['dimensionsCales']?.toString() ?? '-'),
-                      _kv(Icons.directions_boat_filled, 'Marquage navire', a?['marquageNavire']?.toString() ?? '-'),
-                      _kv(Icons.satellite_alt, 'Balise VMS', a?['baliseVMS']?.toString() ?? '-'),
-                      _kv(Icons.info_outline, 'Observation', a?['observation']?.toString() ?? '-'),
-                      _kv(Icons.how_to_vote, 'Demande préalable port',
-                          (a?['demandePrealablePort'] == true) ? 'Oui' : 'Non'),
-                      const SizedBox(height: 8),
-                      const Text('Observateur embarqué', style: TextStyle(fontWeight: FontWeight.w700)),
-                      const SizedBox(height: 6),
-                      _kv(Icons.visibility, 'Présent', (a?['observateurEmbarque']?['present'] == true) ? 'Oui' : 'Non'),
-                      _kv(Icons.person, 'Nom', a?['observateurEmbarque']?['nom']?.toString() ?? '-'),
-                      _kv(Icons.person_outline, 'Prénom', a?['observateurEmbarque']?['prenom']?.toString() ?? '-'),
-                      _kv(Icons.badge, 'Fonction', a?['observateurEmbarque']?['fonction']?.toString() ?? '-'),
-                      _kv(Icons.apartment, 'Entreprise', a?['observateurEmbarque']?['entreprise']?.toString() ?? '-'),
-                      _kv(Icons.credit_card, 'Numéro doc', a?['observateurEmbarque']?['numeroDoc']?.toString() ?? '-'),
-                    ],
-                  ),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 220),
+                  child: _showContent
+                      ?_sectionTile(
+                    leading: Icons.info_outline,
+                    title: 'Section A — Données initiales',
+                    progress: pA,
+                    initiallyExpanded: true,
+                    color: _orange, // ignoré pour unification interne
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _kv(Icons.event_available, 'Arrivée effective', _fmtDate(a?['dateArriveeEffective'])),
+                        _kv(Icons.event, 'Début inspection', _fmtDate(a?['dateDebutInspection'])),
+                        _kv(Icons.event_note, 'Date escale navire', _fmtDate(a?['dateEscaleNavire'])),
+                        _kv(Icons.place, 'Port inspection',
+                            awaitLabel(a?['portInspection'], ['ports', 'ports_inspection', 'port'])),
+                        _kv(Icons.sailing, 'Type navire',
+                            awaitLabel(a?['typeNavire'], ['typenavires', 'type_navires', 'type_navire'])),
+                        _kv(Icons.flag, 'Pays escale',
+                            awaitLabel(a?['paysEscale'], ['pays', 'countries'])),
+                        _kv(Icons.anchor, 'Port escale',
+                            awaitLabel(a?['portEscale'], ['ports', 'ports_escale'])),
+                        _kv(Icons.label_important, 'Objet', (a?['objet']?.toString() ?? '-')),
+                        _kv(Icons.local_offer, 'Objets multiples',
+                            (a?['objets'] is List) ? (a!['objets'] as List).map((e) => e['libelle']).join(', ') : '-'),
+                        _kv(Icons.grid_on, 'Maillage', a?['maillage']?.toString() ?? '-'),
+                        _kv(Icons.straighten, 'Dimensions des cales', a?['dimensionsCales']?.toString() ?? '-'),
+                        _kv(Icons.directions_boat_filled, 'Marquage navire', a?['marquageNavire']?.toString() ?? '-'),
+                        _kv(Icons.satellite_alt, 'Balise VMS', a?['baliseVMS']?.toString() ?? '-'),
+                        _kv(Icons.info_outline, 'Observation', a?['observation']?.toString() ?? '-'),
+                        _kv(Icons.how_to_vote, 'Demande préalable port',
+                            (a?['demandePrealablePort'] == true) ? 'Oui' : 'Non'),
+                        const SizedBox(height: 8),
+                        const Text('Observateur embarqué', style: TextStyle(fontWeight: FontWeight.w700)),
+                        const SizedBox(height: 6),
+                        _kv(Icons.visibility, 'Présent', (a?['observateurEmbarque']?['present'] == true) ? 'Oui' : 'Non'),
+                        _kv(Icons.person, 'Nom', a?['observateurEmbarque']?['nom']?.toString() ?? '-'),
+                        _kv(Icons.person_outline, 'Prénom', a?['observateurEmbarque']?['prenom']?.toString() ?? '-'),
+                        _kv(Icons.badge, 'Fonction', a?['observateurEmbarque']?['fonction']?.toString() ?? '-'),
+                        _kv(Icons.apartment, 'Entreprise', a?['observateurEmbarque']?['entreprise']?.toString() ?? '-'),
+                        _kv(Icons.credit_card, 'Numéro doc', a?['observateurEmbarque']?['numeroDoc']?.toString() ?? '-'),
+                      ],
+                    ),
+                  ) : _skeletonSectionTile(leading: Icons.info_outline, title: 'Section A — Données initiales'),
                 ),
 
                 // SECTION B — unifiée
@@ -733,7 +825,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                       _kv(Icons.business, 'Société consignataire',
                           awaitLabel(b?['societeConsignataire'], ['consignations', 'societes_consignataires'])),
                       _kv(Icons.badge, 'Agent shipping',
-                          awaitLabel(b?['agentShipping'], ['agents_shiping', 'agents_shipping', 'agents_ship'])),
+                          awaitLabel(b?['agentShipping'], ['agent_shipings', 'agents_shipping', 'agents_ship'])),
                       _kv(Icons.flag, 'Nationalité capitaine',
                           awaitLabel(b?['nationaliteCapitaine'], ['pays', 'countries'])),
                       _kv(Icons.person, 'Capitaine', b?['nomCapitaine']?.toString() ?? '-'),

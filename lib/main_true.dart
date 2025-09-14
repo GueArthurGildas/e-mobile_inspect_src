@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:test_app_divkit/me/views/auth/splash_screen.dart';
+import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
 import 'package:test_app_divkit/me/views/shared/app_preferences.dart';
 import 'package:test_app_divkit/me/views/users/screen_test.dart';
 import 'me/routes//app_pages.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         home:
-            SplashScreen(), //UsersPage(),//plashScreen1(),//,//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
+        WalletScreen(), //SplashScreen(), //UsersPage(),//plashScreen1(),//,//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
         onGenerateRoute:
             AppPages.generateRoute, // gestion des routes dynamiques
         //routes: AppPages.routes,

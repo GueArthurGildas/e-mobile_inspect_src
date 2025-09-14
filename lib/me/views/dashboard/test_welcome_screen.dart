@@ -13,6 +13,7 @@ import 'package:test_app_divkit/me/views/form_managing_test/ui/auto_moving_icon.
 import 'dart:async';
 
 import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/profile_screen.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
@@ -518,8 +519,8 @@ class _UserSideDrawer extends StatelessWidget {
     // TODO: branche ces valeurs à ton Provider/Controller
     //final String userName   = "Inspecteur";
     final String userRole   = myUser?.primaryRoleName?? '—';
-    final int pendingCount  = myUser?.nbInspectionsDone??0;  // inspections en attente
-    final int doneCount     = myUser?.nbInspectionsPending??0;  // inspections réalisées
+    final int pendingCount  = myUser?.nbInspectionsPending??0;  // inspections en attente
+    final int doneCount     = myUser?.nbInspectionsDone??0;  // inspections réalisées
 
 
 
@@ -589,20 +590,58 @@ class _UserSideDrawer extends StatelessWidget {
                       color: Colors.amber[700]!,
                       label: "En attente",
                       value: pendingCount.toString(),
+                      onTap: () async {
+                        final rootCtx = Navigator.of(context, rootNavigator: true).context;
+                        Navigator.pop(context); // ferme le Drawer
+
+                        final pending = myUser?.fieldJsonInspectPending ?? const [];
+
+                        await openModalAfterLoader(
+                          rootCtx,
+                          PendingInspectionsScreen(items: pending),
+                          loader: const Duration(milliseconds: 900),
+                          heightFactor: 0.95,
+                        );
+                      },
                     ),
                   ),
+
                   const SizedBox(width: 10),
+
                   Expanded(
                     child: _KPI(
                       icon: Icons.verified_outlined,
                       color: kGreen,
                       label: "Réalisées",
                       value: doneCount.toString(),
+                      onTap: () async {
+                        final rootCtx = Navigator.of(context, rootNavigator: true).context;
+                        Navigator.pop(context); // ferme le Drawer
+
+                        final done = myUser?.fieldJsonInspectDone ?? const [];
+
+                        await openModalAfterLoader(
+                          rootCtx,
+                          PendingInspectionsScreen(items: done),
+                          loader: const Duration(milliseconds: 900),
+                          heightFactor: 0.95,
+                        );
+                      },
                     ),
                   ),
+                  // Expanded(
+                  //   child: _KPI(
+                  //     icon: Icons.verified_outlined,
+                  //     color: kGreen,
+                  //     label: "Réalisées",
+                  //     value: doneCount.toString(),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
+
+
 
             const SizedBox(height: 6),
             const Divider(height: 1),
@@ -617,10 +656,21 @@ class _UserSideDrawer extends StatelessWidget {
                   ListTile(
                     leading: const Icon(Icons.person_outline),
                     title: const Text("Profil"),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.profile);
+                    // onTap: () {
+                    //   Navigator.pop(context);
+                    //   Navigator.pushNamed(context, AppRoutes.profile);
+                    // },
+                    onTap: () async {
+                      final rootCtx = Navigator.of(context, rootNavigator: true).context; // 1) capture
+                      Navigator.pop(context);                                             // 2) ferme le Drawer
+                      await openModalAfterLoader(                                         // 3) loader -> modal
+                        rootCtx,
+                        const ProfileScreen(), // mets ton widget cible
+                        loader: const Duration(milliseconds: 1100),
+                      );
                     },
+
+
                   ),
 
 
@@ -629,101 +679,93 @@ class _UserSideDrawer extends StatelessWidget {
                     leading: const Icon(Icons.inbox_outlined),
                     title: const Text("Mes inspections"),
                     subtitle: const Text("Voir toutes les inspections"),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.inspections);
+                    onTap: () async {
+                      final rootCtx = Navigator.of(context, rootNavigator: true).context; // 1) capture
+                      Navigator.pop(context);                                             // 2) ferme le Drawer
+                      await openModalAfterLoader(                                         // 3) loader -> modal
+                        rootCtx,
+                        const MyInspectionsScreen(), // mets ton widget cible
+                        loader: const Duration(milliseconds: 1100),
+                      );
                     },
+
+
                   ),
 
 
-                  ListTile(
-                    leading: const Icon(Icons.cloud_sync_outlined),
-                    title: const Text("Synchroniser"),
-                    subtitle: const Text("Envoyer/recevoir les données"),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.syncro);
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.cloud_sync_outlined),
+                  //   title: const Text("Synchroniser"),
+                  //   subtitle: const Text("Envoyer/recevoir les données"),
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     Navigator.pushNamed(context, AppRoutes.syncro);
+                  //   },
+                  // ),
 
                   ListTile(
                     leading: const Icon(Icons.group_outlined),
                     title: const Text("Groupes & équipes"),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.groups);
+                    onTap: () async {
+                      final rootCtx = Navigator.of(context, rootNavigator: true).context;
+                      Navigator.pop(context); // ferme Drawer
+
+                      await openModalAfterLoader(
+                        rootCtx,
+                        const GroupsTeamsScreen(), // ton nouvel écran
+                        loader: const Duration(milliseconds: 900),
+                        heightFactor: 0.95, // occupe presque tout l’écran
+                      );
                     },
                   ),
 
 
-                  ListTile(
-                    leading: const Icon(Icons.bookmark_border),
-                    title: const Text("Enregistrements"),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.records);
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.bookmark_border),
+                  //   title: const Text("Enregistrements"),
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     Navigator.pushNamed(context, AppRoutes.records);
+                  //   },
+                  //
+                  // ),
 
 
                   ListTile(
                     leading: const Icon(Icons.settings_outlined),
                     title: const Text("Paramètres"),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.settings);
+
+                    onTap: () async {
+                      final rootCtx = Navigator.of(context, rootNavigator: true).context;
+                      Navigator.pop(context); // ferme Drawer
+
+                      await openModalAfterLoader(
+                        rootCtx,
+                        const SettingsScreen(), // ton nouvel écran
+                        loader: const Duration(milliseconds: 900),
+                        heightFactor: 0.95, // occupe presque tout l’écran
+                      );
                     },
                   ),
 
 
                   /// ici mon test pour synchroniser les inspection
                   ListTile(
-                    leading: const Icon(Icons.settings_outlined),
-                    title: const Text("my_sync_test"),
+                    leading: const Icon(Icons.cloud_sync_outlined),
+                    title: const Text("Centre de synchronisation"),
                     onTap: () async {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (_) => const Center(child: CircularProgressIndicator()),
-                      );
+                      final rootCtx = Navigator.of(context, rootNavigator: true).context;
+                      Navigator.pop(context); // ferme Drawer
 
-                      String msg;
-                      Color color;
-
-                      try {
-                        final api = InspectionApi(baseUrl: 'https://www.mirah-csp.com/api/v1'); // ⚠️ pas de trailing slash
-                        final service = SyncService(
-                          getDb: () => DatabaseHelper.database,
-                          api: api,
-                          chunkSize: 100,
-                        );
-
-                        final r = await service.run();
-
-                        if (r.error != null) {
-                          msg = r.error!;
-                          color = Colors.red; // ❌
-                        } else if (r.totalPending > 0 && r.totalUpdated == 0) {
-                          msg = 'Aucune ligne modifiée côté serveur (déjà sync=1 ?).'
-                              '\nÀ envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
-                          color = Colors.amber; // ⚠️
-                        } else {
-                          msg = 'Synchronisation terminée.'
-                              '\nÀ envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
-                          color = Colors.green; // ✅
-                        }
-                      } catch (e) {
-                        msg = 'Erreur inattendue: $e';
-                        color = Colors.red;
-                      } finally {
-                        Navigator.of(context).pop();
-                      }
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(msg), backgroundColor: color),
+                      await openModalAfterLoader(
+                        rootCtx,
+                        const SyncCenterScreen(), // ton nouvel écran
+                        loader: const Duration(milliseconds: 900),
+                        heightFactor: 0.95, // occupe presque tout l’écran
                       );
                     },
                   ),
+
 
 
                 ],
@@ -760,11 +802,19 @@ class _KPI extends StatelessWidget {
   final Color color;
   final String label;
   final String value;
-  const _KPI({required this.icon, required this.color, required this.label, required this.value});
+  final VoidCallback? onTap; // <- ajouté
+
+  const _KPI({
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.value,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final content = Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -787,11 +837,7 @@ class _KPI extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(value,
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
-                    )),
+                Text(value, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
                 const SizedBox(height: 2),
                 Text(label, style: const TextStyle(fontSize: 12.5, color: Colors.black54)),
               ],
@@ -800,6 +846,10 @@ class _KPI extends StatelessWidget {
         ],
       ),
     );
+
+    return onTap == null
+        ? content
+        : InkWell(onTap: onTap, borderRadius: BorderRadius.circular(10), child: content);
   }
 }
 
@@ -1007,8 +1057,12 @@ Future<void> _logoutFlow(BuildContext context) async {
 
 // Mini-loader centré
 Future<void> _showTinyLoader(BuildContext context, Duration d) async {
+  // Toujours prendre le root navigator (contexte stable)
+  final rootCtx = Navigator.of(context, rootNavigator: true).context;
+
   showDialog(
-    context: context,
+    context: rootCtx,
+    useRootNavigator: true,
     barrierDismissible: false,
     builder: (_) => const Dialog(
       elevation: 0,
@@ -1031,8 +1085,12 @@ Future<void> _showTinyLoader(BuildContext context, Duration d) async {
       ),
     ),
   );
+
   await Future.delayed(d);
-  if (Navigator.of(context).canPop()) Navigator.of(context).pop(); // ferme le loader
+
+  // Fermer le loader via le root navigator (contexte stable)
+  final nav = Navigator.of(rootCtx, rootNavigator: true);
+  if (nav.canPop()) nav.pop();
 }
 
 // Alerte de confirmation => renvoie true/false
@@ -1060,3 +1118,37 @@ Future<bool?> _confirmLogout(BuildContext context) {
     ),
   );
 }
+
+Future<void> openModalAfterLoader(
+    BuildContext context,
+    Widget modal, {
+      Duration loader = const Duration(milliseconds: 900),
+      double heightFactor = 0.92,
+    }) async {
+  final rootCtx = Navigator.of(context, rootNavigator: true).context;
+
+  await _showTinyLoader(rootCtx, loader);
+
+  await showModalBottomSheet(
+    context: rootCtx,
+    useRootNavigator: true,
+    isScrollControlled: true,
+    useSafeArea: true,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (_) => FractionallySizedBox(
+      heightFactor: heightFactor,
+      child: modal,
+    ),
+  );
+}
+
+
+
+
+
+
+
+

@@ -29,7 +29,7 @@ enum ControllerKey {
   zonesCapture,
   presentationsProduit,
   conservationsProduit,
-  inspections,
+  //inspections,
   motifEntree /// code renseigné par moi
 }
 
@@ -50,7 +50,7 @@ class SyncController extends ChangeNotifier {
     ControllerKey.zonesCapture: ZonesCaptureController(),
     ControllerKey.presentationsProduit: PresentationsController(),
     ControllerKey.conservationsProduit: ConservationsController(),
-    ControllerKey.inspections: InspectionController(),
+    //ControllerKey.inspections: InspectionController(),
     ControllerKey.motifEntree : ActivitesNaviresController()
   };
 
