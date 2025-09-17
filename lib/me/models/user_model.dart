@@ -32,6 +32,7 @@ class User {
   final int? id;
   final String? name;
   final String? email;
+  final String? ref_metier_code;
 
   /// API: "json_role": [ { id, name }, ... ]
   final List<UserRole> jsonRole;
@@ -49,6 +50,7 @@ class User {
     this.id,
     this.name,
     this.email,
+    this.ref_metier_code,
     this.jsonRole = const [],
     this.fieldJsonInspectDone = const [],
     this.fieldJsonInspectPending = const [],
@@ -73,6 +75,7 @@ class User {
         id: json['id'] is int ? json['id'] : int.tryParse('${json['id']}'),
         name: json['name']?.toString(),
         email: json['email']?.toString(),
+        ref_metier_code : json['ref_metier_code']?.toString(),
         jsonRole: roles,
         fieldJsonInspectDone:
         done is List ? List<dynamic>.from(done) : const [],
@@ -94,6 +97,7 @@ class User {
         'id': id,
         'name': name,
         'email': email,
+        'ref_metier_code' : ref_metier_code,
         'json_role': jsonRole.map((r) => r.toJson()).toList(),
         'field_json_inspect_done': fieldJsonInspectDone,
         'field_json_inspect_pending': fieldJsonInspectPending,
@@ -142,6 +146,7 @@ class User {
         id: map['id'] is int ? map['id'] : int.tryParse('${map['id']}'),
         name: map['name']?.toString(),
         email: map['email']?.toString(),
+        ref_metier_code : map['ref_metier_code']?.toString(),
         jsonRole: roles,
         fieldJsonInspectDone: done,
         fieldJsonInspectPending: pending,
@@ -161,6 +166,7 @@ class User {
         'id': id,
         'name': name,
         'email': email,
+        'ref_metier_code' : ref_metier_code,
         // On stocke les listes en JSON (TEXT)
         'json_role': jsonEncode(jsonRole.map((r) => r.toJson()).toList()),
         'field_json_inspect_done': jsonEncode(fieldJsonInspectDone),
@@ -188,6 +194,7 @@ class User {
     int? id,
     String? name,
     String? email,
+    String? ref_metier_code,
     List<UserRole>? jsonRole,
     List<dynamic>? fieldJsonInspectDone,
     List<dynamic>? fieldJsonInspectPending,
@@ -197,6 +204,7 @@ class User {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      ref_metier_code : ref_metier_code ?? this.ref_metier_code,
       jsonRole: jsonRole ?? this.jsonRole,
       fieldJsonInspectDone:
       fieldJsonInspectDone ?? this.fieldJsonInspectDone,

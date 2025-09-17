@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
 import 'package:test_app_divkit/me/controllers/user_controller.dart';
+import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/theme_page_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
@@ -30,27 +31,30 @@ import 'package:test_app_divkit/me/controllers/sync_controller.dart';
 import 'package:test_app_divkit/me/controllers/inspection_controller.dart';
 
 
+const kOrange =  Colors.orange;//Color(0xFFFF6A00);      // orange soutenu
+const kGreen  = Color(0xFF1E9E5A);      // vert profond
+const kAmber  = Color(0xFFFFA000);      // amber pour “warning”
 
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return SectionScaffold(
-      title: "Profil",
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: const [
-          ListTile(leading: Icon(Icons.person), title: Text("Nom complet")),
-          Divider(),
-          ListTile(leading: Icon(Icons.badge_outlined), title: Text("Matricule / Rôle")),
-          Divider(),
-          ListTile(leading: Icon(Icons.email_outlined), title: Text("Email")),
-        ],
-      ),
-    );
-  }
-}
+// class ProfileScreen extends StatelessWidget {
+//   const ProfileScreen({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return SectionScaffold(
+//       title: "Profil",
+//       body: ListView(
+//         padding: const EdgeInsets.all(16),
+//         children: const [
+//           ListTile(leading: Icon(Icons.person), title: Text("Nom complet")),
+//           Divider(),
+//           ListTile(leading: Icon(Icons.badge_outlined), title: Text("Matricule / Rôle")),
+//           Divider(),
+//           ListTile(leading: Icon(Icons.email_outlined), title: Text("Email")),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class MyInspectionsScreen extends StatelessWidget {
   const MyInspectionsScreen({super.key});
@@ -126,8 +130,7 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           final inspectController = InspectionController();
           await inspectController.loadAndSync();
 
-          final userController = UserController();
-          await userController.loadAndSync();
+
 
           msg = 'Synchronisation terminée.\n$msg';
           color = Colors.green;
@@ -249,34 +252,130 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("Centre de synchronisation"),
-        backgroundColor: Colors.orange, // rouge frappant
+        backgroundColor: kOrange,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            _buildBigRedButton(
-              icon: Icons.person,
-              label: "User synchro",
-              onPressed: anyBusy ? null : () => _syncUsers(context),
+      body: LayoutBuilder(
+        builder: (ctx, bc) {
+          // Contenu scrollable pour éviter tout overflow en paysage
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header carte avec résumé
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: Colors.black12),
+                      boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 3))],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(children: [
+                          Container(
+                            width: 42, height: 42, alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [kOrange.withOpacity(.18), kGreen.withOpacity(.18)]),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(Icons.cloud_sync, color: Colors.black87),
+                          ),
+                          const SizedBox(width: 12),
+                          const Expanded(
+                            child: Text("Synchronisation des données",
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+                          ),
+                        ]),
+                        const SizedBox(height: 8),
+                        const Text(
+                          "Envoyez vos inspections, mettez à jour les tables de référence et synchronisez les utilisateurs.\n"
+                              "Assurez-vous d’être connecté à Internet pendant la synchronisation.",
+                          style: TextStyle(fontSize: 13.5, color: Colors.black54, height: 1.25),
+                        ),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 8, runSpacing: 8,
+                          children: [
+                            _InfoChip(icon: Icons.assignment, label: "Inspections"),
+                            _InfoChip(icon: Icons.table_chart, label: "Tables de référence"),
+                            _InfoChip(icon: Icons.person, label: "Utilisateurs"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 18),
+                  const _SectionTitle("Actions"),
+
+                  // Grille responsive de gros boutons (pas d’overflow en paysage)
+                  const SizedBox(height: 10),
+                  LayoutBuilder(
+                    builder: (_, c) {
+                      final isWide = c.maxWidth > 560; // 2 colonnes si paysage/large
+                      return Wrap(
+                        spacing: 16, runSpacing: 16,
+                        children: [
+                          SizedBox(
+                            width: isWide ? (c.maxWidth - 16) / 2 : c.maxWidth,
+                            child: _SyncActionButton(
+                              colorA: kOrange, colorB: kGreen,
+                              icon: Icons.assignment,
+                              title: "Inspection synchro",
+                              subtitle: "Serveur Laravel ↔ Base locale",
+                              busy: _busyInspection,
+                              disabled: anyBusy && !_busyInspection,
+                              onPressed: () => _syncInspections(context),
+                            ),
+                          ),
+                          SizedBox(
+                            width: isWide ? (c.maxWidth - 16) / 2 : c.maxWidth,
+                            child: _SyncActionButton(
+                              colorA: const Color(0xFF7B1FA2), colorB: const Color(0xFF3949AB),
+                              icon: Icons.table_chart,
+                              title: "Table ref synchro",
+                              subtitle: "Tables, listes, référentiels",
+                              busy: _busyRefTables,
+                              disabled: anyBusy && !_busyRefTables,
+                              onPressed: () => _syncRefTables(context),
+                            ),
+                          ),
+                          SizedBox(
+                            width: isWide ? (c.maxWidth - 16) / 2 : c.maxWidth,
+                            child: _SyncActionButton(
+                              colorA: const Color(0xFF00838F), colorB: const Color(0xFF00ACC1),
+                              icon: Icons.person,
+                              title: "User synchro",
+                              subtitle: "Rôles, comptes & équipes",
+                              busy: _busyUsers,
+                              disabled: anyBusy && !_busyUsers,
+                              onPressed: () => _syncUsers(context),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+
+                  const SizedBox(height: 24),
+                  const _SectionTitle("Conseils"),
+                  const SizedBox(height: 8),
+                  const _TipLine(text: "Activez Wi-Fi / données mobiles avant de synchroniser."),
+                  const _TipLine(text: "Laissez l’application visible jusqu’à la fin de la synchronisation."),
+                  const _TipLine(text: "En cas d’échec, réessayez ou vérifiez la connexion."),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-            _buildBigRedButton(
-              icon: Icons.assignment,
-              label: "Inspection synchro",
-              onPressed: anyBusy ? null : () => _syncInspections(context),
-            ),
-            const SizedBox(height: 20),
-            _buildBigRedButton(
-              icon: Icons.table_chart,
-              label: "Table ref synchro",
-              onPressed: anyBusy ? null : () => _syncRefTables(context),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
+
 
   // ======= Widgets / Helpers =======
   Widget _buildBigRedButton({
@@ -387,6 +486,141 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  const _InfoChip({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: Colors.black12),
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Icon(icon, size: 16, color: Colors.black54),
+        const SizedBox(width: 6),
+        Text(label, style: const TextStyle(fontSize: 12.5, color: Colors.black87)),
+      ]),
+    );
+  }
+}
+
+
+class _SyncActionButton extends StatelessWidget {
+  final Color colorA;
+  final Color colorB;
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final bool busy;
+  final bool disabled;
+  final VoidCallback onPressed;
+
+  const _SyncActionButton({
+    required this.colorA,
+    required this.colorB,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.busy,
+    this.disabled = false,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDisabled = disabled && !busy;
+
+    return SizedBox(
+      height: 86,
+      child: ElevatedButton(
+        onPressed: isDisabled ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+        ),
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            gradient: LinearGradient(
+              colors: busy
+                  ? [Colors.grey.shade500, Colors.grey.shade600]
+                  : [colorA, colorB],
+            ),
+            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 10, offset: Offset(0, 4))],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Row(
+              children: [
+                Container(
+                  width: 52, height: 52, alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(.18),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.white.withOpacity(.25)),
+                  ),
+                  child: busy
+                      ? const SizedBox(
+                    width: 22, height: 22,
+                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                  )
+                      : Icon(icon, color: Colors.white, size: 26),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          maxLines: 1, overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: Colors.white, fontSize: 16.5, fontWeight: FontWeight.w800)),
+                      const SizedBox(height: 2),
+                      Text(subtitle,
+                          maxLines: 2, overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.white.withOpacity(.9))),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                const Icon(Icons.chevron_right, color: Colors.white, size: 28),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class _SectionTitle extends StatelessWidget {
+  final String title;
+  const _SectionTitle(this.title);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(width: 4, height: 18, decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [kOrange, kGreen]),
+          borderRadius: BorderRadius.circular(2),
+        )),
+        const SizedBox(width: 8),
+        Text(title, style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.w800)),
+      ],
     );
   }
 }
@@ -650,6 +884,38 @@ class _FancyProgressDialogState extends State<_FancyProgressDialog>
   }
 }
 
+class _TipLine extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  final Color color;
+
+  const _TipLine({
+    required this.text,
+    this.icon = Icons.info_outline,
+    this.color = const Color(0xFFFFA726), // orange
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 13.5, height: 1.35, color: Colors.black87),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class PendingInspectionsScreen extends StatelessWidget {
   final List<dynamic> items;
@@ -783,23 +1049,23 @@ class _EmptyState extends StatelessWidget {
 
 
 
-class GroupsTeamsScreen extends StatelessWidget {
-  const GroupsTeamsScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return SectionScaffold(
-      title: "Groupes & équipes",
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: const [
-          ListTile(leading: Icon(Icons.group_outlined), title: Text("Équipe Contrôles")),
-          ListTile(leading: Icon(Icons.group_outlined), title: Text("Équipe Conformité")),
-          ListTile(leading: Icon(Icons.group_outlined), title: Text("Équipe Statistiques")),
-        ],
-      ),
-    );
-  }
-}
+// class GroupsTeamsScreen extends StatelessWidget {
+//   const GroupsTeamsScreen({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     return SectionScaffold(
+//       title: "Groupes & équipes",
+//       body: ListView(
+//         padding: const EdgeInsets.all(16),
+//         children: const [
+//           ListTile(leading: Icon(Icons.group_outlined), title: Text("Équipe Contrôles")),
+//           ListTile(leading: Icon(Icons.group_outlined), title: Text("Équipe Conformité")),
+//           ListTile(leading: Icon(Icons.group_outlined), title: Text("Équipe Statistiques")),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class RecordsScreen extends StatelessWidget {
   const RecordsScreen({super.key});

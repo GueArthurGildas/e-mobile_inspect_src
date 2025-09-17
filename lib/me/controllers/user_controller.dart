@@ -18,6 +18,7 @@ class UserController extends ChangeNotifier {
   static const _kUserIdKey              = 'current_user_id';
   static const _kUserNameKey            = 'current_user_name';
   static const _kUserEmailKey           = 'current_user_email';
+  static const _kUserref_metier_codeKey = 'current_user_ref_metier_code';
   static const _kUserRolesKey           = 'current_user_roles_json';
   static const _kUserInspectDoneKey     = 'current_user_inspect_done_json';
   static const _kUserInspectPendingKey  = 'current_user_inspect_pending_json';

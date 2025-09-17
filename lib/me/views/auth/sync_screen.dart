@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
+import 'package:test_app_divkit/me/controllers/user_controller.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
 import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
@@ -36,6 +37,10 @@ class _SyncScreenState extends State<SyncScreen> {
     try {
       await Common.checkInternetConnection(); // juste info; on avance quoi qu’il arrive
       //await _controllerInspection.loadAndSync();
+
+      final userController = UserController();
+      await userController.loadAndSync();
+
     } catch (_) {
       // on ignore et on continue offline
     }

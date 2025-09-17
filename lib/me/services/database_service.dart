@@ -119,6 +119,7 @@ class DatabaseHelper {
             id INTEGER PRIMARY KEY,
             name TEXT,
             email TEXT,
+            ref_metier_code TEXT,
             json_role TEXT,
             field_json_inspect_done TEXT,
             field_json_inspect_pending TEXT,

@@ -481,7 +481,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => ressources[ressources.length - 2]['screen']),
+              MaterialPageRoute(builder: (_) => ressources[ressources.length - 1]['screen']),
             );
           },
           icon: const Icon(Icons.add),

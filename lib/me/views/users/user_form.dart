@@ -135,7 +135,8 @@ class _UsersScreenState extends State<UsersScreen> {
                   leading: const Icon(Icons.person),
                   title: SelectableText(user.name ?? "Utilisateur"),
                   subtitle: SelectableText(
-                    "Email: ${user.email ?? '—'}\nRôle: $role · Done: $done · Pending: $pending",
+                    //"Email: ${user.email ?? '—'}\nRôle: $role · Done: $done · Pending: $pending",
+                    "Email: ${user.ref_metier_code ?? '—'}\nRôle: $role · Done: $done · Pending: $pending",
                   ),
                   trailing: Text("#${user.id ?? '—'}"),
                   onTap: () {

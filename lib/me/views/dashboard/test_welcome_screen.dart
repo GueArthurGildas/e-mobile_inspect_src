@@ -8,12 +8,14 @@ import 'package:test_app_divkit/me/controllers/user_controller.dart';
 import 'package:test_app_divkit/me/models/user_model.dart';
 import 'package:test_app_divkit/me/routes/app_routes.dart';
 import 'package:test_app_divkit/me/services/database_service.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/Groups_teams_screen.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/auto_moving_icon.dart';
 import 'dart:async';
 
 import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/profile_screen.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/profile_current.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/config_wallet_screen.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
@@ -38,6 +40,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
   Future<void> _loadUser() async {
     final current = await _userCtrl.loadCurrentUser(); // ou getCurrentSession()
+
     setState(() {
        myUser = current;
       _displayName = current?.name ?? 'Utilisateur';
@@ -58,6 +61,7 @@ class _WalletScreenState extends State<WalletScreen> {
       // Ajoute librement d’autres images dans assets/me/images/
     ];
 
+    final int pending = myUser?.nbInspectionsPending ?? 0;
 
 
     return Scaffold(
@@ -272,19 +276,38 @@ class _WalletScreenState extends State<WalletScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 // ⚙️ Réglages
+                //final int pending = myUser?.nbInspectionsPending ?? 0;
+
+              Stack(
+              clipBehavior: Clip.none,
+              children: [
                 IconButton(
-                  icon: const Icon(Icons.settings, color: Colors.white),
-                  onPressed: () => _showInfoSheet(
-                    context,
-                    title: "Paramètres",
-                    message:
-                    "Gérez l’apparence, les notifications, la synchronisation, et vos préférences.",
-                    icon: Icons.settings,
-                  ),
-                  tooltip: "Paramètres",
+                  icon: const Icon(Icons.add_alert_rounded, color: Colors.white),
+                  tooltip: "Alert Inspection",
+                  onPressed: () {
+                    _showInfoSheet(
+                      context,
+                      title: "Alert",
+                      message: "Inspections en attente : $pending",
+                      icon: Icons.sd_card_alert,
+                      messageColor: pending > 0 ? Colors.red : null, // ⬅️ TEXTE EN ROUGE si > 0
+                    );
+                  },
                 ),
 
-                const SizedBox(width: 40), // espace pour l'encoche du FAB
+                // Badge clignotant en haut à droite si pending > 0
+                if (pending > 0)
+                  Positioned(
+                    right: -2,
+                    top: -2,
+                    child: _BlinkingBadge(count: pending),
+                  ),
+              ],
+            ),
+
+
+
+            const SizedBox(width: 40), // espace pour l'encoche du FAB
 
                 // // ⏱️ Historique
                 // IconButton(
@@ -965,69 +988,399 @@ class _StatusPill extends StatelessWidget {
 }
 
 
+// ✅ Ajoute 2 params optionnels (facultatifs) pour les KPI
 void _showInfoSheet(
     BuildContext context, {
       required String title,
       required String message,
       required IconData icon,
+      Color? messageColor,
+      int? pendingCount,   // ⬅️ optionnel
+      int? doneCount,      // ⬅️ optionnel
     }) {
   showModalBottomSheet(
     context: context,
-    isScrollControlled: false,
+    isScrollControlled: true,
     backgroundColor: Colors.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
-    builder: (_) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+    builder: (ctx) {
+      final viewInsets = MediaQuery.of(ctx).viewInsets.bottom;
+
+      return SafeArea(
+        top: false,
+        child: DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.55,
+          minChildSize: 0.35,
+          maxChildSize: 0.95,
+          builder: (_, scrollCtrl) {
+            return StatefulBuilder(
+              builder: (context, setLocal) {
+                bool syncing = false;
+
+                Future<void> _onSync() async {
+                  if (syncing) return;
+                  setLocal(() => syncing = true);
+                  try {
+                    // 👉 Place ici ton appel réel de synchronisation
+                    await Future.delayed(const Duration(seconds: 2));
+                  } finally {
+                    if (context.mounted) setLocal(() => syncing = false);
+                  }
+                }
+
+                return SingleChildScrollView(
+                  controller: scrollCtrl,
+                  padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + viewInsets),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ───── Header pro
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.withOpacity(.10),
+                              borderRadius: BorderRadius.circular(14),
+                              boxShadow: const [
+                                BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, 4)),
+                              ],
+                            ),
+                            child: Icon(icon, color: Colors.orange, size: 28),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text("Centre d’alertes & synchronisation",
+                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+                                SizedBox(height: 4),
+                                Text(
+                                  "Gardez vos données à jour et suivez vos inspections en un coup d’œil.",
+                                  style: TextStyle(fontSize: 13.5, color: Colors.black54, height: 1.25),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+
+                      // Titre original + message
+                      Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
+                      const SizedBox(height: 10),
+                      Text(
+                        message,
+                        style: TextStyle(fontSize: 14.5, height: 1.35, color: messageColor ?? Colors.black87),
+                      ),
+
+                      const SizedBox(height: 14),
+
+                      // ───── Bandeau rouge défilant
+                      Container(
+                        height: 26,
+                        alignment: Alignment.centerLeft,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(.06),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const _MarqueeText(
+                          text:
+                          "⚠️ Synchronisez l’application si vous êtes connecté à Internet pour rester à jour avec les données.",
+                          style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.w600),
+                          pixelsPerSecond: 70,
+                          pause: Duration(milliseconds: 900),
+                          gap: 60,
+                        ),
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      // ───── KPI card (si fourni)
+                      if (pendingCount != null || doneCount != null) ...[
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            border: Border.all(color: Colors.black12),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              if (pendingCount != null)
+                                Expanded(
+                                  child: _MetricChip(
+                                    icon: Icons.sd_card_alert,
+                                    label: "En attente",
+                                    value: pendingCount.toString(),
+                                    color: Colors.amber[700]!,
+                                  ),
+                                ),
+                              if (pendingCount != null && doneCount != null) const SizedBox(width: 10),
+                              if (doneCount != null)
+                                Expanded(
+                                  child: _MetricChip(
+                                    icon: Icons.verified_outlined,
+                                    label: "Réalisées",
+                                    value: doneCount.toString(),
+                                    color: const Color(0xFF2ECC71),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                      ],
+
+                      // ───── Conseils
+                      const Text("Conseils", style: TextStyle(fontSize: 15.5, fontWeight: FontWeight.w800)),
+                      const SizedBox(height: 8),
+                      const _TipLine(text: "Activez le Wi-Fi avant de lancer la synchronisation."),
+                      const _TipLine(text: "Gardez l’application ouverte jusqu’à la fin du processus."),
+                      const _TipLine(text: "Vérifiez l’heure/horloge du téléphone (utile pour les horodatages)."),
+
+                      const SizedBox(height: 16),
+
+                      // ───── Actions rapides
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          _PillAction(
+                            icon: Icons.visibility_outlined,
+                            label: "Voir les en attente",
+                            onTap: () => Navigator.of(context).pop(), // remplace par ton action
+                          ),
+                          _PillAction(
+                            icon: Icons.history,
+                            label: "Historique",
+                            onTap: () => Navigator.of(context).pop(),
+                          ),
+                          _PillAction(
+                            icon: Icons.settings_outlined,
+                            label: "Paramètres",
+                            onTap: () => Navigator.of(context).pop(),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      // ───── CTA principal : Synchroniser maintenant
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: ElevatedButton(
+                          onPressed:() async {
+                            final rootCtx = Navigator.of(context, rootNavigator: true).context;
+                            Navigator.pop(context); // ferme Drawer
+
+                            await openModalAfterLoader(
+                              rootCtx,
+                              const SyncCenterScreen(), // ton nouvel écran
+                              loader: const Duration(milliseconds: 900),
+                              heightFactor: 0.95, // occupe presque tout l’écran
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            elevation: 0,
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                          ),
+                          child: Ink(
+
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: LinearGradient(
+                                colors: syncing
+                                    ? [Colors.grey.shade400, Colors.grey.shade500]
+                                    : [const Color(0xFFFFA726), const Color(0xFF2ECC71)], // orange → vert
+                              ),
+                            ),
+                            child: Center(
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 250),
+                                child: syncing
+                                    ? Row(
+                                  key: const ValueKey('loading'),
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    SizedBox(
+                                      width: 18,
+                                      height: 18,
+                                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text("Synchronisation…",
+                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+                                  ],
+                                )
+                                    : Row(
+                                  key: const ValueKey('ready'),
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    Icon(Icons.sync, color: Colors.white),
+                                    SizedBox(width: 10),
+                                    Text("Synchroniser maintenant",
+                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text("Fermer"),
+                        ),
                       ),
                     ],
                   ),
-                  child: Icon(icon, color: Colors.orange),
-                ),
-                const SizedBox(width: 12),
-                Text(title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    )),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Text(
-              message,
-              style: const TextStyle(fontSize: 14.5, height: 1.35),
-            ),
-            const SizedBox(height: 16),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text("Fermer"),
-              ),
-            ),
-          ],
+                );
+              },
+            );
+          },
         ),
       );
     },
   );
+}
+
+
+class _MetricChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+  const _MetricChip({required this.icon, required this.label, required this.value, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: color.withOpacity(.08),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: color.withOpacity(.25)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 34, height: 34, alignment: Alignment.center,
+            decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: BorderRadius.circular(8)),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: 10),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(value, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+            const SizedBox(height: 2),
+            Text(label, style: const TextStyle(fontSize: 12.5, color: Colors.black54)),
+          ]),
+        ],
+      ),
+    );
+  }
+}
+
+class _PillAction extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  const _PillAction({required this.icon, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.orange.withOpacity(.10),
+      borderRadius: BorderRadius.circular(999),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(999),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Icon(icon, color: Colors.orange, size: 18),
+            const SizedBox(width: 8),
+            Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+class _BlinkingBadge extends StatefulWidget {
+  final int count;
+  const _BlinkingBadge({required this.count});
+
+  @override
+  State<_BlinkingBadge> createState() => _BlinkingBadgeState();
+}
+
+class _BlinkingBadgeState extends State<_BlinkingBadge>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final Animation<double> _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+      lowerBound: 0.35,
+      upperBound: 1.0,
+    )..repeat(reverse: true);
+    _opacity = _ctrl;
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final txt = widget.count > 99 ? '99+' : '${widget.count}';
+    return FadeTransition(
+      opacity: _opacity,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 3)],
+        ),
+        constraints: const BoxConstraints(minWidth: 20, minHeight: 18),
+        child: Text(
+          txt,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 11,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 Future<void> _logoutFlow(BuildContext context) async {
@@ -1144,6 +1497,171 @@ Future<void> openModalAfterLoader(
     ),
   );
 }
+
+class _MarqueeText extends StatefulWidget {
+  final String text;
+  final TextStyle? style;
+  final double pixelsPerSecond; // vitesse (px/s)
+  final Duration pause;         // pause au bout de chaque tour
+  final double gap;             // espace virtuel entre deux tours
+
+  const _MarqueeText({
+    required this.text,
+    this.style,
+    this.pixelsPerSecond = 60,
+    this.pause = const Duration(milliseconds: 800),
+    this.gap = 40,
+  });
+
+  @override
+  State<_MarqueeText> createState() => _MarqueeTextState();
+}
+
+class _MarqueeTextState extends State<_MarqueeText> with TickerProviderStateMixin {
+  late AnimationController _ctrl;
+  Animation<double>? _anim;
+
+  double _containerW = 0;
+  double _textW = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(vsync: this);
+  }
+
+  @override
+  void didUpdateWidget(covariant _MarqueeText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // si texte/style/vitesse changent, on recalculera au prochain build
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  void _recomputeAndRun() async {
+    if (!mounted) return;
+
+    // 1) Mesurer la largeur réelle du texte
+    final tp = TextPainter(
+      text: TextSpan(text: widget.text, style: widget.style),
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    )..layout();
+    _textW = tp.width;
+
+    // 2) Si le texte tient dans le conteneur, pas de défilement : on affiche simplement le texte
+    if (_textW <= _containerW) {
+      _ctrl.stop();
+      _anim = null;
+      if (mounted) setState(() {});
+      return;
+    }
+
+    // 3) Sinon, on anime de (containerW) → (-textW), distance = containerW + textW + gap
+    final distance = _containerW + _textW + widget.gap;
+    final seconds = distance / widget.pixelsPerSecond;
+    _ctrl.duration = Duration(milliseconds: (seconds * 1000).round());
+    _anim = Tween<double>(begin: _containerW, end: -_textW).animate(_ctrl);
+
+    // 4) Boucle avec pause à chaque fin
+    void start() async {
+      if (!mounted) return;
+      await _ctrl.forward(from: 0);
+      if (!mounted) return;
+      await Future.delayed(widget.pause);
+      if (!mounted) return;
+      start(); // relance
+    }
+
+    start();
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        // mémorise la largeur disponible puis (re)lance l’anim si nécessaire
+        final newW = constraints.maxWidth;
+        if (newW != _containerW) {
+          _containerW = newW;
+          // recalcul + relance
+          WidgetsBinding.instance.addPostFrameCallback((_) => _recomputeAndRun());
+        }
+
+        // Conteneur qui CLIPPE (évite l’overflow en paysage)
+        return ClipRect(
+          child: _anim == null
+              ? Text(
+            widget.text,
+            maxLines: 1,
+            overflow: TextOverflow.clip,
+            softWrap: false,
+            style: widget.style,
+          )
+              : AnimatedBuilder(
+            animation: _ctrl,
+            builder: (context, child) {
+              final x = _anim!.value;
+              return Transform.translate(
+                offset: Offset(x, 0),
+                child: SizedBox(
+                  width: _textW, // largeur exacte du texte
+                  child: Text(
+                    widget.text,
+                    maxLines: 1,
+                    overflow: TextOverflow.visible,
+                    softWrap: false,
+                    style: widget.style,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _TipLine extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  final Color color;
+
+  const _TipLine({
+    required this.text,
+    this.icon = Icons.info_outline,
+    this.color = const Color(0xFFFFA726), // orange
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 16, color: color),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 13.5, height: 1.35, color: Colors.black87),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 
 
 

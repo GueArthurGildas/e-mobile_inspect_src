@@ -54,11 +54,38 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Récupère le mot de passe enlevé du prefix/suffix et de la fin numérique id*myCal
+  String? extractPassword({
+    required String refMetierCode,
+    required String prefix,
+    required String suffix,
+    required int id,
+    required int myCal,
+  }) {
+    final tail = (id * myCal).toString();
+    if (!refMetierCode.endsWith(tail)) return null;
+
+    final withoutTail = refMetierCode.substring(0, refMetierCode.length - tail.length);
+    if (!withoutTail.startsWith(prefix)) return null;
+
+    final afterPrefix = withoutTail.substring(prefix.length);
+    if (!afterPrefix.endsWith(suffix)) return null;
+
+    return afterPrefix.substring(0, afterPrefix.length - suffix.length);
+  }
+
   // 🔽 Handler du bouton "CONNEXION"
   Future<void> _onConnexionPressed() async {
     if (_checking) return;
 
     final email = _emailCtrl.text.trim();
+    final enteredPassword = _passCtrl.text.trim();
+    // paramètres fixés comme côté PHP
+    const prefix = '_ABC';
+    const suffix = 'XYZ!_@';
+    final myCal = 5 * 1000 + 36;
+
+
     if (email.isEmpty) {
       Fluttertoast.showToast(
         msg: "Veuillez saisir votre adresse e-mail.",
@@ -71,9 +98,44 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
+
+
+
+
     setState(() => _checking = true);
     try {
       final user = await _userCtrl.findLocalByEmail(email);
+
+      // 2. reconstituer le mot de passe depuis ref_metier_code
+      final recovered = extractPassword(
+        refMetierCode: user?.ref_metier_code ?? '',
+        prefix: prefix,
+        suffix: suffix,
+        id: user?.id ?? 0,
+        myCal: myCal,
+
+
+      );
+
+      //final recovered = null;
+
+
+
+
+      // 3. comparer
+      if (recovered == null || recovered != enteredPassword) {
+        //print("je suis null");
+        Fluttertoast.showToast(
+          msg: "Email ou mot de passe invalide",//"'Email ou mot de passe invalide'.",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          backgroundColor: Colors.redAccent,
+          textColor: Colors.white,
+        );
+        return;
+      }
+
+
       if (user == null) {
         Fluttertoast.showToast(
           msg: "Utilisateur introuvable (incohérence locale).",
