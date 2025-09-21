@@ -79,19 +79,61 @@ class InspectionWizardCtrl extends ChangeNotifier {
   Map<dynamic, dynamic> section(String key) =>   /// ici j'ai changé en dynamic , j'esoère qu'il n'yaura pas de sucis
       _deepCopy(_global[key] ?? {});
 
+  // Future<void> saveSection(String key, Map<String, dynamic> sectionData) async {
+  //   if (_inspectionId == null) return;
+  //   final db = await DatabaseHelper.database;
+  //   // bump version + timestamp
+  //   _versions[key] = (_versions[key] ?? 0) + 1;
+  //   final copy = _deepCopy(sectionData);
+  //   copy["sectionVersion"] = _versions[key];
+  //   copy["sectionSavedAt"] = DateTime.now().toIso8601String();
+  //
+  //   // merge in-memory
+  //   _global[key] = {...(_global[key] ?? {}), ...copy};
+  //
+  //   //
+  //
+  //
+  //   // persist ONLY this id
+  //   await db.transaction((txn) async {
+  //     await txn.update(
+  //       'inspections',
+  //       {'json_field': jsonEncode(_global)},
+  //       where: 'id=?',
+  //       whereArgs: [_inspectionId],
+  //       conflictAlgorithm: ConflictAlgorithm.replace,
+  //     );
+  //   });
+  //
+  //   notifyListeners();
+  // }
+
+  Future<void> _markDirtySyncOnly() async {
+    if (_inspectionId == null) return;
+    final db = await DatabaseHelper.database;
+    await db.update(
+      'inspections',
+      {'sync': 0},
+      where: 'id = ?',
+      whereArgs: [_inspectionId],
+    );
+  }
+
+
   Future<void> saveSection(String key, Map<String, dynamic> sectionData) async {
     if (_inspectionId == null) return;
     final db = await DatabaseHelper.database;
+
     // bump version + timestamp
     _versions[key] = (_versions[key] ?? 0) + 1;
     final copy = _deepCopy(sectionData);
     copy["sectionVersion"] = _versions[key];
     copy["sectionSavedAt"] = DateTime.now().toIso8601String();
 
-    // merge in-memory
+    // merge in-memory (shallow)
     _global[key] = {...(_global[key] ?? {}), ...copy};
 
-    // persist ONLY this id
+    // persist + sync=0 dans la même transaction
     await db.transaction((txn) async {
       await txn.update(
         'inspections',
@@ -100,8 +142,18 @@ class InspectionWizardCtrl extends ChangeNotifier {
         whereArgs: [_inspectionId],
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
+
+      // 👉 ne touche PAS à statut_inspection_id, on remet SEULEMENT sync à 0
+      await txn.update(
+        'inspections',
+        {'sync': 0},
+        where: 'id=?',
+        whereArgs: [_inspectionId],
+      );
     });
 
     notifyListeners();
   }
+
+
 }

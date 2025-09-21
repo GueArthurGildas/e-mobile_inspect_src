@@ -272,7 +272,7 @@ class _WizardScreenState extends State<WizardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Wizard Inspection #${ctrl.inspectionId ?? '-'}'),
+        title: Text('Formulaire Inspection #${ctrl.inspectionId ?? '-'}'),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -383,7 +383,7 @@ class _WizardScreenState extends State<WizardScreen> {
               await _submitWizard(payload);
             },
             icon: const Icon(Icons.cloud_upload, color: Colors.white),
-            label: const Text('Soumettre le wizard', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+            label: const Text("Soumettre l'inspection", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
           ),
         ),
       ),

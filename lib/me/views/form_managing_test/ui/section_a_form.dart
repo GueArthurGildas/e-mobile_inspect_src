@@ -4,6 +4,7 @@ import 'package:test_app_divkit/me/views/form_managing_test/ui/tbl_ref_formA.dar
 import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
 import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
 import '../state/inspection_wizard_ctrl.dart';
+import 'package:intl/intl.dart';
 
 class SectionAForm extends StatefulWidget {
   const SectionAForm({super.key});
@@ -66,6 +67,8 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
         'marquageNavire'  : initial['marquageNavire'] ?? '',
         'baliseVMS'       : initial['baliseVMS'] ?? '',
         'observation'     : initial['observation'] ?? '',
+        'numiccat'     : initial['numiccat'] ?? '',
+
 
         // Switch / objet imbriqué
         'demandePrealablePort': initial['demandePrealablePort'] ?? false,
@@ -135,6 +138,62 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
         };
       });
     }
+  }
+
+
+
+// =======================
+//   Function to pick date + time
+// =======================
+// 4) Pick date THEN time (keeps your storage in _local; parses existing time if present)
+  Future<void> _pickDateTime(BuildContext context, String key) async {
+    // If there’s already a value, use it to prefill the pickers
+    DateTime? current;
+    final raw = _local[key];
+    if (raw is DateTime) current = raw;
+    if (raw is String) current = DateTime.tryParse(raw);
+
+    final DateTime initialDate = current ?? DateTime.now();
+
+    // Step 1: date
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate == null) return;
+
+    // Step 2: time (24h)
+    final TimeOfDay initialTime = current != null
+        ? TimeOfDay(hour: current.hour, minute: current.minute)
+        : TimeOfDay.now();
+
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime,
+      builder: (ctx, child) => MediaQuery(
+        data: MediaQuery.of(ctx).copyWith(alwaysUse24HourFormat: true),
+        child: child!,
+      ),
+    );
+    if (pickedTime == null) return;
+
+    // Combine
+    final DateTime pickedDateTime = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    setState(() {
+      // Keep your existing logic: store either DateTime or ISO string.
+      // If you were storing strings before, keep it consistent:
+      _local[key] = pickedDateTime.toIso8601String();
+      // If you prefer DateTime object, use: _local[key] = pickedDateTime;
+    });
   }
 
   Widget _buildObservateurSummary(Map obs) {
@@ -257,9 +316,6 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
   }
 
 
-
-
-
   @override
   bool get wantKeepAlive => true;
 
@@ -353,11 +409,28 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
     return null;
   }
 
+  // String _dateLabel(dynamic v) {
+  //   final dt = _tryParseDate(v);
+  //   if (dt == null) return 'Sélectionner une date';
+  //   // Affichage court (yyyy-mm-dd)
+  //   return dt.toIso8601String().substring(0, 10);
+  // }
+
+  // 3) Make your label show date + hour (works if you store DateTime OR ISO string)
   String _dateLabel(dynamic v) {
-    final dt = _tryParseDate(v);
-    if (dt == null) return 'Sélectionner une date';
-    // Affichage court (yyyy-mm-dd)
-    return dt.toIso8601String().substring(0, 10);
+    if (v == null) return '';
+    DateTime dt;
+    if (v is DateTime) {
+      dt = v;
+    } else if (v is String) {
+      dt = DateTime.tryParse(v) ?? DateTime.now();
+    } else if (v is int) {
+      dt = DateTime.fromMillisecondsSinceEpoch(v);
+    } else {
+      return v.toString();
+    }
+    // 👉 Shows day/month/year + 24h time
+    return DateFormat('dd/MM/yyyy HH:mm').format(dt);
   }
 
   @override
@@ -391,17 +464,27 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
             readOnly: true,
             decoration: const InputDecoration(labelText: "Date d'arrivée effective du navire"),
             controller: TextEditingController(text: _dateLabel(_local['dateArriveeEffective'])),
-            onTap: () => _pickDate(context, 'dateArriveeEffective'),
+            onTap: () => _pickDateTime(context, 'dateArriveeEffective'),
           ),
           const SizedBox(height: 12),
 
           // Date de début inspection
+          // TextFormField(
+          //   readOnly: true,
+          //   decoration: const InputDecoration(labelText: "Date de début de l'inspection"),
+          //   controller: TextEditingController(text: _dateLabel(_local['dateDebutInspection'])),
+          //   onTap: () => _pickDate(context, 'dateDebutInspection'),
+          // ),
+
           TextFormField(
             readOnly: true,
             decoration: const InputDecoration(labelText: "Date de début de l'inspection"),
-            controller: TextEditingController(text: _dateLabel(_local['dateDebutInspection'])),
-            onTap: () => _pickDate(context, 'dateDebutInspection'),
+            controller: TextEditingController(
+              text: _dateLabel(_local['dateDebutInspection']),
+            ),
+            onTap: () => _pickDateTime(context, 'dateDebutInspection'),
           ),
+          const SizedBox(height: 20),
           const SizedBox(height: 20),
 
           // ======= Informations du navire =======
@@ -509,6 +592,17 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
           ),
           const SizedBox(height: 12),
 
+          // Numero ICCAT
+          TextFormField(
+            initialValue: (_local['numiccat'] ?? '').toString(),
+            decoration: const InputDecoration(labelText: "Numero ICCAT"),
+            keyboardType: TextInputType.text,
+            validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            onChanged: (v) => _local['numiccat'] = v, // garde String comme ta source
+
+          ),
+          const SizedBox(height: 12),
+
           // Dimensions des cales (m)
           TextFormField(
             initialValue: (_local['dimensionsCales'] ?? '').toString(),
@@ -596,15 +690,26 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
           const SizedBox(height: 12),
 
           // Port d'escale
-          DropdownButtonFormField<String>(
-            value: (_local['portEscale'] as String?),
+          // DropdownButtonFormField<String>(
+          //   value: (_local['portEscale'] as String?),
+          //   decoration: const InputDecoration(labelText: "Port d'escale"),
+          //   items: _stepCtrl.portsList
+          //       .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
+          //       .toList(),
+          //   onChanged: (v) => setState(() => _local['portEscale'] = v),
+          //   validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+          // ),
+
+
+          //Port d'escale
+          TextFormField(
+            initialValue: (_local['portEscale'] ?? '').toString(),
             decoration: const InputDecoration(labelText: "Port d'escale"),
-            items: _stepCtrl.portsList
-                .map((e) => DropdownMenuItem<String>(value: e.id.toString(), child: Text(e.libelle.toString())))
-                .toList(),
-            onChanged: (v) => setState(() => _local['portEscale'] = v),
+            keyboardType: TextInputType.text,
             validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            onChanged: (v) => _local['portEscale'] = v, // garde String comme ta source
           ),
+
           const SizedBox(height: 12),
 
           // Date d'escale
@@ -612,7 +717,7 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
             readOnly: true,
             decoration: const InputDecoration(labelText: "Date d'escale"),
             controller: TextEditingController(text: _dateLabel(_local['dateEscaleNavire'])),
-            onTap: () => _pickDate(context, 'dateEscaleNavire'),
+            onTap: () => _pickDateTime(context, 'dateEscaleNavire'),
           ),
           const SizedBox(height: 12),
 
@@ -795,19 +900,41 @@ class _SectionAFormState extends State<SectionAForm> with AutomaticKeepAliveClie
             alignment: Alignment.centerRight,
             child: FilledButton.icon(
               icon: const Icon(Icons.save),
-              style: filledOrangeStyle(),        // <-- ajoute ça
+              style: filledOrangeStyle(),
               label: const Text('Sauvegarder cette section'),
               onPressed: () async {
                 if (!_key.currentState!.validate()) return;
                 await context.read<InspectionWizardCtrl>().saveSection('a', _local);
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Section A sauvegardée.')),
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,        // floating for elegance
+                      margin: const EdgeInsets.all(16),           // nice spacing from edges
+                      duration: const Duration(seconds: 3),       // visible long enough
+                      backgroundColor: Colors.green.shade600,     // ✅ success green
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),  // rounded corners
+                      ),
+                      content: Row(
+                        children: const [
+                          Icon(Icons.check_circle_outline,
+                              color: Colors.white, size: 22),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Section A sauvegardée avec succès.',
+                              style: TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 }
               },
             ),
           ),
+
         ],
       ),
     );

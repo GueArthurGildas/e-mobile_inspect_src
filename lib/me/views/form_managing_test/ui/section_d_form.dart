@@ -133,7 +133,28 @@ class _SectionDFormState extends State<SectionDForm>
     await context.read<InspectionWizardCtrl>().saveSection('d', payload);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Section D sauvegardée.')),
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16),
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.green.shade600, // 🔹 blue to differentiate Section B
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          content: Row(
+            children: const [
+              Icon(Icons.check_circle_outline,
+                  color: Colors.white, size: 22),
+              SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Section D sauvegardée avec succès.',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
     );
   }
 

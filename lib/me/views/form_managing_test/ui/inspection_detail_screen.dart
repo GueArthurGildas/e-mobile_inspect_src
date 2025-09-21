@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as p; // 👈 ajouté pour gérer l’extension de fichier
 
 import 'package:test_app_divkit/me/services/database_service.dart'; // DatabaseHelper
 import '../state/inspection_wizard_ctrl.dart';
@@ -274,6 +275,12 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   bool _notBlank(Object? x) =>
       x != null && x.toString().trim().isNotEmpty && x.toString().toLowerCase() != 'null';
 
+  // 👉 Détecter si un chemin pointe vers une image
+  bool _isImagePath(String path) {
+    final ext = p.extension(path).toLowerCase();
+    return ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.heic', '.heif'].contains(ext);
+  }
+
   // Progress calc → (done, total, pct)
   ({int done, int total, double pct}) _progressA(Map<String, dynamic>? a) {
     if (a == null) return (done: 0, total: 16, pct: 0);
@@ -504,9 +511,9 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
         crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8, childAspectRatio: 1,
       ),
       itemBuilder: (_, i) {
-        final p = paths[i];
+        final pth = paths[i];
         return GestureDetector(
-          onTap: () => _showImage(p),
+          onTap: () => _showImage(pth),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Container(
@@ -516,8 +523,8 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: _orange.withOpacity(0.18)),
               ),
-              child: File(p).existsSync()
-                  ? Image.file(File(p), fit: BoxFit.cover)
+              child: File(pth).existsSync()
+                  ? Image.file(File(pth), fit: BoxFit.cover)
                   : Container(
                 color: Colors.grey.shade100,
                 alignment: Alignment.center,
@@ -527,6 +534,65 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
           ),
         );
       },
+    );
+  }
+
+  // 👉 Affichage mixte (images + autres fichiers) pour Section C
+  Widget _attachmentsGrid(List<String> paths) {
+    if (paths.isEmpty) return const SizedBox.shrink();
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: paths.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3, mainAxisSpacing: 8, crossAxisSpacing: 8, childAspectRatio: 1,
+      ),
+      itemBuilder: (_, i) {
+        final path = paths[i];
+        final isImg = _isImagePath(path);
+        final exists = File(path).existsSync();
+
+        return GestureDetector(
+          onTap: isImg && exists ? () => _showImage(path) : null,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              decoration: BoxDecoration(
+                color: _orange.withOpacity(0.06),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: _orange.withOpacity(0.18)),
+                boxShadow: _softShadow,
+              ),
+              child: isImg && exists
+                  ? Image.file(File(path), fit: BoxFit.cover)
+                  : _fileTileMini(path, exists: exists),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _fileTileMini(String path, {required bool exists}) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.all(8),
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(exists ? Icons.insert_drive_file : Icons.broken_image, size: 28, color: _orange),
+          const SizedBox(height: 6),
+          Text(
+            p.basename(path),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+          ),
+        ],
+      ),
     );
   }
 
@@ -589,12 +655,6 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
             ? cols['statut_inspection_id'] as int
             : int.tryParse('${cols['statut_inspection_id'] ?? ''}');
         final st = _statusInfo(statutId);
-
-        // (Titre calculé commenté dans la version fournie)
-        // final title =
-        // (cols['titre_inspect']?.toString().trim().isNotEmpty ?? false)
-        //     ? cols['titre_inspect'].toString()
-        //     : (data['a']?['shipName']?.toString() ?? '(Inspection)');
 
         final createdAt = _fmtDate(cols['created_at']);
         final updatedAt = _fmtDate(cols['updated_at']);
@@ -673,14 +733,14 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
             appBar: AppBar(
               title: const Text('Détail inspection'),
               actions: [
-                // (Actions commentées dans la version fournie)
+                // (Actions commentées dans votre base)
               ],
             ),
             body: ListView(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 24),
               children: [
                 // =======================
-                // Header (card unifiée mais bandeau distinctif)
+                // Header
                 // =======================
                 Card(
                   elevation: 3,
@@ -705,7 +765,6 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                         ),
                         child: Row(
                           children: [
-                            // (titre principal volontairement commenté dans votre base)
                             const SizedBox(width: 8),
                             Flexible(
                               child: Container(
@@ -745,7 +804,6 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                               runSpacing: 8,
                               children: [
                                 _chipStatus(st.label, st.color),
-                                // (chips dates commentées dans votre base)
                               ],
                             ),
                             const SizedBox(height: 12),
@@ -762,19 +820,19 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                 const SizedBox(height: 12),
 
                 // =======================
-                // Sections (cards même couleur + grands titres dans entête)
+                // Sections
                 // =======================
 
-                // SECTION A — unifiée
+                // SECTION A
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 220),
                   child: _showContent
-                      ?_sectionTile(
+                      ? _sectionTile(
                     leading: Icons.info_outline,
                     title: 'Section A — Données initiales',
                     progress: pA,
                     initiallyExpanded: true,
-                    color: _orange, // ignoré pour unification interne
+                    color: _orange,
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -810,10 +868,11 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                         _kv(Icons.credit_card, 'Numéro doc', a?['observateurEmbarque']?['numeroDoc']?.toString() ?? '-'),
                       ],
                     ),
-                  ) : _skeletonSectionTile(leading: Icons.info_outline, title: 'Section A — Données initiales'),
+                  )
+                      : _skeletonSectionTile(leading: Icons.info_outline, title: 'Section A — Données initiales'),
                 ),
 
-                // SECTION B — unifiée
+                // SECTION B
                 _sectionTile(
                   leading: Icons.groups_2_outlined,
                   title: 'Section B — Acteurs & Consignation',
@@ -838,7 +897,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                   ),
                 ),
 
-                // SECTION C — unifiée
+                // SECTION C — Documents (+ affichage des pièces jointes)
                 _sectionTile(
                   leading: Icons.description_outlined,
                   title: 'Section C — Documents',
@@ -847,7 +906,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                   content: _docsList(c),
                 ),
 
-                // SECTION D — unifiée
+                // SECTION D
                 _sectionTile(
                   leading: Icons.build_outlined,
                   title: 'Section D — Engins à bord',
@@ -856,7 +915,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
                   content: _enginsList(d),
                 ),
 
-                // SECTION E — unifiée
+                // SECTION E
                 _sectionTile(
                   leading: Icons.camera_alt_outlined,
                   title: 'Section E — Captures & Photos (détails complets)',
@@ -867,7 +926,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
               ],
             ),
 
-            // (FAB commenté dans votre base)
+            // (FAB commenté)
           ),
         );
       },
@@ -878,29 +937,67 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   Widget _docsList(Map<String, dynamic>? c) {
     final docs = (c?['documents'] is List) ? (c!['documents'] as List) : const [];
     if (docs.isEmpty) return const Text('Aucun document.');
+
     return Column(
       children: List.generate(docs.length, (i) {
         final d = Map<String, dynamic>.from(docs[i] as Map);
+        final List<String> attachments =
+        (d['attachments'] is List) ? (d['attachments'] as List).map((e) => e.toString()).toList() : const [];
+
         return Container(
           margin: const EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(
-            color: _orange.withOpacity(0.06), // 👈 même couleur de card
+            color: _orange.withOpacity(0.06),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: _orange.withOpacity(0.18)),
             boxShadow: _softShadow,
           ),
-          child: ListTile(
-            dense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            leading: CircleAvatar(
-              backgroundColor: _orange.withOpacity(0.18),
-              child: const Icon(Icons.article_outlined, color: Colors.white, size: 18),
-            ),
-            title: Text(
-                d['typeDocumentLabel']?.toString() ?? 'Document',
-                style: const TextStyle(fontWeight: FontWeight.w700)),
-            subtitle: Text(
-              'ID: ${d['identifiant'] ?? '-'} • Émis: ${d['dateEmission'] ?? '-'} • Expire: ${d['dateExpiration'] ?? '-'}',
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8, 6, 8, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  dense: true,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                  leading: CircleAvatar(
+                    backgroundColor: _orange.withOpacity(0.18),
+                    child: const Icon(Icons.article_outlined, color: Colors.white, size: 18),
+                  ),
+                  title: Text(
+                    d['typeDocumentLabel']?.toString() ?? 'Document',
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                    maxLines: 1, overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    'ID: ${d['identifiant'] ?? '-'} • Émis: ${d['dateEmission'] ?? '-'} • Expire: ${d['dateExpiration'] ?? '-'}',
+                    maxLines: 2, overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: (attachments.isEmpty)
+                      ? null
+                      : Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFFF6A00)),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.attachment, size: 16, color: Color(0xFFE25F00)),
+                        const SizedBox(width: 4),
+                        Text('${attachments.length}',
+                            style: const TextStyle(color: Color(0xFFE25F00))),
+                      ],
+                    ),
+                  ),
+                ),
+                if (attachments.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  _attachmentsGrid(attachments), // 👈 aperçu des fichiers / images
+                ],
+              ],
             ),
           ),
         );

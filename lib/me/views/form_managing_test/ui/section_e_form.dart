@@ -25,7 +25,6 @@ class _SectionEFormState extends State<SectionEForm>
 
   final MyStepEController _stepCtrl = MyStepEController();
   bool _loadingRefs = true;
-
   Color get _orangeColor => const Color(0xFFFF6A00);
 
   @override

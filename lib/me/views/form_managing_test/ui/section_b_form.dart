@@ -304,7 +304,7 @@ class _SectionBFormState extends State<SectionBForm>
             decoration:
             const InputDecoration(labelText: "Passeport du capitaine"),
             textInputAction: TextInputAction.next,
-            validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            //validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
             onChanged: (v) => _local['passeportCapitaine'] = v,
           ),
           const SizedBox(height: 12),
@@ -346,7 +346,7 @@ class _SectionBFormState extends State<SectionBForm>
                 tooltip: 'Choisir une date',
               ),
             ),
-            validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            //validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
             onTap: _pickDate,
           ),
           const SizedBox(height: 20),
@@ -361,7 +361,7 @@ class _SectionBFormState extends State<SectionBForm>
             initialValue: (_local['nomProprietaire'] ?? '').toString(),
             decoration: const InputDecoration(labelText: "Nom du propriétaire"),
             textInputAction: TextInputAction.next,
-            validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            //validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
             onChanged: (v) => _local['nomProprietaire'] = v,
           ),
           const SizedBox(height: 12),
@@ -369,7 +369,7 @@ class _SectionBFormState extends State<SectionBForm>
           // Nationalité propriétaire (BottomSheet)
           FormField<String>(
             initialValue: _local['nationaliteProprietaire'] as String?,
-            validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
+            //validator: (v) => (v == null || v.isEmpty) ? 'Requis' : null,
             builder: (state) {
               final selectedLabel =
               _labelForPays(_local['nationaliteProprietaire'] as String?);
@@ -403,12 +403,34 @@ class _SectionBFormState extends State<SectionBForm>
                 await context.read<InspectionWizardCtrl>().saveSection('b', _local);
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Section B sauvegardée.')),
+                    SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      margin: const EdgeInsets.all(16),
+                      duration: const Duration(seconds: 3),
+                      backgroundColor: Colors.green.shade600, // 🔹 blue to differentiate Section B
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      content: Row(
+                        children: const [
+                          Icon(Icons.check_circle_outline,
+                              color: Colors.white, size: 22),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Section B sauvegardée avec succès.',
+                              style: TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 }
               },
             ),
           ),
+
         ],
       ),
     );
