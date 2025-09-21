@@ -13,7 +13,7 @@ class InspectionApi {
   };
 
   /// PUT /inspections/sync
-  /// Body: {"items":[ {"id":319,"json_field":{...}}, ... ]}
+  /// Body: {"items":[ {"id":319,"json_field":{...},"statut_inspection_id":2}, ... ]}
   Future<int> syncPayloads(List<Map<String, dynamic>> items,
       {Duration timeout = const Duration(seconds: 20)}) async {
     final uri = Uri.parse('$baseUrl/inspections/sync');
