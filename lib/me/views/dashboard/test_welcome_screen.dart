@@ -16,7 +16,8 @@ import 'dart:async';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/profile_current.dart';
 import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/config_wallet_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';                 // ⬅️ nécessaire pour StreamSubscription
+import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';
+import 'package:test_app_divkit/me/views/form_managing_test/upload_test_doc_inspect.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
 const kOrange = Colors.orange;
@@ -57,7 +58,7 @@ class _WalletScreenState extends State<WalletScreen> {
     final images = <String>[
       'assets/me/images/fish1.jpg',
       'assets/me/images/fish2.jpg',
-      'assets/images/logo_horizontal.png',
+      //'assets/images/logo_horizontal.png',
       // Ajoute librement d’autres images dans assets/me/images/
     ];
 
@@ -158,7 +159,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
                   // Titre principal (pro)
                   const Text(
-                    "Centre de Gestion Intégrée Digital",
+                    "Centre de Gestion ",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
@@ -174,13 +175,21 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
 
                   const SizedBox(height: 18),
-                  const _SectionTitle("Actions rapides"),
+                  const _SectionTitle("Fonctionnalités clés"),
                   const SizedBox(height: 8),
 
                   // Lignes d’action sobres (pas de cards)
-                  _ActionRow(icon: Icons.assignment_add,   label: "Démarrer une inspection", onTap: () {}),
+                  _ActionRow(icon: Icons.assignment_add,   label: "Réaliser une inspection", onTap: () {}),
                   _ActionRow(icon: Icons.history,          label: "Consulter l’historique",   onTap: () {}),
-                  _ActionRow(icon: Icons.event_available,  label: "Planifier une visite",      onTap: () {}),
+                  _ActionRow(icon: Icons.event_available,  label: "Assigner une inspection",      onTap: () {}),
+
+                  ///// test pour envoyer les images d'une inspection vers laravel ( juste un bouoton test pour voir )
+
+
+                  const PushInspection320Button(),
+
+
+                  //////////////
 
                   const SizedBox(height: 14),
                   const _SeparatorBar(), // séparateur entre sections
@@ -553,6 +562,15 @@ class _UserSideDrawer extends StatelessWidget {
     //                 final done = user.nbInspectionsDone;
     //                 final pending = user.nbInspectionsPending;
 
+    void _showAxenovSheet(BuildContext context) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,                // plein écran si besoin
+        useSafeArea: true,
+        backgroundColor: Colors.transparent,     // pour arrondis propres
+        builder: (_) => const _AxenovBottomSheet(),
+      );
+    }
 
     return Drawer(
       child: SafeArea(
@@ -698,22 +716,22 @@ class _UserSideDrawer extends StatelessWidget {
 
 
 
-                  ListTile(
-                    leading: const Icon(Icons.inbox_outlined),
-                    title: const Text("Mes inspections"),
-                    subtitle: const Text("Voir toutes les inspections"),
-                    onTap: () async {
-                      final rootCtx = Navigator.of(context, rootNavigator: true).context; // 1) capture
-                      Navigator.pop(context);                                             // 2) ferme le Drawer
-                      await openModalAfterLoader(                                         // 3) loader -> modal
-                        rootCtx,
-                        const MyInspectionsScreen(), // mets ton widget cible
-                        loader: const Duration(milliseconds: 1100),
-                      );
-                    },
-
-
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.inbox_outlined),
+                  //   title: const Text("Mes inspections"),
+                  //   subtitle: const Text("Voir toutes les inspections"),
+                  //   onTap: () async {
+                  //     final rootCtx = Navigator.of(context, rootNavigator: true).context; // 1) capture
+                  //     Navigator.pop(context);                                             // 2) ferme le Drawer
+                  //     await openModalAfterLoader(                                         // 3) loader -> modal
+                  //       rootCtx,
+                  //       const MyInspectionsScreen(), // mets ton widget cible
+                  //       loader: const Duration(milliseconds: 1100),
+                  //     );
+                  //   },
+                  //
+                  //
+                  // ),
 
 
                   // ListTile(
@@ -789,6 +807,63 @@ class _UserSideDrawer extends StatelessWidget {
                     },
                   ),
 
+                  const SizedBox(width: 30),
+
+                  // Petite barre séparatrice (dégradée)
+                  const _DrawerSeparator(),
+
+
+                  // Align(
+                  //   alignment: Alignment.topRight, // topLeft, bottomCenter, etc.
+                  //   child: Image.asset(
+                  //     "assets/me/images/ci-fishe.png",
+                  //     width: 80,
+                  //     height: 80,
+                  //     fit: BoxFit.contain,
+                  //   ),
+                  // )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 50, left: 10),
+                  //   child: Image.asset(
+                  //     "assets/me/images/MIRAH-BG.png",
+                  //     //width: 60,   // largeur plus petite
+                  //     height: 80,  // hauteur plus petite (optionnel)
+                  //    // fit: BoxFit.contain, // garde les proportions de l’image
+                  //   ),
+                  // ),
+                  const SizedBox(height: 8),
+                  const Divider(height: 1),
+                  const SizedBox(height: 6),
+
+                  // ───── Bandeau rouge défilant
+                  Container(
+                    height: 26,
+                    alignment: Alignment.centerLeft,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(.06),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: const _MarqueeText(
+                      text:
+                      "⚠️ Synchronisez l’application si vous êtes connecté à Internet pour rester à jour avec les données.",
+                      style: TextStyle(color: Colors.red, fontSize: 14, fontWeight: FontWeight.w600),
+                      pixelsPerSecond: 70,
+                      pause: Duration(milliseconds: 900),
+                      gap: 60,
+                    ),
+                  ),
+
+                  const Divider(height: 1),
+
+                  //Padding( padding: const EdgeInsets.only(top: 20, left: 10), child: Image.asset( "assets/me/images/MIRAH-BG.png", width: 100, ), )
+
+// ───── Conseils
+                  const Text("Conseils", style: TextStyle(fontSize: 15.5, fontWeight: FontWeight.w800)),
+                  const SizedBox(height: 8),
+                  const _TipLine(text: "Activez le Wi-Fi avant de lancer la synchronisation."),
+                  const _TipLine(text: "Gardez l’application ouverte jusqu’à la fin du processus."),
+
 
 
                 ],
@@ -796,23 +871,48 @@ class _UserSideDrawer extends StatelessWidget {
             ),
 
             // Bandeau bas (style “promo / aide”)
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              color: kOrange.withOpacity(.10),
-              child: Row(
-                children: const [
-                  Icon(Icons.help_outline, color: kOrange),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      "Aide & support • Documentation",
-                      style: TextStyle(fontWeight: FontWeight.w600),
+            // Container(
+            //   width: double.infinity,
+            //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            //   color: kOrange.withOpacity(.10),
+            //   child: Row(
+            //     children: const [
+            //       Icon(Icons.help_outline, color: kOrange),
+            //       SizedBox(width: 10),
+            //       Expanded(
+            //         child: Text(
+            //           "Aide & support • Documentation",
+            //           style: TextStyle(fontWeight: FontWeight.w600),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
+            // 1) Le "tile" cliquable
+            InkWell(
+              borderRadius: BorderRadius.circular(12),
+              splashColor: kOrange.withOpacity(.12),
+              onTap: () => _showAxenovSheet(context),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                color: kOrange.withOpacity(.10),
+                child: const Row(
+                  children: [
+                    Icon(Icons.help_outline, color: kOrange),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        "Aide & support • Documentation",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
+
           ],
         ),
       ),
@@ -1661,6 +1761,179 @@ class _TipLine extends StatelessWidget {
   }
 }
 
+
+// 3) Contenu stylé du modal
+class _AxenovBottomSheet extends StatelessWidget {
+  const _AxenovBottomSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.94, end: 1.0),   // petite montée en douceur
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOut,
+      builder: (ctx, scale, child) {
+        return Transform.scale(
+          scale: scale,
+          alignment: Alignment.bottomCenter,
+          child: child,
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 24,
+              offset: const Offset(0, -8),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Handle
+              Container(
+                width: 44,
+                height: 5,
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: theme.dividerColor,
+                  borderRadius: BorderRadius.circular(99),
+                ),
+              ),
+
+              // En-tête
+              Row(
+                children: [
+                  const CircleAvatar(
+                    radius: 20,
+                    backgroundColor: kOrange,
+                    child: Icon(Icons.business, color: Colors.white),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      "AXENOV CONSULTING",
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                    "Documentation intégrée et disponible dans la version complète.",
+                style: theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 16),
+
+              // Infos clés
+              _InfoTile(
+                icon: Icons.handyman_outlined,
+                title: "Mission",
+                subtitle: "Conception & développement de l’application",
+              ),
+              _InfoTile(
+                icon: Icons.layers_outlined,
+                title: "Stack",
+                subtitle: "Mobile (offline-first) • API Intégration • Base de données • NoSQL",
+              ),
+              _InfoTile(
+                icon: Icons.description_outlined,
+                title: "Documentation",
+                subtitle: "Implémentée dans la version complète de l’application",
+              ),
+              _InfoTile(
+                icon: Icons.contact_mail_outlined,
+                title: "Contact",
+                subtitle: "info-contact@axenov.ci • +225 07 67 07 19 14",
+              ),
+
+              const SizedBox(height: 16),
+              // CTA
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  icon: const Icon(Icons.menu_book_outlined),
+                  style: ButtonStyle(
+                    backgroundColor:
+                    WidgetStatePropertyAll(kOrange.withOpacity(.95)),
+                  ),
+                  label: const Text("Ouvrir la documentation"),
+                  onPressed: () {
+                    // TODO: Naviguer vers ton écran/URL de doc si disponible
+                    Navigator.of(context).maybePop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          "La documentation est disponible dans la version complète.",
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextButton.icon(
+                icon: const Icon(Icons.close),
+                label: const Text("Fermer"),
+                onPressed: () => Navigator.of(context).maybePop(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Petit item d’info réutilisable
+class _InfoTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  const _InfoTile({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: kOrange),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title,
+                    style: theme.textTheme.bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w700)),
+                const SizedBox(height: 2),
+                Text(subtitle, style: theme.textTheme.bodySmall),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 
 

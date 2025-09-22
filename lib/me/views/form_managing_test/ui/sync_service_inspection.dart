@@ -27,23 +27,31 @@ class SyncService {
     this.apiTimeout = const Duration(seconds: 20),
   });
 
+  // Helper: construit un json_field “safe” si null/vidé
   Map<String, dynamic> _normalizeJsonField(dynamic raw) {
     try {
-      final Map<String, dynamic> empty = {"a":{}, "b":{}, "c":{}, "d":{}, "e":{}, "f":{}};
+      final Map<String, dynamic> empty =
+      {"a":{}, "b":{}, "c":{}, "d":{}, "e":{}, "f":{}};
+
       if (raw == null) return empty;
-      if (raw is Map<String, dynamic>) return {...empty, ...raw};
+      if (raw is Map<String, dynamic>) {
+        return {...empty, ...raw}; // merge, garantit les clés a..f
+      }
       if (raw is String && raw.trim().isNotEmpty) {
         final decoded = jsonDecode(raw);
-        if (decoded is Map<String, dynamic>) return {...empty, ...decoded};
+        if (decoded is Map<String, dynamic>) {
+          return {...empty, ...decoded};
+        }
       }
       return empty;
     } catch (_) {
+      // en cas de JSON corrompu → renvoie structure vide
       return {"a":{}, "b":{}, "c":{}, "d":{}, "e":{}, "f":{}};
     }
   }
 
   Future<SyncReport> run() async {
-    // 0) réseau…
+    // 0) réseau
     final net = await Connectivity().checkConnectivity();
     if (net == ConnectivityResult.none) {
       return const SyncReport(error: 'Pas de connexion Internet', totalPending: 0, totalSent: 0, totalUpdated: 0);
@@ -51,42 +59,32 @@ class SyncService {
 
     final db = await getDb();
 
-    // 1) récupérer id + json_field + statut_inspection_id où sync=0
+    // 1) récupérer id + json_field où sync=0
     final rows = await db.query(
       'inspections',
-      columns: ['id', 'json_field', 'statut_inspection_id'],
+      columns: ['id', 'json_field'],
       where: 'sync = 0',
     );
+
     if (rows.isEmpty) {
       return const SyncReport(error: null, totalPending: 0, totalSent: 0, totalUpdated: 0);
     }
 
-    // 2) transformer en items {id, json_field, [statut_inspection_id]}
+    // 2) transformer en items {id, json_field:{a..f}}
     final items = <Map<String, dynamic>>[];
     for (final r in rows) {
-      // id
-      final idRaw = r['id'];
-      int? id = idRaw is int ? idRaw : (idRaw is String ? int.tryParse(idRaw) : null);
+      final idVal = r['id'];
+      int? id;
+      if (idVal is int) id = idVal;
+      if (idVal is String) id = int.tryParse(idVal);
+
       if (id == null) continue;
 
-      // json_field
       final jf = _normalizeJsonField(r['json_field']);
-
-      // statut_inspection_id (optionnel)
-      int? statut;
-      final stRaw = r['statut_inspection_id'];
-      if (stRaw is int) statut = stRaw;
-      if (stRaw is String) statut = int.tryParse(stRaw);
-
-      final item = <String, dynamic>{
+      items.add({
         'id': id,
         'json_field': jf,
-      };
-      if (statut != null) {
-        item['statut_inspection_id'] = statut;
-      }
-
-      items.add(item);
+      });
     }
 
     if (items.isEmpty) {
@@ -109,6 +107,7 @@ class SyncService {
         final ids = chunk.map((e) => e['id'] as int).toList();
         final placeholders = List.filled(ids.length, '?').join(',');
         await db.rawUpdate('UPDATE inspections SET sync = 1 WHERE id IN ($placeholders)', ids);
+
       } catch (e) {
         return SyncReport(
           error: 'Erreur pendant la synchro: $e',

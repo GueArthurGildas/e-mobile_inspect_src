@@ -459,6 +459,8 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                   icon: const Icon(Icons.remove_red_eye, color: Colors.white),
                   label: const Text("Voir détail", style: TextStyle(color: Colors.white)),
                 ),
+
+                const ProSeparator()
               ],
             ),
           ),
@@ -474,8 +476,8 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        //appBar: AppBar(title: const Text('Inspections (DB direct)')),
-      
+        appBar: AppBar(title: const Text('Liste des Inspections'),backgroundColor: Colors.orange,),
+
         // On conserve le FAB et la route via ressources[ressources.length-1]['screen']
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
@@ -487,7 +489,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
           icon: const Icon(Icons.add),
           label: const Text('Nouvelle'),
         ),
-      
+
         body: Column(
           children: [
             // Barre de recherche + filtre statut + bouton Rechercher
@@ -510,7 +512,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                     ),
                   ),
                   const SizedBox(width: 8),
-      
+
                   // Filtre statut
                   SizedBox(
                     width: 190,
@@ -522,7 +524,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       ),
                       items: const [
                         DropdownMenuItem(value: -1, child: Text('Tous les statuts')),
-                        DropdownMenuItem(value: 0, child: Text('En attente')),
+                        DropdownMenuItem(value: 5, child: Text('En attente')),
                         DropdownMenuItem(value: 1, child: Text('En cours')),
                         DropdownMenuItem(value: 2, child: Text('Terminé')),
                       ],
@@ -535,7 +537,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                     ),
                   ),
                   const SizedBox(width: 3),
-      
+
                   // Bouton rechercher (affiche un modal loader)
                   // Bouton rechercher (affiche un modal loader)
                   FilledButton.icon(
@@ -558,18 +560,18 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       ),
                     ),
                   ),
-      
+
                 ],
               ),
             ),
-      
+
             // ---- ALERT NB D'ÉLÉMENTS TROUVÉS ----
             if (_showAlert)
               FutureBuilder<List<Map<String, dynamic>>>(
                 future: _future,
                 builder: (_, snap) {
                   if (snap.connectionState != ConnectionState.done) return const SizedBox.shrink();
-      
+
                   final all = snap.data ?? [];
                   // Applique les mêmes filtres qu’en bas
                   List<Map<String, dynamic>> items = all;
@@ -585,7 +587,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       return st == _statusFilter;
                     }).toList();
                   }
-      
+
                   return Container(
                     width: double.infinity,
                     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -621,9 +623,9 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                   );
                 },
               ),
-      
-      
-      
+
+
+
             Expanded(
               child: FutureBuilder<List<Map<String, dynamic>>>(
                 future: _future,
@@ -636,14 +638,14 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                     return Center(child: Text('Erreur: ${snap.error}'));
                   }
                   final all = snap.data ?? [];
-      
+
                   // Filtre ID (appliqué au clic sur Rechercher)
                   List<Map<String, dynamic>> items = all;
                   final idSearch = int.tryParse(_searchApplied);
                   if (_searchApplied.isNotEmpty && idSearch != null) {
                     items = items.where((e) => (e['id'] as int) == idSearch).toList();
                   }
-      
+
                   // Filtre statut (si sélectionné)
                   if (_statusFilter != null) {
                     items = items.where((e) {
@@ -653,11 +655,11 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       return st == _statusFilter;
                     }).toList();
                   }
-      
+
                   if (items.isEmpty) {
                     return const Center(child: Text('Aucune inspection.'));
                   }
-      
+
                   return RefreshIndicator(
                     onRefresh: _reload,
                     child: ListView.separated(
@@ -669,7 +671,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                         final id = r['id'] as int;
                         final cols = Map<String, dynamic>.from(r['cols'] ?? {});
                         final data = Map<String, dynamic>.from(r['data'] ?? {});
-      
+
                         return  _inspectionCard(
                           context: ctx,
                           id: id,
@@ -679,7 +681,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                           onOpen: () async {
                             await _openPreviewWithLoader(ctx, r); // 👈 nouveau
                           },
-      
+
                           // LANCER L’INSPECTION (flèche)
                           onArrowTap: () async {
                             await Navigator.push(
@@ -694,7 +696,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                             await _reload();
                           },
                         );
-      
+
                       },
                     ),
                   );
@@ -1354,3 +1356,35 @@ class _TimelineTile extends StatelessWidget {
   }
 }
 
+class ProSeparator extends StatelessWidget {
+  final String? label;
+  final IconData? icon;
+  const ProSeparator({super.key, this.label, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    if (label == null || label!.trim().isEmpty) {
+      return Divider(
+        height: 24,
+        thickness: 1,
+        indent: 0,
+        endIndent: 0,
+        color: Colors.black12.withOpacity(.15),
+      );
+    }
+    return Row(
+      children: [
+        if (icon != null) Icon(icon, size: 16, color: Colors.black45),
+        if (icon != null) const SizedBox(width: 6),
+        //Text(label!, style: meta.copyWith(fontWeight: FontWeight.w600)),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            height: 1,
+            color: Colors.black12.withOpacity(.15),
+          ),
+        ),
+      ],
+    );
+  }
+}

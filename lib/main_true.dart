@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
         ),
         home:
-        SplashScreen(),//InspectionListScreen(),//SplashScreen(),//WalletScreen(), //SplashScreen(), //UsersPage(),//plashScreen1(),//,//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
+        WalletScreen() ,//SplashScreen(),//InspectionListScreen(),//SplashScreen(),//WalletScreen(), //SplashScreen(), //UsersPage(),//plashScreen1(),//,//PendingInspectionPage(),//NavireStatusPage(),//HeroWidgetListPage(),//AnimatedListWidgetListPage(),//FormInfosGeneralesScreen(),//FormulaireStyleImage(),//InspectionWizardScreen(),//NavireStatusPage(), //HomeMenuPage(),//SplashScreen1(),
         onGenerateRoute:
             AppPages.generateRoute, // gestion des routes dynamiques
         //routes: AppPages.routes,

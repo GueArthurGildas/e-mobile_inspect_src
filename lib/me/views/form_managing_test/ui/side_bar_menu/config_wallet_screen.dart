@@ -114,11 +114,13 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           // Étape 1/2 — synchro serveur
           status.value = 'Étape 1/2 — Synchronisation serveur (Laravel)…';
           final api = InspectionApi(baseUrl: 'https://www.mirah-csp.com/api/v1');
+
           final service = SyncService(
             getDb: () => DatabaseHelper.database,
             api: api,
             chunkSize: 100,
           );
+
           final r = await service.run();
           if (r.error != null) throw Exception(r.error);
 
@@ -413,7 +415,7 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           controller: controller,
           decoration: const InputDecoration(
             labelText: "Entrez le code",
-            hintText: "Ex: ok123",
+            hintText: "Ex: XXXXXXXX",
           ),
         ),
         actions: [

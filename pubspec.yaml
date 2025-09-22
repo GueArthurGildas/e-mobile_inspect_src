@@ -45,7 +45,7 @@ dependencies:
   #cupertino_icons: ^1.0.8
   date_format: ^2.0.9
 #  device_info_plus: ^11.4.0
-#  dio: ^5.8.0+1
+  dio: ^5.8.0+1
 #  firebase_auth: ^5.5.4
 #  firebase_core: ^3.13.1
 #  firebase_storage: ^12.4.6
@@ -94,6 +94,11 @@ dependencies:
   universal_io: 2.2.2
   file_picker: ^10.2.3
   shared_preferences: ^2.5.3
+  crypto: ^3.0.3 # ajouté recemment par moi
+  mime: ^1.0.4 # ajouté recemment par moi
+  http: ^1.2.2 # ajouté recemment par moi
+
+
 #  url_launcher: ^6.3.1
 #  uuid: ^4.5.1
 #  video_player: ^2.10.0
