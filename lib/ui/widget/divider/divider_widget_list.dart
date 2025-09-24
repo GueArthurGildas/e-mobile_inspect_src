@@ -1,7 +1,7 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/divider/horizontal_divider.dart';
-import 'package:test_app_divkit/ui/widget/divider/vertical_divider.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/divider/horizontal_divider.dart';
+import 'package:e_Inspection_APP/ui/widget/divider/vertical_divider.dart';
 import 'package:flutter/material.dart';
 
 class DividerWidgetListPage extends StatefulWidget {

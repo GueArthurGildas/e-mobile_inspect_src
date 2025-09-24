@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
-import 'package:test_app_divkit/me/views/shared/common.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/views/shared/common.dart';
 
 enum QueryOp { and, or }
 

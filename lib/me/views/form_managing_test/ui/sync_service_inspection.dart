@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/Inspection_api_sync.dart';
 
 
 class SyncReport {

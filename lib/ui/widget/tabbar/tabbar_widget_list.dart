@@ -1,10 +1,10 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/tabbar/bottom_tabbar.dart';
-import 'package:test_app_divkit/ui/widget/tabbar/standart_tabbar.dart';
-import 'package:test_app_divkit/ui/widget/tabbar/tabbar_with_controller.dart';
-import 'package:test_app_divkit/ui/widget/tabbar/tabbar_with_icon.dart';
-import 'package:test_app_divkit/ui/widget/tabbar/tabbar_with_scroll.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/tabbar/bottom_tabbar.dart';
+import 'package:e_Inspection_APP/ui/widget/tabbar/standart_tabbar.dart';
+import 'package:e_Inspection_APP/ui/widget/tabbar/tabbar_with_controller.dart';
+import 'package:e_Inspection_APP/ui/widget/tabbar/tabbar_with_icon.dart';
+import 'package:e_Inspection_APP/ui/widget/tabbar/tabbar_with_scroll.dart';
 import 'package:flutter/material.dart';
 
 class TabbarWidgetListPage extends StatefulWidget {

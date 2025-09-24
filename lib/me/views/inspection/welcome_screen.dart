@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/inspections_controller.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

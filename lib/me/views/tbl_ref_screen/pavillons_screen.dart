@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/pavillons_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/pavillons_controller.dart';
 
 class PavillonsScreen extends StatefulWidget {
   const PavillonsScreen({super.key});

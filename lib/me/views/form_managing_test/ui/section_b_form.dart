@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/my_tble_ref_sect_two.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/my_tble_ref_sect_two.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/wizard_screen.dart';
 
 import '../state/inspection_wizard_ctrl.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
+import 'package:e_Inspection_APP/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
 
 class SectionBForm extends StatefulWidget {
   const SectionBForm({super.key});

@@ -1,9 +1,9 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/gridview/gridview_height.dart';
-import 'package:test_app_divkit/ui/widget/gridview/gridview_with_builder.dart';
-import 'package:test_app_divkit/ui/widget/gridview/gridview_with_count.dart';
-import 'package:test_app_divkit/ui/widget/gridview/gridview_with_extent.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/gridview/gridview_height.dart';
+import 'package:e_Inspection_APP/ui/widget/gridview/gridview_with_builder.dart';
+import 'package:e_Inspection_APP/ui/widget/gridview/gridview_with_count.dart';
+import 'package:e_Inspection_APP/ui/widget/gridview/gridview_with_extent.dart';
 import 'package:flutter/material.dart';
 
 class GridviewWidgetListPage extends StatefulWidget {

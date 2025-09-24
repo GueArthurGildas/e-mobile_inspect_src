@@ -1,16 +1,16 @@
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/screen/contact_us/contact_us_list.dart';
-import 'package:test_app_divkit/ui/screen/forgot_password/forgot_password_list.dart';
-import 'package:test_app_divkit/ui/screen/home/home_list.dart';
-import 'package:test_app_divkit/ui/screen/notification/notification_list.dart';
-import 'package:test_app_divkit/ui/screen/onboarding/onboarding_list.dart';
-import 'package:test_app_divkit/ui/screen/product_list/product_list.dart';
-import 'package:test_app_divkit/ui/screen/signin/signin_list.dart';
-import 'package:test_app_divkit/ui/screen/signup/signup_list.dart';
-import 'package:test_app_divkit/ui/screen/timeline/timeline_list.dart';
-import 'package:test_app_divkit/ui/screen/user/user_list.dart';
-import 'package:test_app_divkit/ui/screen/user_profile/user_profile_list.dart';
-import 'package:test_app_divkit/ui/screen/verification/verification_list.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/screen/contact_us/contact_us_list.dart';
+import 'package:e_Inspection_APP/ui/screen/forgot_password/forgot_password_list.dart';
+import 'package:e_Inspection_APP/ui/screen/home/home_list.dart';
+import 'package:e_Inspection_APP/ui/screen/notification/notification_list.dart';
+import 'package:e_Inspection_APP/ui/screen/onboarding/onboarding_list.dart';
+import 'package:e_Inspection_APP/ui/screen/product_list/product_list.dart';
+import 'package:e_Inspection_APP/ui/screen/signin/signin_list.dart';
+import 'package:e_Inspection_APP/ui/screen/signup/signup_list.dart';
+import 'package:e_Inspection_APP/ui/screen/timeline/timeline_list.dart';
+import 'package:e_Inspection_APP/ui/screen/user/user_list.dart';
+import 'package:e_Inspection_APP/ui/screen/user_profile/user_profile_list.dart';
+import 'package:e_Inspection_APP/ui/screen/verification/verification_list.dart';
 import 'package:flutter/material.dart';
 
 class ScreenTabPage extends StatefulWidget {

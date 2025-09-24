@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/views/shared/app_dropdown_search.dart';
-import 'package:test_app_divkit/me/views/shared/file_manager.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_dropdown_search.dart';
+import 'package:e_Inspection_APP/me/views/shared/file_manager.dart';
 
 enum ControlType {
   label,

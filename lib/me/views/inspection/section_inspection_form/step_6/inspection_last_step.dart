@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_6/step_six_controller.dart';
-import 'package:test_app_divkit/me/views/shared/app_bar.dart';
-import 'package:test_app_divkit/me/views/shared/app_form.dart';
-import 'package:test_app_divkit/me/views/shared/form_control.dart';
+import 'package:e_Inspection_APP/me/views/inspection/section_inspection_form/step_6/step_six_controller.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_bar.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_form.dart';
+import 'package:e_Inspection_APP/me/views/shared/form_control.dart';
 
 class InspectionLastStep extends StatefulWidget {
   const InspectionLastStep({super.key});

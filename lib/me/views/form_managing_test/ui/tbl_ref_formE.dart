@@ -1,15 +1,15 @@
-import 'package:test_app_divkit/me/controllers/presentations_controller.dart';
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/presentations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
 
 // ⚠️ Adapte ces imports aux tiens :
-import 'package:test_app_divkit/me/controllers/especes_controller.dart';
-import 'package:test_app_divkit/me/controllers/zones_capture_controller.dart';
-import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
-import 'package:test_app_divkit/me/models/conservations_model.dart';
+import 'package:e_Inspection_APP/me/controllers/especes_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/zones_capture_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/conservations_controller.dart';
+import 'package:e_Inspection_APP/me/models/conservations_model.dart';
 
-import 'package:test_app_divkit/me/models/especes_model.dart';
-import 'package:test_app_divkit/me/models/presentations_model.dart';
-import 'package:test_app_divkit/me/models/zones_capture_model.dart';
+import 'package:e_Inspection_APP/me/models/especes_model.dart';
+import 'package:e_Inspection_APP/me/models/presentations_model.dart';
+import 'package:e_Inspection_APP/me/models/zones_capture_model.dart';
 
 // ======================================================
 // Petit DTO "normalisé" attendu par SectionEForm

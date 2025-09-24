@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:test_app_divkit/model/screen/notification2_model.dart';
-import 'package:test_app_divkit/ui/reusable/shimmer_loading.dart';
+import 'package:e_Inspection_APP/model/screen/notification2_model.dart';
+import 'package:e_Inspection_APP/ui/reusable/shimmer_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

@@ -3,7 +3,7 @@ this is global style
 This file is used to styling a whole application
  */
 
-import 'package:test_app_divkit/config/apps/ecommerce/constant.dart';
+import 'package:e_Inspection_APP/config/apps/ecommerce/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

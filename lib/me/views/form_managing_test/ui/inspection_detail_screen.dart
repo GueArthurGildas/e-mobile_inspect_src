@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as p; // 👈 ajouté pour gérer l’extension de fichier
 
-import 'package:test_app_divkit/me/services/database_service.dart'; // DatabaseHelper
+import 'package:e_Inspection_APP/me/services/database_service.dart'; // DatabaseHelper
 import '../state/inspection_wizard_ctrl.dart';
 import 'wizard_screen.dart';
 

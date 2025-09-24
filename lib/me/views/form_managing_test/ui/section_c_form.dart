@@ -7,11 +7,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-import 'package:test_app_divkit/me/views/form_managing_test/ui/tbl_ref_formC.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/tbl_ref_formC.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/wizard_screen.dart';
 
 import '../state/inspection_wizard_ctrl.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
+import 'package:e_Inspection_APP/me/views/inspection/section_inspection_form/step_1/step_one_controller.dart';
 
 // ===============================
 // Modèle local

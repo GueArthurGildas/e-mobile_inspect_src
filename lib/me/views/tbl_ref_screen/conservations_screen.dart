@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/conservations_controller.dart';
 
 class ConservationsScreen extends StatefulWidget {
   const ConservationsScreen({super.key});

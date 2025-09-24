@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:test_app_divkit/config/constant.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

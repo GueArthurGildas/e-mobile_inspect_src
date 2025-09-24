@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/services/api_get/types_engins_service.dart';
+import 'package:e_Inspection_APP/me/services/api_get/types_engins_service.dart';
 import '../models/types_engins_model.dart';
 
 class TypesEnginsController extends ChangeNotifier {

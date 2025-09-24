@@ -1,6 +1,6 @@
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
-import 'package:test_app_divkit/me/controllers/types_documents_controller.dart';
-import 'package:test_app_divkit/me/models/types_documents_model.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/types_documents_controller.dart';
+import 'package:e_Inspection_APP/me/models/types_documents_model.dart';
 
 class MyStepThreeController {
   MyStepThreeController();

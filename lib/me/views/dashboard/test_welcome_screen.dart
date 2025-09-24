@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_app_divkit/me/config/api_constants.dart';
-import 'package:test_app_divkit/me/controllers/user_controller.dart';
-import 'package:test_app_divkit/me/models/user_model.dart';
-import 'package:test_app_divkit/me/routes/app_routes.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/Groups_teams_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/auto_moving_icon.dart';
+import 'package:e_Inspection_APP/me/config/api_constants.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
+import 'package:e_Inspection_APP/me/models/user_model.dart';
+import 'package:e_Inspection_APP/me/routes/app_routes.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/Groups_teams_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/Inspection_api_sync.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/auto_moving_icon.dart';
 import 'dart:async';
 
-import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/profile_current.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/config_wallet_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/upload_test_doc_inspect.dart';                 // ⬅️ nécessaire pour StreamSubscription
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/inspection_list_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/profile_current.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/side_bar_menu/config_wallet_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/sync_service_inspection.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/upload_test_doc_inspect.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
 const kOrange = Colors.orange;

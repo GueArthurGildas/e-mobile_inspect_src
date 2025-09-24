@@ -1,12 +1,12 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/listview/horizontal_listview.dart';
-import 'package:test_app_divkit/ui/widget/listview/listview_with_builder.dart';
-import 'package:test_app_divkit/ui/widget/listview/listview_with_generate.dart';
-import 'package:test_app_divkit/ui/widget/listview/listview_with_listtile.dart';
-import 'package:test_app_divkit/ui/widget/listview/reverse_listview.dart';
-import 'package:test_app_divkit/ui/widget/listview/separated_listview.dart';
-import 'package:test_app_divkit/ui/widget/listview/standart_listview.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/horizontal_listview.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/listview_with_builder.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/listview_with_generate.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/listview_with_listtile.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/reverse_listview.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/separated_listview.dart';
+import 'package:e_Inspection_APP/ui/widget/listview/standart_listview.dart';
 import 'package:flutter/material.dart';
 
 class ListviewWidgetListPage extends StatefulWidget {

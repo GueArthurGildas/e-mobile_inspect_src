@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/activites_navires_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/activites_navires_controller.dart';
 
 class ActivitesNaviresScreen extends StatefulWidget {
   const ActivitesNaviresScreen({super.key});

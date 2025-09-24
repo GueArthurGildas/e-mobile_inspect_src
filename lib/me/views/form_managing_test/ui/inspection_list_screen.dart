@@ -2,31 +2,31 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:test_app_divkit/me/services/database_service.dart'; // DatabaseHelper
-import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_detail_screen.dart';
-import 'package:test_app_divkit/me/views/inspection/inspection_screen_load.dart';
-import 'package:test_app_divkit/me/views/users/user_form.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart'; // DatabaseHelper
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/inspection_detail_screen.dart';
+import 'package:e_Inspection_APP/me/views/inspection/inspection_screen_load.dart';
+import 'package:e_Inspection_APP/me/views/users/user_form.dart';
 import '../state/inspection_wizard_ctrl.dart';
 import 'wizard_screen.dart';
 
 // Ressources & écrans (on conserve le FAB existant)
-import 'package:test_app_divkit/me/views/tbl_ref_screen/pays.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/activites_navires_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/agents_shiping_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/conservations_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/consignations_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/especes_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/etats_engins_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/pavillons_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/ports_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/presentations_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/typenavires_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/types_documents_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/types_engins_screen.dart';
-import 'package:test_app_divkit/me/views/tbl_ref_screen/zones_capture_screen.dart';
-import 'package:test_app_divkit/me/views/inspection/inspections_test_sync_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/pays.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/activites_navires_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/agents_shiping_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/conservations_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/consignations_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/especes_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/etats_engins_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/pavillons_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/ports_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/presentations_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/typenavires_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/types_documents_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/types_engins_screen.dart';
+import 'package:e_Inspection_APP/me/views/tbl_ref_screen/zones_capture_screen.dart';
+import 'package:e_Inspection_APP/me/views/inspection/inspections_test_sync_screen.dart';
 
-import 'package:test_app_divkit/me/controllers/user_controller.dart'; // ⬅️ add
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart'; // ⬅️ add
 
 
 class InspectionListScreen extends StatefulWidget {

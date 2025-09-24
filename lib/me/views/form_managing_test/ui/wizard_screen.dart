@@ -1,16 +1,17 @@
 import 'dart:async';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/signature_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:test_app_divkit/me/controllers/user_controller.dart';
-import 'package:test_app_divkit/me/models/user_model.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
+import 'package:e_Inspection_APP/me/models/user_model.dart';
 
-import 'package:test_app_divkit/me/views/form_managing_test/ui/section_a_form.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/section_b_form.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/section_c_form.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/section_d_form.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/section_e_form.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/validation_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/section_a_form.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/section_b_form.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/section_c_form.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/section_d_form.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/section_e_form.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/validation_screen.dart';
 
 import '../state/inspection_wizard_ctrl.dart';
 
@@ -67,6 +68,7 @@ class _WizardScreenState extends State<WizardScreen> {
   }
 
   /// ✅ Soumission avec sélection des participants avant confirmation
+  /// ✅ Soumission avec sélection des participants ET signatures
   Future<void> _submitWizard(Map<String, dynamic> payload) async {
     if (!mounted) return;
 
@@ -83,45 +85,13 @@ class _WizardScreenState extends State<WizardScreen> {
 
     if (picked == null || picked.isEmpty) return;
 
-// 0.1) Construire ids + meta
+    // 0.1) Construire ids + meta
     final participantsIds  = picked.map((u) => u.id).whereType<int>().toList();
     final participantsMeta = picked.map((u) => {
       'id'   : u.id,
       'name' : u.name,
       'email': u.email,
     }).toList();
-
-// 0.2) Persister dans la section 'f' pour que ça apparaisse dans le JSON généré
-    final ctrl = context.read<InspectionWizardCtrl>();
-    await ctrl.saveSection('f', {
-      'participants'      : participantsIds,
-      'participants_meta' : participantsMeta,
-    });
-
-// 0.3) (optionnel mais utile) : merger aussi dans le payload local si tu l’envoies juste après
-    payload['f'] = {
-      ...(payload['f'] ?? {}),
-      'participants'      : participantsIds,
-      'participants_meta' : participantsMeta,
-    };
-
-    // Annulation si rien choisi
-    if (picked == null || picked.isEmpty) {
-      // Option: await showTopConfirm(context, 'Aucun participant sélectionné');
-      return;
-    }
-
-    // 👉 Injection dans le JSON final
-    payload['participants'] = picked.map((u) => u.id).toList();
-    payload['participants_meta'] = picked.map((u) {
-      return {
-        'id': u.id,
-        'name': u.name,
-        'email': u.email,
-      };
-    }).toList();
-
-
 
     // 1) Première confirmation avec récap visuel des participants
     final isConfirmed = await showDialog<bool>(
@@ -140,7 +110,7 @@ class _WizardScreenState extends State<WizardScreen> {
           FilledButton(
             style: _filledOrangeStyle(),
             onPressed: () => Navigator.of(context, rootNavigator: true).pop(true),
-            child: const Text('Oui, enregistrer'),
+            child: const Text('Oui, continuer'),
           ),
         ],
       ),
@@ -149,9 +119,46 @@ class _WizardScreenState extends State<WizardScreen> {
     if (isConfirmed != true) return;
     if (!mounted) return;
 
-    // -- Mise à jour du statut après confirmation (inchangé)
+    // 🆕 1.5) ÉTAPE SIGNATURES : Récupérer l'ID AVANT la navigation
+    final ctrl = context.read<InspectionWizardCtrl>();
+    final inspectionId = ctrl.inspectionId?.toString() ?? 'N/A';
+
+    final signaturesData = await Navigator.of(context).push<Map<String, Map<String, dynamic>>>(
+      MaterialPageRoute(
+        builder: (context) => SignatureScreen(
+          participants: participantsMeta,
+          inspectionId: inspectionId,
+        ),
+      ),
+    );
+
+    // Si l'utilisateur annule les signatures, on s'arrête ici
+    if (signaturesData == null || signaturesData.isEmpty) return;
+    if (!mounted) return;
+
+    // 0.2) 🆕 Persister dans la section 'f' AVEC LES SIGNATURES
+    await ctrl.saveSection('f', {
+      'participants'      : participantsIds,
+      'participants_meta' : participantsMeta,
+      'signatures'        : signaturesData,
+      'signature_count'   : signaturesData.length,
+      'signed_at'         : DateTime.now().toIso8601String(),
+    });
+
+    // 0.3) Merger dans le payload local
+    payload['f'] = {
+      ...(payload['f'] ?? {}),
+      'participants'      : participantsIds,
+      'participants_meta' : participantsMeta,
+      'signatures'        : signaturesData,
+    };
+
+    // Injection dans le JSON final (VOTRE CODE EXISTANT)
+    payload['participants'] = participantsIds;
+    payload['participants_meta'] = participantsMeta;
+
+    // -- Mise à jour du statut après confirmation (VOTRE CODE EXISTANT - INCHANGÉ)
     try {
-      final ctrl = context.read<InspectionWizardCtrl>();
       final id = ctrl.inspectionId;
       if (id != null) {
         await ctrl.updateInspectionStatus(id, 2); // ⚡ statut = 2
@@ -173,7 +180,7 @@ class _WizardScreenState extends State<WizardScreen> {
       return;
     }
 
-    // 2) (Ta seconde confirmation existe dans ton code — je la conserve tel quel)
+    // 2) (VOTRE SECONDE CONFIRMATION EXISTANTE - EXACTEMENT IDENTIQUE)
     final confirm = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -197,7 +204,7 @@ class _WizardScreenState extends State<WizardScreen> {
     );
     if (confirm != true) return;
 
-    // 3) Progression simulée (inchangé)
+    // 3) Progression simulée (VOTRE CODE EXISTANT - INCHANGÉ)
     int progress = 0;
     showDialog(
       context: context,
@@ -240,7 +247,7 @@ class _WizardScreenState extends State<WizardScreen> {
     if (!mounted) return;
     Navigator.of(context).pop(); // ferme la progress
 
-    // 4) Succès + navigation (inchangé)
+    // 4) Succès + navigation (VOTRE CODE EXISTANT - INCHANGÉ)
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -261,6 +268,7 @@ class _WizardScreenState extends State<WizardScreen> {
       MaterialPageRoute(builder: (_) => const ValidationScreen()),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

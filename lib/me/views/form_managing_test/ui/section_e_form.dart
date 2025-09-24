@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/tbl_ref_formE.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/wizard_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/tbl_ref_formE.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/wizard_screen.dart';
 
 import '../state/inspection_wizard_ctrl.dart';
 

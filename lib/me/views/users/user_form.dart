@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/user_controller.dart'; // <-- adapte le chemin si besoin
-import 'package:test_app_divkit/me/models/user_model.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart'; // <-- adapte le chemin si besoin
+import 'package:e_Inspection_APP/me/models/user_model.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});

@@ -1,9 +1,9 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/transform/rotate_transform.dart';
-import 'package:test_app_divkit/ui/widget/transform/scale_transform.dart';
-import 'package:test_app_divkit/ui/widget/transform/skew_transform.dart';
-import 'package:test_app_divkit/ui/widget/transform/translate_transform.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/transform/rotate_transform.dart';
+import 'package:e_Inspection_APP/ui/widget/transform/scale_transform.dart';
+import 'package:e_Inspection_APP/ui/widget/transform/skew_transform.dart';
+import 'package:e_Inspection_APP/ui/widget/transform/translate_transform.dart';
 import 'package:flutter/material.dart';
 
 class TransformWidgetListPage extends StatefulWidget {

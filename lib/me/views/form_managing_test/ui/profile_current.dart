@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/user_controller.dart';
-import 'package:test_app_divkit/me/models/user_model.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/theme_page_menu.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
+import 'package:e_Inspection_APP/me/models/user_model.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/side_bar_menu/theme_page_menu.dart';
 
 const kOrange = Color(0xFFFF6A00); // charte punchy
 const kGreen  = Color(0xFF1E9E5A);

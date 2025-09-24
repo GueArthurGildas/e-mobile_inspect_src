@@ -1,13 +1,13 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/container/border_container.dart';
-import 'package:test_app_divkit/ui/widget/container/border_radius_container.dart';
-import 'package:test_app_divkit/ui/widget/container/coloring_container.dart';
-import 'package:test_app_divkit/ui/widget/container/gradient_color_container.dart';
-import 'package:test_app_divkit/ui/widget/container/margin_container.dart';
-import 'package:test_app_divkit/ui/widget/container/padding_container.dart';
-import 'package:test_app_divkit/ui/widget/container/shadow_container.dart';
-import 'package:test_app_divkit/ui/widget/container/standart_container.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/container/border_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/border_radius_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/coloring_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/gradient_color_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/margin_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/padding_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/shadow_container.dart';
+import 'package:e_Inspection_APP/ui/widget/container/standart_container.dart';
 import 'package:flutter/material.dart';
 
 class ContainerWidgetListPage extends StatefulWidget {

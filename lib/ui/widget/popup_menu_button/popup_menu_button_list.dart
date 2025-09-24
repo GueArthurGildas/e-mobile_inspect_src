@@ -1,12 +1,12 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button1.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button2.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button3.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button4.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button5.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button6.dart';
-import 'package:test_app_divkit/ui/widget/popup_menu_button/popup_menu_button7.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button1.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button2.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button3.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button4.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button5.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button6.dart';
+import 'package:e_Inspection_APP/ui/widget/popup_menu_button/popup_menu_button7.dart';
 import 'package:flutter/material.dart';
 
 class PopupMenuButtonListPage extends StatefulWidget {

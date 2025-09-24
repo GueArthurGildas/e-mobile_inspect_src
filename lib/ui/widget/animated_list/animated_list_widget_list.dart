@@ -1,11 +1,11 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/animated_list/animated_list_1.dart';
-import 'package:test_app_divkit/ui/widget/animated_list/animated_list_2.dart';
-import 'package:test_app_divkit/ui/widget/animated_list/animated_list_3.dart';
-import 'package:test_app_divkit/ui/widget/animated_list/animated_list_4.dart';
-import 'package:test_app_divkit/ui/widget/animated_list/animated_list_5.dart';
-import 'package:test_app_divkit/ui/widget/animated_list/animated_list_6.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/animated_list/animated_list_1.dart';
+import 'package:e_Inspection_APP/ui/widget/animated_list/animated_list_2.dart';
+import 'package:e_Inspection_APP/ui/widget/animated_list/animated_list_3.dart';
+import 'package:e_Inspection_APP/ui/widget/animated_list/animated_list_4.dart';
+import 'package:e_Inspection_APP/ui/widget/animated_list/animated_list_5.dart';
+import 'package:e_Inspection_APP/ui/widget/animated_list/animated_list_6.dart';
 import 'package:flutter/material.dart';
 
 class AnimatedListWidgetListPage extends StatefulWidget {

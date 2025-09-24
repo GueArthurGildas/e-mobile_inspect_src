@@ -1,10 +1,10 @@
-import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
-import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
-import 'package:test_app_divkit/me/controllers/pays_controller.dart';
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
-import 'package:test_app_divkit/me/models/agents_shiping_model.dart';
-import 'package:test_app_divkit/me/models/consignations_model.dart';
-import 'package:test_app_divkit/me/models/pays_model.dart';
+import 'package:e_Inspection_APP/me/controllers/agents_shiping_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/consignations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/pays_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/models/agents_shiping_model.dart';
+import 'package:e_Inspection_APP/me/models/consignations_model.dart';
+import 'package:e_Inspection_APP/me/models/pays_model.dart';
 
 class StepTwoController {
   StepTwoController();

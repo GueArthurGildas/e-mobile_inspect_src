@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/services/api_get/especes_service.dart';
+import 'package:e_Inspection_APP/me/services/api_get/especes_service.dart';
 import '../models/especes_model.dart';
 
 class EspecesController extends ChangeNotifier {

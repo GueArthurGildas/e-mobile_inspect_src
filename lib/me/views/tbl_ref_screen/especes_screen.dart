@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/especes_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/especes_controller.dart';
 
 class EspecesScreen extends StatefulWidget {
   const EspecesScreen({super.key});

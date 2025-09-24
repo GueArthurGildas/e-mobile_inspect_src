@@ -1,8 +1,8 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_list1.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_list2.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_list3.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_list1.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_list2.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_list3.dart';
 import 'package:flutter/material.dart';
 
 class SliverListListPage extends StatefulWidget {

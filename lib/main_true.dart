@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:test_app_divkit/me/views/auth/splash_screen.dart';
-import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_list_screen.dart';
-import 'package:test_app_divkit/me/views/shared/app_preferences.dart';
-import 'package:test_app_divkit/me/views/users/screen_test.dart';
+import 'package:e_Inspection_APP/me/views/auth/splash_screen.dart';
+import 'package:e_Inspection_APP/me/views/dashboard/test_welcome_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/inspection_list_screen.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_preferences.dart';
+import 'package:e_Inspection_APP/me/views/users/screen_test.dart';
 import 'me/routes//app_pages.dart';
 
 void main() async {

@@ -27,7 +27,7 @@ const String errorOccured = 'Error occured, please try again later';
 const int limitPage = 8;
 
 const String globalUrl = 'https://ijtechnology.net/assets/images/api/devkit';
-// const String globalUrl = 'http://192.168.0.1/test_app_divkit/assets/me/images';
+// const String globalUrl = 'http://192.168.0.1/e_Inspection_APP/assets/me/images';
 // const String globalUrl = 'http://192.168.0.4/devkit/assets/images/';
 
 const String serverUrl = 'https://ijtechnology.net/api_devkit';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/presentations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/presentations_controller.dart';
 
 class PresentationsScreen extends StatefulWidget {
   const PresentationsScreen({super.key});

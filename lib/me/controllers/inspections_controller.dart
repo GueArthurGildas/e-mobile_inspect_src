@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/models/inspection.dart';
-import 'package:test_app_divkit/me/models/inspection_model.dart';
-import 'package:test_app_divkit/me/services/api_get/inspections_service.dart';
+import 'package:e_Inspection_APP/me/models/inspection.dart';
+import 'package:e_Inspection_APP/me/models/inspection_model.dart';
+import 'package:e_Inspection_APP/me/services/api_get/inspections_service.dart';
 
 class InspectionController extends ChangeNotifier {
   final InspectionService _service = InspectionService();

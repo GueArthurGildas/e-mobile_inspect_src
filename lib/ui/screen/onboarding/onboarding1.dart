@@ -1,6 +1,6 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/library/flutter_overboard/overboard.dart';
-import 'package:test_app_divkit/library/flutter_overboard/page_model.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/library/flutter_overboard/overboard.dart';
+import 'package:e_Inspection_APP/library/flutter_overboard/page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';

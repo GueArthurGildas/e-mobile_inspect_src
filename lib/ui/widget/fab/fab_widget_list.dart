@@ -1,12 +1,12 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/fab/fab_animation.dart';
-import 'package:test_app_divkit/ui/widget/fab/fab_position.dart';
-import 'package:test_app_divkit/ui/widget/fab/fab_with_border_radius.dart';
-import 'package:test_app_divkit/ui/widget/fab/fab_with_label.dart';
-import 'package:test_app_divkit/ui/widget/fab/fab_with_shape.dart';
-import 'package:test_app_divkit/ui/widget/fab/mini_fab.dart';
-import 'package:test_app_divkit/ui/widget/fab/standart_fab.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/fab_animation.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/fab_position.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/fab_with_border_radius.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/fab_with_label.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/fab_with_shape.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/mini_fab.dart';
+import 'package:e_Inspection_APP/ui/widget/fab/standart_fab.dart';
 import 'package:flutter/material.dart';
 
 class FabWidgetListPage extends StatefulWidget {

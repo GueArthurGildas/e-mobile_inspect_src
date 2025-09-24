@@ -1,10 +1,10 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/screen/timeline/timeline1.dart';
-import 'package:test_app_divkit/ui/screen/timeline/timeline2.dart';
-import 'package:test_app_divkit/ui/screen/timeline/timeline3.dart';
-import 'package:test_app_divkit/ui/screen/timeline/timeline4.dart';
-import 'package:test_app_divkit/ui/screen/timeline/timeline5.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/screen/timeline/timeline1.dart';
+import 'package:e_Inspection_APP/ui/screen/timeline/timeline2.dart';
+import 'package:e_Inspection_APP/ui/screen/timeline/timeline3.dart';
+import 'package:e_Inspection_APP/ui/screen/timeline/timeline4.dart';
+import 'package:e_Inspection_APP/ui/screen/timeline/timeline5.dart';
 import 'package:flutter/material.dart';
 
 class TimelineListPage extends StatefulWidget {

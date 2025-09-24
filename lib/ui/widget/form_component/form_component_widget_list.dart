@@ -1,15 +1,15 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/button_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/checkbox_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/date_picker_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/dropdown_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/radio_button_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/slider_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/switch_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/text_field_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/time_picker_widget.dart';
-import 'package:test_app_divkit/ui/widget/form_component/toggle_button_widget.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/button_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/checkbox_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/date_picker_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/dropdown_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/radio_button_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/slider_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/switch_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/text_field_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/time_picker_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/form_component/toggle_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class FormComponentWidgetListPage extends StatefulWidget {

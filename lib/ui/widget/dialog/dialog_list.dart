@@ -1,9 +1,9 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/dialog/alert_dialog.dart';
-import 'package:test_app_divkit/ui/widget/dialog/custom_dialog.dart';
-import 'package:test_app_divkit/ui/widget/dialog/simple_dialog.dart';
-import 'package:test_app_divkit/ui/widget/dialog/standart_dialog.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/dialog/alert_dialog.dart';
+import 'package:e_Inspection_APP/ui/widget/dialog/custom_dialog.dart';
+import 'package:e_Inspection_APP/ui/widget/dialog/simple_dialog.dart';
+import 'package:e_Inspection_APP/ui/widget/dialog/standart_dialog.dart';
 import 'package:flutter/material.dart';
 
 class DialogListPage extends StatefulWidget {

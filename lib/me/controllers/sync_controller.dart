@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/activites_navires_controller.dart';
-import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
-import 'package:test_app_divkit/me/controllers/conservations_controller.dart';
-import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
-import 'package:test_app_divkit/me/controllers/etats_engins_controller.dart';
-import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
-import 'package:test_app_divkit/me/controllers/pays_controller.dart';
-import 'package:test_app_divkit/me/controllers/ports_controller.dart';
-import 'package:test_app_divkit/me/controllers/presentations_controller.dart';
-import 'package:test_app_divkit/me/controllers/typenavires_controller.dart';
-import 'package:test_app_divkit/me/controllers/types_documents_controller.dart';
-import 'package:test_app_divkit/me/controllers/types_engins_controller.dart';
-import 'package:test_app_divkit/me/controllers/zones_capture_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/activites_navires_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/agents_shiping_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/conservations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/consignations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/etats_engins_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/inspections_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/pays_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/ports_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/presentations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/typenavires_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/types_documents_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/types_engins_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/zones_capture_controller.dart';
 
 import 'especes_controller.dart';
 

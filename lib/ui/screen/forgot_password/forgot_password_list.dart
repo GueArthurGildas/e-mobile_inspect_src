@@ -1,9 +1,9 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/screen/forgot_password/forgot_password1.dart';
-import 'package:test_app_divkit/ui/screen/forgot_password/forgot_password2.dart';
-import 'package:test_app_divkit/ui/screen/forgot_password/forgot_password3.dart';
-import 'package:test_app_divkit/ui/screen/forgot_password/forgot_password4.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/screen/forgot_password/forgot_password1.dart';
+import 'package:e_Inspection_APP/ui/screen/forgot_password/forgot_password2.dart';
+import 'package:e_Inspection_APP/ui/screen/forgot_password/forgot_password3.dart';
+import 'package:e_Inspection_APP/ui/screen/forgot_password/forgot_password4.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPasswordListPage extends StatefulWidget {

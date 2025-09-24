@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_5/step_five_controller.dart';
-import 'package:test_app_divkit/me/views/shared/app_bar.dart';
-import 'package:test_app_divkit/me/views/shared/app_dropdown_search.dart';
-import 'package:test_app_divkit/me/views/shared/app_fab_speed_dial.dart';
-import 'package:test_app_divkit/me/views/shared/app_form.dart';
-import 'package:test_app_divkit/me/views/shared/common.dart';
-import 'package:test_app_divkit/me/views/shared/form_control.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/views/inspection/section_inspection_form/step_5/step_five_controller.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_bar.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_dropdown_search.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_fab_speed_dial.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_form.dart';
+import 'package:e_Inspection_APP/me/views/shared/common.dart';
+import 'package:e_Inspection_APP/me/views/shared/form_control.dart';
 
 import 'informations_captures_screen.dart';
 

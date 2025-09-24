@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/routes/app_routes.dart';
+import 'package:e_Inspection_APP/me/routes/app_routes.dart';
 
 class PendingInspectionPage extends StatefulWidget {
   @override

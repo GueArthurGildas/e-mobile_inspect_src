@@ -1,4 +1,4 @@
-package com.example.test_app_divkit;
+package com.example.e_Inspection_APP;
 
 import io.flutter.embedding.android.FlutterActivity;
 

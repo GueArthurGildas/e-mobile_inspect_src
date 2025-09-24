@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
 import 'package:flutter/material.dart';
 
 class LinearProgressIndicatorPage extends StatefulWidget {

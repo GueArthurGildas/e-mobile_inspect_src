@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:test_app_divkit/me/routes/app_routes.dart';
+import 'package:e_Inspection_APP/me/routes/app_routes.dart';
 import 'package:universal_io/io.dart';
 
 // 🔽 importe ton controller
-import 'package:test_app_divkit/me/controllers/user_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

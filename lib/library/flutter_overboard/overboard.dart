@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/library/flutter_overboard/circular_clipper.dart';
-import 'package:test_app_divkit/library/flutter_overboard/overboard_animator.dart';
-import 'package:test_app_divkit/library/flutter_overboard/page_model.dart';
-import 'package:test_app_divkit/ui/reusable/cache_image_network.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/library/flutter_overboard/circular_clipper.dart';
+import 'package:e_Inspection_APP/library/flutter_overboard/overboard_animator.dart';
+import 'package:e_Inspection_APP/library/flutter_overboard/page_model.dart';
+import 'package:e_Inspection_APP/ui/reusable/cache_image_network.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

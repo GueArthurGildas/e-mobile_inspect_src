@@ -1,8 +1,8 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/safe_area/setting_side_safe_area.dart';
-import 'package:test_app_divkit/ui/widget/safe_area/with_safe_area.dart';
-import 'package:test_app_divkit/ui/widget/safe_area/without_safe_area.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/safe_area/setting_side_safe_area.dart';
+import 'package:e_Inspection_APP/ui/widget/safe_area/with_safe_area.dart';
+import 'package:e_Inspection_APP/ui/widget/safe_area/without_safe_area.dart';
 import 'package:flutter/material.dart';
 
 class SafeAreaWidgetListPage extends StatefulWidget {

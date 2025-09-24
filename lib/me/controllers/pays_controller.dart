@@ -1,7 +1,7 @@
 // pays_controller.dart
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/models/pays_model.dart';
-import 'package:test_app_divkit/me/services/api_get/pays_api_services.dart';
+import 'package:e_Inspection_APP/me/models/pays_model.dart';
+import 'package:e_Inspection_APP/me/services/api_get/pays_api_services.dart';
 
 class PaysController extends ChangeNotifier {
   final PaysService _service = PaysService();

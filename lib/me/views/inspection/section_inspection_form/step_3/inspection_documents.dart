@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/models/types_documents_model.dart';
-import 'package:test_app_divkit/me/views/inspection/section_inspection_form/step_3/step_three_controller.dart';
-import 'package:test_app_divkit/me/views/shared/app_bar.dart';
-import 'package:test_app_divkit/me/views/shared/app_dropdown_search.dart';
-import 'package:test_app_divkit/me/views/shared/app_form.dart';
-import 'package:test_app_divkit/me/views/shared/common.dart';
-import 'package:test_app_divkit/me/views/shared/file_manager.dart';
-import 'package:test_app_divkit/me/views/shared/form_control.dart';
+import 'package:e_Inspection_APP/me/models/types_documents_model.dart';
+import 'package:e_Inspection_APP/me/views/inspection/section_inspection_form/step_3/step_three_controller.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_bar.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_dropdown_search.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_form.dart';
+import 'package:e_Inspection_APP/me/views/shared/common.dart';
+import 'package:e_Inspection_APP/me/views/shared/file_manager.dart';
+import 'package:e_Inspection_APP/me/views/shared/form_control.dart';
 
 class FormInspectionDocumentsScreen extends StatefulWidget {
   const FormInspectionDocumentsScreen({super.key});

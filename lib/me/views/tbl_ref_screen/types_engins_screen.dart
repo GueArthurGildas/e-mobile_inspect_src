@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/types_engins_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/types_engins_controller.dart';
 
 class TypesEnginsScreen extends StatefulWidget {
   const TypesEnginsScreen({super.key});

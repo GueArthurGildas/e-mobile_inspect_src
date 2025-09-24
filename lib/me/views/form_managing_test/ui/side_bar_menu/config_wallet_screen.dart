@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
-import 'package:test_app_divkit/me/controllers/user_controller.dart';
-import 'package:test_app_divkit/me/views/dashboard/test_welcome_screen.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/side_bar_menu/theme_page_menu.dart';
+import 'package:e_Inspection_APP/me/controllers/inspections_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
+import 'package:e_Inspection_APP/me/views/dashboard/test_welcome_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/side_bar_menu/theme_page_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/Inspection_api_sync.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/sync_service_inspection.dart';
 
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:test_app_divkit/me/views/form_managing_test/ui/inspection_detail_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/inspection_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/Inspection_api_sync.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/sync_service_inspection.dart';
 
 // ⬇️ adapte le chemin si ton SyncController est ailleurs
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
 
 
 import 'package:flutter/material.dart';
 
 // ⬇️ adapte ces imports selon ton arborescence
-import 'package:test_app_divkit/me/services/database_service.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/Inspection_api_sync.dart';
-import 'package:test_app_divkit/me/views/form_managing_test/ui/sync_service_inspection.dart';
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
-import 'package:test_app_divkit/me/controllers/inspection_controller.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/Inspection_api_sync.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/sync_service_inspection.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/inspection_controller.dart';
 
 
 const kOrange =  Colors.orange;//Color(0xFFFF6A00);      // orange soutenu

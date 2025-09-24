@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
-import 'package:test_app_divkit/me/routes/app_routes.dart';
-import 'package:test_app_divkit/me/views/shared/app_bar.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/routes/app_routes.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_bar.dart';
 
 class WizardOption {
   String title;

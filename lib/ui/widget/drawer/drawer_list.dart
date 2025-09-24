@@ -1,9 +1,9 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/drawer/drawer_custom_header.dart';
-import 'package:test_app_divkit/ui/widget/drawer/drawer_custom_shape.dart';
-import 'package:test_app_divkit/ui/widget/drawer/drawer_right.dart';
-import 'package:test_app_divkit/ui/widget/drawer/standart_drawer.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/drawer/drawer_custom_header.dart';
+import 'package:e_Inspection_APP/ui/widget/drawer/drawer_custom_shape.dart';
+import 'package:e_Inspection_APP/ui/widget/drawer/drawer_right.dart';
+import 'package:e_Inspection_APP/ui/widget/drawer/standart_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DrawerListPage extends StatefulWidget {

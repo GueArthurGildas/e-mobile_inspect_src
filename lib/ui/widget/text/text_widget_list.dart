@@ -1,19 +1,19 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/text/alignment_text.dart';
-import 'package:test_app_divkit/ui/widget/text/bold_text.dart';
-import 'package:test_app_divkit/ui/widget/text/coloring_text.dart';
-import 'package:test_app_divkit/ui/widget/text/decoration_text.dart';
-import 'package:test_app_divkit/ui/widget/text/font_family_text.dart';
-import 'package:test_app_divkit/ui/widget/text/italic_text.dart';
-import 'package:test_app_divkit/ui/widget/text/letter_spacing_text.dart';
-import 'package:test_app_divkit/ui/widget/text/maxlines_overflow_text.dart';
-import 'package:test_app_divkit/ui/widget/text/rich_text.dart';
-import 'package:test_app_divkit/ui/widget/text/selectable_text.dart';
-import 'package:test_app_divkit/ui/widget/text/shadow_text.dart';
-import 'package:test_app_divkit/ui/widget/text/size_text.dart';
-import 'package:test_app_divkit/ui/widget/text/word_spacing_text.dart';
-import 'package:test_app_divkit/ui/widget/text/standart_text.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/text/alignment_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/bold_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/coloring_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/decoration_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/font_family_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/italic_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/letter_spacing_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/maxlines_overflow_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/rich_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/selectable_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/shadow_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/size_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/word_spacing_text.dart';
+import 'package:e_Inspection_APP/ui/widget/text/standart_text.dart';
 import 'package:flutter/material.dart';
 
 class TextWidgetListPage extends StatefulWidget {

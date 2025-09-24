@@ -1,6 +1,6 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/hero/hero_widget.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/hero/hero_widget.dart';
 import 'package:flutter/material.dart';
 
 class HeroWidgetListPage extends StatefulWidget {

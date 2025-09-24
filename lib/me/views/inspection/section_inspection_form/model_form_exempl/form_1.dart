@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:test_app_divkit/me/views/shared/app_bar.dart';
+import 'package:e_Inspection_APP/me/views/shared/app_bar.dart';
 
 class Form1 extends StatefulWidget {
   const Form1({super.key});

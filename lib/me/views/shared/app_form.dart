@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:test_app_divkit/me/views/shared/file_manager.dart';
-import 'package:test_app_divkit/me/views/shared/form_control.dart';
+import 'package:e_Inspection_APP/me/views/shared/file_manager.dart';
+import 'package:e_Inspection_APP/me/views/shared/form_control.dart';
 
 import 'app_dropdown_search.dart';
 import 'common.dart';

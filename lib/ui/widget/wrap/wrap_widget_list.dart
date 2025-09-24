@@ -1,11 +1,11 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/wrap/alignment_wrap.dart';
-import 'package:test_app_divkit/ui/widget/wrap/spacing_wrap.dart';
-import 'package:test_app_divkit/ui/widget/wrap/standart_wrap.dart';
-import 'package:test_app_divkit/ui/widget/wrap/text_direction_wrap.dart';
-import 'package:test_app_divkit/ui/widget/wrap/vertical_direction_wrap.dart';
-import 'package:test_app_divkit/ui/widget/wrap/wrap_direction.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/wrap/alignment_wrap.dart';
+import 'package:e_Inspection_APP/ui/widget/wrap/spacing_wrap.dart';
+import 'package:e_Inspection_APP/ui/widget/wrap/standart_wrap.dart';
+import 'package:e_Inspection_APP/ui/widget/wrap/text_direction_wrap.dart';
+import 'package:e_Inspection_APP/ui/widget/wrap/vertical_direction_wrap.dart';
+import 'package:e_Inspection_APP/ui/widget/wrap/wrap_direction.dart';
 import 'package:flutter/material.dart';
 
 class WrapWidgetListPage extends StatefulWidget {

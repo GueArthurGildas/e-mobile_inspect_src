@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/consignations_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/consignations_controller.dart';
 
 class ConsignationsScreen extends StatefulWidget {
   const ConsignationsScreen({super.key});

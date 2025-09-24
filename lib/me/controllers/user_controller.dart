@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
-import 'package:test_app_divkit/me/services/api_get/user_api_service.dart';
+import 'package:e_Inspection_APP/me/services/api_get/user_api_service.dart';
 
 class UserController extends ChangeNotifier {
   final UserService _service;

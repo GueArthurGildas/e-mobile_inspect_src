@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:sqflite/sqflite.dart';
-import 'package:test_app_divkit/me/config/api_constants.dart';
-import 'package:test_app_divkit/me/models/conservations_model.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/config/api_constants.dart';
+import 'package:e_Inspection_APP/me/models/conservations_model.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
 
 class ConservationsService {
   Future<Database> get _db async => await DatabaseHelper.database;

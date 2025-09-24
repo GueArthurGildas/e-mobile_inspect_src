@@ -1,4 +1,4 @@
-import 'package:test_app_divkit/config/apps/ecommerce/constant.dart';
+import 'package:e_Inspection_APP/config/apps/ecommerce/constant.dart';
 
 class RelatedProductModel {
   late int id;

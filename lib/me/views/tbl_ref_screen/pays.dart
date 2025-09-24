@@ -1,7 +1,7 @@
 // pays_screen.dart
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/pays_controller.dart';
-import 'package:test_app_divkit/me/models/pays_model.dart';
+import 'package:e_Inspection_APP/me/controllers/pays_controller.dart';
+import 'package:e_Inspection_APP/me/models/pays_model.dart';
 
 class PaysScreen extends StatefulWidget {
   const PaysScreen({super.key});

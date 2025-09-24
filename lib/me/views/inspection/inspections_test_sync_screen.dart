@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_app_divkit/me/controllers/inspection_controller.dart';
-import 'package:test_app_divkit/me/controllers/inspections_controller.dart';
-import 'package:test_app_divkit/me/models/inspection.dart';
-import 'package:test_app_divkit/me/models/inspection_model.dart';
+import 'package:e_Inspection_APP/me/controllers/inspection_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/inspections_controller.dart';
+import 'package:e_Inspection_APP/me/models/inspection.dart';
+import 'package:e_Inspection_APP/me/models/inspection_model.dart';
 
 class InspectionScreen extends StatelessWidget {
   const InspectionScreen({super.key});

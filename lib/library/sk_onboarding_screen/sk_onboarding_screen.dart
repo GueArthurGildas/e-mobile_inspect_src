@@ -1,8 +1,8 @@
 library sk_onboarding_screen;
 
-import 'package:test_app_divkit/ui/reusable/cache_image_network.dart';
+import 'package:e_Inspection_APP/ui/reusable/cache_image_network.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/library/sk_onboarding_screen/sk_onboarding_model.dart';
+import 'package:e_Inspection_APP/library/sk_onboarding_screen/sk_onboarding_model.dart';
 import 'package:universal_io/io.dart' as io;
 
 class SKOnboardingScreen extends StatefulWidget {

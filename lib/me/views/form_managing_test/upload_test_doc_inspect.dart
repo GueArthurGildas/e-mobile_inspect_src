@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 // lib/widgets/push_inspection_320_button.dart
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:test_app_divkit/me/services/database_service.dart';
+import 'package:e_Inspection_APP/me/services/database_service.dart';
 
 
 final _dio = Dio(BaseOptions(

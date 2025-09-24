@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/agents_shiping_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/agents_shiping_controller.dart';
 
 class AgentsShipingScreen extends StatefulWidget {
   const AgentsShipingScreen({super.key});

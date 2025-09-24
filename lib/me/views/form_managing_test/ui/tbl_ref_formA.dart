@@ -1,14 +1,14 @@
-import 'package:test_app_divkit/me/controllers/activites_navires_controller.dart';
-import 'package:test_app_divkit/me/controllers/pavillons_controller.dart';
-import 'package:test_app_divkit/me/controllers/pays_controller.dart';
-import 'package:test_app_divkit/me/controllers/ports_controller.dart';
-import 'package:test_app_divkit/me/controllers/sync_controller.dart';
-import 'package:test_app_divkit/me/controllers/typenavires_controller.dart';
-import 'package:test_app_divkit/me/models/activites_navires_model.dart';
-import 'package:test_app_divkit/me/models/pavillons_model.dart';
-import 'package:test_app_divkit/me/models/pays_model.dart';
-import 'package:test_app_divkit/me/models/ports_model.dart';
-import 'package:test_app_divkit/me/models/typenavires_model.dart';
+import 'package:e_Inspection_APP/me/controllers/activites_navires_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/pavillons_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/pays_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/ports_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/sync_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/typenavires_controller.dart';
+import 'package:e_Inspection_APP/me/models/activites_navires_model.dart';
+import 'package:e_Inspection_APP/me/models/pavillons_model.dart';
+import 'package:e_Inspection_APP/me/models/pays_model.dart';
+import 'package:e_Inspection_APP/me/models/ports_model.dart';
+import 'package:e_Inspection_APP/me/models/typenavires_model.dart';
 
 class MyStepOneController {
   MyStepOneController();

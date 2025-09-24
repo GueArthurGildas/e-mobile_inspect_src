@@ -1,7 +1,7 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/model/screen/product_model.dart';
-import 'package:test_app_divkit/ui/reusable/cache_image_network.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/model/screen/product_model.dart';
+import 'package:e_Inspection_APP/ui/reusable/cache_image_network.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

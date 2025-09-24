@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/user_controller.dart';
-import 'package:test_app_divkit/me/models/user_model.dart';
+import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
+import 'package:e_Inspection_APP/me/models/user_model.dart';
 
 const kOrange = Color(0xFFFFA726);
 const kGreen  = Color(0xFF2ECC71);

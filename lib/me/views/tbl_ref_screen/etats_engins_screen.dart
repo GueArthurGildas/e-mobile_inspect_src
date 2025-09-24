@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/etats_engins_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/etats_engins_controller.dart';
 
 class EtatsEnginsScreen extends StatefulWidget {
   const EtatsEnginsScreen({super.key});

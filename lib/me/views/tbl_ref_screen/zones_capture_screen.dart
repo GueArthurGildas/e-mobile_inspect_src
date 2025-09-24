@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_app_divkit/me/controllers/zones_capture_controller.dart';
+import 'package:e_Inspection_APP/me/controllers/zones_capture_controller.dart';
 
 class ZonesCaptureScreen extends StatefulWidget {
   const ZonesCaptureScreen({super.key});

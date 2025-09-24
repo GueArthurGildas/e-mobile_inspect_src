@@ -1,11 +1,11 @@
-import 'package:test_app_divkit/config/constant.dart';
-import 'package:test_app_divkit/ui/reusable/global_widget.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_appbar_list.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_combine.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_grid_list.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_list_list.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sliver_to_box_adapter.dart';
-import 'package:test_app_divkit/ui/widget/sliver/sticky_sliver.dart';
+import 'package:e_Inspection_APP/config/constant.dart';
+import 'package:e_Inspection_APP/ui/reusable/global_widget.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_appbar_list.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_combine.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_grid_list.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_list_list.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sliver_to_box_adapter.dart';
+import 'package:e_Inspection_APP/ui/widget/sliver/sticky_sliver.dart';
 import 'package:flutter/material.dart';
 
 class SliverWidgetListPage extends StatefulWidget {
