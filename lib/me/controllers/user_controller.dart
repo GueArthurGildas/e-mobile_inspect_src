@@ -309,7 +309,7 @@ class UserController extends ChangeNotifier {
   /// Option pratique : un "logout" unique
   Future<void> logout() async {
     await clearCurrentUser();
-    // _users = []; // si tu veux vider le cache liste
-    // notifyListeners(); // déjà fait dans clearCurrentUser()
+     //_users = []; // si tu veux vider le cache liste
+    //notifyListeners(); // déjà fait dans clearCurrentUser()
   }
 }

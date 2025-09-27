@@ -1,11 +1,44 @@
+import 'package:e_Inspection_APP/me/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/message/service_chat.dart';
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/msg_screen.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final ScrollController scrollController = ScrollController();
+  User? currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  // Charger l'utilisateur au démarrage
+  Future<void> _loadCurrentUser() async {
+    final userController = context.read<UserController>();
+
+    // S'assurer que l'utilisateur est hydraté depuis les SharedPreferences
+    await userController.hydrateSession();
+
+    // Récupérer l'utilisateur actuel
+    final user = userController.currentUser;
+
+    setState(() {
+      currentUser = user;
+    });
+
+    // Debug pour vérifier
+    debugPrint('✅ Current user loaded: ${user?.email} (ID: ${user?.id})');
+  }
 
   bool _isNewDay(DateTime? prev, DateTime curr) {
     if (prev == null) return true;
@@ -61,10 +94,43 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
+  // Méthode robuste pour comparer l'utilisateur
+  bool _isCurrentUser(Message message) {
+    if (currentUser == null) return false;
+
+    // 🎯 SOLUTION 1: Comparaison par ID (le plus fiable)
+    if (currentUser!.id != null && message.senderId != null) {
+      final result = currentUser!.id == message.senderId;
+      debugPrint('🔍 ID Comparison - Current: ${currentUser!.id}, Sender: ${message.senderId}, IsMe: $result');
+      return result;
+    }
+
+    // 🎯 SOLUTION 2: Comparaison par email (fallback)
+    final currentEmail = currentUser!.email?.trim().toLowerCase() ?? '';
+    final senderEmail = message.senderEmail?.trim().toLowerCase() ?? '';
+
+    if (currentEmail.isNotEmpty && senderEmail.isNotEmpty) {
+      final result = currentEmail == senderEmail;
+      debugPrint('📧 Email Comparison - Current: "$currentEmail", Sender: "$senderEmail", IsMe: $result');
+      return result;
+    }
+
+    // 🎯 SOLUTION 3: Comparaison par nom (dernière option)
+    final currentName = currentUser!.name?.trim().toLowerCase() ?? '';
+    final senderName = message.senderName?.trim().toLowerCase() ?? '';
+
+    if (currentName.isNotEmpty && senderName.isNotEmpty) {
+      final result = currentName == senderName;
+      debugPrint('👤 Name Comparison - Current: "$currentName", Sender: "$senderName", IsMe: $result');
+      return result;
+    }
+
+    debugPrint('❌ No valid comparison method found');
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<UserController>().currentUser;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(72),
@@ -100,12 +166,12 @@ class ChatScreen extends StatelessWidget {
                   child: const Icon(Icons.forum_outlined, color: Colors.white),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         "Conversation",
                         style: TextStyle(
                           fontSize: 20,
@@ -114,10 +180,12 @@ class ChatScreen extends StatelessWidget {
                           letterSpacing: .2,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Text(
-                        "Centre de communication",
-                        style: TextStyle(
+                        currentUser?.name != null
+                            ? "Connecté: ${currentUser!.name}"
+                            : "Centre de communication",
+                        style: const TextStyle(
                           fontSize: 12.5,
                           color: Colors.white70,
                           fontWeight: FontWeight.w500,
@@ -171,19 +239,35 @@ class ChatScreen extends StatelessWidget {
                         );
                       }
 
-                      DateTime? lastDate;
-                      return ListView.builder(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        itemCount: items.length,
-                        itemBuilder: (context, i) {
-                          final m = items[i];
-                          final dt = m.timestamp;
-                          final newDay = _isNewDay(lastDate, dt);
-                          lastDate = dt;
+                      // Trier les messages par timestamp (du plus ancien au plus récent)
+                      final sortedItems = List<Message>.from(items);
+                      sortedItems.sort((a, b) => a.timestamp.compareTo(b.timestamp));
 
-                          String _norm(String? s) => (s ?? '').trim().toLowerCase();
-                          final meEmail = _norm(user?.email);
-                          final isMe = _norm(m.senderEmail) == meEmail;
+                      // Auto-scroll vers le bas quand les données changent
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (scrollController.hasClients && mounted) {
+                          scrollController.animateTo(
+                            scrollController.position.maxScrollExtent,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeOut,
+                          );
+                        }
+                      });
+
+                      return ListView.builder(
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemCount: sortedItems.length,
+                        itemBuilder: (context, i) {
+                          final m = sortedItems[i];
+                          final dt = m.timestamp;
+
+                          // Vérifier si c'est un nouveau jour par rapport au message précédent
+                          final prevMessage = i > 0 ? sortedItems[i - 1] : null;
+                          final newDay = _isNewDay(prevMessage?.timestamp, dt);
+
+                          // 🎯 Utilisation de la méthode robuste de comparaison
+                          final isMe = _isCurrentUser(m);
 
                           Widget bubble = MessageBubble(
                             text: m.message,
@@ -223,9 +307,11 @@ class ChatScreen extends StatelessWidget {
                               },
                               onDismissed: (_) async {
                                 await MessageService().deleteMessage(m.id);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Message supprimé.")),
-                                );
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Message supprimé.")),
+                                  );
+                                }
                               },
                               child: bubble,
                             );
@@ -254,5 +340,11 @@ class ChatScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }
