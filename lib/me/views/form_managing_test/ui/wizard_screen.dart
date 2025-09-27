@@ -185,19 +185,117 @@ class _WizardScreenState extends State<WizardScreen> {
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
-        title: const Text('Confirmation'),
-        content: const Text('Voulez-vous vraiment enregistrer votre inspection ?'),
-        contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-        actions: [
-          TextButton(
-            style: _textBackStyle(),
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+        // Icône d'alerte pour attirer l'attention
+        icon: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.orange.shade100,
+            shape: BoxShape.circle,
           ),
-          FilledButton(
-            style: _filledOrangeStyle(),
+          child: Icon(
+            Icons.save_alt_rounded,
+            size: 32,
+            color: Colors.orange.shade700,
+          ),
+        ),
+
+        title: const Text(
+          'Confirmation d\'enregistrement',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+          textAlign: TextAlign.center,
+        ),
+
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            const Text(
+              'Voulez-vous vraiment enregistrer votre inspection ?',
+              style: TextStyle(
+                fontSize: 16,
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            // Message d'information supplémentaire
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.blue.shade200),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    size: 20,
+                    color: Colors.blue.shade600,
+                  ),
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: Text(
+                      'Cette action ne peut pas être annulée.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF1565C0),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+
+        contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+        actionsPadding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
+
+        actions: [
+          // Bouton Annuler avec style amélioré
+          TextButton(
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text(
+              'Annuler',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 12),
+
+          // Bouton de confirmation avec animation au survol
+          FilledButton.icon(
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.orange.shade600,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 2,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Oui, enregistrer'),
+            icon: const Icon(Icons.check_rounded, size: 20),
+            label: const Text(
+              'Oui, enregistrer',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),

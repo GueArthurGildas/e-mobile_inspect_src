@@ -549,7 +549,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
                     child: FilledButton.icon(
                       onPressed: _saveCurrentSignature,
                       icon: const Icon(Icons.check),
-                      label: const Text('Valider l\'inspection'),
+                      label: const Text('Continuer'),
                       style: FilledButton.styleFrom(
                         backgroundColor: const Color(0xFFFF6A00),
                         foregroundColor: Colors.white,
