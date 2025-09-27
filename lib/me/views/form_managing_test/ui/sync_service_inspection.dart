@@ -62,7 +62,7 @@ class SyncService {
     // 1) récupérer id + json_field où sync=0
     final rows = await db.query(
       'inspections',
-      columns: ['id', 'json_field'],
+      columns: ['id', 'json_field',"statut_inspection_id"],
       where: 'sync = 0',
     );
 
@@ -81,9 +81,11 @@ class SyncService {
       if (id == null) continue;
 
       final jf = _normalizeJsonField(r['json_field']);
+      final statut_id = r['statut_inspection_id'];
       items.add({
         'id': id,
         'json_field': jf,
+        'statut_inspection_id' : statut_id,
       });
     }
 

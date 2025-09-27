@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "443467083066",
+    "project_id": "csp-mirah",
+    "storage_bucket": "csp-mirah.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443467083066:android:4feeca7affa4fc20d47403",
+        "android_client_info": {
+          "package_name": "com.example.e_Inspection_APP"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZnpF33vx77zMdSjBS8pHaW-YDP9hVm0k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

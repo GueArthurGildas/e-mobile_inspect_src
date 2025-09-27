@@ -40,15 +40,15 @@ dependencies:
 #  battery_plus: ^6.2.1
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
-#  cloud_firestore: ^5.6.8
+  cloud_firestore: ^5.6.8
   convex_bottom_bar: 3.2.0
   #cupertino_icons: ^1.0.8
   date_format: ^2.0.9
 #  device_info_plus: ^11.4.0
   dio: ^5.8.0+1
 #  firebase_auth: ^5.5.4
-#  firebase_core: ^3.13.1
-#  firebase_storage: ^12.4.6
+  firebase_core: ^3.13.1
+  firebase_storage: ^12.4.6
 #  #flick_video_player: 0.5.0 must wait for the update because not compatible with the new package win32
   fluttertoast: ^8.2.12
 ##  flutter_barcode_scanner: 2.0.0

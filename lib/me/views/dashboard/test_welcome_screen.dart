@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/message/screen_chat.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/msg_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +49,8 @@ class _WalletScreenState extends State<WalletScreen> {
       _displayName = current?.name ?? 'Utilisateur';
     });
   }
+
+
 
   initState(){
     _loadUser();
@@ -187,6 +191,24 @@ class _WalletScreenState extends State<WalletScreen> {
 
 
                   const PushInspection320Button(),
+
+
+                  //const SendMessageBox(), // <-- Le champ + bouton "Envoyer"
+
+
+                  ///// for chat
+
+                  FloatingActionButton.extended(
+                    backgroundColor: Colors.green,
+                    icon: const Icon(Icons.forum),
+                    label: const Text("Communiquer"),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const ChatScreen()),
+                      );
+                    },
+                  ),
+
 
 
                   //////////////
@@ -1565,7 +1587,11 @@ Future<bool?> _confirmLogout(BuildContext context) {
           icon: const Icon(Icons.logout),
           label: const Text("Se déconnecter"),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-          onPressed: () { Navigator.of(context).pop(true);  },
+          onPressed: () async {
+            //final userCtrl = context.read<UserController>();
+            //var u = userCtrl.currentUser;
+            //userCtrl.logout();
+            Navigator.of(context).pop(true);  },
         ),
       ],
     ),
@@ -1934,6 +1960,9 @@ class _InfoTile extends StatelessWidget {
     );
   }
 }
+
+
+
 
 
 
