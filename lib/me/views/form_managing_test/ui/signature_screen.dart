@@ -68,6 +68,246 @@ class _SignatureScreenState extends State<SignatureScreen> {
     return _controllers[_currentParticipant]!;
   }
 
+  /// Dialogue de validation finale après collecte des signatures
+  Future<bool?> _showFinalValidationDialog(
+      BuildContext context,
+      Map<String, Map<String, dynamic>> signaturesData,
+      int participantCount,
+      ) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => Dialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.85, // hauteur max
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Header avec icône d'avertissement
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade600,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.warning_amber_rounded,
+                                  size: 48,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  'VALIDATION FINALE',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'DERNIÈRE ÉTAPE',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.red.shade100,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // Récapitulatif des signatures
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.green.shade200),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.check_circle, color: Colors.green.shade600, size: 24),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Signatures collectées',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.green.shade700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        '$participantCount participants + 1 capitaine',
+                                        style: TextStyle(
+                                          color: Colors.green.shade600,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // Avertissement critique
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.red.shade300, width: 2),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.lock_outline, color: Colors.red.shade600, size: 24),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        'ACTION IRRÉVERSIBLE',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red.shade700,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 12),
+                                Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.shade100,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(
+                                    'Cette inspection sera définitivement verrouillée.\nAucune modification ne sera plus possible.',
+                                    style: TextStyle(
+                                      color: Colors.red.shade700,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.4,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 24),
+
+                          // Question finale
+                          Text(
+                            'Voulez-vous vraiment finaliser cette inspection ?',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade800,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          Text(
+                            'Vérifiez que toutes les informations sont correctes avant de continuer.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // --- Boutons en bas, toujours visibles ---
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.grey.shade700,
+                              side: BorderSide(color: Colors.grey.shade400),
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            onPressed: () => Navigator.of(context).pop(false),
+                            icon: const Icon(Icons.close_rounded, size: 20),
+                            label: const Text(
+                              'Annuler',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: FilledButton.icon(
+                            style: FilledButton.styleFrom(
+                              backgroundColor: Colors.red.shade600,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 2,
+                            ),
+                            onPressed: () => Navigator.of(context).pop(true),
+                            icon: const Icon(Icons.gavel, size: 20),
+                            label: const Text(
+                              'FINALISER',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
   Future<void> _saveCurrentSignature() async {
     if (_currentController.isEmpty) {
       _showSnackBar('Veuillez signer avant de continuer');
@@ -139,7 +379,7 @@ class _SignatureScreenState extends State<SignatureScreen> {
     // Pas besoin de PageController pour le capitaine, on change juste l'état
   }
 
-  void _completeAllSignatures() {
+  void _completeAllSignatures() async {
     // Préparer les données de signatures pour le retour
     final signaturesData = <String, Map<String, dynamic>>{};
 
@@ -167,39 +407,20 @@ class _SignatureScreenState extends State<SignatureScreen> {
       };
     }
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => AlertDialog(
-        title: const Row(
-          children: [
-            Icon(Icons.check_circle, color: Color(0xFF1BB35B)),
-            SizedBox(width: 8),
-            Text('Signatures complètes'),
-          ],
-        ),
-        content: Text(
-          'Toutes les signatures ont été collectées :\n'
-              '• ${_signatures.length} participant(s)\n'
-              '• 1 signature capitaine\n\n'
-              'Retour à la validation de l\'inspection.',
-        ),
-        actions: [
-          FilledButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Fermer le dialogue
-              // Retourner les données de signatures
-              Navigator.of(context).pop(signaturesData);
-            },
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFF1BB35B),
-              foregroundColor: Colors.white,
-            ),
-            child: const Text('Continuer la validation'),
-          ),
-        ],
-      ),
+    // Afficher le dialogue de validation finale
+    final shouldContinue = await _showFinalValidationDialog(
+      context,
+      signaturesData,
+      _signatures.length,
     );
+
+    // Vérifier la réponse de l'utilisateur
+    if (shouldContinue == true) {
+      // L'utilisateur a confirmé - retourner les signatures
+      Navigator.of(context).pop(signaturesData);
+    }
+    // Si shouldContinue == false ou null, on ne fait rien
+    // L'utilisateur reste sur l'écran de signatures
   }
 
   void _showSnackBar(String message) {

@@ -69,6 +69,8 @@ class _WizardScreenState extends State<WizardScreen> {
 
   /// ✅ Soumission avec sélection des participants avant confirmation
   /// ✅ Soumission avec sélection des participants ET signatures
+  /// ✅ Soumission avec sélection des participants avant confirmation
+  /// ✅ Soumission avec sélection des participants ET signatures
   Future<void> _submitWizard(Map<String, dynamic> payload) async {
     if (!mounted) return;
 
@@ -136,6 +138,7 @@ class _WizardScreenState extends State<WizardScreen> {
     if (signaturesData == null || signaturesData.isEmpty) return;
     if (!mounted) return;
 
+    // 🆕 DIRECTEMENT APRÈS SIGNATURES : Commencer le processus de sauvegarde
     // 0.2) 🆕 Persister dans la section 'f' AVEC LES SIGNATURES
     await ctrl.saveSection('f', {
       'participants'      : participantsIds,
@@ -153,11 +156,11 @@ class _WizardScreenState extends State<WizardScreen> {
       'signatures'        : signaturesData,
     };
 
-    // Injection dans le JSON final (VOTRE CODE EXISTANT)
+    // Injection dans le JSON final
     payload['participants'] = participantsIds;
     payload['participants_meta'] = participantsMeta;
 
-    // -- Mise à jour du statut après confirmation (VOTRE CODE EXISTANT - INCHANGÉ)
+    // -- Mise à jour du statut après signatures
     try {
       final id = ctrl.inspectionId;
       if (id != null) {
@@ -180,129 +183,7 @@ class _WizardScreenState extends State<WizardScreen> {
       return;
     }
 
-    // 2) (VOTRE SECONDE CONFIRMATION EXISTANTE - EXACTEMENT IDENTIQUE)
-    final confirm = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => AlertDialog(
-        // Icône d'alerte pour attirer l'attention
-        icon: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: Colors.orange.shade100,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            Icons.save_alt_rounded,
-            size: 32,
-            color: Colors.orange.shade700,
-          ),
-        ),
-
-        title: const Text(
-          'Confirmation d\'enregistrement',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-          textAlign: TextAlign.center,
-        ),
-
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 8),
-            const Text(
-              'Voulez-vous vraiment enregistrer votre inspection ?',
-              style: TextStyle(
-                fontSize: 16,
-                height: 1.4,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            // Message d'information supplémentaire
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.blue.shade200),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.info_outline,
-                    size: 20,
-                    color: Colors.blue.shade600,
-                  ),
-                  const SizedBox(width: 8),
-                  const Expanded(
-                    child: Text(
-                      'Cette action ne peut pas être annulée.',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF1565C0),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-
-        contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-        actionsPadding: const EdgeInsets.fromLTRB(24, 16, 24, 20),
-
-        actions: [
-          // Bouton Annuler avec style amélioré
-          TextButton(
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text(
-              'Annuler',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-
-          const SizedBox(width: 12),
-
-          // Bouton de confirmation avec animation au survol
-          FilledButton.icon(
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.orange.shade600,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              elevation: 2,
-            ),
-            onPressed: () => Navigator.of(context).pop(true),
-            icon: const Icon(Icons.check_rounded, size: 20),
-            label: const Text(
-              'Oui, enregistrer',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    if (confirm != true) return;
-
-    // 3) Progression simulée (VOTRE CODE EXISTANT - INCHANGÉ)
+    // 🆕 DIRECTEMENT AFFICHER LA PROGRESSION - PLUS DE CONFIRMATION
     int progress = 0;
     showDialog(
       context: context,
@@ -366,7 +247,6 @@ class _WizardScreenState extends State<WizardScreen> {
       MaterialPageRoute(builder: (_) => const ValidationScreen()),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
