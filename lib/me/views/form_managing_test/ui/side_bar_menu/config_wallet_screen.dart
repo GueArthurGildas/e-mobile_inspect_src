@@ -110,106 +110,234 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
       task: (status) async {
         String msg = '';
         Color color = Colors.green;
+        List<String> detailsMessages = [];
 
         try {
-
-
-
           // ====================================
-          // Étape 2/3 — Upload des documents
+          // Étape 1/3 — Upload des documents
           // ====================================
-          status.value = 'Étape 2/3 — Upload des documents des inspections…';
+          status.value = 'Étape 1/3 — Recherche des documents à synchroniser…';
 
-          // Récupérer les inspections à synchroniser (sync=1 ET statut_inspection_id=2)
           final db = await DatabaseHelper.database;
           final inspectionsToSync = await InspectionSyncService.getInspectionsToSync(db);
 
           if (inspectionsToSync.isNotEmpty) {
+            detailsMessages.add('📋 ${inspectionsToSync.length} inspection(s) avec documents à synchroniser');
+            status.value = 'Étape 1/3 — Upload des documents (0/${inspectionsToSync.length})…';
+
             int currentInspection = 0;
             final totalInspections = inspectionsToSync.length;
 
-            // Synchroniser chaque inspection avec suivi de progression
+            // Synchroniser chaque inspection avec suivi détaillé
             final docResults = await InspectionSyncService.syncAllPendingInspections(
               onInspectionProgress: (current, total) {
                 currentInspection = current;
-                status.value = 'Étape 2/3 — Upload documents ($current/$total inspections)…';
+                status.value = 'Étape 1/3 — Upload documents ($current/$total inspections)…';
               },
               onUploadProgress: (sent, total) {
                 if (total > 0) {
                   final percent = (sent / total * 100).toStringAsFixed(0);
-                  status.value = 'Étape 2/3 — Upload inspection $currentInspection/$totalInspections ($percent%)…';
+                  final mb = (sent / 1024 / 1024).toStringAsFixed(1);
+                  final totalMb = (total / 1024 / 1024).toStringAsFixed(1);
+                  status.value = 'Étape 1/3 — Upload inspection $currentInspection/$totalInspections ($percent% - $mb/$totalMb MB)…';
                 }
               },
             );
 
-            // Compter les succès/échecs
+            // Analyser les résultats détaillés
             final successCount = docResults.where((r) => r.success).length;
             final failureCount = docResults.length - successCount;
 
-            msg += '\nDocuments: $successCount réussies';
+            if (successCount > 0) {
+              detailsMessages.add('✅ $successCount inspection(s) synchronisée(s) avec succès');
+
+              // Détails des succès
+              final successes = docResults.where((r) => r.success).toList();
+              for (final result in successes) {
+                detailsMessages.add('   • Inspection ${result.inspectionId}: ${result.documentCount} document(s)');
+              }
+            }
+
             if (failureCount > 0) {
-              msg += ', $failureCount échouées';
               color = Colors.orange;
-            }
+              detailsMessages.add('⚠️ $failureCount inspection(s) avec erreur(s)');
 
-            // Afficher les détails des échecs si nécessaire
-            if (failureCount > 0) {
+              // Détails des échecs avec messages d'erreur complets
               final failures = docResults.where((r) => !r.success).toList();
-              final failureDetails = failures.map((f) =>
-              'ID ${f.inspectionId}: ${f.message}'
-              ).join('\n');
+              for (final result in failures) {
+                detailsMessages.add('   ❌ Inspection ${result.inspectionId}:');
+                detailsMessages.add('      ${result.message}');
 
-              debugPrint('Échecs upload documents:\n$failureDetails');
+                // Log détaillé pour debug
+                debugPrint('=== ÉCHEC INSPECTION ${result.inspectionId} ===');
+                debugPrint('Message: ${result.message}');
+                debugPrint('Documents tentés: ${result.documentCount}');
+                if (result.serverResponse != null) {
+                  debugPrint('Réponse serveur: ${result.serverResponse}');
+                }
+                debugPrint('=====================================');
+              }
+
+              // Afficher dialog d'erreur détaillé si échecs
+              if (mounted) {
+                final errorDetails = failures.map((f) =>
+                'Inspection ${f.inspectionId}:\n${f.message}'
+                ).join('\n\n');
+
+                await _showErrorDialog(
+                  context,
+                  title: 'Erreurs upload documents',
+                  message: '$failureCount inspection(s) n\'ont pas pu être synchronisées:\n\n$errorDetails',
+                );
+              }
             }
+
+            msg = 'Documents: $successCount/$totalInspections synchronisées';
+
           } else {
-            msg += '\nAucun document à synchroniser';
+            detailsMessages.add('ℹ️ Aucun document à synchroniser (sync=1 et statut_inspection_id=2)');
+            msg = 'Aucun document à synchroniser';
           }
 
           // ====================================
-          // Étape 1/3 — Synchro serveur (Laravel)
+          // Étape 2/3 — Synchro serveur (Laravel)
           // ====================================
-          status.value = 'Étape 1/3 — Synchronisation serveur (Laravel)…';
-          final api = InspectionApi(baseUrl: 'https://www.mirah-csp.com/api/v1');
+          status.value = 'Étape 2/3 — Synchronisation serveur (Laravel)…';
 
-          final service = SyncService(
-            getDb: () => DatabaseHelper.database,
-            api: api,
-            chunkSize: 100,
-          );
+          try {
+            final api = InspectionApi(baseUrl: 'https://www.mirah-csp.com/api/v1');
 
-          final r = await service.run();
-          if (r.error != null) throw Exception(r.error);
+            final service = SyncService(
+              getDb: () => DatabaseHelper.database,
+              api: api,
+              chunkSize: 100,
+            );
 
-          msg = 'Serveur OK. À envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
+            final r = await service.run();
 
+            if (r.error != null) {
+              throw Exception('Erreur serveur: ${r.error}');
+            }
+
+            detailsMessages.add('✅ Synchronisation serveur réussie');
+            detailsMessages.add('   • À envoyer: ${r.totalPending}');
+            detailsMessages.add('   • Envoyés: ${r.totalSent}');
+            detailsMessages.add('   • Mis à jour: ${r.totalUpdated}');
+
+            msg += '\nServeur: ${r.totalSent} envoyés, ${r.totalUpdated} MAJ';
+
+          } catch (e) {
+            color = Colors.red;
+            detailsMessages.add('❌ Échec synchronisation serveur: $e');
+
+            debugPrint('=== ERREUR SYNC SERVEUR ===');
+            debugPrint('$e');
+            debugPrint('===========================');
+
+            if (mounted) {
+              await _showErrorDialog(
+                context,
+                title: 'Erreur synchronisation serveur',
+                message: 'La synchronisation avec le serveur Laravel a échoué.\n\nDétail: $e',
+              );
+            }
+
+            throw e; // Re-throw pour arrêter le processus
+          }
 
           // ====================================
           // Étape 3/3 — Refresh local
           // ====================================
           status.value = 'Étape 3/3 — Actualisation locale…';
-          final inspectController = InspectionController();
-          await inspectController.loadAndSync();
 
+          try {
+            final inspectController = InspectionController();
+            await inspectController.loadAndSync();
+
+            detailsMessages.add('✅ Actualisation locale terminée');
+
+          } catch (e) {
+            color = Colors.orange;
+            detailsMessages.add('⚠️ Erreur actualisation locale: $e');
+
+            debugPrint('=== ERREUR REFRESH LOCAL ===');
+            debugPrint('$e');
+            debugPrint('============================');
+
+            // Continuer malgré l'erreur de refresh local
+            msg += '\n⚠️ Actualisation locale incomplète';
+          }
+
+          // Message final
           msg = 'Synchronisation terminée.\n$msg';
 
-        } catch (e) {
-          msg = 'Échec de la synchronisation : $e';
+          // Log complet dans la console
+          debugPrint('=== RÉSUMÉ SYNCHRONISATION ===');
+          for (final detail in detailsMessages) {
+            debugPrint(detail);
+          }
+          debugPrint('==============================');
+
+        } catch (e, stackTrace) {
+          msg = 'Échec de la synchronisation';
           color = Colors.red;
+
+          detailsMessages.add('❌ ERREUR GÉNÉRALE: $e');
+
+          // Log détaillé de l'erreur
+          debugPrint('=== ERREUR CRITIQUE SYNCHRONISATION ===');
+          debugPrint('Erreur: $e');
+          debugPrint('Stack trace:');
+          debugPrint('$stackTrace');
+          debugPrint('========================================');
+
           if (mounted) {
+            // Construire un message d'erreur détaillé
+            final errorMessage = detailsMessages.join('\n');
+
             await _showErrorDialog(
               context,
-              title: 'Erreur',
-              message: 'Un problème est survenu pendant la synchro des inspections.\n\nDétail : $e',
+              title: 'Erreur de synchronisation',
+              message: 'Un problème est survenu pendant la synchronisation.\n\n$errorMessage\n\nErreur technique: $e',
             );
           }
         }
 
+        // Afficher le résumé final
         if (!mounted) return;
+
+        // Message détaillé si erreurs
+        if (color != Colors.green && detailsMessages.isNotEmpty) {
+          final summary = detailsMessages.take(5).join('\n'); // Prendre les 5 premiers messages
+          msg = '$msg\n\n$summary';
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(msg),
             backgroundColor: color,
-            duration: const Duration(seconds: 5),
+            duration: Duration(seconds: color == Colors.green ? 5 : 8),
+            action: color != Colors.green ? SnackBarAction(
+              label: 'Détails',
+              textColor: Colors.white,
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Détails de la synchronisation'),
+                    content: SingleChildScrollView(
+                      child: Text(detailsMessages.join('\n')),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ) : null,
           ),
         );
       },
@@ -217,7 +345,6 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
 
     if (mounted) setState(() => _busyInspection = false);
   }
-
   // ==========================================
   // TABLES DE RÉFÉRENCE : nécessite un code "ok123"
   // ==========================================
