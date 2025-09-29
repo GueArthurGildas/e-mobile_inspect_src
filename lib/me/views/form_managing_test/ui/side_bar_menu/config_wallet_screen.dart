@@ -1,3 +1,4 @@
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/upload_doc_insp/upload_all_inspect_services.dart';
 import 'package:flutter/material.dart';
 import 'package:e_Inspection_APP/me/controllers/inspections_controller.dart';
 import 'package:e_Inspection_APP/me/controllers/user_controller.dart';
@@ -111,8 +112,63 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
         Color color = Colors.green;
 
         try {
-          // Étape 1/2 — synchro serveur
-          status.value = 'Étape 1/2 — Synchronisation serveur (Laravel)…';
+
+
+
+          // ====================================
+          // Étape 2/3 — Upload des documents
+          // ====================================
+          status.value = 'Étape 2/3 — Upload des documents des inspections…';
+
+          // Récupérer les inspections à synchroniser (sync=1 ET statut_inspection_id=2)
+          final db = await DatabaseHelper.database;
+          final inspectionsToSync = await InspectionSyncService.getInspectionsToSync(db);
+
+          if (inspectionsToSync.isNotEmpty) {
+            int currentInspection = 0;
+            final totalInspections = inspectionsToSync.length;
+
+            // Synchroniser chaque inspection avec suivi de progression
+            final docResults = await InspectionSyncService.syncAllPendingInspections(
+              onInspectionProgress: (current, total) {
+                currentInspection = current;
+                status.value = 'Étape 2/3 — Upload documents ($current/$total inspections)…';
+              },
+              onUploadProgress: (sent, total) {
+                if (total > 0) {
+                  final percent = (sent / total * 100).toStringAsFixed(0);
+                  status.value = 'Étape 2/3 — Upload inspection $currentInspection/$totalInspections ($percent%)…';
+                }
+              },
+            );
+
+            // Compter les succès/échecs
+            final successCount = docResults.where((r) => r.success).length;
+            final failureCount = docResults.length - successCount;
+
+            msg += '\nDocuments: $successCount réussies';
+            if (failureCount > 0) {
+              msg += ', $failureCount échouées';
+              color = Colors.orange;
+            }
+
+            // Afficher les détails des échecs si nécessaire
+            if (failureCount > 0) {
+              final failures = docResults.where((r) => !r.success).toList();
+              final failureDetails = failures.map((f) =>
+              'ID ${f.inspectionId}: ${f.message}'
+              ).join('\n');
+
+              debugPrint('Échecs upload documents:\n$failureDetails');
+            }
+          } else {
+            msg += '\nAucun document à synchroniser';
+          }
+
+          // ====================================
+          // Étape 1/3 — Synchro serveur (Laravel)
+          // ====================================
+          status.value = 'Étape 1/3 — Synchronisation serveur (Laravel)…';
           final api = InspectionApi(baseUrl: 'https://www.mirah-csp.com/api/v1');
 
           final service = SyncService(
@@ -124,34 +180,37 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           final r = await service.run();
           if (r.error != null) throw Exception(r.error);
 
-          msg =
-          'Serveur OK. À envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
+          msg = 'Serveur OK. À envoyer: ${r.totalPending} • Envoyés: ${r.totalSent} • MAJ: ${r.totalUpdated}';
 
-          // Étape 2/2 — refresh local
-          status.value = 'Étape 2/2 — Actualisation locale…';
+
+          // ====================================
+          // Étape 3/3 — Refresh local
+          // ====================================
+          status.value = 'Étape 3/3 — Actualisation locale…';
           final inspectController = InspectionController();
           await inspectController.loadAndSync();
 
-
-
           msg = 'Synchronisation terminée.\n$msg';
-          color = Colors.green;
+
         } catch (e) {
           msg = 'Échec de la synchronisation : $e';
-          color = Colors.orange;
+          color = Colors.red;
           if (mounted) {
             await _showErrorDialog(
               context,
               title: 'Erreur',
-              message:
-              'Un problème est survenu pendant la synchro des inspections.\n\nDétail : $e',
+              message: 'Un problème est survenu pendant la synchro des inspections.\n\nDétail : $e',
             );
           }
         }
 
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(msg), backgroundColor: color),
+          SnackBar(
+            content: Text(msg),
+            backgroundColor: color,
+            duration: const Duration(seconds: 5),
+          ),
         );
       },
     );

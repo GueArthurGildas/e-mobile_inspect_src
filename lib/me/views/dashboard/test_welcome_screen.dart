@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/message/screen_chat.dart';
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/msg_screen.dart';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/upload_doc_insp/upload_all_inspect_services.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ import 'package:e_Inspection_APP/me/views/form_managing_test/ui/inspection_list_
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/profile_current.dart';
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/side_bar_menu/config_wallet_screen.dart';
 import 'package:e_Inspection_APP/me/views/form_managing_test/ui/sync_service_inspection.dart';
-import 'package:e_Inspection_APP/me/views/form_managing_test/upload_test_doc_inspect.dart';                 // ⬅️ nécessaire pour StreamSubscription
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/upload_doc_insp/upload_test_doc_inspect.dart';                 // ⬅️ nécessaire pour StreamSubscription
 
 
 const kOrange = Colors.orange;
@@ -210,6 +211,8 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
 
 
+                  /// for synch dossier inspection
+                  SyncAllInspectionsButton(),
 
                   //////////////
 

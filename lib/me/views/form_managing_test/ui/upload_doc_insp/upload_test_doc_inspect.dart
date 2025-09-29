@@ -7,32 +7,8 @@ import 'package:e_Inspection_APP/me/services/database_service.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/foundation.dart';
-// lib/widgets/push_inspection_320_button.dart
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'dart:developer' as developer;
-import 'package:flutter/foundation.dart';
 
-// lib/services/inspection_docs_sync.dart
-import 'dart:convert';
-import 'dart:io';
-import 'dart:developer' as developer;
-import 'package:dio/dio.dart';
-import 'package:e_Inspection_APP/me/services/database_service.dart';
-import 'package:path/path.dart' as p;
-import 'package:sqflite/sqflite.dart';
-import 'package:flutter/foundation.dart';
-
-
-// lib/services/inspection_docs_sync.dart
-import 'dart:convert';
-import 'dart:io';
-import 'dart:developer' as developer;
-import 'package:dio/dio.dart';
-import 'package:e_Inspection_APP/me/services/database_service.dart';
-import 'package:path/path.dart' as p;
-import 'package:sqflite/sqflite.dart';
-import 'package:flutter/foundation.dart';
 
 // Configuration Dio avec EXACTEMENT les mêmes headers que Postman
 final _dio = Dio(BaseOptions(
