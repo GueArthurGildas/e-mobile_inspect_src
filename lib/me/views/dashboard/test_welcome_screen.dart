@@ -149,101 +149,125 @@ class _WalletScreenState extends State<WalletScreen> {
 
           // ───────── CONTENU CENTRAL SCROLLABLE ─────────
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 90), // 90 ≈ hauteur BottomBar
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 🖼️ CARROUSEL D’IMAGES (défilement horizontal)
-                  _ImageCarousel(paths: images),
-
-                  // Barre dégradée SOUS l’image
-                  const SizedBox(height: 8),
-                  const _SeparatorBar(),
-                  const SizedBox(height: 14),
-
-                  // Titre principal (pro)
-                  const Text(
-                    "Centre de Gestion ",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      color: kOrange,
-                      height: 1.1,
-                    ),
+            child: Stack(
+              children: [
+                // 1) Fond image (avec errorBuilder pour voir si le chemin est bon)
+                Positioned.fill(
+                  child: Image.asset(
+                    "assets/me/images/fond_screen.png",
+                    fit: BoxFit.cover,
+                    // Si l’asset est introuvable, on verra un fond rouge:
+                    errorBuilder: (_, __, ___) => const ColoredBox(color: Colors.redAccent),
                   ),
-                  const SizedBox(height: 6),
-                  const Text(
-                    "Plateforme e-Inspection du MIRAH • CSP ZEE — Côte d’Ivoire. "
-                        "Facilitez les inspections des navires de pêche, assurez la traçabilité et conservez un historique complet.",
-                    style: TextStyle(fontSize: 14.5, color: Colors.black87, height: 1.35),
+                ),
+
+                // 2) (Optionnel) voile. Désactive-le pour vérifier que l’image est bien visible.
+                // Positioned.fill(
+                //   child: ColoredBox(color: Colors.white.withOpacity(0.85)),
+                // ),
+
+                // 3) Ton contenu scrollable par-dessus
+                SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 90),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _ImageCarousel(paths: images),
+                      const SizedBox(height: 8),
+                      const _SeparatorBar(),
+
+                      // Barre dégradée SOUS l’image
+                      const SizedBox(height: 8),
+                      //const _SeparatorBar(),
+                      const SizedBox(height: 14),
+
+                      // Titre principal (pro)
+                      const Text(
+                        "Centre de Gestion ",
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          color: kOrange,
+                          height: 1.1,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      const Text(
+                        "Plateforme e-Inspection du MIRAH • CSP ZEE — Côte d’Ivoire. "
+                            "Facilitez les inspections des navires de pêche, assurez la traçabilité et conservez un historique complet.",
+                        style: TextStyle(fontSize: 14.5, color: Colors.black87, height: 1.35),
+                      ),
+
+                      const SizedBox(height: 18),
+                      const _SectionTitle("Fonctionnalités clés"),
+                      const SizedBox(height: 8),
+
+                      // Lignes d’action sobres (pas de cards)
+                      _ActionRow(icon: Icons.assignment_add,   label: "Réaliser une inspection", onTap: () {}),
+                      _ActionRow(icon: Icons.history,          label: "Consulter l’historique",   onTap: () {}),
+                      _ActionRow(icon: Icons.event_available,  label: "Assigner une inspection",      onTap: () {}),
+
+                      ///// test pour envoyer les images d'une inspection vers laravel ( juste un bouoton test pour voir )
+
+
+                      //const PushInspection320Button(),
+
+
+                      //const SendMessageBox(), // <-- Le champ + bouton "Envoyer"
+
+                      const SizedBox(height: 20),
+                      ///// for chat
+
+                      FloatingActionButton.extended(
+                        backgroundColor: Colors.green,
+                        foregroundColor: Colors.white, // 👈 applique au texte et à l’icône
+                        icon: const Icon(Icons.forum),
+                        label: const Text("Communiquer"),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => const ChatScreen()),
+                          );
+                        },
+                      ),
+
+
+                      /// for synch dossier inspection
+                      //SyncAllInspectionsButton(),
+
+                      //////////////
+
+                      const SizedBox(height: 14),
+                      const _SeparatorBar(), // séparateur entre sections
+                      const SizedBox(height: 16),
+
+                      const _SectionTitle("Objectifs de l’application"),
+                      const SizedBox(height: 8),
+                      const _BulletLine("Faciliter les inspections de navires de pêche par le MIRAH (CSP ZEE)."),
+                      const _BulletLine("Assurer la traçabilité : navire, engins, espèces, infractions, documents."),
+                      const _BulletLine("Conserver un historique horodaté (photos, rapports, validations)."),
+                      const _BulletLine("Fonctionnement hors-ligne avec synchronisation sécurisée."),
+                      const _BulletLine("Alignement réglementaire en Côte d’Ivoire."),
+                      const _BulletLine("Tableaux de bord et exports pour l’aide à la décision."),
+
+                      const SizedBox(height: 14),
+                      const _SeparatorBar(), // autre séparateur
+                      const SizedBox(height: 16),
+
+                      const _SectionTitle("Informations utiles"),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Accédez à vos dossiers, suivez l’avancement des inspections et générez des rapports conformes. "
+                            "Les données sont stockées localement en absence de réseau et se synchronisent automatiquement.",
+                        style: TextStyle(fontSize: 14.5, color: Colors.black87, height: 1.35),
+                      ),
+
+                    ],
                   ),
-
-                  const SizedBox(height: 18),
-                  const _SectionTitle("Fonctionnalités clés"),
-                  const SizedBox(height: 8),
-
-                  // Lignes d’action sobres (pas de cards)
-                  _ActionRow(icon: Icons.assignment_add,   label: "Réaliser une inspection", onTap: () {}),
-                  _ActionRow(icon: Icons.history,          label: "Consulter l’historique",   onTap: () {}),
-                  _ActionRow(icon: Icons.event_available,  label: "Assigner une inspection",      onTap: () {}),
-
-                  ///// test pour envoyer les images d'une inspection vers laravel ( juste un bouoton test pour voir )
-
-
-                  const PushInspection320Button(),
-
-
-                  //const SendMessageBox(), // <-- Le champ + bouton "Envoyer"
-
-
-                  ///// for chat
-
-                  FloatingActionButton.extended(
-                    backgroundColor: Colors.green,
-                    icon: const Icon(Icons.forum),
-                    label: const Text("Communiquer"),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const ChatScreen()),
-                      );
-                    },
-                  ),
-
-
-                  /// for synch dossier inspection
-                  SyncAllInspectionsButton(),
-
-                  //////////////
-
-                  const SizedBox(height: 14),
-                  const _SeparatorBar(), // séparateur entre sections
-                  const SizedBox(height: 16),
-
-                  const _SectionTitle("Objectifs de l’application"),
-                  const SizedBox(height: 8),
-                  const _BulletLine("Faciliter les inspections de navires de pêche par le MIRAH (CSP ZEE)."),
-                  const _BulletLine("Assurer la traçabilité : navire, engins, espèces, infractions, documents."),
-                  const _BulletLine("Conserver un historique horodaté (photos, rapports, validations)."),
-                  const _BulletLine("Fonctionnement hors-ligne avec synchronisation sécurisée."),
-                  const _BulletLine("Alignement réglementaire en Côte d’Ivoire."),
-                  const _BulletLine("Tableaux de bord et exports pour l’aide à la décision."),
-
-                  const SizedBox(height: 14),
-                  const _SeparatorBar(), // autre séparateur
-                  const SizedBox(height: 16),
-
-                  const _SectionTitle("Informations utiles"),
-                  const SizedBox(height: 8),
-                  const Text(
-                    "Accédez à vos dossiers, suivez l’avancement des inspections et générez des rapports conformes. "
-                        "Les données sont stockées localement en absence de réseau et se synchronisent automatiquement.",
-                    style: TextStyle(fontSize: 14.5, color: Colors.black87, height: 1.35),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
+          )
+
         ],
       ),
 

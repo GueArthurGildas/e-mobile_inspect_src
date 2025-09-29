@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:e_Inspection_APP/me/views/form_managing_test/ui/message/screen_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -294,6 +295,106 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
     );
   }
 
+
+
+// ✅ AJOUTEZ CETTE MÉTHODE ICI
+  Widget _buildStatusBadge(int? statutId, ({String label, Color color}) st) {
+    // Couleurs et styles selon le statut
+    Color bgColor;
+    Color borderColor;
+    Color textColor;
+    IconData icon;
+    bool isPulsing = false;
+
+    switch (statutId) {
+      case 5: // En attente - ORANGE VIF
+        bgColor = Colors.amber.shade100;
+        borderColor = Colors.amber.shade700;
+        textColor = Colors.amber.shade900;
+        icon = Icons.access_time_filled;
+        isPulsing = true;
+        break;
+
+      case 1: // En cours - BLEU VISIBLE
+        bgColor = Colors.blue.shade100;
+        borderColor = Colors.blue.shade700;
+        textColor = Colors.blue.shade900;
+        icon = Icons.play_circle_filled;
+        break;
+
+      case 2: // Terminé - VERT VALIDATION
+        bgColor = Colors.green.shade100;
+        borderColor = Colors.green.shade700;
+        textColor = Colors.green.shade900;
+        icon = Icons.check_circle;
+        break;
+
+      default: // Inconnu - GRIS
+        bgColor = Colors.grey.shade200;
+        borderColor = Colors.grey.shade600;
+        textColor = Colors.grey.shade800;
+        icon = Icons.help_outline;
+        break;
+    }
+
+    final badge = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: borderColor,
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: borderColor.withOpacity(0.3),
+            blurRadius: 6,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 16,
+            color: textColor,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            st.label.toUpperCase(),
+            style: TextStyle(
+              color: textColor,
+              fontSize: 11,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // Animation pulsante pour "En attente"
+    if (isPulsing) {
+      return TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0.95, end: 1.05),
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.easeInOut,
+        builder: (context, scale, child) {
+          return Transform.scale(scale: scale, child: child);
+        },
+        onEnd: () {
+          if (mounted) setState(() {});
+        },
+        child: badge,
+      );
+    }
+
+    return badge;
+  }
+
   Widget _inspectionCard({
     required BuildContext context,
     required int id,
@@ -321,152 +422,340 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
     final st = _statusInfo(statutId);
 
     // Code dossier
-    final String dossierCode = 'INSP-CSP-025-000$id';
+    final String dossierCode = 'INSP-000$id';
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ---- HEADER dégradé orange → vert ----
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFFF6A00), Color(0xFF2ECC71)], // orange -> vert
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
+      elevation: 2,
+      shadowColor: Colors.black.withOpacity(0.08),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              Colors.grey.shade50,
+            ],
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ═══════════ HEADER MODERNE ═══════════
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple, // ✅ Orange uni
+                //color: Colors.blue, // ✅ Orange uni
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Code dossier + Navire
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      dossierCode,
-                      style: const TextStyle(
-                        fontFamily: "Audiowide",
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Ligne 1: Code dossier + Statut TRÈS VISIBLE
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Code dossier avec icône
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.25),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Icon(
+                                Icons.folder_special,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    dossierCode,
+                                    style: const TextStyle(
+                                      fontFamily: "Audiowide",
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    'Créée le $createdAt',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.9),
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // ✅ STATUT TRÈS VISIBLE SELON L'ÉTAT
+                      _buildStatusBadge(statutId, st),
+                    ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // Ligne 2: Nom du navire
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.3),
+                        width: 1,
                       ),
                     ),
-                    Row(
+                    child: Row(
                       children: [
-                        const Icon(
-                          Icons.directions_boat_filled,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          shipName,
-                          style: const TextStyle(
-                            fontFamily: "Bariol",
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.3),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.directions_boat_filled,
                             color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'NAVIRE',
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.8),
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                shipName,
+                                style: const TextStyle(
+                                  fontFamily: "Bariol",
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.3,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-
-                  ],
-                ),
-
-                // Chip statut
-                _statusChip(st.label, st.color),
-              ],
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          // ---- BODY ----
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                _infoRow(Icons.event_available, 'Créée le', createdAt),
-                const SizedBox(height: 8),
-                _infoRow(Icons.directions_boat_filled, 'Arrivée prévue', datePrevArrivNavire),
-                const SizedBox(height: 8),
-                _infoRow(Icons.assignment_turned_in, 'Inspection prévue', datePrevueInspection),
-                const SizedBox(height: 8),
-                _infoRow(Icons.notes, 'Consigne', consigne),
-              ],
-            ),
-          ),
+            // ═══════════ BODY - INFORMATIONS CLÉS ═══════════
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  // Grille d'informations 2×2
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _InfoTile(
+                          icon: Icons.calendar_today,
+                          label: 'Arrivée prévue',
+                          value: datePrevArrivNavire,
+                          color: const Color(0xFFFF6A00),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _InfoTile(
+                          icon: Icons.assignment_turned_in,
+                          label: 'Inspection prévue',
+                          value: datePrevueInspection,
+                          color: const Color(0xFF2ECC71),
+                        ),
+                      ),
+                    ],
+                  ),
 
-          // ---- ACTIONS ----
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: const BorderRadius.vertical(bottom: Radius.circular(18)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                if (statutId != 2)
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF2ECC71), // vert
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  const SizedBox(height: 12),
+
+                  // Consigne avec style note
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.amber.shade50,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.amber.shade200,
+                        width: 1,
+                      ),
                     ),
-                    onPressed: () async {
-                      // ✅ contrôle rôle (admin ou chef_equipe) avant d'exécuter onArrowTap
-                      final userCtrl = UserController();
-                      final allowed = await userCtrl.canContinueInspection();
-                      if (!allowed) {
-                        await showDialog(
-                          context: context,
-                          builder: (_) => AlertDialog(
-                            title: const Text('Accès refusé'),
-                            content: const Text(
-                                "Vous n'avez pas les droits neccessaires !"
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('OK'),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.info_outline,
+                          size: 18,
+                          color: Colors.amber.shade800,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'CONSIGNE',
+                                style: TextStyle(
+                                  color: Colors.amber.shade800,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: 0.8,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                consigne,
+                                style: TextStyle(
+                                  color: Colors.amber.shade900,
+                                  fontSize: 13,
+                                  height: 1.4,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),
-                        );
-                        return; // ne pas appeler onArrowTap
-                      }
-
-                      // 👇 logique existante conservée : on déclenche le callback fourni
-                      if (onArrowTap != null) onArrowTap();
-                    },
-                    icon: const Icon(Icons.play_arrow, color: Colors.white),
-                    label: const Text("Lancer", style: TextStyle(color: Colors.white)),
+                        ),
+                      ],
+                    ),
                   ),
-
-                const SizedBox(width: 10),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF6A00), // orange
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
-                  onPressed: onOpen,
-                  icon: const Icon(Icons.remove_red_eye, color: Colors.white),
-                  label: const Text("Voir détail", style: TextStyle(color: Colors.white)),
-                ),
-
-                const ProSeparator()
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+
+            // ═══════════ FOOTER - ACTIONS ═══════════
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
+              ),
+              child: Row(
+                children: [
+                  // Bouton Voir détail
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: onOpen,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFFFF6A00),
+                        side: const BorderSide(color: Color(0xFFFF6A00), width: 1.5),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      icon: const Icon(Icons.visibility, size: 18),
+                      label: const Text(
+                        'Détails',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  if (statutId != 2) ...[
+                    const SizedBox(width: 12),
+                    // Bouton Lancer (uniquement si pas terminé)
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        onPressed: () async {
+                          final userCtrl = UserController();
+                          final allowed = await userCtrl.canContinueInspection();
+                          if (!allowed) {
+                            await showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: const Text('Accès refusé'),
+                                content: const Text(
+                                    "Vous n'avez pas les droits nécessaires !"
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context).pop(),
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            return;
+                          }
+                          if (onArrowTap != null) onArrowTap();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF2ECC71),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        icon: const Icon(Icons.play_arrow, size: 20),
+                        label: const Text(
+                          'Lancer',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
+
   }
 
 
@@ -479,15 +768,28 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
         appBar: AppBar(title: const Text('Liste des Inspections'),backgroundColor: Colors.orange,),
 
         // On conserve le FAB et la route via ressources[ressources.length-1]['screen']
-        floatingActionButton: FloatingActionButton.extended(
+        // floatingActionButton: FloatingActionButton.extended(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (_) => ressources[ressources.length - 2]['screen']),
+        //     );
+        //   },
+        //   icon: const Icon(Icons.add),
+        //   label: const Text('Nouvelle'),
+        // ),
+
+
+        floatingActionButton:FloatingActionButton.extended(
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white, // 👈 applique au texte et à l’icône
+          icon: const Icon(Icons.forum),
+          label: const Text("Communiquer"),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => ressources[ressources.length - 2]['screen']),
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const ChatScreen()),
             );
           },
-          icon: const Icon(Icons.add),
-          label: const Text('Nouvelle'),
         ),
 
         body: Column(
@@ -665,7 +967,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                     child: ListView.separated(
                       padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
                       itemCount: items.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      separatorBuilder: (_, __) => const _CardSeparator(),
                       itemBuilder: (ctx, i) {
                         final r = items[i];
                         final id = r['id'] as int;
@@ -1385,6 +1687,130 @@ class ProSeparator extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+}
+// À ajouter à la fin du fichier, avant la dernière }
+
+class _InfoTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+
+  const _InfoTile({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: color.withOpacity(0.2),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16, color: color),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  label.toUpperCase(),
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.5,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+class _CardSeparator extends StatelessWidget {
+  const _CardSeparator();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 1,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.transparent,
+                    const Color(0xFFFF6A00).withOpacity(0.3),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.deepPurple
+                // gradient: const LinearGradient(
+                //   colors: [Color(0xFFFF6A00), Color(0xFF2ECC71)],
+                // ),
+              ),
+              child: const Icon(
+                Icons.horizontal_rule,
+                color: Colors.white,
+                size: 14,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: 1,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF2ECC71).withOpacity(0.3),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
