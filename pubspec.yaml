@@ -40,6 +40,7 @@ dependencies:
 #  battery_plus: ^6.2.1
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
+  flutter_file_dialog: ^3.0.2   # (ou version récente)
   cloud_firestore: ^5.6.8
   convex_bottom_bar: 3.2.0
   #cupertino_icons: ^1.0.8
