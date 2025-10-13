@@ -258,15 +258,16 @@ class _WizardScreenState extends State<WizardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulaire Inspection #${ctrl.inspectionId ?? '-'}'),
+        title: Text('Formulaire INSP-00${ctrl.inspectionId ?? '-'}'),
         foregroundColor: Colors.white,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [_AppColors.orange, _AppColors.green],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
+            // gradient: LinearGradient(
+            //   colors: [_AppColors.orange, _AppColors.orange],
+            //   begin: Alignment.centerLeft,
+            //   end: Alignment.centerRight,
+            // ),
+            color:Colors.orange,
           ),
         ),
       ),

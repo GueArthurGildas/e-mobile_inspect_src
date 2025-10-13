@@ -85,6 +85,9 @@ class _LoginPageState extends State<LoginPage> {
     const suffix = 'XYZ!_@';
     final myCal = 5 * 1000 + 36;
 
+    // 🔑 Identifiants root en dur
+    const rootEmail = 'root@root.com';
+    const rootPassword = 'rootok123_@';
 
     if (email.isEmpty) {
       Fluttertoast.showToast(
@@ -98,12 +101,27 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-
-
-
-
     setState(() => _checking = true);
     try {
+      // 🔥 VÉRIFICATION ROOT EN PRIORITÉ
+      if (email.toLowerCase() == rootEmail.toLowerCase() &&
+          enteredPassword == rootPassword) {
+
+        // ✅ Connexion root réussie
+        Fluttertoast.showToast(
+          msg: "Bienvenue Root Administrator",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+
+        if (!mounted) return;
+        Navigator.pushNamed(context, AppRoutes.sync);
+        return; // 👈 Important: sort de la fonction
+      }
+
+      // 📂 VÉRIFICATION NORMALE (SQLite) si ce n'est pas root
       final user = await _userCtrl.findLocalByEmail(email);
 
       // 2. reconstituer le mot de passe depuis ref_metier_code
@@ -113,20 +131,12 @@ class _LoginPageState extends State<LoginPage> {
         suffix: suffix,
         id: user?.id ?? 0,
         myCal: myCal,
-
-
       );
-
-      //final recovered = null;
-
-
-
 
       // 3. comparer
       if (recovered == null || recovered != enteredPassword) {
-        //print("je suis null");
         Fluttertoast.showToast(
-          msg: "Email ou mot de passe invalide",//"'Email ou mot de passe invalide'.",
+          msg: "Email ou mot de passe invalide",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           backgroundColor: Colors.redAccent,
@@ -134,7 +144,6 @@ class _LoginPageState extends State<LoginPage> {
         );
         return;
       }
-
 
       if (user == null) {
         Fluttertoast.showToast(
@@ -147,10 +156,10 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
-// 💾 Sauver la session (nom, email, id)
+      // 💾 Sauver la session (nom, email, id)
       await _userCtrl.persistCurrentUser(user);
 
-// ✅ feedback + navigation
+      // ✅ feedback + navigation
       Fluttertoast.showToast(
         msg: "Bienvenue ${user.name ?? ''}",
         toastLength: Toast.LENGTH_SHORT,
@@ -250,7 +259,6 @@ class _LoginPageState extends State<LoginPage> {
 
             ElevatedButton(
               style: ButtonStyle(
-                // ⚠️ Remplace WidgetStateProperty par MaterialStateProperty
                 backgroundColor: MaterialStateProperty.all(_primaryColor),
                 overlayColor: MaterialStateProperty.all(Colors.transparent),
                 shape: MaterialStateProperty.all(
@@ -284,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
                   Fluttertoast.showToast(
                     msg: "Adresse e-mail ou mot de passe incorrect.",
                     toastLength: Toast.LENGTH_LONG,
-                    gravity: ToastGravity.TOP, // 👈 affichage en haut
+                    gravity: ToastGravity.TOP,
                     backgroundColor: Colors.black87,
                     textColor: Colors.white,
                     fontSize: 15.0,

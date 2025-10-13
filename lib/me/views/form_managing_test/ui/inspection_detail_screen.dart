@@ -20,6 +20,35 @@ List<BoxShadow> get _softShadow => [
 ];
 
 // =======================
+// 🎨 Palette & Effects PROFESSIONNELLE
+// =======================
+//Color get _primary => const Color(0xFF2C3E50);
+Color get _primary => Colors.orange;
+Color get _accent => Colors.orange;//const Color(0xFF3498DB);       // Bleu clair
+Color get _success => const Color(0xFF27AE60);      // Vert validation
+Color get _warning => const Color(0xFFF39C12);      // Orange doux
+Color get _danger => const Color(0xFFE74C3C);       // Rouge alerte
+Color get _background => const Color(0xFFF8F9FA);   // Gris très clair
+Color get _cardBg => Colors.white;
+Color get _textPrimary => const Color(0xFF2C3E50);
+Color get _textSecondary => const Color(0xFF7F8C8D);
+
+List<BoxShadow> get _cardShadow => [
+  BoxShadow(
+    color: Colors.black.withOpacity(0.04),
+    blurRadius: 8,
+    offset: const Offset(0, 2),
+  ),
+];
+
+List<BoxShadow> get _headerShadow => [
+  BoxShadow(
+    color: Colors.black.withOpacity(0.08),
+    blurRadius: 12,
+    offset: const Offset(0, 4),
+  ),
+];
+// =======================
 //   Widget
 // =======================
 class InspectionDetailScreen extends StatefulWidget {
@@ -380,19 +409,42 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
 
   Widget _kv(IconData icon, String key, String val) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 18, color: _orange),
-          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              color: _accent.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Icon(icon, size: 16, color: _accent),
+          ),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(key, style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w600)),
-                const SizedBox(height: 2),
-                Text(val.isEmpty ? '-' : val, style: const TextStyle(fontWeight: FontWeight.w700, color: Colors.black87)),
+                Text(
+                  key.toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  val.isEmpty ? '—' : val,
+                  style: TextStyle(
+                    color: _textPrimary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    height: 1.4,
+                  ),
+                ),
               ],
             ),
           ),
@@ -401,7 +453,6 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     );
   }
 
-  // ---- Section Tile (cards unifiées + grand titre d'entête sur fond attrayant)
   Widget _sectionTile({
     required IconData leading,
     required String title,
@@ -412,90 +463,105 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
   }) {
     final pct = progress.pct.clamp(0.0, 1.0);
 
-    // 🔸 Cartes unifiées : même teinte et même accent (orange)
-    final accent = _orange;
-    final unifiedTint = _orange.withOpacity(0.06);
-
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: unifiedTint,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: _softShadow,
-        border: Border.all(color: accent.withOpacity(0.22), width: 1),
+        color: _cardBg,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: _cardShadow,
+        border: Border.all(color: _textSecondary.withOpacity(0.1)),
       ),
       child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          splashColor: _accent.withOpacity(0.05),
+        ),
         child: ExpansionTile(
-          tilePadding: const EdgeInsets.fromLTRB(12, 12, 12, 8),
+          tilePadding: const EdgeInsets.all(16),
           initiallyExpanded: initiallyExpanded,
-          // Grand bandeau d'entête attrayant avec gros titre
+          leading: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: _accent.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(leading, color: _accent, size: 22),
+          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [_orange, _green]),
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: _softShadow,
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.18),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white30),
-                      ),
-                      child: Icon(leading, color: Colors.white, size: 20),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // 👈 grand titre
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ],
+              Text(
+                title,
+                style: TextStyle(
+                  color: _textPrimary,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 10),
-              // Progress bar
+              const SizedBox(height: 8),
+              // Barre de progression minimaliste
               ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(4),
                 child: Stack(
-                  alignment: Alignment.centerLeft,
                   children: [
-                    Container(height: 8, color: accent.withOpacity(0.18)),
+                    Container(
+                      height: 6,
+                      color: _textSecondary.withOpacity(0.1),
+                    ),
                     FractionallySizedBox(
                       widthFactor: pct,
                       child: Container(
-                        height: 8,
+                        height: 6,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [_orange, _green]),
+                          gradient: LinearGradient(
+                            colors: pct < 0.5
+                                ? [_danger, _warning]
+                                : pct < 1.0
+                                ? [_warning, _accent]
+                                : [_success, _success],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                '${progress.done}/${progress.total} champs • ${(pct * 100).round()}%',
-                style: const TextStyle(color: Colors.black54, fontSize: 12),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: _accent.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      '${progress.done}/${progress.total}',
+                      style: TextStyle(
+                        color: _accent,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${(pct * 100).round()}% complété',
+                    style: TextStyle(
+                      color: _textSecondary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          childrenPadding: const EdgeInsets.fromLTRB(12, 4, 12, 12),
-          children: [content],
+          childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          children: [
+            const _ProSectionDivider(),
+            content,
+          ],
         ),
       ),
     );
@@ -650,7 +716,7 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
         final data = Map<String, dynamic>.from(row['data']);
 
         final id = cols['id'] as int;
-        final dossierCode = 'INSP-CSP-025-000$id';
+        final dossierCode = 'INSP-00$id';
         final statutId = (cols['statut_inspection_id'] is int)
             ? cols['statut_inspection_id'] as int
             : int.tryParse('${cols['statut_inspection_id'] ?? ''}');
@@ -730,86 +796,185 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
         return Theme(
           data: proTheme,
           child: Scaffold(
+            backgroundColor: _background, // ✅ Fond gris très clair
             appBar: AppBar(
-              title: const Text('Détail inspection'),
-              actions: [
-                // (Actions commentées dans votre base)
-              ],
+              backgroundColor: _primary,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              title: const Text(
+                'Détail de l\'inspection',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
             body: ListView(
-              padding: const EdgeInsets.fromLTRB(12, 10, 12, 24),
+              padding: const EdgeInsets.all(16),
               children: [
                 // =======================
                 // Header
                 // =======================
-                Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                    side: BorderSide(color: _orange.withOpacity(0.18)),
+                // =======================
+                // Header PROFESSIONNEL
+                // =======================
+                Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: _cardBg,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: _cardShadow,
+                    border: Border.all(color: _textSecondary.withOpacity(0.1)),
                   ),
-                  clipBehavior: Clip.antiAlias,
                   child: Column(
                     children: [
-                      // Bandeau haut (dégradé)
+                      // Bandeau haut sobre
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [_orange.withOpacity(0.95), _green.withOpacity(0.95)],
-                          ),
-                          boxShadow: _softShadow,
+                          color: Colors.blueGrey, //_primary,
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                         ),
                         child: Row(
                           children: [
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.15),
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Colors.white24),
-                                ),
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(Icons.folder_open, size: 16, color: Colors.white),
-                                      const SizedBox(width: 6),
-                                      Text(dossierCode,
-                                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
-                                    ],
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Icon(
+                                Icons.description_outlined,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'DOSSIER D\'INSPECTION',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.8),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1,
+                                    ),
                                   ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    dossierCode,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Statut moderne
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: st.color,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                st.label.toUpperCase(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.5,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      // Corps (fond unifié très léger)
-                      Container(
-                        width: double.infinity,
-                        color: _orange.withOpacity(0.06),
-                        padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+
+                      // Corps avec informations clés
+                      Padding(
+                        padding: const EdgeInsets.all(16),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              children: [
-                                _chipStatus(st.label, st.color),
+                            _InfoGrid(
+                              items: [
+                                _InfoGridItem(
+                                  icon: Icons.event,
+                                  label: 'Créée le',
+                                  value: createdAt,
+                                  color: _accent,
+                                ),
+                                _InfoGridItem(
+                                  icon: Icons.update,
+                                  label: 'Mise à jour',
+                                  value: updatedAt,
+                                  color: _success,
+                                ),
+                                _InfoGridItem(
+                                  icon: Icons.sailing,
+                                  label: 'Arrivée prévue',
+                                  value: prevArrive,
+                                  color: _warning,
+                                ),
+                                _InfoGridItem(
+                                  icon: Icons.assignment_turned_in,
+                                  label: 'Inspection prévue',
+                                  value: prevInspect,
+                                  color: _primary,
+                                ),
                               ],
                             ),
-                            const SizedBox(height: 12),
-                            _kv(Icons.directions_boat, 'Arrivée prévue', prevArrive),
-                            _kv(Icons.assignment_turned_in, 'Inspection prévue', prevInspect),
-                            _kv(Icons.notes, 'Consigne', consigne),
+
+                            if (consigne != '-' && consigne.isNotEmpty) ...[
+                              const SizedBox(height: 16),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,//_warning.withOpacity(0.08),
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: _warning.withOpacity(0.3),
+                                  ),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(Icons.info_outline, size: 18, color: _warning),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'CONSIGNE',
+                                            style: TextStyle(
+                                              color: _warning,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 1,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            consigne,
+                                            style: TextStyle(
+                                              color: _textPrimary,
+                                              fontSize: 13,
+                                              height: 1.4,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -1147,5 +1312,145 @@ class _InspectionDetailScreenState extends State<InspectionDetailScreen> {
     }
     // fallback immédiat
     return intId.toString();
+  }
+}
+
+class _ProSectionDivider extends StatelessWidget {
+  final String? label;
+  const _ProSectionDivider({this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    if (label == null) {
+      return Container(
+        height: 1,
+        margin: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.transparent,
+              _textSecondary.withOpacity(0.2),
+              Colors.transparent,
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: 1,
+              color: _textSecondary.withOpacity(0.2),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              label!.toUpperCase(),
+              style: TextStyle(
+                color: _textSecondary,
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: 1,
+              color: _textSecondary.withOpacity(0.2),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Grille d'informations 2×2
+class _InfoGrid extends StatelessWidget {
+  final List<_InfoGridItem> items;
+  const _InfoGrid({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 2.2,
+      ),
+      itemCount: items.length,
+      itemBuilder: (_, i) => items[i],
+    );
+  }
+}
+
+class _InfoGridItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final Color color;
+
+  const _InfoGridItem({
+    required this.icon,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.2)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 14, color: color),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  label.toUpperCase(),
+                  style: TextStyle(
+                    color: _textSecondary,
+                    fontSize: 9,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.5,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: TextStyle(
+              color: _textPrimary,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
   }
 }

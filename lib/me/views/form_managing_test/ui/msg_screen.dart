@@ -177,41 +177,82 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ts = TimeOfDay.fromDateTime(time).format(context);
-
     return Align(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isMe ? Colors.orange.shade100 : Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(12),
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
-        child: Column(
-          crossAxisAlignment:
-          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: [
-            if (!isMe) // ✅ Affiche le nom seulement si ce n’est pas moi
-              Text(
-                senderName,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54,
-                ),
-              ),
-            if (!isMe) const SizedBox(height: 4),
-            Text(
-              text,
-              style: const TextStyle(fontSize: 15),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              ts,
-              style: TextStyle(fontSize: 11, color: Colors.black45),
+        decoration: BoxDecoration(
+          color: isMe
+              ? const Color(0xFFFF6A00)
+              : Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(16),
+            topRight: const Radius.circular(16),
+            bottomLeft: isMe ? const Radius.circular(16) : const Radius.circular(4),
+            bottomRight: isMe ? const Radius.circular(4) : const Radius.circular(16),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ✅ NOM DE L'EXPÉDITEUR MIS EN ÉVIDENCE
+              if (!isMe) ...[
+                Text(
+                  senderName,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800, // ✅ Très gras
+                    color: Color(0xFFFF6A00), // ✅ Couleur orange distinctive
+                    letterSpacing: 0.3,
+                  ),
+                ),
+                const SizedBox(height: 6), // ✅ Espacement entre nom et message
+              ],
+
+              // MESSAGE
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: isMe ? Colors.white : Colors.black87,
+                  fontWeight: FontWeight.w500, // ✅ Moins gras que le nom
+                  height: 1.4,
+                ),
+              ),
+
+              const SizedBox(height: 6),
+
+              // HEURE
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}",
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: isMe
+                          ? Colors.white.withOpacity(0.8)
+                          : Colors.black54,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -778,11 +778,49 @@ class _DocSheetState extends State<_DocSheet> {
                     ),
 
                   const SizedBox(height: 16),
-                  SwitchListTile(
-                    value: _verifie,
-                    onChanged: (v) => setState(() => _verifie = v),
-                    title: const Text("Document vérifié"),
-                    contentPadding: EdgeInsets.zero,
+                  Tooltip(
+                    message: "Cochez uniquement après avoir vérifié physiquement l'authenticité du document (tampon, signature, date de validité, etc.)",
+                    padding: const EdgeInsets.all(12),
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.shade800,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      height: 1.4,
+                    ),
+                    preferBelow: false,
+                    waitDuration: const Duration(milliseconds: 500),
+                    showDuration: const Duration(seconds: 4),
+                    child: SwitchListTile(
+                      value: _verifie,
+                      onChanged: (v) => setState(() => _verifie = v),
+                      title: Row(
+                        children: [
+                          const Text("Document authentifié ?"),
+                          const SizedBox(width: 8),
+                          Icon(
+                            Icons.info_outline,
+                            size: 18,
+                            color: Colors.orange.shade700,
+                          ),
+                        ],
+                      ),
+                      subtitle: const Padding(
+                        padding: EdgeInsets.only(top: 4),
+                        child: Text(
+                          "Maintenez appuyé sur l'icône ⓘ pour plus d'info",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.black54,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                    ),
                   ),
 
                   const SizedBox(height: 16),

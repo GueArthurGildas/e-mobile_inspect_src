@@ -114,6 +114,7 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
         String msg = '';
         Color color = Colors.green;
         List<String> detailsMessages = [];
+        bool hasCriticalError = false;
 
         try {
           final db = await DatabaseHelper.database;
@@ -126,7 +127,7 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           final inspectionsToSync = await InspectionSyncService.getInspectionsToSync(db);
 
           if (inspectionsToSync.isNotEmpty) {
-            detailsMessages.add('📋 ${inspectionsToSync.length} inspection(s) trouvée(s)');
+            debugPrint('📋 ${inspectionsToSync.length} inspection(s) trouvée(s) pour sync');
             status.value = 'Étape 1/4 — Upload des documents (0/${inspectionsToSync.length})…';
 
             int currentInspection = 0;
@@ -149,36 +150,37 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
             final docSuccess = docResults.where((r) => r.success).length;
             final docFailure = docResults.length - docSuccess;
 
+            // Log des résultats dans la console
+            debugPrint('=== RÉSULTATS UPLOAD DOCUMENTS ===');
+            debugPrint('Total: ${docResults.length} inspections');
+            debugPrint('Succès: $docSuccess');
+            debugPrint('Échecs: $docFailure');
+
             if (docSuccess > 0) {
-              detailsMessages.add('✅ Documents: $docSuccess/${ docResults.length} réussies');
+              detailsMessages.add('Documents: $docSuccess/${docResults.length} réussies');
+              debugPrint('✅ Inspections réussies:');
+              final successes = docResults.where((r) => r.success).toList();
+              for (final result in successes) {
+                debugPrint('  - Inspection ${result.inspectionId}: ${result.documentCount} document(s)');
+              }
             }
 
             if (docFailure > 0) {
               color = Colors.orange;
-              detailsMessages.add('⚠️ Documents: $docFailure échouées');
+              detailsMessages.add('Documents: $docFailure échouées');
 
+              debugPrint('❌ Inspections échouées:');
               final failures = docResults.where((r) => !r.success).toList();
               for (final result in failures) {
-                detailsMessages.add('   ❌ Inspection ${result.inspectionId}: ${result.message}');
-              }
-
-              if (mounted) {
-                final errorDetails = failures.map((f) =>
-                'Inspection ${f.inspectionId}:\n${f.message}'
-                ).join('\n\n');
-
-                await _showErrorDialog(
-                  context,
-                  title: 'Erreurs upload documents',
-                  message: '$docFailure inspection(s) avec erreurs:\n\n$errorDetails',
-                );
+                debugPrint('  - Inspection ${result.inspectionId}: ${result.message}');
               }
             }
+            debugPrint('==================================');
 
             msg = 'Documents: $docSuccess/${docResults.length}';
 
           } else {
-            detailsMessages.add('ℹ️ Aucun document à synchroniser');
+            debugPrint('ℹ️ Aucun document à synchroniser (sync=0 et statut_inspection_id=2)');
             msg = 'Aucun document';
           }
 
@@ -188,7 +190,7 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           status.value = 'Étape 2/4 — Recherche des images à synchroniser…';
 
           if (inspectionsToSync.isNotEmpty) {
-            detailsMessages.add('📸 Recherche des images dans ${inspectionsToSync.length} inspection(s)...');
+            debugPrint('📸 Recherche des images dans ${inspectionsToSync.length} inspection(s)...');
 
             int currentImageInspection = 0;
 
@@ -212,41 +214,43 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
               final imageFailure = imageResults.length - imageSuccess;
               final totalImages = imageResults.fold(0, (sum, r) => sum + r.uploadedImages);
 
+              // Log des résultats dans la console
+              debugPrint('=== RÉSULTATS UPLOAD IMAGES ===');
+              debugPrint('Total: ${imageResults.length} inspections avec images');
+              debugPrint('Succès: $imageSuccess');
+              debugPrint('Échecs: $imageFailure');
+              debugPrint('Images uploadées: $totalImages');
+
               if (imageSuccess > 0) {
-                detailsMessages.add('✅ Images: $totalImages image(s) de $imageSuccess inspection(s)');
+                detailsMessages.add('Images: $totalImages de $imageSuccess inspection(s)');
+                debugPrint('✅ Inspections réussies:');
+                final successes = imageResults.where((r) => r.success).toList();
+                for (final result in successes) {
+                  debugPrint('  - Inspection ${result.inspectionId}: ${result.uploadedImages}/${result.totalImages} image(s)');
+                }
               }
 
               if (imageFailure > 0) {
                 color = Colors.orange;
-                detailsMessages.add('⚠️ Images: $imageFailure inspection(s) avec erreur(s)');
+                detailsMessages.add('Images: $imageFailure inspection(s) avec erreur(s)');
 
+                debugPrint('❌ Inspections échouées:');
                 final failures = imageResults.where((r) => !r.success).toList();
                 for (final result in failures) {
-                  detailsMessages.add('   ❌ Inspection ${result.inspectionId}: ${result.message}');
+                  debugPrint('  - Inspection ${result.inspectionId}: ${result.message}');
                   if (result.errors.isNotEmpty) {
-                    for (final error in result.errors.take(2)) {
-                      detailsMessages.add('      • $error');
+                    debugPrint('    Détails erreurs:');
+                    for (final error in result.errors) {
+                      debugPrint('      • $error');
                     }
                   }
                 }
-
-                if (mounted && failures.isNotEmpty) {
-                  final errorDetails = failures.map((f) {
-                    final errors = f.errors.isEmpty ? '' : '\n${f.errors.take(3).join('\n')}';
-                    return 'Inspection ${f.inspectionId}:\n${f.message}$errors';
-                  }).join('\n\n');
-
-                  await _showErrorDialog(
-                    context,
-                    title: 'Erreurs upload images',
-                    message: '$imageFailure inspection(s) avec erreurs:\n\n$errorDetails',
-                  );
-                }
               }
+              debugPrint('===============================');
 
               msg += '\nImages: $totalImages uploadées';
             } else {
-              detailsMessages.add('ℹ️ Aucune image à synchroniser');
+              debugPrint('ℹ️ Aucune image à synchroniser (pas de captures dans section "e")');
               msg += '\nAucune image';
             }
           }
@@ -271,26 +275,31 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
               throw Exception('Erreur serveur: ${r.error}');
             }
 
-            detailsMessages.add('✅ Synchronisation serveur réussie');
-            detailsMessages.add('   • À envoyer: ${r.totalPending}');
-            detailsMessages.add('   • Envoyés: ${r.totalSent}');
-            detailsMessages.add('   • Mis à jour: ${r.totalUpdated}');
+            detailsMessages.add('Serveur: ${r.totalSent} envoyés, ${r.totalUpdated} MAJ');
+
+            debugPrint('=== SYNC SERVEUR RÉUSSIE ===');
+            debugPrint('À envoyer: ${r.totalPending}');
+            debugPrint('Envoyés: ${r.totalSent}');
+            debugPrint('Mis à jour: ${r.totalUpdated}');
+            debugPrint('============================');
 
             msg += '\nServeur: ${r.totalSent} envoyés, ${r.totalUpdated} MAJ';
 
           } catch (e) {
+            // ERREUR CRITIQUE - Afficher modale
+            hasCriticalError = true;
             color = Colors.red;
-            detailsMessages.add('❌ Échec synchronisation serveur: $e');
+            detailsMessages.add('ERREUR CRITIQUE: Synchronisation serveur échouée');
 
-            debugPrint('=== ERREUR SYNC SERVEUR ===');
+            debugPrint('=== ERREUR CRITIQUE SYNC SERVEUR ===');
             debugPrint('$e');
-            debugPrint('===========================');
+            debugPrint('====================================');
 
             if (mounted) {
               await _showErrorDialog(
                 context,
-                title: 'Erreur synchronisation serveur',
-                message: 'La synchronisation avec le serveur Laravel a échoué.\n\nDétail: $e',
+                title: 'Erreur critique',
+                message: 'La synchronisation avec le serveur Laravel a échoué. Cette erreur bloque le processus.\n\nDétail: $e',
               );
             }
 
@@ -306,15 +315,16 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
             final inspectController = InspectionController();
             await inspectController.loadAndSync();
 
-            detailsMessages.add('✅ Actualisation locale terminée');
+            detailsMessages.add('Actualisation locale terminée');
+            debugPrint('✅ Actualisation locale réussie');
 
           } catch (e) {
             color = Colors.orange;
-            detailsMessages.add('⚠️ Erreur actualisation locale: $e');
+            detailsMessages.add('Actualisation locale incomplète');
 
-            debugPrint('=== ERREUR REFRESH LOCAL ===');
+            debugPrint('=== AVERTISSEMENT REFRESH LOCAL ===');
             debugPrint('$e');
-            debugPrint('============================');
+            debugPrint('====================================');
 
             msg += '\n⚠️ Actualisation locale incomplète';
           }
@@ -322,32 +332,30 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
           // Message final
           msg = 'Synchronisation terminée.\n$msg';
 
-          // Log complet
-          debugPrint('=== RÉSUMÉ SYNCHRONISATION ===');
+          // Log résumé complet dans la console
+          debugPrint('=== RÉSUMÉ FINAL SYNCHRONISATION ===');
           for (final detail in detailsMessages) {
             debugPrint(detail);
           }
-          debugPrint('==============================');
+          debugPrint('====================================');
 
         } catch (e, stackTrace) {
+          // ERREUR GÉNÉRALE CRITIQUE - Afficher modale
+          hasCriticalError = true;
           msg = 'Échec de la synchronisation';
           color = Colors.red;
 
-          detailsMessages.add('❌ ERREUR GÉNÉRALE: $e');
-
-          debugPrint('=== ERREUR CRITIQUE SYNCHRONISATION ===');
+          debugPrint('=== ERREUR GÉNÉRALE CRITIQUE ===');
           debugPrint('Erreur: $e');
           debugPrint('Stack trace:');
           debugPrint('$stackTrace');
-          debugPrint('========================================');
+          debugPrint('================================');
 
           if (mounted) {
-            final errorMessage = detailsMessages.join('\n');
-
             await _showErrorDialog(
               context,
               title: 'Erreur de synchronisation',
-              message: 'Un problème est survenu pendant la synchronisation.\n\n$errorMessage\n\nErreur technique: $e',
+              message: 'Un problème critique est survenu pendant la synchronisation.\n\nErreur: $e\n\nConsultez les logs pour plus de détails.',
             );
           }
         }
@@ -355,17 +363,13 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
         // Afficher le résumé final
         if (!mounted) return;
 
-        if (color != Colors.green && detailsMessages.isNotEmpty) {
-          final summary = detailsMessages.take(5).join('\n');
-          msg = '$msg\n\n$summary';
-        }
-
+        // SnackBar avec résumé (toujours affiché)
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(msg),
             backgroundColor: color,
-            duration: Duration(seconds: color == Colors.green ? 5 : 8),
-            action: color != Colors.green ? SnackBarAction(
+            duration: Duration(seconds: color == Colors.green ? 4 : 6),
+            action: detailsMessages.isNotEmpty ? SnackBarAction(
               label: 'Détails',
               textColor: Colors.white,
               onPressed: () {
@@ -374,7 +378,22 @@ class _SyncCenterScreenState extends State<SyncCenterScreen> {
                   builder: (context) => AlertDialog(
                     title: const Text('Détails de la synchronisation'),
                     content: SingleChildScrollView(
-                      child: Text(detailsMessages.join('\n')),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(detailsMessages.join('\n')),
+                          if (!hasCriticalError) ...[
+                            const SizedBox(height: 16),
+                            const Divider(),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Consultez les logs de la console pour plus de détails sur chaque inspection.',
+                              style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
+                            ),
+                          ],
+                        ],
+                      ),
                     ),
                     actions: [
                       TextButton(

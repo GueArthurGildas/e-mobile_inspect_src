@@ -422,7 +422,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
     final st = _statusInfo(statutId);
 
     // Code dossier
-    final String dossierCode = 'INSP-000$id';
+    final String dossierCode = 'INSP-00$id';
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -437,7 +437,8 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
             end: Alignment.bottomRight,
             colors: [
               Colors.white,
-              Colors.grey.shade50,
+              Colors.grey.shade300,
+              //Colors.purple,
             ],
           ),
         ),
@@ -448,8 +449,8 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.deepPurple, // ✅ Orange uni
-                //color: Colors.blue, // ✅ Orange uni
+                //color: Colors.deepPurple, // ✅ Orange uni
+                color: Colors.blueGrey, // ✅ Orange uni
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 boxShadow: [
                   BoxShadow(
@@ -525,7 +526,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.black12,//Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color: Colors.white.withOpacity(0.3),
@@ -537,7 +538,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
+                            color: Colors.black,//Colors.white.withOpacity(0.3),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -596,7 +597,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                           icon: Icons.calendar_today,
                           label: 'Arrivée prévue',
                           value: datePrevArrivNavire,
-                          color: const Color(0xFFFF6A00),
+                          color: Colors.black,//const Color(0xFFFF6A00),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -605,7 +606,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                           icon: Icons.assignment_turned_in,
                           label: 'Inspection prévue',
                           value: datePrevueInspection,
-                          color: const Color(0xFF2ECC71),
+                          color: Colors.black,//Color(0xFF2ECC71),
                         ),
                       ),
                     ],
@@ -618,10 +619,10 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.amber.shade50,
+                      color: Colors.white38, //Colors.amber.shade50,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.amber.shade200,
+                        color: Colors.black, //Colors.amber.shade200,
                         width: 1,
                       ),
                     ),
@@ -641,7 +642,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                               Text(
                                 'CONSIGNE',
                                 style: TextStyle(
-                                  color: Colors.amber.shade800,
+                                  color: Colors.black,//Colors.amber.shade800,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 0.8,
@@ -651,7 +652,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                               Text(
                                 consigne,
                                 style: TextStyle(
-                                  color: Colors.amber.shade900,
+                                  color: Colors.black,//Colors.amber.shade900,
                                   fontSize: 13,
                                   height: 1.4,
                                 ),
@@ -729,7 +730,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                           if (onArrowTap != null) onArrowTap();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2ECC71),
+                          backgroundColor: Colors.orange,// Color(0xFF2ECC71),
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           elevation: 0,
@@ -854,7 +855,7 @@ class _InspectionListScreenState extends State<InspectionListScreen> {
                       ),
                     ),
                     style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFF27AE60), // vert prononcé
+                      backgroundColor: Colors.red,//const Color(0xFF27AE60), // vert prononcé
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                       shape: RoundedRectangleBorder(
@@ -1205,7 +1206,7 @@ class _InspectionPreviewSheet extends StatelessWidget {
     final id   = item['id'] as int;
     final cols = Map<String, dynamic>.from(item['cols'] ?? {});
     final data = Map<String, dynamic>.from(item['data'] ?? {});
-    final String dossierCode = 'INSP-CSP-025-000$id';
+    final String dossierCode = 'INSP-00$id';
 
     // Nom navire (depuis navire_json → fallback)
     String shipName = '-';
